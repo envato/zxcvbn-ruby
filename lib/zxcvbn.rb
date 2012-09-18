@@ -1,4 +1,6 @@
 require 'zxcvbn/version'
+require 'zxcvbn/match'
+require 'zxcvbn/matching/dictionary'
 require 'pathname'
 require 'json'
 
