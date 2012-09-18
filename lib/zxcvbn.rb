@@ -7,8 +7,8 @@ require 'json'
 module Zxcvbn
   DATA_PATH = Pathname(File.expand_path('../../data', __FILE__))
 
-  ADJACENCY_GRAPHS = JSON.parse(DATA_PATH.join('adjacency_graphs.json').read)
-  FREQUENCY_LISTS = JSON.parse(DATA_PATH.join('frequency_lists.json').read)
+  ADJACENCY_GRAPHS = YAML.load(DATA_PATH.join('adjacency_graphs.yaml').read)
+  FREQUENCY_LISTS = YAML.load(DATA_PATH.join('frequency_lists.yaml').read)
 
   def zxcvbn(password)
   end
