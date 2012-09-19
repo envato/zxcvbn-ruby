@@ -50,7 +50,7 @@ describe 'zxcvbn over a set of example passwords' do
 
   it 'gives back the same score' do
     pending do
-      JsZxcvbnHelpers::TEST_PASSWORDS.each do |password|
+      TEST_PASSWORDS.each do |password|
         zxcvbn(password).should eq js_zxcvbn(password)
       end
     end
