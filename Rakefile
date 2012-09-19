@@ -9,3 +9,8 @@ task :console do
   IRB.start
   1
 end
+
+task :compile_coffeescript do
+  `coffee --compile --bare spec/support/js_source/{matching,scoring,init}.coffee`
+  `cat spec/support/js_source/{matching,scoring,adjacency_graphs,frequency_lists,init}.js > spec/support/js_source/compiled.js`
+end
