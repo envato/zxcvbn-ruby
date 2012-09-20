@@ -4,6 +4,8 @@ require "bundler/setup"
 
 task :console do
   require 'zxcvbn'
+  require './spec/support/js_helpers'
+  include JsHelpers
   require 'irb'
   ARGV.clear
   IRB.start
