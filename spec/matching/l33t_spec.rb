@@ -52,6 +52,8 @@ describe Zxcvbn::Matching::L33t do
 
   describe '#matches' do
     let(:matches) { matcher.matches('p@ssword') }
+    # it doesn't match on 'password' because that's not in the english
+    # dictionary/frequency list
 
     it 'finds the correct matches' do
       matches.map(&:matched_word).should eq([
