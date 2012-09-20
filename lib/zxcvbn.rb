@@ -3,6 +3,7 @@ require 'zxcvbn/match'
 require 'zxcvbn/matching/dictionary'
 require 'zxcvbn/matching/l33t'
 require 'zxcvbn/matching/spatial'
+require 'zxcvbn/matching/sequences'
 require 'pathname'
 require 'json'
 
