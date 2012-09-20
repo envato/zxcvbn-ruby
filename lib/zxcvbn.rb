@@ -5,6 +5,7 @@ require 'zxcvbn/matching/l33t'
 require 'zxcvbn/matching/spatial'
 require 'zxcvbn/matching/sequences'
 require 'zxcvbn/matching/repeat'
+require 'zxcvbn/matching/digits'
 require 'pathname'
 require 'json'
 
