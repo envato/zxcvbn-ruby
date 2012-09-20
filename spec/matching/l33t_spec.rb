@@ -18,8 +18,6 @@ describe Zxcvbn::Matching::L33t do
       it 'returns the correct possible substitutions' do
         substitutions = {'a' => ['@'], 'i' => ['1']}
         matcher.substitution_combinations(substitutions).should match_array([
-          {'a' => '@'},
-          {'i' => '1'},
           {'a' => '@', 'i' => '1'}
         ])
       end
@@ -27,9 +25,6 @@ describe Zxcvbn::Matching::L33t do
       it 'returns the correct possible substitutions with multiple options' do
         substitutions = {'a' => ['@', '4'], 'i' => ['1']}
         matcher.substitution_combinations(substitutions).should match_array([
-          {'a' => '@'},
-          {'i' => '1'},
-          {'a' => '4'},
           {'a' => '@', 'i' => '1'},
           {'a' => '4', 'i' => '1'}
         ])
@@ -40,12 +35,6 @@ describe Zxcvbn::Matching::L33t do
       it 'returns the correct possible substitutions' do
         substitutions = {'a' => ['@'], 'i' => ['1'], 'z' => ['3']}
         matcher.substitution_combinations(substitutions).should match_array([
-          {'a' => '@'},
-          {'i' => '1'},
-          {'z' => '3'},
-          {'a' => '@', 'i' => '1'},
-          {'a' => '@', 'z' => '3'},
-          {'z' => '3', 'i' => '1'},
           {'a' => '@', 'i' => '1', 'z' => '3'}
         ])
       end
@@ -55,20 +44,6 @@ describe Zxcvbn::Matching::L33t do
       it 'returns the correct possible substitutions' do
         substitutions = {'a' => ['@'], 'i' => ['1'], 'z' => ['3'], 'b' => ['8']}
         matcher.substitution_combinations(substitutions).should match_array([
-          {'a' => '@'},
-          {'i' => '1'},
-          {'z' => '3'},
-          {'b' => '8'},
-          {'a' => '@', 'i' => '1'},
-          {'a' => '@', 'z' => '3'},
-          {'z' => '3', 'i' => '1'},
-          {'a' => '@', 'b' => '8'},
-          {'i' => '1', 'b' => '8'},
-          {'z' => '3', 'b' => '8'},
-          {'a' => '@', 'i' => '1', 'z' => '3'},
-          {'a' => '@', 'i' => '1', 'b' => '8'},
-          {'a' => '@', 'z' => '3', 'b' => '8'},
-          {'i' => '1', 'z' => '3', 'b' => '8'},
           {'a' => '@', 'i' => '1', 'z' => '3', 'b' => '8'}
         ])
       end

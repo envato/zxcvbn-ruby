@@ -81,11 +81,9 @@ module Zxcvbn
           combinations << subs_array
 
           # find all possible combinations for each number of combinations available
-          (1...subs_array.size).each do |size|
-            subs_array.combination(size).each do |combination|
-              # Don't add duplicates
-              combinations << combination unless combinations.include?(combination)
-            end
+          subs_array.combination(subs_array.size).each do |combination|
+            # Don't add duplicates
+            combinations << combination unless combinations.include?(combination)
           end
         end
 
