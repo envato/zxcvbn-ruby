@@ -1,14 +1,14 @@
 module Zxcvbn
   module Matching
-    class Digits
+    class Year
       include RegexHelpers
 
-      DIGITS_REGEX = /\d{3,}/
+      YEAR_REGEX = /19\d\d|200\d|201\d/
 
       def matches(password)
         result = []
-        re_match_all(DIGITS_REGEX, password) do |match|
-          match.pattern = 'digits'
+        re_match_all(YEAR_REGEX, password) do |match|
+          match.pattern = 'year'
           result << match
         end
         result

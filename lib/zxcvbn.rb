@@ -1,11 +1,13 @@
 require 'zxcvbn/version'
 require 'zxcvbn/match'
+require 'zxcvbn/matching/regex_helpers'
 require 'zxcvbn/matching/dictionary'
 require 'zxcvbn/matching/l33t'
 require 'zxcvbn/matching/spatial'
 require 'zxcvbn/matching/sequences'
 require 'zxcvbn/matching/repeat'
 require 'zxcvbn/matching/digits'
+require 'zxcvbn/matching/year'
 require 'pathname'
 require 'json'
 
