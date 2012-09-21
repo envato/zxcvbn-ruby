@@ -83,28 +83,23 @@ module Zxcvbn
         dates
       end
 
-      def date_patterns_for_length(length)
-        case length
-        when 8
-          %w[ yyyymmdd ddmmyyyy mmddyyyy ]
-        when 7
-          %w[ yyyymdd yyyymmd ddmyyyy dmmyyyy ]
-        when 6
-          %w[ yymmdd ddmmyy mmddyy ]
-        when 5
-          %w[ yymdd yymmd ddmyy dmmyy mmdyy mddyy ]
-        when 4
-          %w[ yymd dmyy mdyy ]
-        else
-          []
-        end
-      end
+      DATE_PATTERN_FOR_LENGTH = {
+        8 => %w[ yyyymmdd ddmmyyyy mmddyyyy ],
+        7 => %w[ yyyymdd yyyymmd ddmyyyy dmmyyyy ],
+        6 => %w[ yymmdd ddmmyy mmddyy ],
+        5 => %w[ yymdd yymmd ddmyy dmmyy mmdyy mddyy ],
+        4 => %w[ yymd dmyy mdyy ]
+      }
 
       PATTERN_CHAR_TO_SYM = {
         'y' => :year,
         'm' => :month,
         'd' => :day
       }
+
+      def date_patterns_for_length(length)
+        DATE_PATTERN_FOR_LENGTH[length] || []
+      end
 
       def valid_date?(day, month, year)
         return false if day > 31 || month > 12
