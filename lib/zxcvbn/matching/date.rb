@@ -4,8 +4,8 @@ module Zxcvbn
       include RegexHelpers
 
       YEAR_SUFFIX = /
-        ( \d{1,2} )
-        ( \s | \- | \/ | \\ | \_ | \. )
+        ( \d{1,2} )                         # day or month
+        ( \s | \- | \/ | \\ | \_ | \. )     # separator
         ( \d{1,2} )                         # month or day
         \2                                  # same separator
         ( 19\d{2} | 200\d | 201\d | \d{2} ) # year
@@ -13,7 +13,7 @@ module Zxcvbn
 
       YEAR_PREFIX = /
         ( 19\d{2} | 200\d | 201\d | \d{2} ) # year
-        ( \s | - | \/ | \\ | _ | \. )        # separator
+        ( \s | - | \/ | \\ | _ | \. )       # separator
         ( \d{1,2} )                         # day or month
         \2                                  # same separator
         ( \d{1,2} )                         # month or day
@@ -44,93 +44,86 @@ module Zxcvbn
       def match_without_separator(password)
         result = []
         re_match_all(WITHOUT_SEPARATOR, password) do |match, re_match|
-          i, j = match.i, match.j
-          token = match.token
-          candidates_1 = []
+          extract_dates(match.token).each do |candidate|
+            day, month, year = candidate[:day], candidate[:month], candidate[:year]
 
-          if token.length <= 6
-            candidates_1 << {
-              :day_month => token[2..-1],
-              :year => token[0..1]
-            }
-            candidates_1 << {
-              :day_month => token[0...token.length-2],
-              :year => token[token.length-2..-1]
-            }
-          end
-          if token.length >= 6
-            candidates_1 << {
-              :day_month => token[4..-1],
-              :year => token[0..3]
-            }
-            candidates_1 << {
-              :day_month => token[0..token.length-4],
-              :year => token[token.length-1..-1]
-            }
-          end
-          candidates_2 = []
-          candidates_1.each do |candidate|
-            case candidate[:day_month].length
-            when 2
-              candidates_2 << {
-                :day => candidate[:day_month][0],
-                :month => candidate[:day_month][1],
-                :year => candidate[:year]
-              }
-            when 3
-              candidates_2 << {
-                :day => candidate[:day_month][0..1],
-                :month => candidate[:day_month][2],
-                :year => candidate[:year]                
-              }
-              candidates_2 << {
-                :day => candidate[:day_month][0],
-                :month => candidate[:day_month][1..2],
-                :year => candidate[:year]                
-              }
-            when 4
-              candidates_2 << {
-                :day => candidate[:day_month][0..1],
-                :month => candidate[:day_month][2..3],
-                :year => candidate[:year]                
-              }              
-            end
-          end
-          # debugger
-          candidates_2.each do |candidate|
-            # if candidate[:day] > 31 && candidate[:month] > 12
-              # candidate[:day], candidate[:month] = candidate[:month], candidate[:day]
-            # end
-            day, month, year = candidate[:day].to_i, candidate[:month].to_i, candidate[:year].to_i
-            
-            if valid_date?(day, month, year) &&
-                !matches_year?(token)
-              match = match.dup
-              match.pattern = 'date'
-              match.day = day
-              match.month = month
-              match.year = year
-              match.separator = ''
-              result << match
-            end
+            match = match.dup
+            match.pattern = 'date'
+            match.day = day
+            match.month = month
+            match.year = year
+            match.separator = ''
+            result << match
           end
         end
         result
       end
 
+      def extract_dates(token)
+        dates = []
+        date_patterns_for_length(token.length).map do |pattern|
+          candidate = {
+            :year => '',
+            :month => '',
+            :day => ''
+          }
+          for i in 0...token.length
+            candidate[PATTERN_CHAR_TO_SYM[pattern[i]]] << token[i]
+          end
+          candidate.each do |component, value|
+            candidate[component] = value.to_i
+          end
+          
+          candidate[:year] = expand_year(candidate[:year])
+          
+          if valid_date?(candidate[:day], candidate[:month], candidate[:year]) && !matches_year?(token)
+            dates << candidate
+          end
+        end
+        dates
+      end
+
+      def date_patterns_for_length(length)
+        case length
+        when 8
+          %w[ yyyymmdd ddmmyyyy mmddyyyy ]
+        when 7
+          %w[ yyyymdd yyyymmd ddmyyyy dmmyyyy ]
+        when 6
+          %w[ yymmdd ddmmyy mmddyy ]
+        when 5
+          %w[ yymdd yymmd ddmyy dmmyy mmdyy mddyy ]
+        when 4
+          %w[ yymd dmyy mdyy ]
+        else
+          []
+        end
+      end
+
+      PATTERN_CHAR_TO_SYM = {
+        'y' => :year,
+        'm' => :month,
+        'd' => :day
+      }
+
       def valid_date?(day, month, year)
         return false if day > 31 || month > 12
-        if year < 50
-          year += 2000
-        elsif year > 50 && year < 100
-          year += 1900
-        end
         return false unless year >= 1900 && year <= 2019
         true
       end
 
       def matches_year?(token)
-        Year::YEAR_REGEX.match(token)
+        token.size == 4 && Year::YEAR_REGEX.match(token)
+      end
+
+      def expand_year(year)
+        return year unless year < 100
+        now = Time.now.year
+        if year <= 19
+          year + 2000
+        else
+          year + 1900
+        end
       end
     end
   end
