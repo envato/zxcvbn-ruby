@@ -3,15 +3,16 @@ module Zxcvbn
     module RegexHelpers
       def re_match_all(regex, password)
         loop do
-          match = regex.match(password)
-          break unless match
-          i, j = match.offset(0)
-          yield Match.new(
+          re_match = regex.match(password)
+          break unless re_match
+          i, j = re_match.offset(0)
+          match = Match.new(
             :i => i,
             :j => j,
             :token => password[i...j]
           )
-          password = password.sub(match[0], ' ' * match[0].length)
+          yield match, re_match
+          password = password.sub(re_match[0], ' ' * re_match[0].length)
         end
       end
     end

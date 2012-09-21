@@ -8,6 +8,7 @@ require 'zxcvbn/matching/sequences'
 require 'zxcvbn/matching/repeat'
 require 'zxcvbn/matching/digits'
 require 'zxcvbn/matching/year'
+require 'zxcvbn/matching/date'
 require 'pathname'
 require 'json'
 
