@@ -4,7 +4,8 @@ module Zxcvbn
     # the lowercased password in the dictionary
 
     class Dictionary
-      def initialize(ranked_dictionary)
+      def initialize(name, ranked_dictionary)
+        @name = name
         @ranked_dictionary = ranked_dictionary
       end
 
@@ -17,11 +18,12 @@ module Zxcvbn
             word = lowercased_password[i..j]
             if @ranked_dictionary.has_key?(word)
               results << Match.new(:matched_word => word,
-                                   :token => word,
+                                   :token => password[i..j],
                                    :i => i,
                                    :j => j,
                                    :rank => @ranked_dictionary[word],
-                                   :pattern => 'dictionary')
+                                   :pattern => 'dictionary',
+                                   :dictionary_name => @name)
             end
           end
         end

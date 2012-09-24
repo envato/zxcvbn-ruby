@@ -23,16 +23,6 @@ describe Zxcvbn::Matching::Spatial do
       method_invoker.eval_convert_object(%'spatial_match("#{password}")')
     end
 
-    def match_to_hash_with_string_keys(matches)
-      matches.map do |match|
-        hash = match.instance_variable_get('@table')
-        hash.keys.each do |key|
-          hash[key.to_s] = hash.delete(key)
-        end
-        hash
-      end
-    end
-
     %w[ rtyikm ].each do |password|
       it "gives back the same result for #{password}" do
         results_as_hash = match_to_hash_with_string_keys(matcher.matches(password))

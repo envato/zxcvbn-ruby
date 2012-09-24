@@ -28,4 +28,16 @@ module JsHelpers
     method_invoker.eval_convert_object("zxcvbn('#{password}')")
   end
 
+  def match_to_hash_with_string_keys(matches)
+    matches.map do |match|
+      hash = match.instance_variable_get('@table')
+      hash.keys.each do |key|
+        hash[key.to_s] = hash.delete(key)
+      end
+      ['sub_display'].each do |key|
+        hash.delete(key)
+      end
+      hash
+    end
+  end
 end

@@ -38,4 +38,19 @@ module Zxcvbn
 
   def zxcvbn(password)
   end
+
+  def omnimatch(password)
+    matchers = []
+    dictionary_matchers = RANKED_DICTIONARIES.map do |name, dictionary|
+      Matching::Dictionary.new(name, dictionary)
+    end
+    l33t_matcher = Matching::L33t.new(dictionary_matchers)
+    matchers += dictionary_matchers
+    matchers << l33t_matcher << Matching::Spatial.new(ADJACENCY_GRAPHS) << Matching::Digits.new << Matching::Repeat.new << Matching::Sequences.new << Matching::Year.new << Matching::Date.new
+    result = []
+    matchers.each do |matcher|
+      result += matcher.matches(password)
+    end
+    result.flatten
+  end
 end
