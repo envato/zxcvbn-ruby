@@ -10,6 +10,8 @@ require 'zxcvbn/matching/digits'
 require 'zxcvbn/matching/year'
 require 'zxcvbn/matching/date'
 require 'zxcvbn/omnimatch'
+require 'zxcvbn/score'
+require 'zxcvbn/scoring'
 require 'pathname'
 require 'json'
 
