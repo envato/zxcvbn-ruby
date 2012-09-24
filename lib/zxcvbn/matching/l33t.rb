@@ -22,20 +22,24 @@ module Zxcvbn
 
       def matches(password)
         matches = []
-        combinations_to_try = substitution_combinations(relevant_l33t_substitutions(password))
+        lowercased_password = password.downcase
+        combinations_to_try = l33t_subs(relevent_l33t_subtable(lowercased_password))
         combinations_to_try.each do |substitution|
           @dictionary_matchers.each do |matcher|
-            subbed_password = substitute(password, substitution)
+            subbed_password = translate(lowercased_password, substitution)
             matcher.matches(subbed_password).each do |match|
               token = password[match.i..match.j]
-              next if token == match.matched_word.downcase
+              next if token.downcase == match.matched_word.downcase
               match_substitutions = {}
-              substitution.each do |letter, substitution|
-                match_substitutions[letter] = substitution if token.include?(substitution)
+              substitution.each do |substitution, letter|
+                match_substitutions[substitution] = letter if token.include?(substitution)
               end
               match.l33t = true
-              match.token = token
+              match.token = password[match.i..match.j]
               match.sub = match_substitutions
+              match.sub_display = match_substitutions.map do |k, v|
+                "#{k} -> #{v}"
+              end.join(', ')
               matches << match
             end
           end
@@ -43,72 +47,81 @@ module Zxcvbn
         matches
       end
 
-      def substitute(password, substitution)
-        subbed_password = password.dup
-        substitution.each do |letter, substitution|
-          subbed_password.gsub!(substitution, letter)
-        end
-        subbed_password
+      def translate(password, sub)
+        password.split('').map do |chr|
+          sub[chr] || chr
+        end.join
       end
 
-      # produces a l33t table of substitutions present in the given password
-      def relevant_l33t_substitutions(password)
-        subs = Hash.new do |hash, key|
-          hash[key] = []
+      def relevent_l33t_subtable(password)
+        filtered = {}
+        L33T_TABLE.each do |letter, subs|
+          relevent_subs = subs.select { |s| password.include?(s) }
+          filtered[letter] = relevent_subs unless relevent_subs.empty?
         end
-        L33T_TABLE.each do |letter, substibutions|
-          password.each_char do |password_char|
-            if substibutions.include?(password_char)
-              subs[letter] << password_char
+        filtered
+      end
+
+      def l33t_subs(table)
+        keys = table.keys
+        subs = [[]]
+        subs = find_substitutions(subs, table, keys)
+        new_subs = []
+        subs.each do |sub|
+          hash = {}
+          sub.each do |l33t_char, chr|
+            hash[l33t_char] = chr
+          end
+          new_subs << hash
+        end
+        new_subs
+      end
+
+      def find_substitutions(subs, table, keys)
+        return subs if keys.empty?
+        first_key = keys[0]
+        rest_keys = keys[1..-1]
+        next_subs = []
+        table[first_key].each do |l33t_char|
+          subs.each do |sub|
+            dup_l33t_index = -1
+            (0...sub.length).each do |i|
+              if sub[i][0] == l33t_char
+                dup_l33t_index = i
+                break
+              end
+            end
+
+            if dup_l33t_index == -1
+              sub_extension = sub + [[l33t_char, first_key]]
+              next_subs << sub_extension
+            else
+              sub_alternative = sub.dup
+              sub_alternative[dup_l33t_index, 1] = [[l33t_char, first_key]]
+              next_subs << sub
+              next_subs << sub_alternative
             end
           end
         end
-        subs
+        subs = dedup(next_subs)
+        find_substitutions(subs, table, rest_keys)
       end
 
-      # takes a character substitutions hash and produces an array of all
-      # possible substitution combinations
-      def substitution_combinations(subs_hash)
-        combinations = []
-        expanded_substitutions = expanded_substitutions(subs_hash)
+      def dedup(subs)
+        deduped = []
+        members = []
+        subs.each do |sub|
+          assoc = sub.dup
 
-        # build an array of all possible combinations
-        expanded_substitutions.each do |substitution_hash|
-          # convert a hash to an array of hashes with 1 key each
-          subs_array = substitution_hash.map do |letter, substitutions|
-            {letter => substitutions}
-          end
-          combinations << subs_array
-
-          # find all possible combinations for each number of combinations available
-          subs_array.combination(subs_array.size).each do |combination|
-            # Don't add duplicates
-            combinations << combination unless combinations.include?(combination)
+          assoc.sort! rescue debugger
+          label = assoc.map{|k, v| "#{k},#{v}"}.join('-')
+          unless members.include?(label)
+            members << label
+            deduped << sub
           end
         end
-
-        # convert back to simple hash per substitution combination
-        combination_hashes = combinations.map do |combination_set|
-          hash = {}
-          combination_set.each do |combination_hash|
-            hash.merge!(combination_hash)
-          end
-          hash
-        end
-
-        combination_hashes
+        deduped
       end
-
-      # expand possible combinations if multiple characters can be substituted
-      # e.g. {'a' => ['4', '@'], 'i' => ['1']} expands to
-      #      [{'a' => '4', 'i' => 1}, {'a' => '@', 'i' => '1'}]
-      def expanded_substitutions(hash)
-        return {} if hash.empty?
-        values = hash.values
-        product_values = values[0].product(*values[1..-1])
-        product_values.map{ |p| Hash[hash.keys.zip(p)] }
-      end
-
     end
   end
 end

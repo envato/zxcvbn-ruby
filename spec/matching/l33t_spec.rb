@@ -3,12 +3,12 @@ require 'spec_helper'
 describe Zxcvbn::Matching::L33t do
   let(:matcher) { described_class.new([dictionary_matcher]) }
   let(:dictionary) { Zxcvbn::RANKED_DICTIONARIES['english'] }
-  let(:dictionary_matcher) { Zxcvbn::Matching::Dictionary.new(dictionary) }
+  let(:dictionary_matcher) { Zxcvbn::Matching::Dictionary.new('english', dictionary) }
 
   describe '#relevant_l33t_substitutions' do
     it 'returns relevant l33t substitutions' do
-      matcher.relevant_l33t_substitutions('p@ssw1rd24').should eq(
-        {'a' => ['@', '4'], 'i' => ['1'], 'l' => ['1'], 'z' => ['2']}
+      matcher.relevent_l33t_subtable('p@ssw1rd24').should eq(
+        {'a' => ['4', '@'], 'i' => ['1'], 'l' => ['1'], 'z' => ['2']}
       )
     end
   end
@@ -17,16 +17,16 @@ describe Zxcvbn::Matching::L33t do
     context 'with 2 possible substitutions' do
       it 'returns the correct possible substitutions' do
         substitutions = {'a' => ['@'], 'i' => ['1']}
-        matcher.substitution_combinations(substitutions).should match_array([
-          {'a' => '@', 'i' => '1'}
+        matcher.l33t_subs(substitutions).should match_array([
+          {'@' => 'a', '1' => 'i'}
         ])
       end
 
       it 'returns the correct possible substitutions with multiple options' do
         substitutions = {'a' => ['@', '4'], 'i' => ['1']}
-        matcher.substitution_combinations(substitutions).should match_array([
-          {'a' => '@', 'i' => '1'},
-          {'a' => '4', 'i' => '1'}
+        matcher.l33t_subs(substitutions).should match_array([
+          {'@' => 'a', '1' => 'i'},
+          {'4' => 'a', '1' => 'i'}
         ])
       end
     end
@@ -34,8 +34,8 @@ describe Zxcvbn::Matching::L33t do
     context 'with 3 possible substitutions' do
       it 'returns the correct possible substitutions' do
         substitutions = {'a' => ['@'], 'i' => ['1'], 'z' => ['3']}
-        matcher.substitution_combinations(substitutions).should match_array([
-          {'a' => '@', 'i' => '1', 'z' => '3'}
+        matcher.l33t_subs(substitutions).should match_array([
+          {'@' => 'a', '1' => 'i', '3' => 'z'}
         ])
       end
     end
@@ -43,8 +43,8 @@ describe Zxcvbn::Matching::L33t do
     context 'with 4 possible substitutions' do
       it 'returns the correct possible substitutions' do
         substitutions = {'a' => ['@'], 'i' => ['1'], 'z' => ['3'], 'b' => ['8']}
-        matcher.substitution_combinations(substitutions).should match_array([
-          {'a' => '@', 'i' => '1', 'z' => '3', 'b' => '8'}
+        matcher.l33t_subs(substitutions).should match_array([
+          {'@' => 'a', '1' => 'i', '3' => 'z', '8' => 'b'}
         ])
       end
     end
@@ -75,10 +75,10 @@ describe Zxcvbn::Matching::L33t do
 
     it 'sets the substituions used' do
       matches.map(&:sub).should eq([
-        {'a' => '@'},
-        {'a' => '@'},
-        {'a' => '@'},
-        {'a' => '@'}
+        {'@' => 'a'},
+        {'@' => 'a'},
+        {'@' => 'a'},
+        {'@' => 'a'}
       ])
     end
   end
@@ -86,21 +86,30 @@ describe Zxcvbn::Matching::L33t do
   context 'integration with all dictionaries' do
     let(:matcher) { described_class.new(dictionary_matchers) }
     let(:dictionary_matchers) {
-      Zxcvbn::RANKED_DICTIONARIES.values.map do |dictionary|
-        Zxcvbn::Matching::Dictionary.new(dictionary)
+      Zxcvbn::RANKED_DICTIONARIES.map do |name, dictionary|
+        Zxcvbn::Matching::Dictionary.new(name, dictionary)
       end
     }
 
-    def l33t_match(password, dictionary)
-      method_invoker.eval_convert_object(%'l33t_match("#{password}", build_ranked_dict(#{dictionary}))')
+    def js_l33t_match(password)
+      method_invoker.eval_convert_object(%'l33t_match("#{password}")')
     end
 
     %w[ viking briansmith4mayor ].each do |password|
       it "gives back the same results for #{password}" do
-        js_results = l33t_match(password, 'english')
+        js_results = js_l33t_match(password)
         ruby_results = matcher.matches(password)
         js_results.map{|r| r['matched_word']}.should match_array(ruby_results.map(&:matched_word))
         js_results.count.should eq ruby_results.count
+      end
+    end
+
+    TEST_PASSWORDS.each do |password|
+      it "gives back the same results for #{password}" do
+        js_results = js_l33t_match(password)
+        ruby_results = matcher.matches(password)
+        ruby_results.count.should eq js_results.count
+        ruby_results.should match_js_results js_results
       end
     end
   end
