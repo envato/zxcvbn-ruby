@@ -31,12 +31,19 @@ module Zxcvbn
       def match_with_separator(password)
         result = []
         re_match_all(YEAR_SUFFIX, password) do |match, re_match|
-          result << match
           match.pattern = 'date'
           match.day = re_match[1].to_i
           match.separator = re_match[2]
           match.month = re_match[3].to_i
           match.year = re_match[4].to_i
+
+          day, month = match.day, match.month
+          if month > 12
+            match.day = month
+            match.month = day
+          end
+
+          result << match if valid_date?(match.day, match.month, match.year)
         end
         result
       end
@@ -112,13 +119,15 @@ module Zxcvbn
       end
 
       def expand_year(year)
-        return year unless year < 100
-        now = Time.now.year
-        if year <= 19
-          year + 2000
-        else
-          year + 1900
-        end
+        return year
+        # Block dates with 2 digit years for now to be compatible with the JS version
+        # return year unless year < 100
+        # now = Time.now.year
+        # if year <= 19
+        #   year + 2000
+        # else
+        #   year + 1900
+        # end
       end
     end
   end

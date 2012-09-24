@@ -6,10 +6,11 @@ module Zxcvbn
           re_match = regex.match(password)
           break unless re_match
           i, j = re_match.offset(0)
+          j -= 1
           match = Match.new(
             :i => i,
             :j => j,
-            :token => password[i...j]
+            :token => password[i..j]
           )
           yield match, re_match
           password = password.sub(re_match[0], ' ' * re_match[0].length)
