@@ -5,7 +5,7 @@ module Zxcvbn
     end
 
     def minimum_entropy_match_sequence
-      Score.new
+      Score.new(@password)
     end
   end
 end
