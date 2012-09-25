@@ -416,7 +416,7 @@ sequence_match = function(password) {
           }
           return _results;
         })(), prev_n = _ref2[0], cur_n = _ref2[1];
-        if (cur_n - prev_n === seq_direction) {
+        if (!!cur_n && (cur_n - prev_n === seq_direction)) {
           j += 1;
         } else {
           if (j - i > 2) {
