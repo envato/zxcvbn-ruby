@@ -4,7 +4,6 @@ require "bundler/setup"
 
 task :console do
   require 'zxcvbn'
-  Zxcvbn.build_ranked_dictionaries
   require './spec/support/js_helpers'
   include JsHelpers
   require 'irb'
