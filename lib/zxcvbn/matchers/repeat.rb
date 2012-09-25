@@ -1,5 +1,5 @@
 module Zxcvbn
-  module Matching
+  module Matchers
     class Repeat
       def matches(password)
         result = []

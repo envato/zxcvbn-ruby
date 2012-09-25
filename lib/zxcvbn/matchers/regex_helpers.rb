@@ -1,5 +1,5 @@
 module Zxcvbn
-  module Matching
+  module Matchers
     module RegexHelpers
       def re_match_all(regex, password)
         loop do

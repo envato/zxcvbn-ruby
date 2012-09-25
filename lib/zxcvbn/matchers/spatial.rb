@@ -1,5 +1,5 @@
 module Zxcvbn
-  module Matching
+  module Matchers
     class Spatial
       def initialize(graphs)
         @graphs = graphs

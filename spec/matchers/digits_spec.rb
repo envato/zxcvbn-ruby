@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Zxcvbn::Matching::Digits do
+describe Zxcvbn::Matchers::Digits do
   let(:matcher) { subject }
   let(:matches) { matcher.matches('testing1239xx9712') }
 

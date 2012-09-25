@@ -38,18 +38,18 @@ module Zxcvbn
     def build_matchers
       matchers = []
       dictionary_matchers = @ranked_dictionaries.map do |name, dictionary|
-        Matching::Dictionary.new(name, dictionary)
+        Matchers::Dictionary.new(name, dictionary)
       end
-      l33t_matcher = Matching::L33t.new(dictionary_matchers)
+      l33t_matcher = Matchers::L33t.new(dictionary_matchers)
       matchers += dictionary_matchers
       matchers += [
         l33t_matcher,
-        Matching::Spatial.new(ADJACENCY_GRAPHS),
-        Matching::Digits.new,
-        Matching::Repeat.new,
-        Matching::Sequences.new,
-        Matching::Year.new,
-        Matching::Date.new
+        Matchers::Spatial.new(ADJACENCY_GRAPHS),
+        Matchers::Digits.new,
+        Matchers::Repeat.new,
+        Matchers::Sequences.new,
+        Matchers::Year.new,
+        Matchers::Date.new
       ]
       matchers
     end

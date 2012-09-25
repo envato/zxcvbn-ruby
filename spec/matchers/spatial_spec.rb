@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Zxcvbn::Matching::Spatial do
-  let(:matcher) { Zxcvbn::Matching::Spatial.new(graphs) }
+describe Zxcvbn::Matchers::Spatial do
+  let(:matcher) { Zxcvbn::Matchers::Spatial.new(graphs) }
   let(:graphs)  { Zxcvbn::ADJACENCY_GRAPHS }
 
   describe '#matches' do

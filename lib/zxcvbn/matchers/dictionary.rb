@@ -1,5 +1,5 @@
 module Zxcvbn
-  module Matching
+  module Matchers
     # Given a password and a dictionary, match on any sequential segment of
     # the lowercased password in the dictionary
 

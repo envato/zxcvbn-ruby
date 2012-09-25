@@ -1,5 +1,5 @@
 module Zxcvbn
-  module Matching
+  module Matchers
     class L33t
       L33T_TABLE = {
         'a' => ['4', '@'],

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Zxcvbn::Matching::Year do
+describe Zxcvbn::Matchers::Year do
   let(:matcher) { subject }
   let(:matches) { matcher.matches('testing1998') }
 

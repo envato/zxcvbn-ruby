@@ -1,5 +1,5 @@
 module Zxcvbn
-  module Matching
+  module Matchers
     class Digits
       include RegexHelpers
 

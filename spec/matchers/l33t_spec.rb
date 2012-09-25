@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Zxcvbn::Matching::L33t do
+describe Zxcvbn::Matchers::L33t do
   let(:matcher) { described_class.new([dictionary_matcher]) }
   let(:dictionary) { RANKED_DICTIONARIES['english'] }
-  let(:dictionary_matcher) { Zxcvbn::Matching::Dictionary.new('english', dictionary) }
+  let(:dictionary_matcher) { Zxcvbn::Matchers::Dictionary.new('english', dictionary) }
 
   describe '#relevant_l33t_substitutions' do
     it 'returns relevant l33t substitutions' do

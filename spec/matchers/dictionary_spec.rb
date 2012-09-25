@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Zxcvbn::Matching::Dictionary do
+describe Zxcvbn::Matchers::Dictionary do
   let(:matcher) { described_class.new('english', dictionary) }
   let(:dictionary) { RANKED_DICTIONARIES['english'] }
 
