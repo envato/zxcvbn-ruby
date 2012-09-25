@@ -6,6 +6,21 @@ module Zxcvbn::Scoring::Entropy
     lg(cardinality * match.token.length)
   end
 
+  def sequence_entropy(match)
+    first_char = match.token[0]
+    base_entropy = if ['a', '1'].include?(first_char)
+      1
+    elsif first_char.match(/\d/)
+      lg(10)
+    elsif first_char.match(/[a-z]/)
+      lg(26)
+    else
+      lg(26) + 1
+    end
+    base_entropy += 1 unless match.ascending
+    base_entropy + lg(match.token.length)
+  end
+
   def digits_entropy(match)
     lg(10 ** match.token.length)
   end
