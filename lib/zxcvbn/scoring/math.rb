@@ -70,6 +70,22 @@ module Zxcvbn
       def min(a, b)
         a < b ? a : b
       end
+
+      def average_degree_for(graph_name)
+        graph   = Zxcvbn::ADJACENCY_GRAPHS[graph_name]
+        average = 0.0
+
+        graph.each do |key, neighbors|
+          average += neighbors.compact.length
+        end
+        
+        average /= graph.keys.length
+        average
+      end
+
+      def starting_positions_for(graph_name)
+        Zxcvbn::ADJACENCY_GRAPHS[graph_name].length
+      end
     end
   end    
 end
