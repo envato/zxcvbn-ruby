@@ -90,21 +90,22 @@ module Zxcvbn::Scoring::Entropy
 
   def spatial_entropy(match)
     if %w|qwerty dvorak|.include? match.graph
-      s = starting_positions_for_graph('qwerty')
-      d = average_degree_for_graph('qwerty')
+      starting_positions = starting_positions_for_graph('qwerty')
+      average_degree     = average_degree_for_graph('qwerty')
     else
-      s = starting_positions_for_graph('keypad')
-      d = average_degree_for_graph('keypad')
+      starting_positions = starting_positions_for_graph('keypad')
+      average_degree     = average_degree_for_graph('keypad')
     end
 
     possibilities = 0
-    l = match.token.length
-    t = match.turns
-    # estimate the number of possible patterns w/ length L or less with t turns or less.
-    (2..l).each do |i|
-      possible_turns = [t, i -1].min
+    token_length  = match.token.length
+    turns         = match.turns
+
+    # estimate the ngpumber of possible patterns w/ token length or less with number of turns or less.
+    (2..token_length).each do |i|
+      possible_turns = [turns, i -1].min
       (1..possible_turns).each do |j|
-        possibilities += nCk(i - 1, j - 1) * s * d ** j
+        possibilities += nCk(i - 1, j - 1) * starting_positions * average_degree ** j
       end
     end
         
@@ -113,11 +114,12 @@ module Zxcvbn::Scoring::Entropy
     # math is similar to extra entropy from uppercase letters in dictionary matches.
     
     if match.shifted_count
-      s2 = match.shifted_count
-      u2 = match.token.length - match.shifted_count # unshifted count
-      possibilities = 0
-      (0..[s2, u2].min).each do |i|
-        possibilities += nCk(s2 + u2, i)
+      shiffted_count  = match.shifted_count
+      unshifted_count = match.token.length - match.shifted_count
+      possibilities   = 0
+      
+      (0..[shiffted_count, unshifted_count].min).each do |i|
+        possibilities += nCk(shiffted_count + unshifted_count, i)
       end
       entropy += lg possibilities
     end
