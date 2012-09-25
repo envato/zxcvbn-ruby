@@ -1,6 +1,5 @@
 module Zxcvbn
   class Score
-    include Math
     attr_accessor :entropy, :crack_time, :crack_time_display, :score, :pattern
 
     def initialize

@@ -1,5 +1,7 @@
 module Zxcvbn
   class Scoring
+    include Math
+    
     def initialize(password, matches)
       @password, @matches = password, matches
     end

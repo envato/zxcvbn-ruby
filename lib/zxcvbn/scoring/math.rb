@@ -1,5 +1,5 @@
 module Zxcvbn
-  class Score
+  class Scoring
     module Math
       def bruteforce_cardinality(password)
         is_type_of = {}
@@ -48,7 +48,7 @@ module Zxcvbn
           "#{1 + (seconds / year).ceil} years"
         else
           'centuries'
-        end        
+        end
       end
     end
   end    
