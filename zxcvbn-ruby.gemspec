@@ -15,6 +15,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Zxcvbn::VERSION
 
-  gem.add_dependency 'therubyracer'
+  gem.add_development_dependency 'therubyracer'
   gem.add_development_dependency 'rspec'
 end
