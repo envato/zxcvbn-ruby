@@ -263,7 +263,9 @@ sequence_match = (password) ->
       loop
         [prev_char, cur_char] = password[j-1..j]
         [prev_n, cur_n] = (seq_candidate.indexOf(chr) for chr in [prev_char, cur_char])
-        if cur_n - prev_n == seq_direction
+        # Bug fix. 'ba+' was falsly being reported as a sequence due to 1 - null working in JS.
+        # TODO: Submit PR to zxcvbn.js
+        if !!cur_n && (cur_n - prev_n == seq_direction)
           j += 1
         else
           if j - i > 2 # don't consider length 1 or 2 chains.

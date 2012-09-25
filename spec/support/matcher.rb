@@ -1,30 +1,35 @@
 RSpec::Matchers.define :match_js_results do |expected_js_results|
   match do |actual_ruby_results|
-    ruby_results = convert_matches_to_hash(actual_ruby_results)
-    ruby_results = sort(ruby_results)
-    expected_js_results = sort(expected_js_results)
-    (ruby_results + expected_js_results).each do |result|
-      ['sub_display'].each do |key|
-        result.delete(key)
+    actual_ruby_results = reduce(actual_ruby_results.map(&:to_hash))
+    expected_js_results = reduce(expected_js_results)
+
+    @missing, @extra = [], []
+    expected_js_results.each do |js_result|
+      unless actual_ruby_results.include?(js_result)
+        @missing << js_result
       end
     end
-
-    ruby_results == expected_js_results
-  end
-
-  def convert_matches_to_hash(results)
-    results.map do |match|
-      hash = match.instance_variable_get('@table')
-      hash.keys.each do |key|
-        hash[key.to_s] = hash.delete(key)
+    actual_ruby_results.each do |ruby_result|
+      unless expected_js_results.include?(ruby_result)
+        @extra << ruby_result
       end
-      hash
     end
+    @missing.empty? && @extra.empty?
   end
 
-  def sort(results)
-    results.sort_by do |hash|
-      [hash['pattern'], hash['i'], hash['j'], hash['matched_word'], hash['dictionary_name']]
+  failure_message_for_should do |actual|
+    "Matches missing from ruby results:\n#{@missing.inspect}\nMatches unique to ruby results:\n#{@extra.inspect}"
+  end
+
+  def reduce(results)
+    result = []
+    results.each do |hash|
+      new_hash = {}
+      (hash.keys - ['sub', 'sub_display']).sort.each do |key|
+        new_hash[key] = hash[key]
+      end
+      result << new_hash
     end
+    result
   end
 end

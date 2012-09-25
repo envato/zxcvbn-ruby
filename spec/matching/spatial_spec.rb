@@ -19,14 +19,15 @@ describe Zxcvbn::Matching::Spatial do
   end
 
   context 'integration' do
-    def spatial_match(password)
+    def js_spatial_match(password)
       method_invoker.eval_convert_object(%'spatial_match("#{password}")')
     end
 
-    %w[ rtyikm ].each do |password|
-      it "gives back the same result for #{password}" do
-        results_as_hash = match_to_hash_with_string_keys(matcher.matches(password))
-        results_as_hash.should eq(spatial_match(password, ))
+    TEST_PASSWORDS.each do |password|
+      it "gives back the same results for #{password}" do
+        js_results = js_spatial_match(password)
+        ruby_results = matcher.matches(password)
+        ruby_results.should match_js_results js_results
       end
     end
   end

@@ -35,7 +35,6 @@ describe Zxcvbn::Matching::Dictionary do
       it "gives back the same results for #{password}" do
         js_results = js_dictionary_match(password)
         ruby_results = dictionary_match(password)
-        ruby_results.count.should eq js_results.uniq.count
         ruby_results.should match_js_results js_results
       end
     end

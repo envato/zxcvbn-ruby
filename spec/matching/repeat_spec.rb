@@ -15,4 +15,18 @@ describe Zxcvbn::Matching::Repeat do
     matches[1].token.should eq 'aaa'
     matches[1].repeated_char.should eq 'a'
   end
+
+  context 'integration' do
+    def js_repeat_match(password)
+      method_invoker.eval_convert_object(%'repeat_match("#{password}")')
+    end
+
+    TEST_PASSWORDS.each do |password|
+      it "gives back the same results for #{password}" do
+        js_results = js_repeat_match(password)
+        ruby_results = matcher.matches(password)
+        ruby_results.should match_js_results js_results
+      end
+    end
+  end
 end

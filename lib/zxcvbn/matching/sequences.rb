@@ -2,9 +2,9 @@ module Zxcvbn
   module Matching
     class Sequences
       SEQUENCES = {
-        :lower => 'abcdefghijklmnopqrstuvwxyz',
-        :upper => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-        :digits => '01234567890'
+        'lower' => 'abcdefghijklmnopqrstuvwxyz',
+        'upper' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        'digits' => '01234567890'
       }
 
       def matches(password)
