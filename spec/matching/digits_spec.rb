@@ -12,18 +12,4 @@ describe Zxcvbn::Matching::Digits do
     matches.count.should == 2
     matches[0].token.should eq '1239'
   end
-
-  context 'integration' do
-    def js_digits_match(password)
-      run_js(%'digits_match("#{password}")')
-    end
-
-    TEST_PASSWORDS.each do |password|
-      it "gives back the same results for #{password}" do
-        js_results = js_digits_match(password)
-        ruby_results = matcher.matches(password)
-        ruby_results.should match_js_results js_results
-      end
-    end
-  end
 end

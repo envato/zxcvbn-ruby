@@ -82,25 +82,4 @@ describe Zxcvbn::Matching::L33t do
       ])
     end
   end
-
-  context 'integration with all dictionaries' do
-    let(:matcher) { described_class.new(dictionary_matchers) }
-    let(:dictionary_matchers) {
-      RANKED_DICTIONARIES.map do |name, dictionary|
-        Zxcvbn::Matching::Dictionary.new(name, dictionary)
-      end
-    }
-
-    def js_l33t_match(password)
-      run_js(%'l33t_match("#{password}")')
-    end
-
-    TEST_PASSWORDS.each do |password|
-      it "gives back the same results for #{password}" do
-        js_results = js_l33t_match(password)
-        ruby_results = matcher.matches(password)
-        ruby_results.should match_js_results js_results
-      end
-    end
-  end
 end

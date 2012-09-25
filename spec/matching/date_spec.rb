@@ -106,16 +106,4 @@ describe Zxcvbn::Matching::Date do
       matches.should be_empty
     end
   end
-
-  def js_date_match(password)
-    run_js(%'date_match("#{password}")')
-  end
-
-  TEST_PASSWORDS.each do |password|
-    it "gives back the same results for #{password}" do
-      js_results = js_date_match(password)
-      ruby_results = matcher.matches(password)
-      ruby_results.should match_js_results js_results
-    end
-  end
 end

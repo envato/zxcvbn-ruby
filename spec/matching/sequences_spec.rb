@@ -13,16 +13,4 @@ describe Zxcvbn::Matching::Sequences do
     matches[0].token.should eq 'abcde'
     matches[1].token.should eq '87654'
   end
-
-  def js_sequence_match(password)
-    run_js(%'sequence_match("#{password}")')
-  end
-
-  TEST_PASSWORDS.each do |password|
-    it "gives back the same results for #{password}" do
-      js_results = js_sequence_match(password)
-      ruby_results = matcher.matches(password)
-      ruby_results.should match_js_results js_results
-    end
-  end
 end
