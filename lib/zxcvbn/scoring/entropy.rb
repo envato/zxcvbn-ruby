@@ -1,6 +1,11 @@
 module Zxcvbn::Scoring::Entropy
   include Zxcvbn::Scoring::Math
 
+  def repeat_entropy(match)
+    cardinality = bruteforce_cardinality match.token
+    lg(cardinality * match.token.length)
+  end
+
   def digits_entropy(match)
     lg(10 ** match.token.length)
   end
@@ -10,6 +15,6 @@ module Zxcvbn::Scoring::Entropy
   NUM_DAYS = 31
 
   def year_entropy(match)
-    lg NUM_YEARS
+    lg(NUM_YEARS)
   end
 end
