@@ -149,4 +149,58 @@ describe Zxcvbn::Scoring::Entropy do
       specify { calculated_entropy.should eq 1 }
     end
   end
+
+  describe '#spatial_entropy' do
+    let(:match) { Zxcvbn::Match.new(:token => '123wsclf', :turns => 1) }
+
+    context 'when keyboard is qwerty' do
+      it 'should return the correct entropy' do
+        match.graph = 'qwerty'
+        
+        entropy.spatial_entropy(match).should eql 11.562242424221074
+      end
+    end
+
+    context 'when keyboard is dvorak' do
+      it 'should return the correct entropy' do
+        match.graph = 'dvorak'
+
+        entropy.spatial_entropy(match).should eql 11.562242424221074
+      end
+    end
+
+    context 'when keyboard is not qwerty or dvorak' do
+      it 'should return the correct entropy' do
+        match.graph = 'keypad'
+
+        entropy.spatial_entropy(match).should eql 9.05528243550119
+      end
+    end
+
+    context 'when match includes several turns' do
+      it 'should return the correct entropy' do
+        match.turns = 5
+
+        entropy.spatial_entropy(match).should eql 21.761397858718993
+      end
+    end
+
+    context 'when match includes shifted count' do
+      it 'should return the correct entropy' do
+        match.shiffted_count = 5
+
+        entropy.spatial_entropy(match).should eql 9.05528243550119
+      end
+    end
+
+    context 'when match includes shifted count and several turns' do
+      it 'should return the correct entropy' do
+        match.shiffted_count = 5
+        match.turns          = 5
+
+        entropy.spatial_entropy(match).should eql 21.761397858718993
+      end
+    end
+  end
+
 end

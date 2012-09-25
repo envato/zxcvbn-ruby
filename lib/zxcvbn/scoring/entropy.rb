@@ -87,4 +87,40 @@ module Zxcvbn::Scoring::Entropy
     end
     lg(possibilities) || 1
   end
+
+  def spatial_entropy(match)
+    if %w|qwerty dvorak|.include? match.graph
+      s = starting_positions_for_graph('qwerty')
+      d = average_degree_for_graph('qwerty')
+    else
+      s = starting_positions_for_graph('keypad')
+      d = average_degree_for_graph('keypad')
+    end
+
+    possibilities = 0
+    l = match.token.length
+    t = match.turns
+    # estimate the number of possible patterns w/ length L or less with t turns or less.
+    (2..l).each do |i|
+      possible_turns = [t, i -1].min
+      (1..possible_turns).each do |j|
+        possibilities += nCk(i - 1, j - 1) * s * d ** j
+      end
+    end
+        
+    entropy = lg possibilities
+    # add extra entropy for shifted keys. (% instead of 5, A instead of a.)
+    # math is similar to extra entropy from uppercase letters in dictionary matches.
+    
+    if match.shifted_count
+      s2 = match.shifted_count
+      u2 = match.token.length - match.shifted_count # unshifted count
+      possibilities = 0
+      (0..[s2, u2].min).each do |i|
+        possibilities += nCk(s2 + u2, i)
+      end
+      entropy += lg possibilities
+    end
+    entropy
+  end
 end
