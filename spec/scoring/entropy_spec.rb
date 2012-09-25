@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Zxcvbn::Scoring::Entropy do
+  include Zxcvbn::Scoring::Math
+
   let(:entropy) {
     Class.new do
       include Zxcvbn::Scoring::Entropy
@@ -10,15 +12,13 @@ describe Zxcvbn::Scoring::Entropy do
   describe '#digits_entropy' do
     it 'behaves the same as the js version' do
       match = Zxcvbn::Match.new(:token => '12345678')
-      js_digits_entropy = method_invoker.eval(%'digits_entropy({token: "#{match.token}"})')
-      ruby_digits_entropy = entropy.digits_entropy(match)
-      ruby_digits_entropy.should eq js_digits_entropy
+      entropy.digits_entropy(match).should eq lg(10 ** match.token.length)
     end
   end
 
   describe '#year_entropy' do
     it 'behaves the same as the js version' do
-      entropy.year_entropy(nil).should eq ::Math.log(Zxcvbn::Scoring::Entropy::NUM_YEARS, 2)
+      entropy.year_entropy(nil).should eq lg(Zxcvbn::Scoring::Entropy::NUM_YEARS)
     end
   end
 end
