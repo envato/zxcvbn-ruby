@@ -54,6 +54,22 @@ module Zxcvbn
       def lg(n)
         ::Math.log(n, 2)
       end
+
+      def nCk(n, k)
+        return 0 if k > n
+        return 1 if k == 0
+        r = 1
+        (1..k).each do |d|
+          r = r * n
+          r = r / d
+          n -= 1
+        end
+        r
+      end
+
+      def min(a, b)
+        a < b ? a : b
+      end
     end
   end    
 end

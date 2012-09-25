@@ -98,4 +98,55 @@ describe Zxcvbn::Scoring::Entropy do
       end
     end
   end
+
+  describe '#dictionary_entropy' do
+    let(:match) { Zxcvbn::Match.new(:token => token, :rank => rank, :l33t => l33t, :sub => sub) }
+    let(:l33t)  { false }
+    let(:sub)   { {} }
+    let(:calculated_entropy) { entropy.dictionary_entropy(match) }
+
+    context 'a simple dictionary word, all lower case and no l33t subs' do
+      let(:token) { 'you' }
+      let(:rank)  { 1 }
+
+      specify { calculated_entropy.should eq 0 }
+    end
+
+    context 'with all upper case characters' do
+      let(:token) { 'YOU' }
+      let(:rank)  { 1 }
+
+      specify { calculated_entropy.should eq 1 }
+    end
+
+    context 'starting with uppercase' do
+      let(:token) { 'You' }
+      let(:rank)  { 1 }
+
+      specify { calculated_entropy.should eq 1 }
+    end
+
+    context 'starting with uppercase' do
+      let(:token) { 'yoU' }
+      let(:rank)  { 1 }
+
+      specify { calculated_entropy.should eq 1 }
+    end
+
+    context 'mixed upper and lower' do
+      let(:token) { 'tEsTiNg' }
+      let(:rank)  { 1 }
+
+      specify { calculated_entropy.should eq 6 }
+    end
+
+    context 'extra l33t entropy' do
+      let(:token) { 'p3rs0n' }
+      let(:rank)  { 1 }
+      let(:l33t)  { true }
+      let(:sub)   { {'3' => 'e', '0' => 'o'} }
+
+      specify { calculated_entropy.should eq 1 }
+    end
+  end
 end
