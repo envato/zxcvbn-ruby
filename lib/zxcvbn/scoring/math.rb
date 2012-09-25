@@ -50,6 +50,10 @@ module Zxcvbn
           'centuries'
         end
       end
+
+      def lg(n)
+        ::Math.log(n, 2)
+      end
     end
   end    
 end
