@@ -24,7 +24,11 @@ module JsHelpers
     $method_invoker ||= JsMethodInvoker.new
   end
 
+  def run_js(javascript)
+    method_invoker.eval_convert_object(javascript)
+  end
+
   def js_zxcvbn(password)
-    method_invoker.eval_convert_object("zxcvbn('#{password}')")
+    run_js("zxcvbn('#{password}')")
   end
 end

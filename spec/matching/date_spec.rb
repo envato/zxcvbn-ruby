@@ -108,7 +108,7 @@ describe Zxcvbn::Matching::Date do
   end
 
   def js_date_match(password)
-    method_invoker.eval_convert_object(%'date_match("#{password}")')
+    run_js(%'date_match("#{password}")')
   end
 
   TEST_PASSWORDS.each do |password|

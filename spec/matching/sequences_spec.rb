@@ -15,7 +15,7 @@ describe Zxcvbn::Matching::Sequences do
   end
 
   def js_sequence_match(password)
-    method_invoker.eval_convert_object(%'sequence_match("#{password}")')
+    run_js(%'sequence_match("#{password}")')
   end
 
   TEST_PASSWORDS.each do |password|

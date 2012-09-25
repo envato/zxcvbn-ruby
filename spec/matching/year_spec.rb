@@ -15,7 +15,7 @@ describe Zxcvbn::Matching::Year do
 
   context 'integration' do
     def js_year_match(password)
-      method_invoker.eval_convert_object(%'year_match("#{password}")')
+      run_js(%'year_match("#{password}")')
     end
 
     TEST_PASSWORDS.each do |password|

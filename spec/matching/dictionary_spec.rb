@@ -27,7 +27,7 @@ describe Zxcvbn::Matching::Dictionary do
 
     def js_dictionary_match(password)
       RANKED_DICTIONARIES.keys.map do |name|
-        method_invoker.eval_convert_object(%'build_dict_matcher("#{name}", build_ranked_dict(#{name}))("#{password}")')
+        run_js(%'build_dict_matcher("#{name}", build_ranked_dict(#{name}))("#{password}")')
       end.flatten
     end
 

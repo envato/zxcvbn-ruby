@@ -18,7 +18,7 @@ describe Zxcvbn::Matching::Repeat do
 
   context 'integration' do
     def js_repeat_match(password)
-      method_invoker.eval_convert_object(%'repeat_match("#{password}")')
+      run_js(%'repeat_match("#{password}")')
     end
 
     TEST_PASSWORDS.each do |password|

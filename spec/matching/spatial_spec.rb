@@ -20,7 +20,7 @@ describe Zxcvbn::Matching::Spatial do
 
   context 'integration' do
     def js_spatial_match(password)
-      method_invoker.eval_convert_object(%'spatial_match("#{password}")')
+      run_js(%'spatial_match("#{password}")')
     end
 
     TEST_PASSWORDS.each do |password|

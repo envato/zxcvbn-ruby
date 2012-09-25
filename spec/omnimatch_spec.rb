@@ -10,7 +10,7 @@ describe Zxcvbn::Omnimatch do
   end
 
   def js_omnimatch(password)
-    method_invoker.eval_convert_object(%'omnimatch("#{password}")')
+    run_js(%'omnimatch("#{password}")')
   end
 
   TEST_PASSWORDS.each do |password|

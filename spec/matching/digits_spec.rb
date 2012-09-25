@@ -15,7 +15,7 @@ describe Zxcvbn::Matching::Digits do
 
   context 'integration' do
     def js_digits_match(password)
-      method_invoker.eval_convert_object(%'digits_match("#{password}")')
+      run_js(%'digits_match("#{password}")')
     end
 
     TEST_PASSWORDS.each do |password|

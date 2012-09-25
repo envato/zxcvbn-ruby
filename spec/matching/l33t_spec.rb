@@ -92,7 +92,7 @@ describe Zxcvbn::Matching::L33t do
     }
 
     def js_l33t_match(password)
-      method_invoker.eval_convert_object(%'l33t_match("#{password}")')
+      run_js(%'l33t_match("#{password}")')
     end
 
     TEST_PASSWORDS.each do |password|
