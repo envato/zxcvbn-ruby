@@ -12,13 +12,13 @@ describe Zxcvbn::Scoring::Entropy do
   describe '#digits_entropy' do
     it 'returns a base 2 log of 10 to the power of the token length' do
       match = Zxcvbn::Match.new(:token => '12345678')
-      entropy.digits_entropy(match).should eq lg(10 ** match.token.length)
+      entropy.digits_entropy(match).should eq 26.5754247590989
     end
   end
 
   describe '#year_entropy' do
     it 'returns a base 2 log of the number of possible years' do
-      entropy.year_entropy(nil).should eq lg(Zxcvbn::Scoring::Entropy::NUM_YEARS)
+      entropy.year_entropy(nil).should eq 6.894817763307944
     end
   end
 end
