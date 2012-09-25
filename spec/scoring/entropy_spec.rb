@@ -28,4 +28,27 @@ describe Zxcvbn::Scoring::Entropy do
       entropy.year_entropy(nil).should eq 6.894817763307944
     end
   end
+
+  describe '#date_entropy' do
+    context 'with a two digit year' do
+      it 'returns the correct value' do
+        match = Zxcvbn::Match.new(:year => 98)
+        entropy.date_entropy(match).should eq 15.183015000882756
+      end
+    end
+
+    context 'with a four digit year' do
+      it 'returns the correct value' do
+        match = Zxcvbn::Match.new(:year => 2012)
+        entropy.date_entropy(match).should eq 15.433976574415976
+      end
+    end
+
+    context 'with a separator' do
+      it 'returns the correct value' do
+        match = Zxcvbn::Match.new(:year => 2012, :separator => '/')
+        entropy.date_entropy(match).should eq 17.433976574415976
+      end
+    end
+  end
 end

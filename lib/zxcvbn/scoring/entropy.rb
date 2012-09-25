@@ -17,4 +17,18 @@ module Zxcvbn::Scoring::Entropy
   def year_entropy(match)
     lg(NUM_YEARS)
   end
+
+  def date_entropy(match)
+    if match.year < 100
+      entropy = lg(NUM_DAYS * NUM_MONTHS * 100)
+    else
+      entropy = lg(NUM_DAYS * NUM_MONTHS * NUM_YEARS)
+    end
+
+    if match.separator
+      entropy += 2
+    end
+
+    entropy    
+  end
 end
