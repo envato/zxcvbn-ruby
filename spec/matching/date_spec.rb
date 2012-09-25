@@ -115,7 +115,6 @@ describe Zxcvbn::Matching::Date do
     it "gives back the same results for #{password}" do
       js_results = js_date_match(password)
       ruby_results = matcher.matches(password)
-      ruby_results.count.should eq js_results.count
       ruby_results.should match_js_results js_results
     end
   end

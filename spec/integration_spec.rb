@@ -3,9 +3,6 @@ require 'spec_helper'
 describe 'zxcvbn over a set of example passwords' do
   include Zxcvbn
 
-  # 35
-  
-
   it 'gives back the same score' do
     pending do
       TEST_PASSWORDS.each do |password|
@@ -14,16 +11,17 @@ describe 'zxcvbn over a set of example passwords' do
     end
   end
 
+  def js_omnimatch(password)
+    method_invoker.eval_convert_object(%'omnimatch("#{password}")')
+  end
+
   TEST_PASSWORDS.each do |password|
-    it "gives back the same number of matches for #{password}" do
-      results = match_to_hash_with_string_keys(omnimatch(password))
-      js_results = method_invoker.eval_convert_object(%'omnimatch("#{password}")')
-      # debugg
-      # ap results
-      # debugger
-      # ap js_results
-      results.should match_array js_results
-      results.count.should eq js_results.count
+    it "gives back the same results for #{password}" do
+      js_results = js_omnimatch(password)
+      ruby_results = omnimatch(password)
+
+      ruby_results.should match_js_results js_results
     end
   end
+
 end
