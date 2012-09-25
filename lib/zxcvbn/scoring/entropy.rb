@@ -78,7 +78,6 @@ module Zxcvbn::Scoring::Entropy
     word = match.token
     return 0 unless match.l33t
     possibilities = 0
-      debugger
     match.sub.each do |subbed, unsubbed|
       num_subbed = word.chars.count{|c| c == subbed}
       num_unsubbed = word.chars.count{|c| c == unsubbed}
