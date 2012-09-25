@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Zxcvbn::Matching::Dictionary do
   let(:matcher) { described_class.new('english', dictionary) }
-  let(:dictionary) { Zxcvbn::RANKED_DICTIONARIES['english'] }
+  let(:dictionary) { RANKED_DICTIONARIES['english'] }
 
   it 'finds all the matches' do
     matches = matcher.matches('whatisinit')
@@ -14,7 +14,7 @@ describe Zxcvbn::Matching::Dictionary do
 
   context 'integration' do
     let(:dictionary_matchers) {
-      Zxcvbn::RANKED_DICTIONARIES.map do |name, dictionary|
+      RANKED_DICTIONARIES.map do |name, dictionary|
         Zxcvbn::Matching::Dictionary.new(name, dictionary)
       end
     }
@@ -26,7 +26,7 @@ describe Zxcvbn::Matching::Dictionary do
     end
 
     def js_dictionary_match(password)
-      Zxcvbn::RANKED_DICTIONARIES.keys.map do |name|
+      RANKED_DICTIONARIES.keys.map do |name|
         method_invoker.eval_convert_object(%'build_dict_matcher("#{name}", build_ranked_dict(#{name}))("#{password}")')
       end.flatten
     end

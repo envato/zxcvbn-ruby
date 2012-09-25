@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Zxcvbn::Matching::L33t do
   let(:matcher) { described_class.new([dictionary_matcher]) }
-  let(:dictionary) { Zxcvbn::RANKED_DICTIONARIES['english'] }
+  let(:dictionary) { RANKED_DICTIONARIES['english'] }
   let(:dictionary_matcher) { Zxcvbn::Matching::Dictionary.new('english', dictionary) }
 
   describe '#relevant_l33t_substitutions' do
@@ -86,7 +86,7 @@ describe Zxcvbn::Matching::L33t do
   context 'integration with all dictionaries' do
     let(:matcher) { described_class.new(dictionary_matchers) }
     let(:dictionary_matchers) {
-      Zxcvbn::RANKED_DICTIONARIES.map do |name, dictionary|
+      RANKED_DICTIONARIES.map do |name, dictionary|
         Zxcvbn::Matching::Dictionary.new(name, dictionary)
       end
     }

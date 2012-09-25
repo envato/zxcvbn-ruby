@@ -11,17 +11,4 @@ describe 'zxcvbn over a set of example passwords' do
     end
   end
 
-  def js_omnimatch(password)
-    method_invoker.eval_convert_object(%'omnimatch("#{password}")')
-  end
-
-  TEST_PASSWORDS.each do |password|
-    it "gives back the same results for #{password}" do
-      js_results = js_omnimatch(password)
-      ruby_results = omnimatch(password)
-
-      ruby_results.should match_js_results js_results
-    end
-  end
-
 end
