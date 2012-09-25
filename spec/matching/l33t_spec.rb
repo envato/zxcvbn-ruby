@@ -95,20 +95,10 @@ describe Zxcvbn::Matching::L33t do
       method_invoker.eval_convert_object(%'l33t_match("#{password}")')
     end
 
-    %w[ viking briansmith4mayor ].each do |password|
-      it "gives back the same results for #{password}" do
-        js_results = js_l33t_match(password)
-        ruby_results = matcher.matches(password)
-        js_results.map{|r| r['matched_word']}.should match_array(ruby_results.map(&:matched_word))
-        js_results.count.should eq ruby_results.count
-      end
-    end
-
     TEST_PASSWORDS.each do |password|
       it "gives back the same results for #{password}" do
         js_results = js_l33t_match(password)
         ruby_results = matcher.matches(password)
-        ruby_results.count.should eq js_results.count
         ruby_results.should match_js_results js_results
       end
     end
