@@ -140,54 +140,54 @@ describe Zxcvbn::Scoring::Math do
     end
   end
 
-  describe '#average_degree_for' do
+  describe '#average_degree_for_graph' do
     context 'when keyboard is qwerty' do
       it 'returns the correct average degree over all keys' do
-        average_degree_for('qwerty').should eql 4.595744680851064
+        average_degree_for_graph('qwerty').should eql 4.595744680851064
       end
     end
 
     context 'when keyboard is dvorak' do
       it 'returns the correct average degree over all keys' do
-        average_degree_for('dvorak').should eql 4.595744680851064
+        average_degree_for_graph('dvorak').should eql 4.595744680851064
       end
     end
 
     context 'when keyboard is keypad' do
       it 'returns the correct average degree over all keys' do
-        average_degree_for('keypad').should eql 5.066666666666666
+        average_degree_for_graph('keypad').should eql 5.066666666666666
       end
     end
 
     context 'when keyboard is mac keypad' do
       it 'returns the correct average degree over all keys' do
-        average_degree_for('mac_keypad').should eql 5.25
+        average_degree_for_graph('mac_keypad').should eql 5.25
       end
     end
   end
 
-  describe '#starting_positions_for' do
+  describe '#starting_positions_for_graph' do
     context 'when keyboard is qwerty' do
       it 'returns the correct average degree over all keys' do
-        starting_positions_for('qwerty').should eql 94
+        starting_positions_for_graph('qwerty').should eql 94
       end
     end
 
     context 'when keyboard is dvorak' do
       it 'returns the correct average degree over all keys' do
-        starting_positions_for('dvorak').should eql 94
+        starting_positions_for_graph('dvorak').should eql 94
       end
     end
 
     context 'when keyboard is keypad' do
       it 'returns the correct average degree over all keys' do
-        starting_positions_for('keypad').should eql 15
+        starting_positions_for_graph('keypad').should eql 15
       end
     end
 
     context 'when keyboard is mac keypad' do
       it 'returns the correct average degree over all keys' do
-        starting_positions_for('mac_keypad').should eql 16
+        starting_positions_for_graph('mac_keypad').should eql 16
       end
     end
   end

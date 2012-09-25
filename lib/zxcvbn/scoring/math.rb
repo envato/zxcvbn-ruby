@@ -71,7 +71,7 @@ module Zxcvbn
         a < b ? a : b
       end
 
-      def average_degree_for(graph_name)
+      def average_degree_for_graph(graph_name)
         graph   = Zxcvbn::ADJACENCY_GRAPHS[graph_name]
         average = 0.0
 
@@ -83,7 +83,7 @@ module Zxcvbn
         average
       end
 
-      def starting_positions_for(graph_name)
+      def starting_positions_for_graph(graph_name)
         Zxcvbn::ADJACENCY_GRAPHS[graph_name].length
       end
     end
