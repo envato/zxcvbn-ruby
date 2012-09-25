@@ -16,5 +16,9 @@ describe Zxcvbn::Scoring::Entropy do
     end
   end
 
-  
+  describe '#year_entropy' do
+    it 'behaves the same as the js version' do
+      entropy.year_entropy(nil).should eq ::Math.log(Zxcvbn::Scoring::Entropy::NUM_YEARS, 2)
+    end
+  end
 end
