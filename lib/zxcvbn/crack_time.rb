@@ -1,4 +1,4 @@
-module Zxcvbn::Scoring::CrackTime
+module Zxcvbn::CrackTime
   SINGLE_GUESS = 0.010
   NUM_ATTACKERS = 100
 

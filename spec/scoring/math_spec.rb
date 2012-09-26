@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Zxcvbn::Scoring::Math do
-  include Zxcvbn::Scoring::Math
+describe Zxcvbn::Math do
+  include Zxcvbn::Math
 
   describe '#bruteforce_cardinality' do
     context 'when empty password' do

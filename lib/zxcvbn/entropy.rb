@@ -1,5 +1,5 @@
-module Zxcvbn::Scoring::Entropy
-  include Zxcvbn::Scoring::Math
+module Zxcvbn::Entropy
+  include Zxcvbn::Math
 
   def calc_entropy(match)
     return match.entropy unless match.entropy.nil?

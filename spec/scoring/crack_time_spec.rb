@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Zxcvbn::Scoring::CrackTime do
-  include Zxcvbn::Scoring::CrackTime
+describe Zxcvbn::CrackTime do
+  include Zxcvbn::CrackTime
 
   describe '#entropy_to_crack_time' do
     specify do

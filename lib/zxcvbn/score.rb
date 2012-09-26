@@ -1,7 +1,7 @@
 module Zxcvbn
   class Score
     attr_accessor :entropy, :crack_time, :crack_time_display, :score, :pattern,
-                  :match_sequence, :password
+                  :match_sequence, :password, :calc_time
 
     def initialize(options = {})
       @entropy            = options[:entropy]

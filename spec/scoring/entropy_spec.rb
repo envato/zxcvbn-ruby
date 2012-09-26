@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Zxcvbn::Scoring::Entropy do
-  include Zxcvbn::Scoring::Math
+describe Zxcvbn::Entropy do
+  include Zxcvbn::Math
 
   let(:entropy) {
     Class.new do
-      include Zxcvbn::Scoring::Entropy
+      include Zxcvbn::Entropy
     end.new
   }
 
