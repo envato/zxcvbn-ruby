@@ -15,7 +15,7 @@ require 'zxcvbn/entropy'
 require 'zxcvbn/crack_time'
 require 'zxcvbn/score'
 require 'zxcvbn/scorer'
-require 'zxcvbn/password_strength_estimator'
+require 'zxcvbn/password_strength'
 require 'pathname'
 
 module Zxcvbn
@@ -24,7 +24,7 @@ module Zxcvbn
   FREQUENCY_LISTS = YAML.load(DATA_PATH.join('frequency_lists.yaml').read)
 
   def zxcvbn(password)
-    @zxcvbn ||= PasswordStrengthEstimator.new
-    @zxcvbn.score(password)
+    @zxcvbn ||= PasswordStrength.new
+    @zxcvbn.test(password)
   end
 end

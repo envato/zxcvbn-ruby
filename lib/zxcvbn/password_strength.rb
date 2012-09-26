@@ -1,13 +1,13 @@
 require 'benchmark'
 
 module Zxcvbn
-  class PasswordStrengthEstimator
+  class PasswordStrength
     def initialize
       @omnimatch = Omnimatch.new
       @scorer = Scorer.new
     end
 
-    def score(password)
+    def test(password)
       result = nil
       calc_time = Benchmark.realtime do
         matches = @omnimatch.matches(password)
