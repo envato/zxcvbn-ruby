@@ -1,6 +1,28 @@
 module Zxcvbn::Scoring::Entropy
   include Zxcvbn::Scoring::Math
 
+  def calc_entropy(match)
+    return match.entropy unless match.entropy.nil?
+    # debugger
+    match.entropy = case match.pattern
+    when 'repeat'
+      repeat_entropy(match)
+    when 'sequence'
+      sequence_entropy(match)
+    when 'digits'
+      digits_entropy(match)
+    when 'year'
+      year_entropy(match)
+    when 'date'
+      date_entropy(match)
+    when 'spatial'
+      spatial_entropy(match)
+    when 'dictionary'
+      dictionary_entropy(match)
+    end
+    match.entropy ||= 0
+  end
+
   def repeat_entropy(match)
     cardinality = bruteforce_cardinality match.token
     lg(cardinality * match.token.length)
