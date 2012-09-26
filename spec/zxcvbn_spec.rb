@@ -19,4 +19,17 @@ describe 'zxcvbn over a set of example passwords' do
     end
   end
 
+  context 'with a custom user dictionary' do
+    it 'scores them against the user dictionary' do
+      result = zxcvbn('themeforest', ['themeforest'])
+      result.entropy.should eq 0
+      result.score.should eq 0
+    end
+
+    it 'matches l33t substitutions on this dictionary' do
+      result = zxcvbn('th3m3for3st', ['themeforest'])
+      result.entropy.should eq 1
+      result.score.should eq 0
+    end
+  end
 end

@@ -7,15 +7,23 @@ module Zxcvbn
       @matchers = build_matchers
     end
 
-    def matches(password)
+    def matches(password, user_inputs = [])
       result = []
-      @matchers.each do |matcher|
+      (@matchers + user_input_matchers(user_inputs)).each do |matcher|
         result += matcher.matches(password)
       end
       result
     end
 
     private
+
+    def user_input_matchers(user_inputs)
+      return [] unless user_inputs.any?
+      user_ranked_dictionary = rank_dictionary(user_inputs)
+      dictionary_matcher = Matchers::Dictionary.new('user_inputs', user_ranked_dictionary)
+      l33t_matcher = Matchers::L33t.new([dictionary_matcher])
+      [dictionary_matcher, l33t_matcher]
+    end
 
     def rank_dictionaries
       dictionaries = {}

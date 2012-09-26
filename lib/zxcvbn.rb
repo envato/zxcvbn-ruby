@@ -23,8 +23,8 @@ module Zxcvbn
   ADJACENCY_GRAPHS = YAML.load(DATA_PATH.join('adjacency_graphs.yaml').read)
   FREQUENCY_LISTS = YAML.load(DATA_PATH.join('frequency_lists.yaml').read)
 
-  def zxcvbn(password)
+  def zxcvbn(password, user_inputs = [])
     @zxcvbn ||= PasswordStrength.new
-    @zxcvbn.test(password)
+    @zxcvbn.test(password, user_inputs)
   end
 end
