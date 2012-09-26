@@ -1,4 +1,5 @@
 require 'v8'
+require 'json'
 
 module JsHelpers
   class JsMethodInvoker

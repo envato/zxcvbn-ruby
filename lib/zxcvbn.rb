@@ -27,9 +27,4 @@ module Zxcvbn
     @zxcvbn ||= PasswordStrengthEstimator.new
     @zxcvbn.score(password)
   end
-
-  def omnimatch(password)
-    @omnimatch ||= Omnimatch.new
-    @omnimatch.matches(password)
-  end
 end
