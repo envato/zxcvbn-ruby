@@ -19,8 +19,18 @@ require 'zxcvbn/password_strength'
 require 'pathname'
 
 module Zxcvbn
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
+
+  module ClassMethods
+    def zxcvbn(password, user_inputs = [])
+      @zxcvbn ||= PasswordStrength.new
+      @zxcvbn.test(password, user_inputs)
+    end
+  end
+
   def zxcvbn(password, user_inputs = [])
-    @zxcvbn ||= PasswordStrength.new
-    @zxcvbn.test(password, user_inputs)
+    self.class.zxcvbn(password, user_inputs)
   end
 end
