@@ -71,7 +71,7 @@ module Zxcvbn
     end
 
     def average_degree_for_graph(graph_name)
-      graph   = Zxcvbn::ADJACENCY_GRAPHS[graph_name]
+      graph   = Zxcvbn::Omnimatch::ADJACENCY_GRAPHS[graph_name]
       average = 0.0
 
       graph.each do |key, neighbors|
@@ -83,7 +83,7 @@ module Zxcvbn
     end
 
     def starting_positions_for_graph(graph_name)
-      Zxcvbn::ADJACENCY_GRAPHS[graph_name].length
+      Zxcvbn::Omnimatch::ADJACENCY_GRAPHS[graph_name].length
     end
   end
 end
