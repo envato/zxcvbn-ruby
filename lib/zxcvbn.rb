@@ -15,9 +15,8 @@ require 'zxcvbn/entropy'
 require 'zxcvbn/crack_time'
 require 'zxcvbn/score'
 require 'zxcvbn/scorer'
+require 'zxcvbn/password_strength_estimator'
 require 'pathname'
-require 'json'
-require 'benchmark'
 
 module Zxcvbn
   DATA_PATH = Pathname(File.expand_path('../../data', __FILE__))
@@ -25,13 +24,8 @@ module Zxcvbn
   FREQUENCY_LISTS = YAML.load(DATA_PATH.join('frequency_lists.yaml').read)
 
   def zxcvbn(password)
-    result = nil
-    calc_time = Benchmark.realtime do
-      matches = omnimatch(password)
-      result = Scorer.new(password, matches).minimum_entropy_match_sequence
-    end
-    result.calc_time = calc_time
-    result
+    @zxcvbn ||= PasswordStrengthEstimator.new
+    @zxcvbn.score(password)
   end
 
   def omnimatch(password)
