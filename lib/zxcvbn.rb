@@ -17,6 +17,7 @@ require 'zxcvbn/score'
 require 'zxcvbn/scoring'
 require 'pathname'
 require 'json'
+require 'benchmark'
 
 module Zxcvbn
   DATA_PATH = Pathname(File.expand_path('../../data', __FILE__))
@@ -24,6 +25,13 @@ module Zxcvbn
   FREQUENCY_LISTS = YAML.load(DATA_PATH.join('frequency_lists.yaml').read)
 
   def zxcvbn(password)
+    result = nil
+    calc_time = Benchmark.realtime do
+      matches = omnimatch(password)
+      result = Scoring.new(password, matches).minimum_entropy_match_sequence
+    end
+    result.calc_time = calc_time
+    result
   end
 
   def omnimatch(password)
