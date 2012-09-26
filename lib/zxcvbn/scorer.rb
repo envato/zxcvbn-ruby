@@ -2,13 +2,8 @@ module Zxcvbn
   class Scorer
     include Entropy
     include CrackTime
-    
-    def initialize(password, matches)
-      @password, @matches = password, matches
-    end
 
-    def minimum_entropy_match_sequence
-      password, matches = @password, @matches
+    def minimum_entropy_match_sequence(password, matches)
       bruteforce_cardinality = bruteforce_cardinality(password) # e.g. 26 for lowercase
       up_to_k = []      # minimum entropy up to k.
       backpointers = [] # for the optimal sequence of matches up to k, holds the final match (match.j == k). null means the sequence ends w/ a brute-force character.
