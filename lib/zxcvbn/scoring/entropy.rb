@@ -57,8 +57,8 @@ module Zxcvbn::Scoring::Entropy
 
   START_UPPER = /^[A-Z][^A-Z]+$/
   END_UPPER   = /^[^A-Z]+[A-Z]$/
-  ALL_UPPER   = /^[^a-z]+$/
-  ALL_LOWER   = /^[^A-Z]+$/
+  ALL_UPPER   = /^[A-Z]+$/
+  ALL_LOWER   = /^[a-z]+$/
 
   def extra_uppercase_entropy(match)
     word = match.token
@@ -85,7 +85,8 @@ module Zxcvbn::Scoring::Entropy
         possibilities += nCk(num_subbed + num_unsubbed, i)
       end
     end
-    lg(possibilities) || 1
+    entropy = lg(possibilities)
+    entropy == 0 ? 1 : entropy
   end
 
   def spatial_entropy(match)

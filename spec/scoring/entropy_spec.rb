@@ -140,6 +140,13 @@ describe Zxcvbn::Scoring::Entropy do
       specify { calculated_entropy.should eq 6 }
     end
 
+    context 'starting with digits' do
+      let(:token) { '12345' }
+      let(:rank)  { 1 }
+
+      specify { calculated_entropy.should eq 0 }
+    end
+
     context 'extra l33t entropy' do
       let(:token) { 'p3rs0n' }
       let(:rank)  { 1 }
