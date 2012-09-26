@@ -15,7 +15,7 @@ module Zxcvbn
           is_type_of['symbols'] = true
         end
       end
-      
+
       cardinality = 0
       cardinality += 10 if is_type_of['digits']
       cardinality += 26 if is_type_of['upper']
