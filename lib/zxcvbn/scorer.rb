@@ -1,5 +1,5 @@
 module Zxcvbn
-  class Scoring
+  class Scorer
     include Entropy
     include CrackTime
     
