@@ -2,8 +2,8 @@
 require File.expand_path('../lib/zxcvbn/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Steve Hodgkiss"]
-  gem.email         = ["steve@hodgkiss.me"]
+  gem.authors       = ["Steve Hodgkiss", "Matthieu Aussaguel"]
+  gem.email         = ["steve@hodgkiss.me", "matthieu.aussaguel@gmail.com"]
   gem.description   = %q{Ruby port of Dropboxs zxcvbn.js}
   gem.summary       = %q{}
   gem.homepage      = "http://github.com/envato/zxcvbn-ruby"
