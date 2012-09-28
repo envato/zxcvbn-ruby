@@ -8,6 +8,7 @@ module Zxcvbn
     end
 
     def test(password, user_inputs = [])
+      password = password || ''
       result = nil
       calc_time = Benchmark.realtime do
         matches = @omnimatch.matches(password, user_inputs)

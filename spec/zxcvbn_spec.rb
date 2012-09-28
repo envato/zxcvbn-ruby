@@ -32,4 +32,10 @@ describe 'zxcvbn over a set of example passwords' do
       result.score.should eq 0
     end
   end
+
+  context 'nil password' do
+    specify do
+      expect { zxcvbn(nil) }.to_not raise_error
+    end
+  end
 end
