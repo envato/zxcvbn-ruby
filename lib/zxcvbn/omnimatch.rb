@@ -1,4 +1,6 @@
 require 'json'
+require 'yaml'
+require 'pathname'
 
 module Zxcvbn
   class Omnimatch

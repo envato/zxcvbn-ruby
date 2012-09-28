@@ -16,7 +16,6 @@ require 'zxcvbn/crack_time'
 require 'zxcvbn/score'
 require 'zxcvbn/scorer'
 require 'zxcvbn/password_strength'
-require 'pathname'
 
 module Zxcvbn
   def self.included(base)
