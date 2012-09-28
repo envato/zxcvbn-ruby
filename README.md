@@ -19,7 +19,7 @@ class User < Struct.new(:username, :password)
   include Zxcvbn
 
   def password_strength
-    zxcvbn(password, [username])
+    zxcvbn(password, [username, 'sitename'])
   end
 end
 
