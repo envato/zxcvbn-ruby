@@ -10,9 +10,11 @@ Gemfile:
 gem "zxcvbn-ruby", :require => 'zxcvbn'
 ```
 
-Example user model:
+Example usage:
 
 ```ruby
+require 'zxcvbn'
+
 class User < Struct.new(:username, :password)
   include Zxcvbn
 
