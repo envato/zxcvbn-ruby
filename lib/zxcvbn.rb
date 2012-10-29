@@ -27,8 +27,8 @@ module Zxcvbn
   RANKED_DICTIONARIES = DictionaryRanker.rank_dictionaries(FREQUENCY_LISTS)
 
   def test(password, user_inputs = [])
-    @zxcvbn = PasswordStrength.new
-    @zxcvbn.test(password, user_inputs)
+    zxcvbn = PasswordStrength.new
+    zxcvbn.test(password, user_inputs)
   end
 
   def add_word_list(name, list)
