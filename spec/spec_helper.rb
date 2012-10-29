@@ -52,5 +52,3 @@ TEST_PASSWORDS = [
   'rWibMFACxAUGZmxhVncy',
   'Ba9ZyWABu99[BK#6MBgbH88Tofv)vs$w'
 ]
-
-RANKED_DICTIONARIES = Zxcvbn::Omnimatch.new.ranked_dictionaries
