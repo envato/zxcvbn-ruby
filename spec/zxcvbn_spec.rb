@@ -31,6 +31,16 @@ describe 'zxcvbn over a set of example passwords' do
     end
   end
 
+  context 'with a custom global dictionary' do
+    before { Zxcvbn.add_word_list('envato', ['envato']) }
+
+    it 'scores them against the dictionary' do
+      result = Zxcvbn.test('envato')
+      result.entropy.should eq 0
+      result.score.should eq 0
+    end
+  end
+
   context 'nil password' do
     specify do
       expect { Zxcvbn.test(nil) }.to_not raise_error

@@ -30,4 +30,8 @@ module Zxcvbn
     @zxcvbn = PasswordStrength.new
     @zxcvbn.test(password, user_inputs)
   end
+
+  def add_word_list(name, list)
+    RANKED_DICTIONARIES[name] = DictionaryRanker.rank_dictionary(list)
+  end
 end
