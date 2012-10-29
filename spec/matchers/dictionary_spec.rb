@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Zxcvbn::Matchers::Dictionary do
   let(:matcher) { described_class.new('english', dictionary) }
-  let(:dictionary) { Zxcvbn::Omnimatch::RANKED_DICTIONARIES['english'] }
+  let(:dictionary) { Zxcvbn::RANKED_DICTIONARIES['english'] }
 
   it 'finds all the matches' do
     matches = matcher.matches('whatisinit')
