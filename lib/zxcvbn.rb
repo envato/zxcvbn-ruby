@@ -9,6 +9,7 @@ require 'zxcvbn/matchers/repeat'
 require 'zxcvbn/matchers/digits'
 require 'zxcvbn/matchers/year'
 require 'zxcvbn/matchers/date'
+require 'zxcvbn/dictionary_ranker'
 require 'zxcvbn/omnimatch'
 require 'zxcvbn/math'
 require 'zxcvbn/entropy'
@@ -18,18 +19,10 @@ require 'zxcvbn/scorer'
 require 'zxcvbn/password_strength'
 
 module Zxcvbn
-  def self.included(base)
-    base.extend(ClassMethods)
-  end
+  extend self
 
-  module ClassMethods
-    def zxcvbn(password, user_inputs = [])
-      @zxcvbn ||= PasswordStrength.new
-      @zxcvbn.test(password, user_inputs)
-    end
-  end
-
-  def zxcvbn(password, user_inputs = [])
-    self.class.zxcvbn(password, user_inputs)
+  def test(password, user_inputs = [])
+    @zxcvbn = PasswordStrength.new
+    @zxcvbn.test(password, user_inputs)
   end
 end
