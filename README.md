@@ -16,10 +16,8 @@ Example usage:
 require 'zxcvbn'
 
 class User < Struct.new(:username, :password)
-  include Zxcvbn
-
   def password_strength
-    zxcvbn(password, [username, 'sitename'])
+    Zxcvbn.test(password, [username, 'sitename'])
   end
 end
 
