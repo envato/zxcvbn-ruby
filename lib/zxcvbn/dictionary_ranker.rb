@@ -14,7 +14,7 @@ module Zxcvbn
       dictionary = {}
       i = 1
       words.each do |word|
-        dictionary[word] = i
+        dictionary[word.downcase] = i
         i += 1
       end
       dictionary

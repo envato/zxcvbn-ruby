@@ -11,4 +11,9 @@ describe Zxcvbn::Matchers::Dictionary do
                        'sin', 'i', 'in', 'i', 'it']
     matches.map(&:matched_word).should == expected_matches
   end
+
+  it 'matches uppercase' do
+    matcher = described_class.new('user_inputs', Zxcvbn::DictionaryRanker.rank_dictionary(['test','AB10CD']))
+    matcher.matches('AB10CD').should_not be_empty
+  end
 end
