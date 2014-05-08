@@ -1,5 +1,5 @@
---- 
-passwords: 
+---
+passwords:
 - password
 - "123456"
 - "12345678"
@@ -386,7 +386,7 @@ passwords:
 - "333333"
 - cartman
 - guinness
-- 123abc
+- "123abc"
 - speedy
 - buffalo
 - kitty
@@ -421,9 +421,9 @@ passwords:
 - slipknot
 - "3333"
 - death
-- 1q2w3e
+- "1q2w3e"
 - eclipse
-- 1q2w3e4r
+- "1q2w3e4r"
 - drummer
 - montana
 - music
@@ -467,7 +467,7 @@ passwords:
 - lizard
 - assman
 - nintendo
-- 123qwe
+- "123qwe"
 - november
 - xxxxx
 - october
@@ -502,7 +502,7 @@ passwords:
 - dude
 - drowssap
 - lovely
-- 1qaz2wsx
+- "1qaz2wsx"
 - booty
 - snickers
 - nipples
@@ -951,7 +951,7 @@ passwords:
 - christia
 - stephani
 - tang
-- 1234qwer
+- "1234qwer"
 - "98765432"
 - sexual
 - maxima
@@ -1325,7 +1325,7 @@ passwords:
 - zong
 - xuan
 - zang
-- 0.0.000
+- "0.0.000"
 - suan
 - shei
 - shui
@@ -1355,7 +1355,7 @@ passwords:
 - kansas
 - muscle
 - weng
-- 1passwor
+- "1passwor"
 - bluemoon
 - zhui
 - zhua
@@ -1540,7 +1540,7 @@ passwords:
 - penguins
 - rescue
 - griffey
-- 8j4ye3uz
+- "8j4ye3uz"
 - californ
 - champs
 - qwertyuiop
@@ -1653,7 +1653,7 @@ passwords:
 - letsgo
 - robert1
 - brownie
-- 098765
+- "098765"
 - playtime
 - lightnin
 - atomic
@@ -1840,7 +1840,7 @@ passwords:
 - sentinel
 - snake1
 - richard1
-- 1234abcd
+- "1234abcd"
 - guardian
 - candyman
 - fisting
@@ -1934,7 +1934,7 @@ passwords:
 - a12345
 - newbie
 - mmmm
-- 1qazxsw2
+- "1qazxsw2"
 - zorro
 - writer
 - stripper
@@ -1949,7 +1949,7 @@ passwords:
 - cyber
 - hurrican
 - moneys
-- 1x2zkg8w
+- "1x2zkg8w"
 - zeus
 - tomato
 - lion
@@ -2140,7 +2140,7 @@ passwords:
 - wolfie
 - studly
 - hamburg
-- 81fukkc
+- "81fukkc"
 - "741852"
 - catman
 - china
@@ -2186,7 +2186,7 @@ passwords:
 - "1981"
 - beaner
 - yoyo
-- 0.0.0.000
+- "0.0.0.000"
 - super1
 - select
 - snuggles
@@ -2479,7 +2479,7 @@ passwords:
 - rodman
 - redalert
 - grapes
-- 4runner
+- "4runner"
 - carrera
 - floppy
 - ou8122
@@ -2559,7 +2559,7 @@ passwords:
 - iscool
 - jamesbon
 - "1956"
-- 1pussy
+- "1pussy"
 - womam
 - sweden
 - skidoo
@@ -2956,7 +2956,7 @@ passwords:
 - juggalo
 - jetski
 - barefoot
-- 50spanks
+- "50spanks"
 - gobears
 - scandinavian
 - cubbies
@@ -3027,7 +3027,7 @@ passwords:
 - mustard
 - misty1
 - jagger
-- 3x7pxr
+- "3x7pxr"
 - silver1
 - snowboar
 - penetrating
@@ -3357,8 +3357,8 @@ passwords:
 - missouri
 - wishbone
 - infiniti
-- 1a2b3c
-- 1qwerty
+- "1a2b3c"
+- "1qwerty"
 - wonderboy
 - shojou
 - sparky1
@@ -3388,13 +3388,13 @@ passwords:
 - missy1
 - "282828"
 - xyz123
-- 426hemi
+- "426hemi"
 - "404040"
 - seinfeld
 - pingpong
 - lazarus
 - marine1
-- 12345a
+- "12345a"
 - beamer
 - babyface
 - greece
@@ -3434,7 +3434,7 @@ passwords:
 - rogue
 - avalanch
 - audia4
-- 55bgates
+- "55bgates"
 - cccccccc
 - came11
 - figaro
@@ -3709,7 +3709,7 @@ passwords:
 - "1224"
 - hannah1
 - "525252"
-- 4ever
+- "4ever"
 - carbon
 - scorpio1
 - rt6ytere
@@ -3921,7 +3921,7 @@ passwords:
 - medic
 - reddevil
 - reckless
-- 123456a
+- "123456a"
 - "1125"
 - "1031"
 - astra
@@ -3944,7 +3944,7 @@ passwords:
 - wingnut
 - wireless
 - icu812
-- 1master
+- "1master"
 - beatle
 - bigblock
 - wolfen
@@ -3962,7 +3962,7 @@ passwords:
 - laurent
 - rimmer
 - "1020"
-- 12qwaszx
+- "12qwaszx"
 - hamish
 - halifax
 - fishhead
@@ -4041,12 +4041,12 @@ passwords:
 - kiwi
 - winners
 - jackpot
-- 1a2b3c4d
+- "1a2b3c4d"
 - "1776"
 - beardog
 - bighead
 - bird33
-- 0987
+- "0987"
 - spooge
 - pelican
 - peepee
@@ -4100,7 +4100,7 @@ passwords:
 - audio
 - asimov
 - "753951"
-- 4you
+- "4you"
 - chilly
 - care1839
 - flyfish
@@ -4202,7 +4202,7 @@ passwords:
 - hola
 - minemine
 - munch
-- 1dragon
+- "1dragon"
 - biology
 - bestbuy
 - bigpoppa
@@ -4240,8 +4240,8 @@ passwords:
 - harddick
 - gotribe
 - "6996"
-- 7grout
-- 5wr2i7h8
+- "7grout"
+- "5wr2i7h8"
 - "635241"
 - chase1
 - fallout
@@ -4285,7 +4285,7 @@ passwords:
 - bigpimp
 - zaqwsx
 - "414141"
-- 3000gt
+- "3000gt"
 - "434343"
 - serpent
 - smurf
@@ -4332,7 +4332,7 @@ passwords:
 - iverson3
 - bluesman
 - zouzou
-- 090909
+- "090909"
 - "1002"
 - stone1
 - "4040"
@@ -4380,7 +4380,7 @@ passwords:
 - xxxxxx1
 - yogibear
 - "000001"
-- 0815
+- "0815"
 - zulu
 - "420000"
 - sigmar
@@ -4609,7 +4609,7 @@ passwords:
 - sunfire
 - tbird
 - stryker
-- 3ip76k2
+- "3ip76k2"
 - sevens
 - pilgrim
 - tenchi
@@ -4623,7 +4623,7 @@ passwords:
 - midnite
 - reddwarf
 - "1129"
-- 123asd
+- "123asd"
 - "12312312"
 - allstar
 - albany
@@ -4632,7 +4632,7 @@ passwords:
 - hardball
 - goldfing
 - "7734"
-- 49ers
+- "49ers"
 - carnage
 - callum
 - carlos1
@@ -4786,7 +4786,7 @@ passwords:
 - enforcer
 - waterboy
 - "1992"
-- 23skidoo
+- "23skidoo"
 - bimbo
 - blue11
 - birddog
@@ -4845,7 +4845,7 @@ passwords:
 - kokomo
 - mooses
 - inter
-- 1michael
+- "1michael"
 - "1993"
 - "19781978"
 - "25252525"
@@ -5083,7 +5083,7 @@ passwords:
 - bbking
 - baritone
 - gryphon
-- 57chevy
+- "57chevy"
 - "494949"
 - celeron
 - fishy
@@ -5154,7 +5154,7 @@ passwords:
 - "818181"
 - "6666666"
 - "5000"
-- 5rxypn
+- "5rxypn"
 - cameron1
 - checker
 - calibra
@@ -5281,7 +5281,7 @@ passwords:
 - yamahar1
 - zapper
 - zorro1
-- 0911
+- "0911"
 - "3006"
 - sixsix
 - shopper
@@ -5352,7 +5352,7 @@ passwords:
 - blazers
 - benny1
 - woodwork
-- 0069
+- "0069"
 - "0101"
 - taffy
 - "4567"
@@ -5374,7 +5374,7 @@ passwords:
 - mannn
 - rocknrol
 - riversid
-- 123aaa
+- "123aaa"
 - "11112222"
 - "121314"
 - "1021"
@@ -5392,8 +5392,8 @@ passwords:
 - hattrick
 - harpoon
 - "878787"
-- 8inches
-- 4wwvte
+- "8inches"
+- "4wwvte"
 - cassandr
 - charlie123
 - gatsby
@@ -5516,8 +5516,8 @@ passwords:
 - werdna
 - idontknow
 - jack1
-- 1bitch
-- 151nxjmt
+- "1bitch"
+- "151nxjmt"
 - bendover
 - bmwbmw
 - zaq123
@@ -5601,7 +5601,7 @@ passwords:
 - jaguar1
 - "1990"
 - "159159"
-- 1love
+- "1love"
 - bears1
 - bigtruck
 - bigboss
@@ -5641,10 +5641,10 @@ passwords:
 - "112211"
 - gwju3g
 - greywolf
-- 7bgiqk
+- "7bgiqk"
 - "7878"
 - "535353"
-- 4snz9g
+- "4snz9g"
 - candyass
 - cccccc1
 - catfight
@@ -5683,7 +5683,7 @@ passwords:
 - wally1
 - willie1
 - inspiron
-- 1test
+- "1test"
 - "2929"
 - bigblack
 - xytfu7
@@ -5795,8 +5795,8 @@ passwords:
 - wizzard
 - whdbtp
 - whkzyc
-- 154ugeiu
-- 1fuck
+- "154ugeiu"
+- "1fuck"
 - binky
 - bigred1
 - blubber
@@ -5809,9 +5809,9 @@ passwords:
 - survey
 - tammy1
 - stuffer
-- 3mpz4r
+- "3mpz4r"
 - "3000"
-- 3some
+- "3some"
 - sierra1
 - shampoo
 - shyshy
@@ -5840,7 +5840,7 @@ passwords:
 - hairball
 - hatter
 - grimace
-- 7xm5rq
+- "7xm5rq"
 - "6789"
 - cartoons
 - capcom
@@ -5897,7 +5897,7 @@ passwords:
 - warhamme
 - jackass1
 - "2277"
-- 20spanks
+- "20spanks"
 - blobby
 - blinky
 - bikers
@@ -5906,7 +5906,7 @@ passwords:
 - blue23
 - xman
 - wyvern
-- 085tzzqi
+- "085tzzqi"
 - zxzxzx
 - zsmj2v
 - suede
@@ -5917,7 +5917,7 @@ passwords:
 - "4226"
 - "4271"
 - "321123"
-- 383pdjvl
+- "383pdjvl"
 - shane1
 - shelby1
 - spades
@@ -5946,12 +5946,12 @@ passwords:
 - b929ezzh
 - goodyear
 - gubber
-- 863abgsg
+- "863abgsg"
 - "7474"
 - "797979"
 - "464646"
 - "543210"
-- 4zqauf
+- "4zqauf"
 - "4949"
 - ch5nmk
 - carlito
@@ -6024,7 +6024,7 @@ passwords:
 - swampy
 - "445566"
 - "333666"
-- 380zliki
+- "380zliki"
 - sexpot
 - sexylady
 - sixtynin
@@ -6060,7 +6060,7 @@ passwords:
 - hawkwind
 - h2slca
 - grace1
-- 6chid8
+- "6chid8"
 - "789654"
 - canine
 - casio
@@ -6125,8 +6125,8 @@ passwords:
 - willi
 - isacs155
 - igor
-- 1million
-- 1letmein
+- "1million"
+- "1letmein"
 - x35v8l
 - yogi
 - ywvxpz
@@ -6168,9 +6168,9 @@ passwords:
 - hardwood
 - gumbo
 - "616913"
-- 57np39
-- 56qhxs
-- 4mnveh
+- "57np39"
+- "56qhxs"
+- "4mnveh"
 - fatluvr69
 - fqkw5m
 - fidelity
@@ -6239,14 +6239,14 @@ passwords:
 - yoshi
 - yinyang
 - x24ik3
-- 063dyjuy
+- "063dyjuy"
 - "0000007"
 - ztmfcq
 - stopit
 - stooges
 - symow8
 - strato
-- 2hot4u
+- "2hot4u"
 - skins
 - shakes
 - sex1
@@ -6280,7 +6280,7 @@ passwords:
 - bahamut
 - golfman
 - happines
-- 7uftyx
+- "7uftyx"
 - "5432"
 - "5353"
 - "5151"
@@ -6309,7 +6309,7 @@ passwords:
 - upnfmc
 - tyrant
 - trout1
-- 9skw5g
+- "9skw5g"
 - aceman
 - acls2h
 - aaabbb
@@ -6371,7 +6371,7 @@ passwords:
 - "4343"
 - "3728"
 - "4444444"
-- 368ejhih
+- "368ejhih"
 - solar
 - sonne
 - sniffer
@@ -6408,11 +6408,11 @@ passwords:
 - golfnut
 - gsxr1000
 - gregory1
-- 766rglqy
+- "766rglqy"
 - "8520"
 - "753159"
-- 8dihc6
-- 69camaro
+- "8dihc6"
+- "69camaro"
 - "666777"
 - cheeba
 - chino
@@ -6512,8 +6512,8 @@ passwords:
 - system1
 - surveyor
 - stirling
-- 3qvqod
-- 3way
+- "3qvqod"
+- "3way"
 - "456321"
 - sizzle
 - simhrq
@@ -6541,10 +6541,10 @@ passwords:
 - albino
 - azazel
 - grinder
-- 6uldv8
-- 83y6pv
+- "6uldv8"
+- "83y6pv"
 - "8888888"
-- 4tlved
+- "4tlved"
 - "515051"
 - carsten
 - flyers88
@@ -6585,7 +6585,7 @@ passwords:
 - trs8f7
 - ugejvp
 - abba
-- 911turbo
+- "911turbo"
 - acdc
 - abcd123
 - crash1
@@ -6620,14 +6620,14 @@ passwords:
 - yess
 - zlzfrh
 - wolvie
-- 007bond
+- "007bond"
 - "******"
 - tailgate
 - tanya1
 - sxhq65
 - stinky1
 - "3234412"
-- 3ki42x
+- "3ki42x"
 - seville
 - shimmer
 - sienna
@@ -6657,9 +6657,9 @@ passwords:
 - baggies
 - barrage
 - guru
-- 72d5tn
+- "72d5tn"
 - "606060"
-- 4wcqjn
+- "4wcqjn"
 - chance1
 - flange
 - fartman
@@ -6721,7 +6721,7 @@ passwords:
 - iiiiii1
 - "159951"
 - "1624"
-- 1911a1
+- "1911a1"
 - "2244"
 - bellagio
 - bedlam
@@ -6733,7 +6733,7 @@ passwords:
 - sundown
 - sukebe
 - swifty
-- 2fast4u
+- "2fast4u"
 - sexe
 - shroom
 - seaweed
@@ -6776,14 +6776,14 @@ passwords:
 - graywolf
 - golf1
 - gomets
-- 8vjzus
+- "8vjzus"
 - "7890"
 - "789123"
-- 8uiazp
+- "8uiazp"
 - "5757"
-- 474jdvff
-- 551scasi
-- 50cent
+- "474jdvff"
+- "551scasi"
+- "50cent"
 - camaro1
 - cherry1
 - chemist
@@ -6857,8 +6857,8 @@ passwords:
 - imback
 - "1914"
 - "19741974"
-- 1monkey
-- 1q2w3e4r5t
+- "1monkey"
+- "1q2w3e4r5t"
 - "2500"
 - "2255"
 - bigshow
@@ -6873,7 +6873,7 @@ passwords:
 - yhwnqc
 - zzzxxx
 - "393939"
-- 2fchbg
+- "2fchbg"
 - skinhead
 - skilled
 - shadow12
@@ -6905,7 +6905,7 @@ passwords:
 - redshift
 - "1202"
 - "1469"
-- 12locked
+- "12locked"
 - arizona1
 - alfarome
 - al9agd
@@ -6924,8 +6924,8 @@ passwords:
 - hannes
 - "8543852"
 - "868686"
-- 4ng62t
-- 554uzpad
+- "4ng62t"
+- "554uzpad"
 - "5401"
 - "567890"
 - "5232"
@@ -6999,12 +6999,12 @@ passwords:
 - insider
 - jayman
 - "1911"
-- 1dallas
+- "1dallas"
 - "1900"
-- 1ranger
-- 201jedlz
+- "1ranger"
+- "201jedlz"
 - "2501"
-- 1qaz
+- "1qaz"
 - bignuts
 - bigbad
 - beebee
@@ -7017,12 +7017,12 @@ passwords:
 - zebra1
 - yankee1
 - zoomzoom
-- 09876543
+- "09876543"
 - "0311"
 - ?????
 - stjabn
 - tainted
-- 3tmnej
+- "3tmnej"
 - skooter
 - skelter
 - starlite
@@ -7065,10 +7065,10 @@ passwords:
 - gucci
 - grammy
 - happydog
-- 7kbe9d
+- "7kbe9d"
 - "7676"
-- 6bjvpe
-- 5lyedn
+- "6bjvpe"
+- "5lyedn"
 - "5858"
 - "5291"
 - charlie2
@@ -7141,7 +7141,7 @@ passwords:
 - evangeli
 - eeeee1
 - eyphed
-male_names: 
+male_names:
 - james
 - john
 - robert
@@ -8146,7 +8146,7 @@ male_names:
 - darell
 - broderick
 - alonso
-female_names: 
+female_names:
 - mary
 - patricia
 - linda
@@ -11962,7 +11962,7 @@ female_names:
 - angila
 - alona
 - allyn
-surnames: 
+surnames:
 - smith
 - johnson
 - williams
@@ -52546,7 +52546,7 @@ surnames:
 - beacher
 - bazar
 - baysmore
-english: 
+english:
 - you
 - i
 - to
