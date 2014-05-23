@@ -30,13 +30,12 @@ module Zxcvbn
       while k >= 0
         match = backpointers[k]
         if match
-          match_sequence.push match
+          match_sequence.unshift match
           k = match.i - 1
         else
           k -= 1
         end
       end
-      match_sequence.reverse!
 
       # fill in the blanks between pattern matches with bruteforce "matches"
       # that way the match sequence fully covers the password: match1.j == match2.i - 1 for every adjacent match1, match2.
