@@ -40,10 +40,6 @@ module Zxcvbn
       r
     end
 
-    def min(a, b)
-      a < b ? a : b
-    end
-
     def average_degree_for_graph(graph_name)
       graph   = Zxcvbn::ADJACENCY_GRAPHS[graph_name]
       average = 0.0

@@ -91,7 +91,7 @@ module Zxcvbn::Entropy
     num_upper = word.chars.count{|c| c.match(/[A-Z]/) }
     num_lower = word.chars.count{|c| c.match(/[a-z]/) }
     possibilities = 0
-    (0..min(num_upper, num_lower)).each do |i|
+    (0..[num_upper, num_lower].min).each do |i|
       possibilities += nCk(num_upper + num_lower, i)
     end
     lg(possibilities)
@@ -104,7 +104,7 @@ module Zxcvbn::Entropy
     match.sub.each do |subbed, unsubbed|
       num_subbed = word.chars.count{|c| c == subbed}
       num_unsubbed = word.chars.count{|c| c == unsubbed}
-      (0..min(num_subbed, num_unsubbed)).each do |i|
+      (0..[num_subbed, num_unsubbed].min).each do |i|
         possibilities += nCk(num_subbed + num_unsubbed, i)
       end
     end
