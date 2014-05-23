@@ -9,11 +9,10 @@ module Zxcvbn
     end
 
     def matches(password, user_inputs = [])
-      result = []
-      (@matchers + user_input_matchers(user_inputs)).each do |matcher|
-        result += matcher.matches(password)
-      end
-      result
+      matchers = (@matchers + user_input_matchers(user_inputs))
+      matchers.map do |matcher, result|
+        matcher.matches(password)
+      end.inject(&:+)
     end
 
     private
