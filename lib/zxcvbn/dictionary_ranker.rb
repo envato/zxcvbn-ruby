@@ -3,21 +3,16 @@
 module Zxcvbn
   class DictionaryRanker
     def self.rank_dictionaries(lists)
-      dictionaries = {}
-      lists.each do |dict_name, words|
+      lists.each_with_object({}) do |(dict_name, words), dictionaries|
         dictionaries[dict_name] = rank_dictionary(words)
       end
-      dictionaries
     end
 
     def self.rank_dictionary(words)
-      dictionary = {}
-      i = 1
-      words.each do |word|
-        dictionary[word.downcase] = i
-        i += 1
+      words.each_with_index
+           .with_object({}) do |(word, i), dictionary|
+        dictionary[word.downcase] = i + 1
       end
-      dictionary
     end
   end
 end
