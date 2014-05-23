@@ -22,10 +22,7 @@ module Zxcvbn
       WITHOUT_SEPARATOR = /\d{4,8}/
 
       def matches(password)
-        result = []
-        result += match_with_separator(password)
-        result += match_without_separator(password)
-        result
+        match_with_separator(password) + match_without_separator(password)
       end
 
       def match_with_separator(password)
