@@ -77,9 +77,9 @@ module Zxcvbn
           candidate.each do |component, value|
             candidate[component] = value.to_i
           end
-          
+
           candidate[:year] = expand_year(candidate[:year])
-          
+
           if valid_date?(candidate[:day], candidate[:month], candidate[:year]) && !matches_year?(token)
             dates << candidate
           end
