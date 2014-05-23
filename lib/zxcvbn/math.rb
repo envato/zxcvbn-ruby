@@ -42,14 +42,13 @@ module Zxcvbn
 
     def average_degree_for_graph(graph_name)
       graph   = Zxcvbn::ADJACENCY_GRAPHS[graph_name]
-      average = 0.0
+      sum = 0.0
 
       graph.each do |key, neighbors|
-        average += neighbors.compact.length
+        sum += neighbors.compact.length
       end
 
-      average /= graph.keys.length
-      average
+      sum / graph.keys.length
     end
 
     def starting_positions_for_graph(graph_name)
