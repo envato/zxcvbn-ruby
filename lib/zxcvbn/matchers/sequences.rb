@@ -20,7 +20,7 @@ module Zxcvbn
             next unless [-1, 1].include? seq_direction
 
             while j < password.length &&
-                  seq.index(password[j]) == index_i + seq_direction * (j - i)
+                  password[j] == seq[index_i + seq_direction * (j - i)]
               j+= 1
             end
             if j - i > 2 # don't consider length 1 or 2 chains.
