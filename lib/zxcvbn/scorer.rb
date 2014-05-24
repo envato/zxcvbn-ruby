@@ -24,6 +24,7 @@ module Zxcvbn
           end
         end
       end
+
       # walk backwards and decode the best sequence
       match_sequence = []
       k = password.length - 1
@@ -40,13 +41,11 @@ module Zxcvbn
       k = 0
       match_sequence_copy = []
       match_sequence.each do |match|
-        i, j = match.i, match.j
-        if i - k > 0
-          debugger if i == 0
-          match_sequence_copy << make_bruteforce_match(password, k, i - 1, bruteforce_cardinality)
+        if match.i > k
+          match_sequence_copy << make_bruteforce_match(password, k, match.i - 1, bruteforce_cardinality)
         end
-        k = j + 1
-        match_sequence_copy.push match
+        k = match.j + 1
+        match_sequence_copy << match
       end
       if k < password.length
         match_sequence_copy.push make_bruteforce_match(password, k, password.length - 1, bruteforce_cardinality)
