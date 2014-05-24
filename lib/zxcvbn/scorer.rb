@@ -48,7 +48,7 @@ module Zxcvbn
         match_sequence_copy << match
       end
       if k < password.length
-        match_sequence_copy.push make_bruteforce_match(password, k, password.length - 1, bruteforce_cardinality)
+        match_sequence_copy << make_bruteforce_match(password, k, password.length - 1, bruteforce_cardinality)
       end
       match_sequence = match_sequence_copy
 
