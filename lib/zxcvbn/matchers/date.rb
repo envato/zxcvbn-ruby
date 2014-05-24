@@ -29,13 +29,16 @@ module Zxcvbn
         result = []
         re_match_all(YEAR_SUFFIX, password) do |match, re_match|
           match.pattern = 'date'
-          match.day = re_match[1].to_i
           match.separator = re_match[2]
-          match.month = re_match[3].to_i
           match.year = re_match[4].to_i
 
-          day, month = match.day, match.month
-          if month > 12
+          day = re_match[1].to_i
+          month = re_match[3].to_i
+
+          if month <= 12
+            match.day = day
+            match.month = month
+          else
             match.day = month
             match.month = day
           end
@@ -51,7 +54,6 @@ module Zxcvbn
           extract_dates(match.token).each do |candidate|
             day, month, year = candidate[:day], candidate[:month], candidate[:year]
 
-            match = match.dup
             match.pattern = 'date'
             match.day = day
             match.month = month
