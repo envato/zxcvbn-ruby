@@ -37,32 +37,19 @@ module Zxcvbn
         end
       end
 
-      # fill in the blanks between pattern matches with bruteforce "matches"
-      # that way the match sequence fully covers the password: match1.j == match2.i - 1 for every adjacent match1, match2.
-      make_bruteforce_match = lambda do |i, j|
-        Match.new(
-          :pattern => 'bruteforce',
-          :i => i,
-          :j => j,
-          :token => password[i..j],
-          :entropy => lg(bruteforce_cardinality ** (j - i + 1)),
-          :cardinality => bruteforce_cardinality
-        )
-      end
-
       k = 0
       match_sequence_copy = []
       match_sequence.each do |match|
         i, j = match.i, match.j
         if i - k > 0
           debugger if i == 0
-          match_sequence_copy << make_bruteforce_match.call(k, i - 1)
+          match_sequence_copy << make_bruteforce_match(password, k, i - 1, bruteforce_cardinality)
         end
         k = j + 1
         match_sequence_copy.push match
       end
       if k < password.length
-        match_sequence_copy.push make_bruteforce_match.call(k, password.length - 1)
+        match_sequence_copy.push make_bruteforce_match(password, k, password.length - 1, bruteforce_cardinality)
       end
       match_sequence = match_sequence_copy
 
@@ -77,6 +64,20 @@ module Zxcvbn
         :crack_time => crack_time.round(3),
         :crack_time_display => display_time(crack_time),
         :score => crack_time_to_score(crack_time)
+      )
+    end
+
+    # fill in the blanks between pattern matches with bruteforce "matches"
+    # that way the match sequence fully covers the password:
+    # match1.j == match2.i - 1 for every adjacent match1, match2.
+    def make_bruteforce_match(password, i, j, bruteforce_cardinality)
+      Match.new(
+        :pattern => 'bruteforce',
+        :i => i,
+        :j => j,
+        :token => password[i..j],
+        :entropy => lg(bruteforce_cardinality ** (j - i + 1)),
+        :cardinality => bruteforce_cardinality
       )
     end
   end
