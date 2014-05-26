@@ -41,12 +41,10 @@ module Zxcvbn
     end
 
     def average_degree_for_graph(graph_name)
-      graph   = Zxcvbn::ADJACENCY_GRAPHS[graph_name]
-      sum = 0.0
+      graph = Zxcvbn::ADJACENCY_GRAPHS[graph_name]
 
-      graph.each do |key, neighbors|
-        sum += neighbors.compact.length
-      end
+      sum = graph.map {|_, neighbors| neighbors.compact.length }
+                 .inject(0.0, :+)
 
       sum / graph.keys.length
     end
