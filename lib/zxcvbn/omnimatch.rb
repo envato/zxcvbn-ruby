@@ -9,8 +9,8 @@ module Zxcvbn
     end
 
     def matches(password, user_inputs = [])
-      matchers = (@matchers + user_input_matchers(user_inputs))
-      matchers.map do |matcher, result|
+      matchers = @matchers + user_input_matchers(user_inputs)
+      matchers.map do |matcher|
         matcher.matches(password)
       end.inject(&:+)
     end
