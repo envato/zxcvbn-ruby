@@ -42,11 +42,9 @@ module Zxcvbn
 
     def average_degree_for_graph(graph_name)
       graph = Zxcvbn::ADJACENCY_GRAPHS[graph_name]
-
-      sum = graph.map {|_, neighbors| neighbors.compact.length }
-                 .inject(0.0, :+)
-
-      sum / graph.keys.length
+      degrees = graph.map { |_, neighbors| neighbors.compact.size }
+      sum = degrees.inject(0, :+)
+      sum.to_f / graph.size
     end
 
     def starting_positions_for_graph(graph_name)
