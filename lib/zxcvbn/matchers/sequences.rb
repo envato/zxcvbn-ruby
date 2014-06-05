@@ -7,55 +7,56 @@ module Zxcvbn
         'digits' => '01234567890'
       }
 
+      def seq_match_length(password, from, direction, seq)
+        index_from = seq.index(password[from])
+        j = 1
+        while from + j < password.length &&
+              password[from + j] == seq[index_from + direction * j]
+          j+= 1
+        end
+        j
+      end
+
+      # find the first matching sequence, and return with
+      # direction, if characters are one apart in the sequence
+      def applicable_sequence(password, i)
+        SEQUENCES.each do |name, sequence|
+          index1 = sequence.index(password[i])
+          index2 = sequence.index(password[i+1])
+          if index1 and index2
+            seq_direction = index2 - index1
+            if [-1, 1].include?(seq_direction)
+              return [name, sequence, seq_direction]
+            else
+              return nil
+            end
+          end
+        end
+      end
+
       def matches(password)
         result = []
         i = 0
-        while i < password.length-1
-          j = i + 1
-          seq = nil # either lower, upper, or digits
-          seq_name = nil
-          seq_direction = nil # 1 for ascending seq abcd, -1 for dcba
-          SEQUENCES.each do |seq_candidate_name, seq_candidate|
-            seq = nil
+        while i < password.length - 1
+          seq_name, seq, seq_direction = applicable_sequence(password, i)
 
-            i_n, j_n = [password[i], password[j]].map do |chr|
-              chr ? seq_candidate.index(chr) : nil
+          if seq
+            length = seq_match_length(password, i, seq_direction, seq)
+            if length > 2
+              result << Match.new(
+                :pattern => 'sequence',
+                :i => i,
+                :j => i + length - 1,
+                :token => password[i, length],
+                :sequence_name => seq_name,
+                :sequence_space => seq.length,
+                :ascending => seq_direction == 1
+              )
             end
-
-            if i_n && j_n && i_n > -1 && j_n > -1
-              direction = j_n - i_n
-              if [1, -1].include?(direction)
-                seq = seq_candidate
-                seq_name = seq_candidate_name
-                seq_direction = direction
-              end
-            end
-            if seq
-              loop do
-                prev_char, cur_char = password[(j-1)], password[j]
-                prev_n, cur_n = [prev_char, cur_char].map do |chr|
-                  chr ? seq_candidate.index(chr) : nil
-                end
-                if prev_n && cur_n && cur_n - prev_n == seq_direction
-                  j += 1
-                else
-                  if j - i > 2 # don't consider length 1 or 2 chains.
-                    result << Match.new(
-                      :pattern => 'sequence',
-                      :i => i,
-                      :j => j-1,
-                      :token => password[i...j],
-                      :sequence_name => seq_name,
-                      :sequence_space => seq.length,
-                      :ascending => seq_direction == 1
-                    )
-                  end
-                  break
-                end
-              end
-            end
+            i += length - 1
+          else
+            i += 1
           end
-          i = j
         end
         result
       end

@@ -3,11 +3,9 @@ require 'ostruct'
 module Zxcvbn
   class Match < OpenStruct
     def to_hash
-      hash = @table.dup
-      hash.keys.sort.each do |key|
-        hash[key.to_s] = hash.delete(key)
+      @table.keys.sort.each_with_object({}) do |key, hash|
+        hash[key.to_s] = @table[key]
       end
-      hash
     end
   end
 end

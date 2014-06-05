@@ -3,24 +3,25 @@ module Zxcvbn::Entropy
 
   def calc_entropy(match)
     return match.entropy unless match.entropy.nil?
-    # debugger
+
     match.entropy = case match.pattern
-    when 'repeat'
-      repeat_entropy(match)
-    when 'sequence'
-      sequence_entropy(match)
-    when 'digits'
-      digits_entropy(match)
-    when 'year'
-      year_entropy(match)
-    when 'date'
-      date_entropy(match)
-    when 'spatial'
-      spatial_entropy(match)
-    when 'dictionary'
-      dictionary_entropy(match)
-    end
-    match.entropy ||= 0
+                    when 'repeat'
+                      repeat_entropy(match)
+                    when 'sequence'
+                      sequence_entropy(match)
+                    when 'digits'
+                      digits_entropy(match)
+                    when 'year'
+                      year_entropy(match)
+                    when 'date'
+                      date_entropy(match)
+                    when 'spatial'
+                      spatial_entropy(match)
+                    when 'dictionary'
+                      dictionary_entropy(match)
+                    else
+                      0
+                    end
   end
 
   def repeat_entropy(match)
@@ -66,7 +67,7 @@ module Zxcvbn::Entropy
       entropy += 2
     end
 
-    entropy    
+    entropy
   end
 
   def dictionary_entropy(match)
@@ -90,7 +91,7 @@ module Zxcvbn::Entropy
     num_upper = word.chars.count{|c| c.match(/[A-Z]/) }
     num_lower = word.chars.count{|c| c.match(/[a-z]/) }
     possibilities = 0
-    (0..min(num_upper, num_lower)).each do |i|
+    (0..[num_upper, num_lower].min).each do |i|
       possibilities += nCk(num_upper + num_lower, i)
     end
     lg(possibilities)
@@ -103,7 +104,7 @@ module Zxcvbn::Entropy
     match.sub.each do |subbed, unsubbed|
       num_subbed = word.chars.count{|c| c == subbed}
       num_unsubbed = word.chars.count{|c| c == unsubbed}
-      (0..min(num_subbed, num_unsubbed)).each do |i|
+      (0..[num_subbed, num_unsubbed].min).each do |i|
         possibilities += nCk(num_subbed + num_unsubbed, i)
       end
     end
@@ -131,16 +132,16 @@ module Zxcvbn::Entropy
         possibilities += nCk(i - 1, j - 1) * starting_positions * average_degree ** j
       end
     end
-        
+
     entropy = lg possibilities
     # add extra entropy for shifted keys. (% instead of 5, A instead of a.)
     # math is similar to extra entropy from uppercase letters in dictionary matches.
-    
+
     if match.shifted_count
       shiffted_count  = match.shifted_count
       unshifted_count = match.token.length - match.shifted_count
       possibilities   = 0
-      
+
       (0..[shiffted_count, unshifted_count].min).each do |i|
         possibilities += nCk(shiffted_count + unshifted_count, i)
       end

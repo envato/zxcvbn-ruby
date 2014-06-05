@@ -13,4 +13,9 @@ describe Zxcvbn::Matchers::Sequences do
     matches[0].token.should eq 'abcde'
     matches[1].token.should eq '87654'
   end
+
+  it 'finds overlapping matches' do
+    matches = matcher.matches('abcba')
+    matches.map(&:token).should eq ['abc', 'cba']
+  end
 end
