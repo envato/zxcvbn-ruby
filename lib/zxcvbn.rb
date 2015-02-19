@@ -27,14 +27,13 @@ module Zxcvbn
   DATA_PATH = Pathname(File.expand_path('../../data', __FILE__))
   ADJACENCY_GRAPHS = JSON.load(DATA_PATH.join('adjacency_graphs.json').read)
   FREQUENCY_LISTS_PATH = DATA_PATH.join("frequency_lists")
-  FREQUENCY_LISTS = {
-    "english":      FREQUENCY_LISTS_PATH.join("english.txt").read.split,
-    "female_names": FREQUENCY_LISTS_PATH.join("female_names.txt").read.split,
-    "male_names":   FREQUENCY_LISTS_PATH.join("male_names.txt").read.split,
-    "passwords":    FREQUENCY_LISTS_PATH.join("passwords.txt").read.split,
-    "surnames":     FREQUENCY_LISTS_PATH.join("surnames.txt").read.split
-  }
-  RANKED_DICTIONARIES = DictionaryRanker.rank_dictionaries(FREQUENCY_LISTS)
+  RANKED_DICTIONARIES = DictionaryRanker.rank_dictionaries(
+    "english" =>      FREQUENCY_LISTS_PATH.join("english.txt").read.split,
+    "female_names" => FREQUENCY_LISTS_PATH.join("female_names.txt").read.split,
+    "male_names" =>   FREQUENCY_LISTS_PATH.join("male_names.txt").read.split,
+    "passwords" =>    FREQUENCY_LISTS_PATH.join("passwords.txt").read.split,
+    "surnames" =>     FREQUENCY_LISTS_PATH.join("surnames.txt").read.split
+  )
 
   def test(password, user_inputs = [])
     zxcvbn = PasswordStrength.new
