@@ -5,7 +5,7 @@ describe Zxcvbn::Matchers::Year do
   let(:matches) { matcher.matches('testing1998') }
 
   it 'sets the pattern name' do
-    matches.all? { |m| m.pattern == 'year' }.should be_true
+    matches.all? { |m| m.pattern == 'year' }.should eql(true)
   end
 
   it 'finds the correct matches' do
