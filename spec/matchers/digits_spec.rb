@@ -5,7 +5,7 @@ describe Zxcvbn::Matchers::Digits do
   let(:matches) { matcher.matches('testing1239xx9712') }
 
   it 'sets the pattern name' do
-    matches.all? { |m| m.pattern == 'digits' }.should be_true
+    matches.all? { |m| m.pattern == 'digits' }.should eql(true)
   end
 
   it 'finds the correct matches' do

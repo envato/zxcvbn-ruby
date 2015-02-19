@@ -5,7 +5,7 @@ describe Zxcvbn::Matchers::Sequences do
   let(:matches) { matcher.matches('abcde87654') }
 
   it 'sets the pattern name' do
-    matches.all? { |m| m.pattern == 'sequence' }.should be_true
+    matches.all? { |m| m.pattern == 'sequence' }.should eql(true)
   end
 
   it 'finds the correct matches' do

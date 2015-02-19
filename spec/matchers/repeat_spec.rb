@@ -5,7 +5,7 @@ describe Zxcvbn::Matchers::Repeat do
   let(:matches) { matcher.matches('bbbbbtestingaaa') }
 
   it 'sets the pattern name' do
-    matches.all? { |m| m.pattern == 'repeat' }.should be_true
+    matches.all? { |m| m.pattern == 'repeat' }.should eql(true)
   end
 
   it 'finds the repeated patterns' do
