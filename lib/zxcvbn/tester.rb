@@ -6,7 +6,7 @@ module Zxcvbn
   # parsing the dictionary data from disk each test. Dictionary data is read
   # once from disk and stored in memory for the life of the Tester object.
   #
-  # Examples:
+  # Example:
   #
   #   tester = Zxcvbn::Tester.new
   #
