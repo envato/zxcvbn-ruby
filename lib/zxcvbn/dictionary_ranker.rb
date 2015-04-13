@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module Zxcvbn
   class DictionaryRanker
     def self.rank_dictionaries(lists)

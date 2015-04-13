@@ -1,3 +1,5 @@
+require 'zxcvbn/math'
+
 module Zxcvbn::Entropy
   include Zxcvbn::Math
 

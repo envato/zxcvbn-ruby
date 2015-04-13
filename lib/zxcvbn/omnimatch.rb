@@ -1,6 +1,17 @@
+require 'zxcvbn/dictionary_ranker'
+require 'zxcvbn/matchers/dictionary'
+require 'zxcvbn/matchers/l33t'
+require 'zxcvbn/matchers/spatial'
+require 'zxcvbn/matchers/digits'
+require 'zxcvbn/matchers/repeat'
+require 'zxcvbn/matchers/sequences'
+require 'zxcvbn/matchers/year'
+require 'zxcvbn/matchers/date'
+
 module Zxcvbn
   class Omnimatch
-    def initialize
+    def initialize(data)
+      @data = data
       @matchers = build_matchers
     end
 
@@ -24,14 +35,14 @@ module Zxcvbn
 
     def build_matchers
       matchers = []
-      dictionary_matchers = RANKED_DICTIONARIES.map do |name, dictionary|
+      dictionary_matchers = @data.ranked_dictionaries.map do |name, dictionary|
         Matchers::Dictionary.new(name, dictionary)
       end
       l33t_matcher = Matchers::L33t.new(dictionary_matchers)
       matchers += dictionary_matchers
       matchers += [
         l33t_matcher,
-        Matchers::Spatial.new(ADJACENCY_GRAPHS),
+        Matchers::Spatial.new(@data.adjacency_graphs),
         Matchers::Digits.new,
         Matchers::Repeat.new,
         Matchers::Sequences.new,

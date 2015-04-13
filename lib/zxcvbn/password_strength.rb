@@ -1,10 +1,12 @@
 require 'benchmark'
+require 'zxcvbn/omnimatch'
+require 'zxcvbn/scorer'
 
 module Zxcvbn
   class PasswordStrength
-    def initialize
-      @omnimatch = Omnimatch.new
-      @scorer = Scorer.new
+    def initialize(data)
+      @omnimatch = Omnimatch.new(data)
+      @scorer = Scorer.new(data)
     end
 
     def test(password, user_inputs = [])

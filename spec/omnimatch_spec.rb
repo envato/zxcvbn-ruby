@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Zxcvbn::Omnimatch do
   before(:all) do
-    @omnimatch = described_class.new
+    @omnimatch = described_class.new(Zxcvbn::Data.new)
   end
 
   def omnimatch(password)

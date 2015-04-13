@@ -1,3 +1,5 @@
+require 'zxcvbn/matchers/regex_helpers'
+
 module Zxcvbn
   module Matchers
     class Digits

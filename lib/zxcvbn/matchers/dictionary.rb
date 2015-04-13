@@ -1,3 +1,5 @@
+require 'zxcvbn/match'
+
 module Zxcvbn
   module Matchers
     # Given a password and a dictionary, match on any sequential segment of
