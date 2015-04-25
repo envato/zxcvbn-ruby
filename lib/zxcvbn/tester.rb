@@ -27,5 +27,9 @@ module Zxcvbn
     def add_word_lists(lists)
       lists.each_pair {|name, words| @data.add_word_list(name, words)}
     end
+
+    def inspect
+      "#<#{self.class}:0x#{self.__id__.to_s(16)}>"
+    end
   end
 end
