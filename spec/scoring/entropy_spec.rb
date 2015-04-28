@@ -6,6 +6,9 @@ describe Zxcvbn::Entropy do
   let(:entropy) {
     Class.new do
       include Zxcvbn::Entropy
+      def data
+        Zxcvbn::Data.new
+      end
     end.new
   }
 
@@ -163,7 +166,7 @@ describe Zxcvbn::Entropy do
     context 'when keyboard is qwerty' do
       it 'should return the correct entropy' do
         match.graph = 'qwerty'
-        
+
         entropy.spatial_entropy(match).should eql 11.562242424221074
       end
     end

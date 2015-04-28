@@ -1,5 +1,16 @@
+require 'zxcvbn/entropy'
+require 'zxcvbn/crack_time'
+require 'zxcvbn/score'
+require 'zxcvbn/match'
+
 module Zxcvbn
   class Scorer
+    def initialize(data)
+      @data = data
+    end
+
+    attr_reader :data
+
     include Entropy
     include CrackTime
 

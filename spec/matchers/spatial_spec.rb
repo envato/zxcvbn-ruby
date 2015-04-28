@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Zxcvbn::Matchers::Spatial do
   let(:matcher) { Zxcvbn::Matchers::Spatial.new(graphs) }
-  let(:graphs)  { Zxcvbn::ADJACENCY_GRAPHS }
+  let(:graphs)  { Zxcvbn::Data.new.adjacency_graphs }
 
   describe '#matches' do
     let(:matches) { matcher.matches('rtyikm') }

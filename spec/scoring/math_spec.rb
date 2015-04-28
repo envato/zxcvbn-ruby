@@ -3,6 +3,10 @@ require 'spec_helper'
 describe Zxcvbn::Math do
   include Zxcvbn::Math
 
+  def data
+    Zxcvbn::Data.new
+  end
+
   describe '#bruteforce_cardinality' do
     context 'when empty password' do
       it 'should return 0 if empty password' do

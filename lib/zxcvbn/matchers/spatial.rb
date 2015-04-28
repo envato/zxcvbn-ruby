@@ -1,3 +1,5 @@
+require 'zxcvbn/match'
+
 module Zxcvbn
   module Matchers
     class Spatial
