@@ -193,7 +193,6 @@ marc
 reginald
 ruben
 brett
-angel
 nathaniel
 rafael
 edgar
@@ -321,7 +320,6 @@ preston
 alton
 archie
 marco
-wm
 pete
 randolph
 garry
@@ -330,7 +328,6 @@ jonathon
 felipe
 bennie
 gerardo
-ed
 dominic
 loren
 delbert
@@ -360,10 +357,12 @@ irving
 owen
 rufus
 woodrow
+sammy
 kristopher
 levi
 marcos
 gustavo
+jake
 lionel
 marty
 gilberto
@@ -375,7 +374,6 @@ orville
 drew
 ervin
 dewey
-al
 wilfred
 josh
 hugo
@@ -402,7 +400,6 @@ lamar
 rolando
 clay
 percy
-dexter
 bradford
 merle
 darin
@@ -553,7 +550,6 @@ rodrigo
 gerry
 rigoberto
 alphonso
-ty
 rickie
 noe
 vern
@@ -594,7 +590,6 @@ nestor
 hollis
 stefan
 donny
-art
 linwood
 beau
 weldon
@@ -630,7 +625,6 @@ adan
 numbers
 clair
 buford
-german
 bernie
 wilmer
 emerson
@@ -678,7 +672,6 @@ jamel
 lazaro
 alphonse
 randell
-major
 johnie
 jarrett
 ariel
@@ -689,7 +682,6 @@ seymour
 scottie
 eugenio
 mohammed
-valentin
 arnulfo
 lucien
 ferdinand
@@ -697,7 +689,6 @@ thad
 ezra
 aldo
 rubin
-royal
 mitch
 earle
 abe
@@ -865,7 +856,6 @@ jamey
 teodoro
 mckinley
 maximo
-sol
 raleigh
 lawerence
 abram
@@ -899,7 +889,6 @@ nathanial
 jordon
 danilo
 claud
-val
 sherwood
 raymon
 rayford
@@ -911,8 +900,6 @@ felton
 ezequiel
 erasmo
 lonny
-len
-ike
 milan
 lino
 jarod
@@ -927,27 +914,23 @@ ellsworth
 virgilio
 toney
 nathanael
-del
 benedict
 mose
 hong
 isreal
 garret
 fausto
-asa
 arlen
 zack
 modesto
 francesco
 manual
-jae
 gaylord
 gaston
 filiberto
 deangelo
 michale
 granville
-wes
 malik
 zackary
 tuan
@@ -959,13 +942,11 @@ korey
 jospeh
 colton
 waylon
-von
 hosea
 shad
 santo
 rudolf
 rolf
-rey
 renaldo
 marcellus
 lucius
@@ -988,7 +969,6 @@ jacinto
 graig
 franklyn
 edmundo
-sid
 leif
 jeramy
 willian
@@ -997,7 +977,6 @@ shon
 michal
 lynwood
 jere
-hai
 elden
 darell
 broderick

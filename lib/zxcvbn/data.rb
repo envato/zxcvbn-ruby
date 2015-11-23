@@ -5,11 +5,12 @@ module Zxcvbn
   class Data
     def initialize
       @ranked_dictionaries = DictionaryRanker.rank_dictionaries(
-        "english" =>      read_word_list("english.txt"),
-        "female_names" => read_word_list("female_names.txt"),
-        "male_names" =>   read_word_list("male_names.txt"),
-        "passwords" =>    read_word_list("passwords.txt"),
-        "surnames" =>     read_word_list("surnames.txt")
+        "us_tv_and_film" =>      read_word_list("us_tv_and_film.txt"),
+        "english_wikipedia" =>      read_word_list("english_wikipedia.txt"),
+        "passwords" =>      read_word_list("passwords.txt"),
+        "surnames" =>      read_word_list("surnames.txt"),
+        "male_names" =>      read_word_list("male_names.txt"),
+        "female_names" =>      read_word_list("female_names.txt")
       )
       @adjacency_graphs = JSON.load(DATA_PATH.join('adjacency_graphs.json').read)
     end
