@@ -7,7 +7,7 @@ module JsHelpers
 
     def initialize
       @ctx = V8::Context.new do |ctx|
-        ctx.eval(JS_SOURCE_PATH.join('compiled.js').read)
+        ctx.eval(JS_SOURCE_PATH.join('zxcvbn.js').read)
       end
     end
 

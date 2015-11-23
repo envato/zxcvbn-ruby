@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Zxcvbn::Matchers::Dictionary do
-  let(:matcher) { described_class.new('english', dictionary) }
-  let(:dictionary) { Zxcvbn::Data.new.ranked_dictionaries['english'] }
+  let(:matcher) { described_class.new('us_tv_and_film', dictionary) }
+  let(:dictionary) { Zxcvbn::Data.new.ranked_dictionaries['us_tv_and_film'] }
 
   it 'finds all the matches' do
     matches = matcher.matches('whatisinit')

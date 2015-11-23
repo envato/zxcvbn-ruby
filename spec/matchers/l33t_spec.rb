@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Zxcvbn::Matchers::L33t do
   let(:matcher) { described_class.new([dictionary_matcher]) }
-  let(:dictionary) { Zxcvbn::Data.new.ranked_dictionaries['english'] }
-  let(:dictionary_matcher) { Zxcvbn::Matchers::Dictionary.new('english', dictionary) }
+  let(:dictionary) { Zxcvbn::Data.new.ranked_dictionaries['us_tv_and_film'] }
+  let(:dictionary_matcher) { Zxcvbn::Matchers::Dictionary.new('us_tv_and_film', dictionary) }
 
   describe '#relevant_l33t_substitutions' do
     it 'returns relevant l33t substitutions' do
@@ -52,7 +52,7 @@ describe Zxcvbn::Matchers::L33t do
 
   describe '#matches' do
     let(:matches) { matcher.matches('p@ssword') }
-    # it doesn't match on 'password' because that's not in the english
+    # it doesn't match on 'password' because that's not in the us_tv_and_film
     # dictionary/frequency list
 
     it 'finds the correct matches' do
