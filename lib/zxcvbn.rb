@@ -12,9 +12,8 @@ module Zxcvbn
   # Example:
   #
   #   Zxcvbn.test("password").score #=> 0
-  def test(password, user_inputs = [], word_lists = {})
+  def test(password, user_inputs = [])
     tester = Tester.new
-    tester.add_word_lists(word_lists)
     tester.test(password, user_inputs)
   end
 end

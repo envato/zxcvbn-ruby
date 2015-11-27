@@ -50,5 +50,7 @@ TEST_PASSWORDS = [
 
   'eheuczkqyq',
   'rWibMFACxAUGZmxhVncy',
-  'Ba9ZyWABu99[BK#6MBgbH88Tofv)vs$w'
+  'Ba9ZyWABu99[BK#6MBgbH88Tofv)vs$w',
+  'qwER43@!',
+  'Obama!123'
 ]
