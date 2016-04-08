@@ -38,4 +38,7 @@ $ irb
 => #<Zxcvbn::Score:0x007fd4689c1168 @entropy=29.782, @crack_time=46159.451, @crack_time_display="14 hours", @score=2, @match_sequence=[#<Zxcvbn::Match pattern="spatial", i=0, j=15, token="asdfghju7654rewq", graph="qwerty", turns=5, shifted_count=0, entropy=29.7820508329166>], password"asdfghju7654rewq", calc_time0.00526
 ```
 
-**Note**: Do not store the results of `Zxcvbn::Tester#test`. See http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/
+**Note**: Storing the entropy of an encrypted or hashed value provides
+information that can make cracking the value orders of magnitude easier for an
+attacker. For this reason we advise you not to store the results of
+`Zxcvbn::Tester#test`. Further reading: [A Tale of Security Gone Wrong](http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/).
