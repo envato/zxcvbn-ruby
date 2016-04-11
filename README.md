@@ -10,6 +10,8 @@ Gemfile:
 gem 'zxcvbn-ruby', require: 'zxcvbn'
 ```
 
+[RubyGems.org gem replacement vulnerability and mitigation](http://blog.rubygems.org/2016/04/06/gem-replacement-vulnerability-and-mitigation.html): not affected.
+
 Example usage:
 
 ```ruby
