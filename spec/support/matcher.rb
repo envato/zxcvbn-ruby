@@ -17,7 +17,7 @@ RSpec::Matchers.define :match_js_results do |expected_js_results|
     @missing.empty? && @extra.empty?
   end
 
-  failure_message_for_should do |actual|
+  failure_message do |actual|
     "Matches missing from ruby results:\n#{@missing.inspect}\nMatches unique to ruby results:\n#{@extra.inspect}"
   end
 

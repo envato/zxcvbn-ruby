@@ -18,7 +18,7 @@ describe Zxcvbn::Omnimatch do
       js_results = js_omnimatch(password)
       ruby_results = omnimatch(password)
 
-      ruby_results.should match_js_results js_results
+      expect(ruby_results).to match_js_results js_results
     end
   end
 end
