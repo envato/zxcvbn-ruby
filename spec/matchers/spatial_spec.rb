@@ -8,13 +8,13 @@ describe Zxcvbn::Matchers::Spatial do
     let(:matches) { matcher.matches('rtyikm') }
 
     it 'finds the correct of matches' do
-      matches.count.should eq 3
-      matches[0].token.should eq 'rty'
-      matches[0].graph.should eq 'qwerty'
-      matches[1].token.should eq 'ikm'
-      matches[1].graph.should eq 'qwerty'
-      matches[2].token.should eq 'yik'
-      matches[2].graph.should eq 'dvorak'
+      expect(matches.count).to eq 3
+      expect(matches[0].token).to eq 'rty'
+      expect(matches[0].graph).to eq 'qwerty'
+      expect(matches[1].token).to eq 'ikm'
+      expect(matches[1].graph).to eq 'qwerty'
+      expect(matches[2].token).to eq 'yik'
+      expect(matches[2].graph).to eq 'dvorak'
     end
   end
 end

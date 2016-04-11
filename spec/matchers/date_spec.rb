@@ -15,16 +15,16 @@ describe Zxcvbn::Matchers::Date do
       let(:matches) { matcher.matches(password) }
 
       it 'finds matches' do
-        matches.should_not be_empty
+        expect(matches).not_to be_empty
       end
 
       it 'finds the correct matches' do
-        matches.count.should eq 1
-        matches[0].token.should eq %w[ 02 12 1997 ].join(separator)
-        matches[0].separator.should eq separator
-        matches[0].day.should eq 2
-        matches[0].month.should eq 12
-        matches[0].year.should eq 1997
+        expect(matches.count).to eq 1
+        expect(matches[0].token).to eq %w[ 02 12 1997 ].join(separator)
+        expect(matches[0].separator).to eq separator
+        expect(matches[0].day).to eq 2
+        expect(matches[0].month).to eq 12
+        expect(matches[0].year).to eq 1997
       end
     end
   end
@@ -103,7 +103,7 @@ describe Zxcvbn::Matchers::Date do
     let(:matches) { matcher.matches('testing0.x.1997') }
 
     it 'doesnt match' do
-      matches.should be_empty
+      expect(matches).to be_empty
     end
   end
 end

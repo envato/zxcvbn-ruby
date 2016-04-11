@@ -15,7 +15,7 @@ describe Zxcvbn::Entropy do
   describe '#repeat_entropy' do
     it 'returns the correct value' do
       match = Zxcvbn::Match.new(:token => '2222')
-      entropy.repeat_entropy(match).should eq 5.321928094887363
+      expect(entropy.repeat_entropy(match)).to eq 5.321928094887363
     end
   end
 
@@ -27,7 +27,7 @@ describe Zxcvbn::Entropy do
         let(:token) { token }
 
         it 'returns the correct value' do
-          entropy.sequence_entropy(match).should eq 3.807354922057604
+          expect(entropy.sequence_entropy(match)).to eq 3.807354922057604
         end
       end
     end
@@ -36,7 +36,7 @@ describe Zxcvbn::Entropy do
       let(:token) { '23456' }
 
       it 'returns the correct value' do
-        entropy.sequence_entropy(match).should eq 5.643856189774725
+        expect(entropy.sequence_entropy(match)).to eq 5.643856189774725
       end
     end
 
@@ -44,7 +44,7 @@ describe Zxcvbn::Entropy do
       let(:token) { 'bcdef' }
 
       it 'returns the correct value' do
-        entropy.sequence_entropy(match).should eq 7.022367813028454
+        expect(entropy.sequence_entropy(match)).to eq 7.022367813028454
       end
     end
 
@@ -52,7 +52,7 @@ describe Zxcvbn::Entropy do
       let(:token) { 'BCDEF' }
 
       it 'returns the correct value' do
-        entropy.sequence_entropy(match).should eq 8.022367813028454
+        expect(entropy.sequence_entropy(match)).to eq 8.022367813028454
       end
     end
 
@@ -61,7 +61,7 @@ describe Zxcvbn::Entropy do
       let(:token) { 'bcdef' }
 
       it 'returns the correct value' do
-        entropy.sequence_entropy(match).should eq 8.022367813028454
+        expect(entropy.sequence_entropy(match)).to eq 8.022367813028454
       end
     end
   end
@@ -69,13 +69,13 @@ describe Zxcvbn::Entropy do
   describe '#digits_entropy' do
     it 'returns the correct value' do
       match = Zxcvbn::Match.new(:token => '12345678')
-      entropy.digits_entropy(match).should eq 26.5754247590989
+      expect(entropy.digits_entropy(match)).to eq 26.5754247590989
     end
   end
 
   describe '#year_entropy' do
     it 'returns the correct value' do
-      entropy.year_entropy(nil).should eq 6.894817763307944
+      expect(entropy.year_entropy(nil)).to eq 6.894817763307944
     end
   end
 
@@ -83,21 +83,21 @@ describe Zxcvbn::Entropy do
     context 'with a two digit year' do
       it 'returns the correct value' do
         match = Zxcvbn::Match.new(:year => 98)
-        entropy.date_entropy(match).should eq 15.183015000882756
+        expect(entropy.date_entropy(match)).to eq 15.183015000882756
       end
     end
 
     context 'with a four digit year' do
       it 'returns the correct value' do
         match = Zxcvbn::Match.new(:year => 2012)
-        entropy.date_entropy(match).should eq 15.433976574415976
+        expect(entropy.date_entropy(match)).to eq 15.433976574415976
       end
     end
 
     context 'with a separator' do
       it 'returns the correct value' do
         match = Zxcvbn::Match.new(:year => 2012, :separator => '/')
-        entropy.date_entropy(match).should eq 17.433976574415976
+        expect(entropy.date_entropy(match)).to eq 17.433976574415976
       end
     end
   end
@@ -112,42 +112,42 @@ describe Zxcvbn::Entropy do
       let(:token) { 'you' }
       let(:rank)  { 1 }
 
-      specify { calculated_entropy.should eq 0 }
+      specify { expect(calculated_entropy).to eq 0 }
     end
 
     context 'with all upper case characters' do
       let(:token) { 'YOU' }
       let(:rank)  { 1 }
 
-      specify { calculated_entropy.should eq 1 }
+      specify { expect(calculated_entropy).to eq 1 }
     end
 
     context 'starting with uppercase' do
       let(:token) { 'You' }
       let(:rank)  { 1 }
 
-      specify { calculated_entropy.should eq 1 }
+      specify { expect(calculated_entropy).to eq 1 }
     end
 
     context 'starting with uppercase' do
       let(:token) { 'yoU' }
       let(:rank)  { 1 }
 
-      specify { calculated_entropy.should eq 1 }
+      specify { expect(calculated_entropy).to eq 1 }
     end
 
     context 'mixed upper and lower' do
       let(:token) { 'tEsTiNg' }
       let(:rank)  { 1 }
 
-      specify { calculated_entropy.should eq 6 }
+      specify { expect(calculated_entropy).to eq 6 }
     end
 
     context 'starting with digits' do
       let(:token) { '12345' }
       let(:rank)  { 1 }
 
-      specify { calculated_entropy.should eq 0 }
+      specify { expect(calculated_entropy).to eq 0 }
     end
 
     context 'extra l33t entropy' do
@@ -156,7 +156,7 @@ describe Zxcvbn::Entropy do
       let(:l33t)  { true }
       let(:sub)   { {'3' => 'e', '0' => 'o'} }
 
-      specify { calculated_entropy.should eq 1 }
+      specify { expect(calculated_entropy).to eq 1 }
     end
   end
 
@@ -167,7 +167,7 @@ describe Zxcvbn::Entropy do
       it 'should return the correct entropy' do
         match.graph = 'qwerty'
 
-        entropy.spatial_entropy(match).should eql 11.562242424221074
+        expect(entropy.spatial_entropy(match)).to eql 11.562242424221074
       end
     end
 
@@ -175,7 +175,7 @@ describe Zxcvbn::Entropy do
       it 'should return the correct entropy' do
         match.graph = 'dvorak'
 
-        entropy.spatial_entropy(match).should eql 11.562242424221074
+        expect(entropy.spatial_entropy(match)).to eql 11.562242424221074
       end
     end
 
@@ -183,7 +183,7 @@ describe Zxcvbn::Entropy do
       it 'should return the correct entropy' do
         match.graph = 'keypad'
 
-        entropy.spatial_entropy(match).should eql 9.05528243550119
+        expect(entropy.spatial_entropy(match)).to eql 9.05528243550119
       end
     end
 
@@ -191,7 +191,7 @@ describe Zxcvbn::Entropy do
       it 'should return the correct entropy' do
         match.turns = 5
 
-        entropy.spatial_entropy(match).should eql 21.761397858718993
+        expect(entropy.spatial_entropy(match)).to eql 21.761397858718993
       end
     end
 
@@ -199,7 +199,7 @@ describe Zxcvbn::Entropy do
       it 'should return the correct entropy' do
         match.shiffted_count = 5
 
-        entropy.spatial_entropy(match).should eql 9.05528243550119
+        expect(entropy.spatial_entropy(match)).to eql 9.05528243550119
       end
     end
 
@@ -208,7 +208,7 @@ describe Zxcvbn::Entropy do
         match.shiffted_count = 5
         match.turns          = 5
 
-        entropy.spatial_entropy(match).should eql 21.761397858718993
+        expect(entropy.spatial_entropy(match)).to eql 21.761397858718993
       end
     end
   end

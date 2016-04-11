@@ -5,11 +5,11 @@ describe Zxcvbn::Matchers::Digits do
   let(:matches) { matcher.matches('testing1239xx9712') }
 
   it 'sets the pattern name' do
-    matches.all? { |m| m.pattern == 'digits' }.should eql(true)
+    expect(matches.all? { |m| m.pattern == 'digits' }).to eql(true)
   end
 
   it 'finds the correct matches' do
-    matches.count.should == 2
-    matches[0].token.should eq '1239'
+    expect(matches.count).to eq(2)
+    expect(matches[0].token).to eq '1239'
   end
 end
