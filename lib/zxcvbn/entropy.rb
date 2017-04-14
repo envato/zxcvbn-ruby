@@ -129,7 +129,7 @@ module Zxcvbn::Entropy
 
     # estimate the ngpumber of possible patterns w/ token length or less with number of turns or less.
     (2..token_length).each do |i|
-      possible_turns = [turns, i -1].min
+      possible_turns = [turns, i - 1].min
       (1..possible_turns).each do |j|
         possibilities += nCk(i - 1, j - 1) * starting_positions * average_degree ** j
       end
