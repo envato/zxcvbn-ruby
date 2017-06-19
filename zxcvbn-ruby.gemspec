@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "zxcvbn-ruby"
   gem.require_paths = ["lib"]
   gem.version       = Zxcvbn::VERSION
+  gem.license       = 'MIT'
 
   gem.add_development_dependency 'therubyracer'
   gem.add_development_dependency 'rspec'
