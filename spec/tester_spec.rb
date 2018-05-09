@@ -16,6 +16,11 @@ describe Zxcvbn::Tester do
       expect(ruby_result.score).to eq js_result['score']
       expect(ruby_result.pattern).to eq js_result['pattern']
       expect(ruby_result.match_sequence.count).to eq js_result['match_sequence'].count
+
+      # NOTE: feedback doesn't exist in these old versions of the library,
+      #       so instead we just check that it put `Feedback` in there.
+      #       Real tests for its values go in `feedback_giver_spec.rb`
+      expect(ruby_result.feedback).to be_a Zxcvbn::Feedback
     end
   end
 
