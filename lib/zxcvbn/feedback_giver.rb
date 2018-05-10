@@ -81,18 +81,6 @@ module Zxcvbn
           ]
         )
 
-      # NOTE: This gem doesn't include the `recent_year` regex
-      # when 'regex'
-      #   if match.regex_name == 'recent_year'
-      #     Feedback.new(
-      #       warning: 'Recent years are easy to guess',
-      #       suggestions: [
-      #         'Avoid recent years',
-      #         'Avoid years that are associated with you'
-      #       ]
-      #     )
-      #   end
-
       when 'date'
         Feedback.new(
           warning: 'Dates are often easy to guess',
@@ -114,14 +102,8 @@ module Zxcvbn
                       'This is a very common password'
                     end
                   else
-                    # NOTE: This gem doesn't include the guesses_log10 data,
-                    #       so we just show this for all similar passwords.
-                    # elsif match.guesses_log10 <= 4
                     'This is similar to a commonly used password'
                   end
-                # NOTE: This gem doesn't include the "english_wikipedia" dict
-                # elsif match.dictionary_name == 'english_wikipedia'
-                #   'A word by itself is easy to guess' if is_sole_match
                 elsif NAME_DICTIONARIES.include? match.dictionary_name
                   if is_sole_match
                     'Names and surnames by themselves are easy to guess'
@@ -140,11 +122,6 @@ module Zxcvbn
           'All-uppercase is almost as easy to guess as all-lowercase'
         )
       end
-
-      # NOTE: This gem doesn't include reverse dictionary checking
-      # if match.reversed && match.token.length >= 4
-      #   suggestions.push "Reversed words aren't much harder to guess"
-      # end
 
       if match.l33t
         suggestions.push(
