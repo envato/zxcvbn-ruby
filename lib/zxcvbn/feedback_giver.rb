@@ -60,14 +60,8 @@ module Zxcvbn
         )
 
       when 'repeat'
-        warning = if match.token.length == 1
-                    'Repeats like "aaa" are easy to guess'
-                  else
-                    'Repeats like "abcabcabc" are only slightly harder to guess than "abc"'
-                  end
-
         Feedback.new(
-          warning: warning,
+          warning: 'Repeats like "aaa" are easy to guess',
           suggestions: [
             'Avoid repeated words and characters'
           ]
