@@ -109,9 +109,9 @@ module Zxcvbn
       suggestions = []
       word = match.token
 
-      if word.match?(Zxcvbn::Entropy::START_UPPER)
+      if word =~ Zxcvbn::Entropy::START_UPPER
         suggestions.push "Capitalization doesn't help very much"
-      elsif word.match?(Zxcvbn::Entropy::ALL_UPPER) && word.downcase != word
+      elsif word =~ Zxcvbn::Entropy::ALL_UPPER && word.downcase != word
         suggestions.push(
           'All-uppercase is almost as easy to guess as all-lowercase'
         )
