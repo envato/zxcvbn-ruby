@@ -1,4 +1,8 @@
-FeedbackSuggest = Struct.new(:warning, :suggestions)
+FeedbackSuggest = Struct.new(:warning, :suggestions) do
+  def to_json
+    to_h.to_json
+  end
+end
 
 module Zxcvbn
   class Feedback
