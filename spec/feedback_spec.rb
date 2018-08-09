@@ -2,20 +2,36 @@ require 'spec_helper'
 
 describe Zxcvbn::Feedback do
 
-  let(:suggestions) { Zxcvbn::Feedback.new(score, sequence).suggestions }
-  # let(:score) { Zxcvbn::Score.new(score_options) }
-  let(:score) { 0 }
+  let(:feedback_result) { Zxcvbn::Feedback.new(score, sequence).suggestions }
 
-  let(:sequence) do
-    [
-      {token: "p@ssword", pattern: "dictionary"},
-      {token: "2001", pattern: "year"}
-    ]
+  context "score and squence are low or non existent (most likly no password tested)" do
+    let(:score) { 0 }
+    let(:sequence) { [] }
+
+    it "returns a struct with warning and suggestions" do
+      expect(feedback_result.to_h).to have_key(:warning)
+      expect(feedback_result.to_h).to have_key(:suggestions)
+    end
   end
 
-  it "returns a struct with warning and suggestions" do
-    expect(suggestions.to_h).to have_key(:warning)
-    expect(suggestions.to_h).to have_key(:suggestions)
-  end
+  context "secure password" do
+    let(:score) { 4 }
+    let(:sequence) do
+      [
+        {token: "cats", pattern: "dictionary"},
+        {token: ".", pattern: "bruteforce"},
+        {token: "look", pattern: "dictionary"},
+        {token: ".", pattern: "bruteforce"},
+        {token: "good", pattern: "dictionary"},
+        {token: ".", pattern: "bruteforce"},
+        {token: "in", pattern: "dictionary"},
+        {token: ".", pattern: "bruteforce"},
+        {token: "black", pattern: "dictionary"},
+      ]
+    end
 
+    it "returns empty suggestions if score is above 2" do
+      expect(feedback_result.suggestions).to be_empty
+    end
+  end
 end
