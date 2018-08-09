@@ -14,6 +14,21 @@ describe Zxcvbn::Feedback do
     end
   end
 
+  context "weak password" do
+    let(:score) { 0 }
+    let(:sequence) do
+      [
+        {token: "I", pattern: "dictionary"},
+        {token: "LOVE", pattern: "bruteforce"},
+        {token: "cats", pattern: "dictionary"},
+      ]
+    end
+
+    it "returns suggestions with weak password" do
+      expect(feedback_result.suggestions).to_not be_empty
+    end
+  end
+
   context "secure password" do
     let(:score) { 4 }
     let(:sequence) do

@@ -21,6 +21,13 @@ module Zxcvbn
 
       return suggest if sequence.size.zero?
       return FeedbackSuggest.new('', []) if score > 2
+
+      extra_feedback = 'Add another word or two. Uncommon words are better.'
+      if !suggest.suggestions.empty?
+        suggest.suggestions.unshift extra_feedback
+      else
+        suggest = FeedbackSuggest.new('', [extra_feedback])
+      end
       suggest
     end
   end
