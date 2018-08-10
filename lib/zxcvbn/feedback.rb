@@ -32,8 +32,8 @@ module Zxcvbn
 
     def get_match_feedback(match, is_sole_match)
       case match.pattern
-      when ''
-        FeedbackSuggest.new('', [])
+      when 'spatial'
+        FeedbackSuggest.new('Short keyboard patterns are easy to guess', ['Use a longer keyboard pattern with more turns'])
       else
         FeedbackSuggest.new('', [])
       end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SequenceToken = Struct.new(:token, :pattern)
+SequenceToken = Struct.new(:token, :pattern, :turns)
 
 describe Zxcvbn::Feedback do
 
@@ -49,6 +49,19 @@ describe Zxcvbn::Feedback do
 
     it "returns empty suggestions if score is above 2" do
       expect(feedback_result.suggestions).to be_empty
+    end
+  end
+
+  context "spatal" do
+    let(:score) { 0 }
+    let(:sequence) { [SequenceToken.new("yuiop", "spatial")] }
+
+    it "suggests not using spatially similar keyboard characters" do
+      expect(feedback_result.suggestions).to include("Use a longer keyboard pattern with more turns")
+    end
+
+    it "has a warning regarding keyboard patterns" do
+      expect(feedback_result.warning).to eq("Short keyboard patterns are easy to guess")
     end
   end
 end
