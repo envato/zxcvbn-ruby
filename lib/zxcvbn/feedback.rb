@@ -25,13 +25,17 @@ module Zxcvbn
       return FeedbackSuggest.new('', []) if score > 2
 
       longest_match = sequence.max_by { |x| x.token.length }
-      suggest = get_match_feedback(longest_match, sequence.size == 1)
+      suggest = get_match_feedback(longest_match)
       suggest.suggestions.unshift('Add another word or two. Uncommon words are better.')
       suggest
     end
 
-    def get_match_feedback(match, is_sole_match)
+    private
+
+    def get_match_feedback(match)
       case match.pattern
+      when 'dictionary'
+        get_dictionary_match_feedback(match)
       when 'spatial'
         FeedbackSuggest.new('Short keyboard patterns are easy to guess', ['Use a longer keyboard pattern with more turns'])
       when 'repeat'
@@ -42,6 +46,21 @@ module Zxcvbn
         FeedbackSuggest.new("Years are easy to guess", ['Avoid recent years or years that are associated with you'])
       else
         FeedbackSuggest.new('', [])
+      end
+    end
+
+    def get_dictionary_match_feedback(match)
+      warning = get_dictionary_warning(match)
+      FeedbackSuggest.new(warning, [])
+    end
+
+    def get_dictionary_warning(match)
+      if match.dictionary_name == "passwords"
+        "This is similar to a commonly used password"
+      elsif match.dictionary_name == "english"
+        "Simple passwords with a few comomon words are easy to guess"
+      elsif ['surnames', 'male_names', 'female_names'].include?(match.dictionary_name)
+        "Common names and surnames are easy to guess"
       end
     end
 

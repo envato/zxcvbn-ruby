@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SequenceToken = Struct.new(:token, :pattern)
+SequenceToken = Struct.new(:token, :pattern, :dictionary_name)
 
 describe Zxcvbn::Feedback do
 
@@ -106,6 +106,35 @@ describe Zxcvbn::Feedback do
 
     it "has a warning regarding character repetition" do
       expect(feedback_result.warning).to eq("Years are easy to guess")
+    end
+  end
+
+  context "dictionary" do
+    context "password" do
+      let(:score) { 0 }
+      let(:sequence) { [SequenceToken.new("baseball", "dictionary", "passwords")] }
+
+      it "warns about known common passwords" do
+        expect(feedback_result.warning).to eq("This is similar to a commonly used password")
+      end
+    end
+
+    context "english" do
+      let(:score) { 0 }
+      let(:sequence) { [SequenceToken.new("something", "dictionary", "english")] }
+
+      it "warns about known common passwords" do
+        expect(feedback_result.warning).to eq("Simple passwords with a few comomon words are easy to guess")
+      end
+    end
+
+    context "names" do
+      let(:score) { 0 }
+      let(:sequence) { [SequenceToken.new("baseball", "dictionary", "female_names")] }
+
+      it "warns about known common names" do
+        expect(feedback_result.warning).to eq("Common names and surnames are easy to guess")
+      end
     end
   end
 end
