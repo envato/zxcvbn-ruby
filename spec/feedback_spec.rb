@@ -74,7 +74,7 @@ describe Zxcvbn::Feedback do
     let(:score) { 0 }
     let(:sequence) { [SequenceToken.new("hhhhhh", "repeat")] }
 
-    it "suggests not using repeating characters or sequences" do
+    it "suggests not using repeating characters" do
       expect(feedback_result.suggestions).to include("Avoid repeated words and characters")
     end
 
