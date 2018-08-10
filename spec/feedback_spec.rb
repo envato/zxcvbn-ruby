@@ -95,4 +95,17 @@ describe Zxcvbn::Feedback do
       expect(feedback_result.warning).to eq("Sequences like abc or 6543 are easy to guess")
     end
   end
+
+  context "year" do
+    let(:score) { 0 }
+    let(:sequence) { [SequenceToken.new("2014", "year")] }
+
+    it "suggests not using repeating characters" do
+      expect(feedback_result.suggestions).to include("Avoid recent years or years that are associated with you")
+    end
+
+    it "has a warning regarding character repetition" do
+      expect(feedback_result.warning).to eq("Years are easy to guess")
+    end
+  end
 end

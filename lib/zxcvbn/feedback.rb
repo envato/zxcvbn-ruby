@@ -38,6 +38,8 @@ module Zxcvbn
         FeedbackSuggest.new("Repeats like 'aaa' or 'abcabcabc' are easy to guess", ['Avoid repeated words and characters'])
       when 'sequence'
         FeedbackSuggest.new("Sequences like abc or 6543 are easy to guess", ['Avoid sequences'])
+      when 'year'
+        FeedbackSuggest.new("Years are easy to guess", ['Avoid recent years or years that are associated with you'])
       else
         FeedbackSuggest.new('', [])
       end
