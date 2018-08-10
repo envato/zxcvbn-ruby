@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SequenceToken = Struct.new(:token, :pattern, :turns)
+SequenceToken = Struct.new(:token, :pattern)
 
 describe Zxcvbn::Feedback do
 
@@ -62,6 +62,19 @@ describe Zxcvbn::Feedback do
 
     it "has a warning regarding keyboard patterns" do
       expect(feedback_result.warning).to eq("Short keyboard patterns are easy to guess")
+    end
+  end
+
+  context "repeat" do
+    let(:score) { 0 }
+    let(:sequence) { [SequenceToken.new("hhhhhh", "repeat")] }
+
+    it "suggests not using repeating characters or sequences" do
+      expect(feedback_result.suggestions).to include("Avoid repeated words and characters")
+    end
+
+    it "has a warning regarding character repetition" do
+      expect(feedback_result.warning).to eq("Repeats like 'aaa' or 'abcabcabc' are easy to guess")
     end
   end
 end

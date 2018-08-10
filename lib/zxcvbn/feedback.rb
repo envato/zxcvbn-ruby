@@ -34,6 +34,8 @@ module Zxcvbn
       case match.pattern
       when 'spatial'
         FeedbackSuggest.new('Short keyboard patterns are easy to guess', ['Use a longer keyboard pattern with more turns'])
+      when 'repeat'
+        FeedbackSuggest.new("Repeats like 'aaa' or 'abcabcabc' are easy to guess", ['Avoid repeated words and characters'])
       else
         FeedbackSuggest.new('', [])
       end
