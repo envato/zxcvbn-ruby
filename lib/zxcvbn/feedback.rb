@@ -36,6 +36,8 @@ module Zxcvbn
         FeedbackSuggest.new('Short keyboard patterns are easy to guess', ['Use a longer keyboard pattern with more turns'])
       when 'repeat'
         FeedbackSuggest.new("Repeats like 'aaa' or 'abcabcabc' are easy to guess", ['Avoid repeated words and characters'])
+      when 'sequence'
+        FeedbackSuggest.new("Sequences like abc or 6543 are easy to guess", ['Avoid sequences'])
       else
         FeedbackSuggest.new('', [])
       end

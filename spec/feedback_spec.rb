@@ -82,4 +82,17 @@ describe Zxcvbn::Feedback do
       expect(feedback_result.warning).to eq("Repeats like 'aaa' or 'abcabcabc' are easy to guess")
     end
   end
+
+  context "sequence" do
+    let(:score) { 0 }
+    let(:sequence) { [SequenceToken.new("abcdef", "sequence")] }
+
+    it "suggests not using repeating characters" do
+      expect(feedback_result.suggestions).to include("Avoid sequences")
+    end
+
+    it "has a warning regarding character repetition" do
+      expect(feedback_result.warning).to eq("Sequences like abc or 6543 are easy to guess")
+    end
+  end
 end
