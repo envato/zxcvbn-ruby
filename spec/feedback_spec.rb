@@ -14,6 +14,11 @@ describe Zxcvbn::Feedback do
       expect(feedback_result.to_h).to have_key(:warning)
       expect(feedback_result.to_h).to have_key(:suggestions)
     end
+
+    it "dfaults with some sane suggestions" do
+      expect(feedback_result.suggestions).to include("Use a few words, avoid common phrases")
+      expect(feedback_result.suggestions).to include("No need for symbols, digits, or uppercase letters")
+    end
   end
 
   context "weak password" do
