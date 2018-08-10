@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+SequenceToken = Struct.new(:token, :pattern)
+
 describe Zxcvbn::Feedback do
 
   let(:feedback_result) { Zxcvbn::Feedback.new(score, sequence).suggestions }
@@ -18,9 +20,9 @@ describe Zxcvbn::Feedback do
     let(:score) { 0 }
     let(:sequence) do
       [
-        {token: "I", pattern: "dictionary"},
-        {token: "LOVE", pattern: "bruteforce"},
-        {token: "cats", pattern: "dictionary"},
+        SequenceToken.new("I", "dictionary"),
+        SequenceToken.new("LOVE", "bruteforce"),
+        SequenceToken.new("cats", "dictionary"),
       ]
     end
 
@@ -33,15 +35,15 @@ describe Zxcvbn::Feedback do
     let(:score) { 4 }
     let(:sequence) do
       [
-        {token: "cats", pattern: "dictionary"},
-        {token: ".", pattern: "bruteforce"},
-        {token: "look", pattern: "dictionary"},
-        {token: ".", pattern: "bruteforce"},
-        {token: "good", pattern: "dictionary"},
-        {token: ".", pattern: "bruteforce"},
-        {token: "in", pattern: "dictionary"},
-        {token: ".", pattern: "bruteforce"},
-        {token: "black", pattern: "dictionary"},
+        SequenceToken.new("cats", "dictionary"),
+        SequenceToken.new(".", "bruteforce"),
+        SequenceToken.new("look", "dictionary"),
+        SequenceToken.new(".", "bruteforce"),
+        SequenceToken.new("good", "dictionary"),
+        SequenceToken.new(".", "bruteforce"),
+        SequenceToken.new("in", "dictionary"),
+        SequenceToken.new(".", "bruteforce"),
+        SequenceToken.new("black", "dictionary"),
       ]
     end
 
