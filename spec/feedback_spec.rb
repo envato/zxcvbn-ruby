@@ -75,7 +75,7 @@ describe Zxcvbn::Feedback do
     let(:sequence) { [SequenceToken.new("hhhhhh", "repeat")] }
 
     it "suggests not using repeating characters" do
-      expect(feedback_result.suggestions).to include("Avoid repeated words and characters")
+      expect(feedback_result.suggestions).to include("Avoid repeated words, characters and numbers")
     end
 
     it "has a warning regarding character repetition" do
@@ -123,16 +123,16 @@ describe Zxcvbn::Feedback do
       let(:score) { 0 }
       let(:sequence) { [SequenceToken.new("something", "dictionary", "english")] }
 
-      it "warns about known common passwords" do
+      it "warns about common english words" do
         expect(feedback_result.warning).to eq("Simple passwords with a few comomon words are easy to guess")
       end
     end
 
     context "names" do
       let(:score) { 0 }
-      let(:sequence) { [SequenceToken.new("baseball", "dictionary", "female_names")] }
+      let(:sequence) { [SequenceToken.new("betty", "dictionary", "female_names")] }
 
-      it "warns about known common names" do
+      it "warns about using common names" do
         expect(feedback_result.warning).to eq("Common names and surnames are easy to guess")
       end
     end
