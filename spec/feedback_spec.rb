@@ -112,7 +112,13 @@ describe Zxcvbn::Feedback do
   context "dictionary" do
     context "password" do
       let(:score) { 0 }
-      let(:sequence) { [SequenceToken.new("baseball", "dictionary", "passwords")] }
+      let(:sequence) { [double(
+        "Sequence Token",
+        :token => "baseball",
+        :pattern => "dictionary",
+        :dictionary_name => "passwords",
+        :l33t_entropy => 0)]
+      }
 
       it "warns about known common passwords" do
         expect(feedback_result.warning).to eq("This is similar to a commonly used password")
@@ -121,7 +127,13 @@ describe Zxcvbn::Feedback do
 
     context "english" do
       let(:score) { 0 }
-      let(:sequence) { [SequenceToken.new("something", "dictionary", "english")] }
+      let(:sequence) { [double(
+        "Sequence Token",
+        :token => "something",
+        :pattern => "dictionary",
+        :dictionary_name => "english",
+        :l33t_entropy => 0)]
+      }
 
       it "warns about common english words" do
         expect(feedback_result.warning).to eq("Simple passwords with a few comomon words are easy to guess")
@@ -130,11 +142,32 @@ describe Zxcvbn::Feedback do
 
     context "names" do
       let(:score) { 0 }
-      let(:sequence) { [SequenceToken.new("betty", "dictionary", "female_names")] }
+      let(:sequence) { [double(
+        "Sequence Token",
+        :token => "betty",
+        :pattern => "dictionary",
+        :dictionary_name => "female_names",
+        :l33t_entropy => 0)]
+      }
 
       it "warns about using common names" do
         expect(feedback_result.warning).to eq("Common names and surnames are easy to guess")
       end
+    end
+  end
+
+  context "l33t substitutions" do
+    let(:score) { 0 }
+    let(:sequence) { [double(
+      "Sequence Token",
+      :token => "P@SSWORD",
+      :pattern => "dictionary",
+      :dictionary_name => "passwords",
+      :l33t_entropy => 1)]
+    }
+
+    it "suggests leet character substitutions don't help to increase complexity" do
+      expect(feedback_result.suggestions).to include("Predictable substitutions like '@' instead of 'a' don't help very much")
     end
   end
 end

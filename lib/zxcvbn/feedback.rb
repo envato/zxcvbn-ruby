@@ -25,14 +25,14 @@ module Zxcvbn
       return FeedbackSuggest.new('', []) if score > 2
 
       longest_match = sequence.max_by { |x| x.token.length }
-      suggest = get_match_feedback(longest_match)
+      suggest = get_pattern_match_feedback(longest_match)
       suggest.suggestions.unshift('Add another word or two. Uncommon words are better.')
       suggest
     end
 
     private
 
-    def get_match_feedback(match)
+    def get_pattern_match_feedback(match)
       case match.pattern
       when 'dictionary'
         get_dictionary_match_feedback(match)
@@ -51,7 +51,8 @@ module Zxcvbn
 
     def get_dictionary_match_feedback(match)
       warning = get_dictionary_warning(match)
-      FeedbackSuggest.new(warning, [])
+      suggestion = get_dictionary_suggestion(match)
+      FeedbackSuggest.new(warning, [suggestion])
     end
 
     def get_dictionary_warning(match)
@@ -61,6 +62,14 @@ module Zxcvbn
         "Simple passwords with a few comomon words are easy to guess"
       elsif ['surnames', 'male_names', 'female_names'].include?(match.dictionary_name)
         "Common names and surnames are easy to guess"
+      end
+    end
+
+    def get_dictionary_suggestion(match)
+      if match.l33t_entropy == 1
+        "Predictable substitutions like '@' instead of 'a' don't help very much"
+      else
+        ""
       end
     end
 
