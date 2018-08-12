@@ -1,7 +1,4 @@
 require 'spec_helper'
-
-SequenceToken = Struct.new(:token, :pattern, :dictionary_name)
-
 describe Zxcvbn::Feedback do
 
   let(:feedback_result) { Zxcvbn::Feedback.new(score, sequence).suggestions }
@@ -25,9 +22,9 @@ describe Zxcvbn::Feedback do
     let(:score) { 0 }
     let(:sequence) do
       [
-        SequenceToken.new("I", "dictionary"),
-        SequenceToken.new("LOVE", "bruteforce"),
-        SequenceToken.new("cats", "dictionary"),
+        double("password token", :token => "I", :pattern => "dictionary"),
+        double("password token", :token => "LOVE", :pattern => "bruteforce"),
+        double("password token", :token => "cats", :pattern => "dictionary")
       ]
     end
 
@@ -40,15 +37,15 @@ describe Zxcvbn::Feedback do
     let(:score) { 4 }
     let(:sequence) do
       [
-        SequenceToken.new("cats", "dictionary"),
-        SequenceToken.new(".", "bruteforce"),
-        SequenceToken.new("look", "dictionary"),
-        SequenceToken.new(".", "bruteforce"),
-        SequenceToken.new("good", "dictionary"),
-        SequenceToken.new(".", "bruteforce"),
-        SequenceToken.new("in", "dictionary"),
-        SequenceToken.new(".", "bruteforce"),
-        SequenceToken.new("black", "dictionary"),
+        double("password token", :token => "cats", :pattern => "dictionary"),
+        double("password token", :token => ".", :pattern => "bruteforce"),
+        double("password token", :token => "look", :pattern => "dictionary"),
+        double("password token", :token => ".", :pattern => "bruteforce"),
+        double("password token", :token => "good", :pattern => "dictionary"),
+        double("password token", :token => ".", :pattern => "bruteforce"),
+        double("password token", :token => "in", :pattern => "dictionary"),
+        double("password token", :token => ".", :pattern => "bruteforce"),
+        double("password token", :token => "black", :pattern => "dictionary"),
       ]
     end
 
@@ -59,7 +56,7 @@ describe Zxcvbn::Feedback do
 
   context "spatal" do
     let(:score) { 0 }
-    let(:sequence) { [SequenceToken.new("yuiop", "spatial")] }
+    let(:sequence) { [double("password token", :token => "yuiop", :pattern => "spatial")] }
 
     it "suggests not using spatially similar keyboard characters" do
       expect(feedback_result.suggestions).to include("Use a longer keyboard pattern with more turns")
@@ -72,7 +69,7 @@ describe Zxcvbn::Feedback do
 
   context "repeat" do
     let(:score) { 0 }
-    let(:sequence) { [SequenceToken.new("hhhhhh", "repeat")] }
+    let(:sequence) { [double("password token", :token => "hhhhhh", :pattern => "repeat")] }
 
     it "suggests not using repeating characters" do
       expect(feedback_result.suggestions).to include("Avoid repeated words, characters and numbers")
@@ -85,7 +82,7 @@ describe Zxcvbn::Feedback do
 
   context "sequence" do
     let(:score) { 0 }
-    let(:sequence) { [SequenceToken.new("abcdef", "sequence")] }
+    let(:sequence) { [double("password token", :token => "abcdef", :pattern => "sequence")] }
 
     it "suggests not using repeating characters" do
       expect(feedback_result.suggestions).to include("Avoid sequences")
@@ -98,7 +95,7 @@ describe Zxcvbn::Feedback do
 
   context "year" do
     let(:score) { 0 }
-    let(:sequence) { [SequenceToken.new("2014", "year")] }
+    let(:sequence) { [double("password token", :token => "2014", :pattern => "year")] }
 
     it "suggests not using repeating characters" do
       expect(feedback_result.suggestions).to include("Avoid recent years or years that are associated with you")
