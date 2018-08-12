@@ -68,6 +68,8 @@ module Zxcvbn
     def get_dictionary_suggestion(match)
       if match.l33t_entropy == 1
         "Predictable substitutions like '@' instead of 'a' don't help very much"
+      elsif match.uppercase_entropy == 1
+        "Capitalization doesn't help very much"
       else
         ""
       end

@@ -117,7 +117,8 @@ describe Zxcvbn::Feedback do
         :token => "baseball",
         :pattern => "dictionary",
         :dictionary_name => "passwords",
-        :l33t_entropy => 0)]
+        :l33t_entropy => 0,
+        :uppercase_entropy => 0)]
       }
 
       it "warns about known common passwords" do
@@ -132,7 +133,8 @@ describe Zxcvbn::Feedback do
         :token => "something",
         :pattern => "dictionary",
         :dictionary_name => "english",
-        :l33t_entropy => 0)]
+        :l33t_entropy => 0,
+        :uppercase_entropy => 0)]
       }
 
       it "warns about common english words" do
@@ -147,7 +149,8 @@ describe Zxcvbn::Feedback do
         :token => "betty",
         :pattern => "dictionary",
         :dictionary_name => "female_names",
-        :l33t_entropy => 0)]
+        :l33t_entropy => 0,
+        :uppercase_entropy => 0)]
       }
 
       it "warns about using common names" do
@@ -163,11 +166,28 @@ describe Zxcvbn::Feedback do
       :token => "P@SSWORD",
       :pattern => "dictionary",
       :dictionary_name => "passwords",
-      :l33t_entropy => 1)]
+      :l33t_entropy => 1,
+      :uppercase_entropy => 0)]
     }
 
     it "suggests leet character substitutions don't help to increase complexity" do
       expect(feedback_result.suggestions).to include("Predictable substitutions like '@' instead of 'a' don't help very much")
+    end
+  end
+
+  context "capitalizations" do
+    let(:score) { 0 }
+    let(:sequence) { [double(
+      "Sequence Token",
+      :token => "Cats",
+      :pattern => "dictionary",
+      :dictionary_name => "english",
+      :l33t_entropy => 0,
+      :uppercase_entropy => 1)]
+    }
+
+    it "suggests capitalizations don't help to increase complexity" do
+      expect(feedback_result.suggestions).to include("Capitalization doesn't help very much")
     end
   end
 end
