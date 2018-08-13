@@ -34,8 +34,6 @@ module Zxcvbn
 
     def get_pattern_match_feedback(match)
       case match.pattern
-      when 'dictionary'
-        get_dictionary_match_feedback(match)
       when 'spatial'
         FeedbackSuggest.new('Short keyboard patterns are easy to guess', ['Use a longer keyboard pattern with more turns'])
       when 'repeat'
@@ -44,6 +42,8 @@ module Zxcvbn
         FeedbackSuggest.new("Sequences like abc or 6543 are easy to guess", ['Avoid sequences'])
       when 'year'
         FeedbackSuggest.new("Years are easy to guess", ['Avoid recent years or years that are associated with you'])
+      when 'dictionary'
+        get_dictionary_match_feedback(match)
       else
         FeedbackSuggest.new('', [])
       end
@@ -56,12 +56,12 @@ module Zxcvbn
     end
 
     def get_dictionary_warning(match)
-      if match.dictionary_name == "passwords"
-        "This is similar to a commonly used password"
-      elsif match.dictionary_name == "english"
+      if match.dictionary_name == "english"
         "Simple passwords with a few comomon words are easy to guess"
       elsif ['surnames', 'male_names', 'female_names'].include?(match.dictionary_name)
         "Common names and surnames are easy to guess"
+      elsif match.dictionary_name == "passwords"
+        "This is similar to a commonly used password"
       end
     end
 
@@ -71,7 +71,7 @@ module Zxcvbn
       elsif match.uppercase_entropy == 1
         "Capitalization doesn't help very much"
       else
-        ""
+        "Dictionary combinations can be easy to guess"
       end
     end
 
