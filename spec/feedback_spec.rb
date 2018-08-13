@@ -3,13 +3,13 @@ describe Zxcvbn::Feedback do
 
   let(:feedback_result) { Zxcvbn::Feedback.new(score, sequence).suggestions }
 
-  context "score and squence are low or non existent (most likly no password tested)" do
+  context "score and squence are low or non existent (most likly tested an empty string)" do
     let(:score) { 0 }
     let(:sequence) { [] }
 
-    it "returns a struct with warning and suggestions" do
-      expect(feedback_result.to_h).to have_key(:warning)
-      expect(feedback_result.to_h).to have_key(:suggestions)
+    it "returns an object with warning and suggestions" do
+      expect(feedback_result).to respond_to(:warning)
+      expect(feedback_result).to respond_to(:suggestions)
     end
 
     it "dfaults with some sane suggestions" do
