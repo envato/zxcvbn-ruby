@@ -16,6 +16,8 @@ Gem::Specification.new do |gem|
   gem.version       = Zxcvbn::VERSION
   gem.license       = 'MIT'
 
+  gem.required_ruby_version = '~> 2.3'
+
   gem.add_development_dependency 'therubyracer'
   gem.add_development_dependency 'rspec'
 end
