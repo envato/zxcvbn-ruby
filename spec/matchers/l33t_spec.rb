@@ -51,12 +51,14 @@ describe Zxcvbn::Matchers::L33t do
   end
 
   describe '#matches' do
-    let(:matches) { matcher.matches('p@ssword') }
-    # it doesn't match on 'password' because that's not in the english
-    # dictionary/frequency list
+    subject(:matches) { matcher.matches('p@ssword') }
+
+    it "doesn't find 'password' because it's not in english.txt" do
+      expect(matches.map(&:matched_word)).not_to include "password"
+    end
 
     it 'finds the correct matches' do
-      expect(matches.map(&:matched_word)).to eq([
+      expect(matches.map(&:matched_word)).to match_array([
         'pas',
         'a',
         'as',
@@ -65,7 +67,7 @@ describe Zxcvbn::Matchers::L33t do
     end
 
     it 'sets the token correctly on those matches' do
-      expect(matches.map(&:token)).to eq([
+      expect(matches.map(&:token)).to match_array([
         'p@s',
         '@',
         '@s',
@@ -74,7 +76,7 @@ describe Zxcvbn::Matchers::L33t do
     end
 
     it 'sets the substituions used' do
-      expect(matches.map(&:sub)).to eq([
+      expect(matches.map(&:sub)).to match_array([
         {'@' => 'a'},
         {'@' => 'a'},
         {'@' => 'a'},
