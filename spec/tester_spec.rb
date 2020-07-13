@@ -38,6 +38,14 @@ describe Zxcvbn::Tester do
     end
   end
 
+  context 'with an invalid entry in the dictionary' do
+    it 'ignores that entry' do
+      result = tester.test('themeforest', [nil, 1, 'themeforest'])
+      expect(result.entropy).to eq 0
+      expect(result.score).to eq 0
+    end
+  end
+
   context 'with a custom global dictionary' do
     before { tester.add_word_lists('envato' => ['envato']) }
 

@@ -21,7 +21,7 @@ module Zxcvbn
     end
 
     def test(password, user_inputs = [])
-      PasswordStrength.new(@data).test(password, user_inputs)
+      PasswordStrength.new(@data).test(password, sanitize(user_inputs))
     end
 
     def add_word_lists(lists)
@@ -30,6 +30,12 @@ module Zxcvbn
 
     def inspect
       "#<#{self.class}:0x#{self.__id__.to_s(16)}>"
+    end
+
+    private
+
+    def sanitize(user_inputs)
+      user_inputs.select { |i| i.respond_to?(:downcase) }
     end
   end
 end
