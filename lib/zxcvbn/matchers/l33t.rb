@@ -31,8 +31,8 @@ module Zxcvbn
               token = password[match.i..match.j]
               next if token.downcase == match.matched_word.downcase
               match_substitutions = {}
-              substitution.each do |substitution, letter|
-                match_substitutions[substitution] = letter if token.include?(substitution)
+              substitution.each do |s, letter|
+                match_substitutions[s] = letter if token.include?(s)
               end
               match.l33t = true
               match.token = password[match.i..match.j]
