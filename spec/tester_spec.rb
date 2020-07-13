@@ -50,7 +50,7 @@ describe Zxcvbn::Tester do
 
   context 'nil password' do
     specify do
-      expect { tester.test(nil) }.to_not raise_error
+      expect(tester.test(nil)).to have_attributes(entropy: 0, score: 0, crack_time: 0)
     end
   end
 end
