@@ -1,5 +1,7 @@
 # coding: utf-8
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 describe Zxcvbn::Tester do
   let(:tester) { Zxcvbn::Tester.new }
@@ -10,13 +12,13 @@ describe Zxcvbn::Tester do
       js_result = js_zxcvbn(password)
 
       expect(ruby_result.calc_time).not_to be_nil
-      expect(ruby_result.password).to eq js_result['password']
-      expect(ruby_result.entropy).to eq js_result['entropy']
-      expect(ruby_result.crack_time).to eq js_result['crack_time']
-      expect(ruby_result.crack_time_display).to eq js_result['crack_time_display']
-      expect(ruby_result.score).to eq js_result['score']
-      expect(ruby_result.pattern).to eq js_result['pattern']
-      expect(ruby_result.match_sequence.count).to eq js_result['match_sequence'].count
+      expect(ruby_result.password).to eq js_result["password"]
+      expect(ruby_result.entropy).to eq js_result["entropy"]
+      expect(ruby_result.crack_time).to eq js_result["crack_time"]
+      expect(ruby_result.crack_time_display).to eq js_result["crack_time_display"]
+      expect(ruby_result.score).to eq js_result["score"]
+      expect(ruby_result.pattern).to eq js_result["pattern"]
+      expect(ruby_result.match_sequence.count).to eq js_result["match_sequence"].count
 
       # NOTE: feedback didn't exist in the version of the JS library this gem
       #       is based on, so instead we just check that it put `Feedback` in
@@ -25,15 +27,15 @@ describe Zxcvbn::Tester do
     end
   end
 
-  context 'with a custom user dictionary' do
-    it 'scores them against the user dictionary' do
-      result = tester.test('themeforest', ['themeforest'])
+  context "with a custom user dictionary" do
+    it "scores them against the user dictionary" do
+      result = tester.test("themeforest", ["themeforest"])
       expect(result.entropy).to eq 0
       expect(result.score).to eq 0
     end
 
-    it 'matches l33t substitutions on this dictionary' do
-      result = tester.test('th3m3for3st', ['themeforest'])
+    it "matches l33t substitutions on this dictionary" do
+      result = tester.test("th3m3for3st", ["themeforest"])
       expect(result.entropy).to eq 1
       expect(result.score).to eq 0
     end
@@ -71,11 +73,11 @@ describe Zxcvbn::Tester do
     end
   end
 
-  context 'with a custom global dictionary' do
-    before { tester.add_word_lists('envato' => ['envato']) }
+  context "with a custom global dictionary" do
+    before { tester.add_word_lists("envato" => ["envato"]) }
 
-    it 'scores them against the dictionary' do
-      result = tester.test('envato')
+    it "scores them against the dictionary" do
+      result = tester.test("envato")
       expect(result.entropy).to eq 0
       expect(result.score).to eq 0
     end
@@ -89,7 +91,7 @@ describe Zxcvbn::Tester do
     end
   end
 
-  context 'nil password' do
+  context "nil password" do
     specify do
       expect(tester.test(nil)).to have_attributes(entropy: 0, score: 0, crack_time: 0)
     end

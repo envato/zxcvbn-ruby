@@ -1,5 +1,7 @@
-require 'zxcvbn/data'
-require 'zxcvbn/password_strength'
+# frozen_string_literal: true
+
+require "zxcvbn/data"
+require "zxcvbn/password_strength"
 
 module Zxcvbn
   # Allows you to test the strength of multiple passwords without reading and
@@ -29,7 +31,7 @@ module Zxcvbn
     end
 
     def inspect
-      "#<#{self.class}:0x#{self.__id__.to_s(16)}>"
+      "#<#{self.class}:0x#{__id__.to_s(16)}>"
     end
 
     private
