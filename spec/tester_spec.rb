@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'spec_helper'
 
 describe Zxcvbn::Tester do
@@ -38,8 +39,32 @@ describe Zxcvbn::Tester do
     end
   end
 
+  context "with Unicode entries in the password" do
+    it "validates the password" do
+      result = tester.test("✅🐴🔋staple", %w[Theme Forest themeforest])
+      expect(result.entropy).to be_positive
+      expect(result.score).to be_positive
+    end
+  end
+
+  context "with Unicode entries in the dictionary" do
+    it "validates the password" do
+      result = tester.test("correct horse battery staple", %w[✅ 🐴 🔋])
+      expect(result.entropy).to be_positive
+      expect(result.score).to be_positive
+    end
+  end
+
+  context "with Unicode entries in the password and the dictionary" do
+    it "validates the password" do
+      result = tester.test("✅🐴🔋staple", %w[✅ 🐴 🔋])
+      expect(result.entropy).to be_positive
+      expect(result.score).to be_zero
+    end
+  end
+
   context "with invalid entries in the dictionary" do
-    it "ignores those entris" do
+    it "ignores those entries" do
       result = tester.test("themeforest", [nil, 1, "themeforest"])
       expect(result.entropy).to eq 0
       expect(result.score).to eq 0
