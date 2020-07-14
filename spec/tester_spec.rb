@@ -38,9 +38,9 @@ describe Zxcvbn::Tester do
     end
   end
 
-  context 'with an invalid entry in the dictionary' do
-    it 'ignores that entry' do
-      result = tester.test('themeforest', [nil, 1, 'themeforest'])
+  context "with invalid entries in the dictionary" do
+    it "ignores those entris" do
+      result = tester.test("themeforest", [nil, 1, "themeforest"])
       expect(result.entropy).to eq 0
       expect(result.score).to eq 0
     end
@@ -53,6 +53,14 @@ describe Zxcvbn::Tester do
       result = tester.test('envato')
       expect(result.entropy).to eq 0
       expect(result.score).to eq 0
+    end
+
+    context "with invalid entries in a custom dictionary" do
+      before { tester.add_word_lists("themeforest" => [nil, 1, "themeforest"]) }
+
+      it "ignores those entries" do
+        expect(tester.test("themeforest")).to have_attributes(entropy: 0, score: 0, crack_time: 0)
+      end
     end
   end
 

@@ -25,7 +25,7 @@ module Zxcvbn
     end
 
     def add_word_lists(lists)
-      lists.each_pair {|name, words| @data.add_word_list(name, words)}
+      lists.each_pair { |name, words| @data.add_word_list(name, sanitize(words)) }
     end
 
     def inspect
