@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
- - Invalid user dictionaries are handled more robustly [[#28][28]
+ - Invalid user dictionaries are handled more robustly [[#28]][28]
 
 [28]: https://github.com/envato/zxcvbn-ruby/pull/28
 
