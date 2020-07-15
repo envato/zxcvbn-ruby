@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [29]: https://github.com/envato/zxcvbn-ruby/pull/29
 
 
+### Fixed
+ - Invalid user dictionaries are handled more robustly [[#28]][28]
+
+[28]: https://github.com/envato/zxcvbn-ruby/pull/28
+
 ## [1.0.0] - 2019-05-14
 ### Added
 Adds more ported password checking features to bring this gem more up to date.

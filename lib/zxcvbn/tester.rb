@@ -1,5 +1,7 @@
-require 'zxcvbn/data'
-require 'zxcvbn/password_strength'
+# frozen_string_literal: true
+
+require "zxcvbn/data"
+require "zxcvbn/password_strength"
 
 module Zxcvbn
   # Allows you to test the strength of multiple passwords without reading and
@@ -21,15 +23,21 @@ module Zxcvbn
     end
 
     def test(password, user_inputs = [])
-      PasswordStrength.new(@data).test(password, user_inputs)
+      PasswordStrength.new(@data).test(password, sanitize(user_inputs))
     end
 
     def add_word_lists(lists)
-      lists.each_pair {|name, words| @data.add_word_list(name, words)}
+      lists.each_pair { |name, words| @data.add_word_list(name, sanitize(words)) }
     end
 
     def inspect
-      "#<#{self.class}:0x#{self.__id__.to_s(16)}>"
+      "#<#{self.class}:0x#{__id__.to_s(16)}>"
+    end
+
+    private
+
+    def sanitize(user_inputs)
+      user_inputs.select { |i| i.respond_to?(:downcase) }
     end
   end
 end
