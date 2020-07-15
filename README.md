@@ -143,6 +143,11 @@ attacker. For this reason we advise you not to store the results of
 [`LICENSE.txt`](https://github.com/envato/zxcvbn-ruby/blob/master/LICENSE.txt)
 for details.
 
+## Code of Conduct
+
+We welcome contribution from everyone. Read more about it in
+[`CODE_OF_CONDUCT.md`](https://github.com/envato/zxcvbn-ruby/blob/master/CODE_OF_CONDUCT.md).
+
 
  [envato]: https://envato.com?utm_source=github
  [zxcvbn.js]: https://github.com/dropbox/zxcvbn
