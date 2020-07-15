@@ -1,6 +1,6 @@
 # zxcvbn-ruby [![Build Status](https://travis-ci.org/envato/zxcvbn-ruby.svg?branch=master)](https://travis-ci.org/envato/zxcvbn-ruby)
 
-Ruby port of [zxcvbn.js](https://github.com/dropbox/zxcvbn)
+This is a Ruby port of Dropbox's [zxcvbn.js](https://github.com/dropbox/zxcvbn) JavaScript library.
 
 ## Usage
 
