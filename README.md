@@ -121,4 +121,9 @@ information that can make cracking the value orders of magnitude easier for an
 attacker. For this reason we advise you not to store the results of
 `Zxcvbn::Tester#test`. Further reading: [A Tale of Security Gone Wrong](http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/).
 
+## Contact
+
+ - [GitHub project](https://github.com/envato/zxcvbn-ruby)
+ - Bug reports and feature requests are welcome via [GitHub Issues](https://github.com/envato/zxcvbn-ruby/issues)
+
  [envato]: https://envato.com?utm_source=github
