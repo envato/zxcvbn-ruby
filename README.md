@@ -1,16 +1,29 @@
-# zxcvbn-ruby [![Build Status](https://travis-ci.org/envato/zxcvbn-ruby.svg?branch=master)](https://travis-ci.org/envato/zxcvbn-ruby)
+# zxcvbn-ruby
 
-Ruby port of [zxcvbn.js](https://github.com/dropbox/zxcvbn)
+This is a Ruby port of Dropbox's [zxcvbn.js][zxcvbn.js] JavaScript library.
 
-## Usage
+## Development status [![Build Status](https://travis-ci.org/envato/zxcvbn-ruby.svg?branch=master)](https://travis-ci.org/envato/zxcvbn-ruby)
 
-Gemfile:
+`zxcvbn-ruby` is considered stable and is used in projects around [Envato][envato].
+
+After checking out the repository, run `bundle install` to install dependencies.
+Then, run `rake spec` to run the tests.
+
+To install this gem onto your local machine, run `bundle exec rake install`.
+
+To release a new version, update the version number in `version.rb`, and then
+run `bundle exec rake release`, which will create a git tag for the version,
+push git commits and tags, and push the `.gem` file to
+[rubygems.org](https://rubygems.org).
+
+
+## Getting started [![Gem version](https://img.shields.io/gem/v/zxcvbn-ruby.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby) [![Gem downloads](https://img.shields.io/gem/dt/zxcvbn-ruby.svg?style=flat-square)](https://rubygems.org/gems/zxcvbn-ruby)
+
+Add the following to your project's `Gemfile`:
 
 ```ruby
 gem 'zxcvbn-ruby', require: 'zxcvbn'
 ```
-
-[RubyGems.org gem replacement vulnerability and mitigation](http://blog.rubygems.org/2016/04/06/gem-replacement-vulnerability-and-mitigation.html): not affected.
 
 Example usage:
 
@@ -107,3 +120,60 @@ $ irb
 information that can make cracking the value orders of magnitude easier for an
 attacker. For this reason we advise you not to store the results of
 `Zxcvbn::Tester#test`. Further reading: [A Tale of Security Gone Wrong](http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/).
+
+## Contact
+
+ - [GitHub project](https://github.com/envato/zxcvbn-ruby)
+ - Bug reports and feature requests are welcome via [GitHub Issues](https://github.com/envato/zxcvbn-ruby/issues)
+
+## Maintainers
+
+ - [Pete Johns](https://github.com/johnsyweb)
+ - [Steve Hodgkiss](https://github.com/stevehodgkiss)
+
+## Authors
+
+ - [Steve Hodgkiss](https://github.com/stevehodgkiss)
+ - [Matthieu Aussaguel](https://github.com/matthieua)
+ - [_et al._](https://github.com/envato/zxcvbn-ruby/graphs/contributors)
+
+## License [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby/blob/master/LICENSE.txt)
+
+`zxcvbn-ruby` uses MIT license, the same as [zxcvbn.js][zxcvbn.js] itself. See
+[`LICENSE.txt`](https://github.com/envato/zxcvbn-ruby/blob/master/LICENSE.txt)
+for details.
+
+## Code of Conduct
+
+We welcome contribution from everyone. Read more about it in
+[`CODE_OF_CONDUCT.md`](https://github.com/envato/zxcvbn-ruby/blob/master/CODE_OF_CONDUCT.md).
+
+## Contributing [![PRs welcome](https://img.shields.io/badge/PRs-welcome-orange.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby/issues)
+
+For bug fixes, documentation changes, and features:
+
+1. [Fork it](./fork)
+1. Create your feature branch (`git checkout -b my-new-feature`)
+1. Commit your changes (`git commit -am 'Add some feature'`)
+1. Push to the branch (`git push origin my-new-feature`)
+1. Create a new Pull Request
+
+For larger new features: Do everything as above, but first also make contact with the project maintainers to be sure your change fits with the project direction and you won't be wasting effort going in the wrong direction.
+
+## About [![code with heart by Envato](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-Envato-ff69b4.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby)
+
+This project is maintained by the [Envato engineering team][webuild] and funded by [Envato][envato].
+
+[<img src="http://opensource.envato.com/images/envato-oss-readme-logo.png" alt="Envato logo">][envato]
+
+Encouraging the use and creation of open source software is one of the ways we
+serve our community. See [our other projects][oss] or [come work with us][careers]
+where you'll find an incredibly diverse, intelligent and capable group of people
+who help make our company succeed and make our workplace fun, friendly and
+happy.
+
+ [careers]: https://envato.com/careers/?utm_source=github
+ [envato]: https://envato.com?utm_source=github
+ [oss]: https://opensource.envato.com/?utm_source=github
+ [webuild]: https://webuild.envato.com?utm_source=github
+ [zxcvbn.js]: https://github.com/dropbox/zxcvbn
