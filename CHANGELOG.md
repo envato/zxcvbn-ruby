@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
  - Invalid user dictionaries are handled more robustly ([#28])
 
-[1.1.0]: https://github.com/envato/zxcvbn-ruby/compare/v1.0.0...HEAD
+[1.1.0]: https://github.com/envato/zxcvbn-ruby/compare/v1.0.0...v1.1.0
 [28]: https://github.com/envato/zxcvbn-ruby/pull/28
 [29]: https://github.com/envato/zxcvbn-ruby/pull/29
 
@@ -40,4 +40,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#21]: https://github.com/envato/zxcvbn-ruby/pull/21
 [#22]: https://github.com/envato/zxcvbn-ruby/pull/22
 [#25]: https://github.com/envato/zxcvbn-ruby/pull/25
-
