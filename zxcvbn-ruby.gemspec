@@ -16,8 +16,16 @@ Gem::Specification.new do |gem|
   gem.version       = Zxcvbn::VERSION
   gem.license       = 'MIT'
 
-  gem.required_ruby_version = '~> 2.3'
+  gem.required_ruby_version = '~> 2.5'
 
   gem.add_development_dependency 'therubyracer'
   gem.add_development_dependency 'rspec'
+
+  gem.metadata = {
+    "bug_tracker_uri" => "https://github.com/envato/zxcvbn-ruby/issues",
+    "changelog_uri" => "https://github.com/envato/zxcvbn-ruby/blob/master/CHANGELOG.md",
+    "documentation_uri" => "https://github.com/envato/zxcvbn-ruby/blob/master/README.md",
+    "homepage_uri" => "https://github.com/envato/zxcvbn-ruby",
+    "source_code_uri" => "https://github.com/envato/zxcvbn-ruby"
+  }
 end

@@ -1,19 +1,30 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 describe Zxcvbn::Matchers::Dictionary do
-  let(:matcher) { described_class.new('english', dictionary) }
-  let(:dictionary) { Zxcvbn::Data.new.ranked_dictionaries['english'] }
+  subject(:matcher) { described_class.new("Test dictionary", dictionary) }
 
-  it 'finds all the matches' do
-    matches = matcher.matches('whatisinit')
-    expect(matches.count).to eq(14)
-    expected_matches = ['wha', 'what', 'ha', 'hat', 'a', 'at', 'tis', 'i', 'is',
-                       'sin', 'i', 'in', 'i', 'it']
-    expect(matches.map(&:matched_word)).to eq(expected_matches)
-  end
+  describe "#matches" do
+    let(:matches) { matcher.matches(password) }
+    let(:matched_words) { matches.map(&:matched_word) }
 
-  it 'matches uppercase' do
-    matcher = described_class.new('user_inputs', Zxcvbn::DictionaryRanker.rank_dictionary(['test','AB10CD']))
-    expect(matcher.matches('AB10CD')).not_to be_empty
+    context "Given a dictionary of English words" do
+      let(:dictionary) { Zxcvbn::Data.new.ranked_dictionaries["english"] }
+      let(:password) { "whatisinit" }
+
+      it "finds all the matches" do
+        expect(matched_words).to match_array %w[wha what ha hat a at tis i is sin i in i it]
+      end
+    end
+
+    context "Given a custom dictionary" do
+      let(:dictionary) { Zxcvbn::DictionaryRanker.rank_dictionary(%w[test AB10CD]) }
+      let(:password) { "AB10CD" }
+
+      it "matches uppercase passwords with normalised dictionary entries" do
+        expect(matched_words).to match_array(%w[ab10cd])
+      end
+    end
   end
 end
