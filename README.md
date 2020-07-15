@@ -17,9 +17,9 @@ push git commits and tags, and push the `.gem` file to
 [rubygems.org](https://rubygems.org).
 
 
-## Usage
+## Getting started [![Gem version](https://img.shields.io/gem/v/zxcvbn-ruby.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby) [![Gem downloads](https://img.shields.io/gem/dt/zxcvbn-ruby.svg?style=flat-square)](https://rubygems.org/gems/zxcvbn-ruby)
 
-Gemfile:
+Add the following to your project's `Gemfile`:
 
 ```ruby
 gem 'zxcvbn-ruby', require: 'zxcvbn'
