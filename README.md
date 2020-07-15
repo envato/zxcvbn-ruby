@@ -1,6 +1,6 @@
 # zxcvbn-ruby
 
-This is a Ruby port of Dropbox's [zxcvbn.js](https://github.com/dropbox/zxcvbn) JavaScript library.
+This is a Ruby port of Dropbox's [zxcvbn.js][zxcvbn.js] JavaScript library.
 
 ## Development status [![Build Status](https://travis-ci.org/envato/zxcvbn-ruby.svg?branch=master)](https://travis-ci.org/envato/zxcvbn-ruby)
 
@@ -137,4 +137,12 @@ attacker. For this reason we advise you not to store the results of
  - [Matthieu Aussaguel](https://github.com/matthieua)
  - [_et al._](https://github.com/envato/zxcvbn-ruby/graphs/contributors)
 
+## License [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby/blob/master/LICENSE.txt)
+
+`zxcvbn-ruby` uses MIT license, the same as [zxcvbn.js][zxcvbn.js] itself. See
+[`LICENSE.txt`](https://github.com/envato/zxcvbn-ruby/blob/master/LICENSE.txt)
+for details.
+
+
  [envato]: https://envato.com?utm_source=github
+ [zxcvbn.js]: https://github.com/dropbox/zxcvbn
