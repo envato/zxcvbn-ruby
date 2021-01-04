@@ -5,8 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+ - Support for Ruby 3 (thanks @RSO ([#33]))
+
+### Changed
+ - Use [mini\_racer] for running JavaScript specs (thanks @RSO ([#3r33]))
+ - Moved CI to GitHub Actions ([#34])
 
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.1.0...HEAD
+[mini\_racer]: https://rubygems.org/gems/mini_racer/
+[#33]: https://github.com/envato/zxcvbn-ruby/pull/33
+[#33]: https://github.com/envato/zxcvbn-ruby/pull/33
+[#34]: https://github.com/envato/zxcvbn-ruby/pull/34
 
 ## [1.1.0] - 2020-07-16
 ### Added
@@ -21,8 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Invalid user dictionaries are handled more robustly ([#28])
 
 [1.1.0]: https://github.com/envato/zxcvbn-ruby/compare/v1.0.0...v1.1.0
-[28]: https://github.com/envato/zxcvbn-ruby/pull/28
-[29]: https://github.com/envato/zxcvbn-ruby/pull/29
+[#28]: https://github.com/envato/zxcvbn-ruby/pull/28
+[#29]: https://github.com/envato/zxcvbn-ruby/pull/29
 
 ## [1.0.0] - 2019-05-14
 ### Added
