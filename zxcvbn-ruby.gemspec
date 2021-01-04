@@ -1,6 +1,8 @@
 # -*- encoding: utf-8 -*-
 require File.expand_path('../lib/zxcvbn/version', __FILE__)
 
+GITHUB_URL = 'https://github.com/envato/zxcvbn-ruby'
+
 Gem::Specification.new do |gem|
   gem.authors       = ["Steve Hodgkiss", "Matthieu Aussaguel"]
   gem.email         = ["steve@hodgkiss.me", "matthieu.aussaguel@gmail.com"]
@@ -22,10 +24,10 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec'
 
   gem.metadata = {
-    "bug_tracker_uri" => "https://github.com/envato/zxcvbn-ruby/issues",
-    "changelog_uri" => "https://github.com/envato/zxcvbn-ruby/blob/master/CHANGELOG.md",
-    "documentation_uri" => "https://github.com/envato/zxcvbn-ruby/blob/master/README.md",
-    "homepage_uri" => "https://github.com/envato/zxcvbn-ruby",
-    "source_code_uri" => "https://github.com/envato/zxcvbn-ruby"
+    'bug_tracker_uri' => "#{GITHUB_URL}/issues",
+    'changelog_uri' => "#{GITHUB_URL}/blob/HEAD/CHANGELOG.md",
+    'documentation_uri' => "#{GITHUB_URL}/blob/HEAD/README.md",
+    'homepage_uri' => GITHUB_URL,
+    'source_code_uri' => GITHUB_URL
   }
 end

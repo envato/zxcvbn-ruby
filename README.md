@@ -137,16 +137,16 @@ attacker. For this reason we advise you not to store the results of
  - [Matthieu Aussaguel](https://github.com/matthieua)
  - [_et al._](https://github.com/envato/zxcvbn-ruby/graphs/contributors)
 
-## License [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby/blob/master/LICENSE.txt)
+## License [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby/blob/HEAD/LICENSE.txt)
 
 `zxcvbn-ruby` uses MIT license, the same as [zxcvbn.js][zxcvbn.js] itself. See
-[`LICENSE.txt`](https://github.com/envato/zxcvbn-ruby/blob/master/LICENSE.txt)
+[`LICENSE.txt`](https://github.com/envato/zxcvbn-ruby/blob/HEAD/LICENSE.txt)
 for details.
 
 ## Code of Conduct
 
 We welcome contribution from everyone. Read more about it in
-[`CODE_OF_CONDUCT.md`](https://github.com/envato/zxcvbn-ruby/blob/master/CODE_OF_CONDUCT.md).
+[`CODE_OF_CONDUCT.md`](https://github.com/envato/zxcvbn-ruby/blob/HEAD/CODE_OF_CONDUCT.md).
 
 ## Contributing [![PRs welcome](https://img.shields.io/badge/PRs-welcome-orange.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby/issues)
 
