@@ -2,7 +2,7 @@
 
 This is a Ruby port of Dropbox's [zxcvbn.js][zxcvbn.js] JavaScript library.
 
-## Development status [![Build Status](https://travis-ci.org/envato/zxcvbn-ruby.svg?branch=master)](https://travis-ci.org/envato/zxcvbn-ruby)
+## Development status [![CI Status](https://github.com/envato/zxcvbn-ruby/workflows/CI/badge.svg)](https://github.com/envato/zxcvbn-ruby/actions?query=workflow%3ACI)
 
 `zxcvbn-ruby` is considered stable and is used in projects around [Envato][envato].
 
