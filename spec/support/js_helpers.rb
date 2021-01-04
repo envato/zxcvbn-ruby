@@ -1,4 +1,4 @@
-require 'v8'
+require 'mini_racer'
 require 'json'
 
 module JsHelpers
@@ -6,9 +6,8 @@ module JsHelpers
     JS_SOURCE_PATH = Pathname(File.expand_path('../js_source/', __FILE__))
 
     def initialize
-      @ctx = V8::Context.new do |ctx|
-        ctx.eval(JS_SOURCE_PATH.join('compiled.js').read)
-      end
+      @ctx = MiniRacer::Context.new
+      @ctx.eval(JS_SOURCE_PATH.join('compiled.js').read)
     end
 
     def eval(string)
