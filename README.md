@@ -119,7 +119,7 @@ $ irb
 **Note**: Storing the entropy of an encrypted or hashed value provides
 information that can make cracking the value orders of magnitude easier for an
 attacker. For this reason we advise you not to store the results of
-`Zxcvbn::Tester#test`. Further reading: [A Tale of Security Gone Wrong](http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/).
+`Zxcvbn::Tester#test`. Further reading: [A Tale of Security Gone Wrong](https://web.archive.org/web/20240715041147/http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/).
 
 ## Contact
 
