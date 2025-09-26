@@ -77,7 +77,7 @@ module Zxcvbn
           }
           for i in 0...token.length
             key = PATTERN_CHAR_TO_SYM[pattern[i]]
-            candidate[key] = (candidate[key] || String.new)
+            candidate[key] = +(candidate[key] || String.new)
             candidate[key] << token[i]
           end
           candidate.each do |component, value|
