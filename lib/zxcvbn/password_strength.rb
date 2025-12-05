@@ -1,4 +1,4 @@
-require 'benchmark'
+require 'zxcvbn/clock'
 require 'zxcvbn/feedback_giver'
 require 'zxcvbn/omnimatch'
 require 'zxcvbn/scorer'
@@ -13,7 +13,7 @@ module Zxcvbn
     def test(password, user_inputs = [])
       password = password || ''
       result = nil
-      calc_time = Benchmark.realtime do
+      calc_time = Clock.realtime do
         matches = @omnimatch.matches(password, user_inputs)
         result = @scorer.minimum_entropy_match_sequence(password, matches)
       end
