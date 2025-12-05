@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Removed the dependency on the Ruby `benchmark` module.
+- Tests are no longer included in the gem package.
 
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.0...HEAD
 
