@@ -6,11 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Removed
-- Removed the dependency on the Ruby `benchmark` module.
-- Tests are no longer included in the gem package.
+[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.1...HEAD
 
-[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.0...HEAD
+## [1.2.1] - 2025-12-05
+
+### Removed
+- Removed the dependency on the Ruby `benchmark` module ([#44]).
+- Tests are no longer included in the gem package ([#45]).
+
+[1.2.1]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.0...v.1.2.1
+[#44]: https://github.com/envato/zxcvbn-ruby/pull/44
+[#45]: https://github.com/envato/zxcvbn-ruby/pull/45
 
 ## [1.2.0] - 2021-01-05
 
