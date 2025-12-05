@@ -36,7 +36,7 @@ describe Zxcvbn::Entropy do
       let(:token) { '23456' }
 
       it 'returns the correct value' do
-        expect(entropy.sequence_entropy(match)).to eq 5.643856189774725
+        expect(entropy.sequence_entropy(match)).to be_within(1e-14).of(5.643856189774725)
       end
     end
 
@@ -69,7 +69,7 @@ describe Zxcvbn::Entropy do
   describe '#digits_entropy' do
     it 'returns the correct value' do
       match = Zxcvbn::Match.new(:token => '12345678')
-      expect(entropy.digits_entropy(match)).to eq 26.5754247590989
+      expect(entropy.digits_entropy(match)).to be_within(1e-14).of(26.5754247590989)
     end
   end
 
@@ -183,7 +183,7 @@ describe Zxcvbn::Entropy do
       it 'should return the correct entropy' do
         match.graph = 'keypad'
 
-        expect(entropy.spatial_entropy(match)).to eql 9.05528243550119
+        expect(entropy.spatial_entropy(match)).to be_within(1e-14).of(9.05528243550119)
       end
     end
 
@@ -191,7 +191,7 @@ describe Zxcvbn::Entropy do
       it 'should return the correct entropy' do
         match.turns = 5
 
-        expect(entropy.spatial_entropy(match)).to eql 21.761397858718993
+        expect(entropy.spatial_entropy(match)).to be_within(1e-14).of(21.761397858718993)
       end
     end
 
@@ -199,7 +199,7 @@ describe Zxcvbn::Entropy do
       it 'should return the correct entropy' do
         match.shiffted_count = 5
 
-        expect(entropy.spatial_entropy(match)).to eql 9.05528243550119
+        expect(entropy.spatial_entropy(match)).to be_within(1e-14).of(9.05528243550119)
       end
     end
 
@@ -208,7 +208,7 @@ describe Zxcvbn::Entropy do
         match.shiffted_count = 5
         match.turns          = 5
 
-        expect(entropy.spatial_entropy(match)).to eql 21.761397858718993
+        expect(entropy.spatial_entropy(match)).to be_within(1e-14).of(21.761397858718993)
       end
     end
   end
