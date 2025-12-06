@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Zxcvbn::Matchers::Sequences do
+RSpec.describe Zxcvbn::Matchers::Sequences do
   let(:matcher) { subject }
   let(:matches) { matcher.matches('abcde87654') }
 

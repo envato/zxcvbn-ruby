@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Zxcvbn::Math do
+RSpec.describe Zxcvbn::Math do
   include Zxcvbn::Math
 
   def data

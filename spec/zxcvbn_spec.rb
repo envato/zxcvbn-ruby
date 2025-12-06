@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Zxcvbn.test' do
+RSpec.describe 'Zxcvbn.test' do
   context 'with a password' do
     it 'returns a result' do
       result = Zxcvbn.test('password')

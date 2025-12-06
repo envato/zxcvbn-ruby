@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Zxcvbn::Scorer do
+RSpec.describe Zxcvbn::Scorer do
 
 end

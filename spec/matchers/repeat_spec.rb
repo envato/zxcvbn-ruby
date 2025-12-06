@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Zxcvbn::Matchers::Repeat do
+RSpec.describe Zxcvbn::Matchers::Repeat do
   let(:matcher) { subject }
   let(:matches) { matcher.matches('bbbbbtestingaaa') }
 

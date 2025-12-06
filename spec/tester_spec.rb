@@ -3,7 +3,7 @@
 
 require "spec_helper"
 
-describe Zxcvbn::Tester do
+RSpec.describe Zxcvbn::Tester do
   let(:tester) { Zxcvbn::Tester.new }
 
   TEST_PASSWORDS.each do |password|

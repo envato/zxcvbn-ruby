@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Zxcvbn::Matchers::L33t do
+RSpec.describe Zxcvbn::Matchers::L33t do
   let(:matcher) { described_class.new([dictionary_matcher]) }
   let(:dictionary) { Zxcvbn::Data.new.ranked_dictionaries['english'] }
   let(:dictionary_matcher) { Zxcvbn::Matchers::Dictionary.new('english', dictionary) }
