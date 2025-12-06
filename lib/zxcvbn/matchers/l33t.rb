@@ -4,18 +4,18 @@ module Zxcvbn
   module Matchers
     class L33t
       L33T_TABLE = {
-        'a' => ['4', '@'],
-        'b' => ['8'],
-        'c' => ['(', '{', '[', '<'],
-        'e' => ['3'],
-        'g' => ['6', '9'],
-        'i' => ['1', '!', '|'],
-        'l' => ['1', '|', '7'],
-        'o' => ['0'],
-        's' => ['$', '5'],
-        't' => ['+', '7'],
-        'x' => ['%'],
-        'z' => ['2']
+        'a' => ['4', '@'].freeze,
+        'b' => ['8'].freeze,
+        'c' => ['(', '{', '[', '<'].freeze,
+        'e' => ['3'].freeze,
+        'g' => ['6', '9'].freeze,
+        'i' => ['1', '!', '|'].freeze,
+        'l' => ['1', '|', '7'].freeze,
+        'o' => ['0'].freeze,
+        's' => ['$', '5'].freeze,
+        't' => ['+', '7'].freeze,
+        'x' => ['%'].freeze,
+        'z' => ['2'].freeze
       }.freeze
 
       def initialize(dictionary_matchers)
