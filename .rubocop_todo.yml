@@ -149,10 +149,6 @@ Style/Documentation:
     - 'lib/zxcvbn/score.rb'
     - 'lib/zxcvbn/scorer.rb'
 
-Style/EachForSimpleLoop:
-  Exclude:
-    - 'spec/scoring/math_spec.rb'
-
 # This cop supports safe autocorrection (--autocorrect).
 Style/EvalWithLocation:
   Exclude:
