@@ -197,13 +197,6 @@ Style/IfUnlessModifier:
     - 'lib/zxcvbn/scorer.rb'
     - 'spec/support/matcher.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, Autocorrect.
-# SupportedStyles: module_function, extend_self, forbidden
-Style/ModuleFunction:
-  Exclude:
-    - 'lib/zxcvbn.rb'
-
 Style/MultilineBlockChain:
   Exclude:
     - 'lib/zxcvbn/scorer.rb'

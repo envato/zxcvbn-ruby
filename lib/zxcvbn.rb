@@ -5,7 +5,7 @@ require 'zxcvbn/version'
 require 'zxcvbn/tester'
 
 module Zxcvbn
-  extend self
+  module_function
 
   DATA_PATH = Pathname(File.expand_path('../data', __dir__))
 
