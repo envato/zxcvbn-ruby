@@ -5,7 +5,8 @@ RSpec::Matchers.define :match_js_results do |expected_js_results|
     actual_ruby_results = reduce(actual_ruby_results.map(&:to_hash))
     expected_js_results = reduce(expected_js_results)
 
-    @missing, @extra = [], []
+    @missing = []
+    @extra = []
     expected_js_results.each do |js_result|
       unless actual_ruby_results.include?(js_result)
         @missing << js_result

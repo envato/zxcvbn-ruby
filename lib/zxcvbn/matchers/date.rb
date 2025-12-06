@@ -56,7 +56,9 @@ module Zxcvbn
         result = []
         re_match_all(WITHOUT_SEPARATOR, password) do |match, _re_match|
           extract_dates(match.token).each do |candidate|
-            day, month, year = candidate[:day], candidate[:month], candidate[:year]
+            day = candidate[:day]
+            month = candidate[:month]
+            year = candidate[:year]
 
             match.pattern = 'date'
             match.day = day

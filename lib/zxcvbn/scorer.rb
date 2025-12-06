@@ -30,7 +30,8 @@ module Zxcvbn
         matches.select do |match|
           match.j == k
         end.each do |match|
-          i, j = match.i, match.j
+          i = match.i
+          j = match.j
           # see if best entropy up to i-1 + entropy of this match is less than the current minimum at j.
           previous_i_entropy = i > 0 ? up_to_k[i - 1] : 0
           candidate_entropy = previous_i_entropy + calc_entropy(match)
