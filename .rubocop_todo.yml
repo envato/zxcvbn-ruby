@@ -189,14 +189,6 @@ Style/HashTransformValues:
   Exclude:
     - 'lib/zxcvbn/dictionary_ranker.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-Style/IfUnlessModifier:
-  Exclude:
-    - 'lib/zxcvbn/entropy.rb'
-    - 'lib/zxcvbn/matchers/new_l33t.rb'
-    - 'lib/zxcvbn/scorer.rb'
-    - 'spec/support/matcher.rb'
-
 Style/MultilineBlockChain:
   Exclude:
     - 'lib/zxcvbn/scorer.rb'

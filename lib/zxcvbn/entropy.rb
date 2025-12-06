@@ -70,9 +70,7 @@ module Zxcvbn::Entropy
         lg(NUM_DAYS * NUM_MONTHS * NUM_YEARS)
       end
 
-    if match.separator
-      entropy += 2
-    end
+    entropy += 2 if match.separator
 
     entropy
   end

@@ -65,9 +65,7 @@ module Zxcvbn
         end
         L33T_TABLE.each do |letter, substibutions|
           password.each_char do |password_char|
-            if substibutions.include?(password_char)
-              subs[letter] << password_char
-            end
+            subs[letter] << password_char if substibutions.include?(password_char)
           end
         end
         subs

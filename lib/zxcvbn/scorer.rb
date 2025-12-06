@@ -78,9 +78,7 @@ module Zxcvbn
       k = 0
       match_sequence_copy = []
       match_sequence.each do |match|
-        if match.i > k
-          match_sequence_copy << make_bruteforce_match(password, k, match.i - 1, bruteforce_cardinality)
-        end
+        match_sequence_copy << make_bruteforce_match(password, k, match.i - 1, bruteforce_cardinality) if match.i > k
         k = match.j + 1
         match_sequence_copy << match
       end
