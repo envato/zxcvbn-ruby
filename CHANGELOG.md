@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+ - Address linting issues ([#52])
+
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.2...HEAD
+[#52]: https://github.com/envato/zxcvbn-ruby/pull/52
 
 ## [1.2.2] - 2025-12-06
 

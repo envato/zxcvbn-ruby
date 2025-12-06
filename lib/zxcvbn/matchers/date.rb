@@ -54,7 +54,7 @@ module Zxcvbn
 
       def match_without_separator(password)
         result = []
-        re_match_all(WITHOUT_SEPARATOR, password) do |match, re_match|
+        re_match_all(WITHOUT_SEPARATOR, password) do |match, _re_match|
           extract_dates(match.token).each do |candidate|
             day, month, year = candidate[:day], candidate[:month], candidate[:year]
 

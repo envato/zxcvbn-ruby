@@ -6,50 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowSafeAssignment.
-Lint/AssignmentInCondition:
-  Exclude:
-    - 'lib/zxcvbn/matchers/regex_helpers.rb'
-
-# Configuration parameters: DebuggerMethods, DebuggerRequires.
-Lint/Debugger:
-  Exclude:
-    - 'lib/zxcvbn/matchers/l33t.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Lint/NonDeterministicRequireOrder:
-  Exclude:
-    - 'spec/spec_helper.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Lint/ScriptPermission:
-  Exclude:
-    - 'Rakefile'
-
-Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - 'lib/zxcvbn/matchers/new_l33t.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'lib/zxcvbn/matchers/date.rb'
-    - 'spec/support/matcher.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods, NotImplementedExceptions.
-# NotImplementedExceptions: NotImplementedError
-Lint/UnusedMethodArgument:
-  Exclude:
-    - 'lib/zxcvbn/entropy.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Lint/UselessAssignment:
-  Exclude:
-    - 'lib/zxcvbn/feedback_giver.rb'
-
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:

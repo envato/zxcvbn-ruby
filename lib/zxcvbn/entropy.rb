@@ -58,7 +58,7 @@ module Zxcvbn::Entropy
   NUM_MONTHS = 12
   NUM_DAYS = 31
 
-  def year_entropy(match)
+  def year_entropy(_match)
     lg(NUM_YEARS)
   end
 
