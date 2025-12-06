@@ -58,7 +58,7 @@ module Zxcvbn
       score_for(password, match_sequence, up_to_k)
     end
 
-    def score_for password, match_sequence, up_to_k
+    def score_for(password, match_sequence, up_to_k)
       min_entropy = up_to_k[password.length - 1] || 0 # or 0 corner case is for an empty password ''
       crack_time = entropy_to_crack_time(min_entropy)
 
