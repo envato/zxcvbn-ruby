@@ -26,7 +26,6 @@ module Zxcvbn
         matches = []
         lowercased_password = password.downcase
         combinations_to_try = substitution_combinations(relevant_l33t_substitutions(lowercased_password))
-        # debugger if password == 'abcdefghijk987654321'
         combinations_to_try.each do |substitution|
           @dictionary_matchers.each do |matcher|
             subbed_password = substitute(lowercased_password, substitution)
@@ -34,7 +33,6 @@ module Zxcvbn
               token = lowercased_password[match.i..match.j]
               next if token == match.matched_word.downcase
 
-              # debugger if token == '1'
               match_substitutions = {}
               substitution.each do |letter, substitution|
                 match_substitutions[substitution] = letter if token.include?(substitution)

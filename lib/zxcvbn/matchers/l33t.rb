@@ -117,7 +117,7 @@ module Zxcvbn
         subs.each do |sub|
           assoc = sub.dup
 
-          assoc.sort! rescue debugger
+          assoc.sort!
           label = assoc.map { |k, v| "#{k},#{v}" }.join('-')
           unless members.include?(label)
             members << label

@@ -6,11 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Configuration parameters: DebuggerMethods, DebuggerRequires.
-Lint/Debugger:
-  Exclude:
-    - 'lib/zxcvbn/matchers/l33t.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Lint/NonDeterministicRequireOrder:
   Exclude:
