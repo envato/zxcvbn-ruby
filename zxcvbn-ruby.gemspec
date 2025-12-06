@@ -20,9 +20,6 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = '>= 2.5'
 
-  gem.add_development_dependency 'mini_racer'
-  gem.add_development_dependency 'rspec'
-
   gem.metadata = {
     'bug_tracker_uri' => "#{GITHUB_URL}/issues",
     'changelog_uri' => "#{GITHUB_URL}/blob/HEAD/CHANGELOG.md",
