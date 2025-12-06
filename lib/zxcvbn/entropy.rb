@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zxcvbn/math'
 
 module Zxcvbn::Entropy

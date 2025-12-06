@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zxcvbn/matchers/regex_helpers'
 
 module Zxcvbn
@@ -71,9 +73,9 @@ module Zxcvbn
         dates = []
         date_patterns_for_length(token.length).map do |pattern|
           candidate = {
-            :year => '',
-            :month => '',
-            :day => ''
+            :year => +'',
+            :month => +'',
+            :day => +''
           }
           for i in 0...token.length
             candidate[PATTERN_CHAR_TO_SYM[pattern[i]]] << token[i]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zxcvbn/clock'
 require 'zxcvbn/feedback_giver'
 require 'zxcvbn/omnimatch'

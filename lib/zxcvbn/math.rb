@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zxcvbn
   module Math
     def bruteforce_cardinality(password)

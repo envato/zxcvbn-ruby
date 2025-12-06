@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zxcvbn
   class DictionaryRanker
     def self.rank_dictionaries(lists)

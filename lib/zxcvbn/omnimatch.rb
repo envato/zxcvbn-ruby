@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zxcvbn/dictionary_ranker'
 require 'zxcvbn/matchers/dictionary'
 require 'zxcvbn/matchers/l33t'

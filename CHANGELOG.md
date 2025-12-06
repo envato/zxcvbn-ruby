@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+ - Address layout and frozen string literal issues ([#49])
+
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.1...HEAD
+[#49]: https://github.com/envato/zxcvbn-ruby/pull/49
 
 ## [1.2.1] - 2025-12-05
 

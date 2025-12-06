@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zxcvbn
   module CrackTime
     SINGLE_GUESS = 0.010

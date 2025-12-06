@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 require 'zxcvbn/dictionary_ranker'
 

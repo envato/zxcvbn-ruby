@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zxcvbn/entropy'
 require 'zxcvbn/feedback'
 

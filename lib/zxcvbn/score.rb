@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zxcvbn
   class Score
     attr_accessor :entropy, :crack_time, :crack_time_display, :score, :pattern,
