@@ -398,8 +398,3 @@ Style/WordArray:
     - 'spec/matchers/l33t_spec.rb'
     - 'spec/matchers/sequences_spec.rb'
     - 'spec/support/matcher.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/ZeroLengthPredicate:
-  Exclude:
-    - 'lib/zxcvbn/feedback_giver.rb'
