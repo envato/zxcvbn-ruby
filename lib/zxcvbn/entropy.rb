@@ -63,11 +63,12 @@ module Zxcvbn::Entropy
   end
 
   def date_entropy(match)
-    if match.year < 100
-      entropy = lg(NUM_DAYS * NUM_MONTHS * 100)
-    else
-      entropy = lg(NUM_DAYS * NUM_MONTHS * NUM_YEARS)
-    end
+    entropy =
+      if match.year < 100
+        lg(NUM_DAYS * NUM_MONTHS * 100)
+      else
+        lg(NUM_DAYS * NUM_MONTHS * NUM_YEARS)
+      end
 
     if match.separator
       entropy += 2

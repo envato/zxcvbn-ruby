@@ -125,13 +125,6 @@ Style/ClassAndModuleChildren:
   Exclude:
     - 'lib/zxcvbn/entropy.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, SingleLineConditionsOnly, IncludeTernaryExpressions.
-# SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
-  Exclude:
-    - 'lib/zxcvbn/entropy.rb'
-
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Exclude:
