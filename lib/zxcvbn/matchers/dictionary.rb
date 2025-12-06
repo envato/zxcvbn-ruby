@@ -21,13 +21,15 @@ module Zxcvbn
           (i...password_length).each do |j|
             word = lowercased_password[i..j]
             if @ranked_dictionary.has_key?(word)
-              results << Match.new(:matched_word => word,
-                                   :token => password[i..j],
-                                   :i => i,
-                                   :j => j,
-                                   :rank => @ranked_dictionary[word],
-                                   :pattern => 'dictionary',
-                                   :dictionary_name => @name)
+              results << Match.new(
+                matched_word: word,
+                token: password[i..j],
+                i: i,
+                j: j,
+                rank: @ranked_dictionary[word],
+                pattern: 'dictionary',
+                dictionary_name: @name
+              )
             end
           end
         end

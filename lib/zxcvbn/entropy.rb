@@ -63,11 +63,12 @@ module Zxcvbn::Entropy
   end
 
   def date_entropy(match)
-    if match.year < 100
-      entropy = lg(NUM_DAYS * NUM_MONTHS * 100)
-    else
-      entropy = lg(NUM_DAYS * NUM_MONTHS * NUM_YEARS)
-    end
+    entropy =
+      if match.year < 100
+        lg(NUM_DAYS * NUM_MONTHS * 100)
+      else
+        lg(NUM_DAYS * NUM_MONTHS * NUM_YEARS)
+      end
 
     if match.separator
       entropy += 2
@@ -84,10 +85,10 @@ module Zxcvbn::Entropy
     match.base_entropy + match.uppercase_entropy + match.l33t_entropy
   end
 
-  START_UPPER = /^[A-Z][^A-Z]+$/
-  END_UPPER   = /^[^A-Z]+[A-Z]$/
-  ALL_UPPER   = /^[A-Z]+$/
-  ALL_LOWER   = /^[a-z]+$/
+  START_UPPER = /^[A-Z][^A-Z]+$/.freeze
+  END_UPPER   = /^[^A-Z]+[A-Z]$/.freeze
+  ALL_UPPER   = /^[A-Z]+$/.freeze
+  ALL_LOWER   = /^[a-z]+$/.freeze
 
   def extra_uppercase_entropy(match)
     word = match.token

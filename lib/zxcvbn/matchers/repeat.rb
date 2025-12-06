@@ -11,17 +11,15 @@ module Zxcvbn
         while i < password.length
           cur_char = password[i]
           j = i + 1
-          while cur_char == password[j]
-            j += 1
-          end
+          j += 1 while cur_char == password[j]
 
           if j - i > 2 # don't consider length 1 or 2 chains.
             result << Match.new(
-              :pattern => 'repeat',
-              :i => i,
-              :j => j - 1,
-              :token => password[i...j],
-              :repeated_char => cur_char
+              pattern: 'repeat',
+              i: i,
+              j: j - 1,
+              token: password[i...j],
+              repeated_char: cur_char
             )
           end
 

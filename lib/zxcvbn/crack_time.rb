@@ -12,14 +12,13 @@ module Zxcvbn
     end
 
     def crack_time_to_score(seconds)
-      case
-      when seconds < 10**2
+      if seconds < 10**2
         0
-      when seconds < 10**4
+      elsif seconds < 10**4
         1
-      when seconds < 10**6
+      elsif seconds < 10**6
         2
-      when seconds < 10**8
+      elsif seconds < 10**8
         3
       else
         4
@@ -34,18 +33,17 @@ module Zxcvbn
       year    = month * 12
       century = year * 100
 
-      case
-      when seconds < minute
+      if seconds < minute
         'instant'
-      when seconds < hour
+      elsif seconds < hour
         "#{1 + (seconds / minute).ceil} minutes"
-      when seconds < day
+      elsif seconds < day
         "#{1 + (seconds / hour).ceil} hours"
-      when seconds < month
+      elsif seconds < month
         "#{1 + (seconds / day).ceil} days"
-      when seconds < year
+      elsif seconds < year
         "#{1 + (seconds / month).ceil} months"
-      when seconds < century
+      elsif seconds < century
         "#{1 + (seconds / year).ceil} years"
       else
         'centuries'

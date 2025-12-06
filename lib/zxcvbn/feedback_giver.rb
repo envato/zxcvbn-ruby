@@ -18,7 +18,7 @@ module Zxcvbn
 
     def self.get_feedback(score, sequence)
       # starting feedback
-      return DEFAULT_FEEDBACK if sequence.length.zero?
+      return DEFAULT_FEEDBACK if sequence.empty?
 
       # no feedback if score is good or great.
       return EMPTY_FEEDBACK if score > 2

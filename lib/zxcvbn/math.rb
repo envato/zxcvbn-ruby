@@ -36,8 +36,8 @@ module Zxcvbn
 
       r = 1
       (1..k).each do |d|
-        r = r * n
-        r = r / d
+        r *= n
+        r /= d
         n -= 1
       end
       r

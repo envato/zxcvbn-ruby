@@ -13,7 +13,7 @@ module Zxcvbn
     end
 
     def test(password, user_inputs = [])
-      password = password || ''
+      password ||= ''
       result = nil
       calc_time = Clock.realtime do
         matches = @omnimatch.matches(password, user_inputs)

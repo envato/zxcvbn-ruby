@@ -1,7 +1,6 @@
-# coding: utf-8
 # frozen_string_literal: true
 
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.describe Zxcvbn::Tester do
   let(:tester) { Zxcvbn::Tester.new }
@@ -12,13 +11,13 @@ RSpec.describe Zxcvbn::Tester do
       js_result = js_zxcvbn(password)
 
       expect(ruby_result.calc_time).not_to be_nil
-      expect(ruby_result.password).to eq js_result["password"]
-      expect(ruby_result.entropy).to eq js_result["entropy"]
-      expect(ruby_result.crack_time).to eq js_result["crack_time"]
-      expect(ruby_result.crack_time_display).to eq js_result["crack_time_display"]
-      expect(ruby_result.score).to eq js_result["score"]
-      expect(ruby_result.pattern).to eq js_result["pattern"]
-      expect(ruby_result.match_sequence.count).to eq js_result["match_sequence"].count
+      expect(ruby_result.password).to eq js_result['password']
+      expect(ruby_result.entropy).to eq js_result['entropy']
+      expect(ruby_result.crack_time).to eq js_result['crack_time']
+      expect(ruby_result.crack_time_display).to eq js_result['crack_time_display']
+      expect(ruby_result.score).to eq js_result['score']
+      expect(ruby_result.pattern).to eq js_result['pattern']
+      expect(ruby_result.match_sequence.count).to eq js_result['match_sequence'].count
 
       # NOTE: feedback didn't exist in the version of the JS library this gem
       #       is based on, so instead we just check that it put `Feedback` in
@@ -27,71 +26,71 @@ RSpec.describe Zxcvbn::Tester do
     end
   end
 
-  context "with a custom user dictionary" do
-    it "scores them against the user dictionary" do
-      result = tester.test("themeforest", ["themeforest"])
+  context 'with a custom user dictionary' do
+    it 'scores them against the user dictionary' do
+      result = tester.test('themeforest', ['themeforest'])
       expect(result.entropy).to eq 0
       expect(result.score).to eq 0
     end
 
-    it "matches l33t substitutions on this dictionary" do
-      result = tester.test("th3m3for3st", ["themeforest"])
+    it 'matches l33t substitutions on this dictionary' do
+      result = tester.test('th3m3for3st', ['themeforest'])
       expect(result.entropy).to eq 1
       expect(result.score).to eq 0
     end
   end
 
-  context "with Unicode entries in the password" do
-    it "validates the password" do
-      result = tester.test("✅🐴🔋staple", %w[Theme Forest themeforest])
+  context 'with Unicode entries in the password' do
+    it 'validates the password' do
+      result = tester.test('✅🐴🔋staple', %w[Theme Forest themeforest])
       expect(result.entropy).to be_positive
       expect(result.score).to be_positive
     end
   end
 
-  context "with Unicode entries in the dictionary" do
-    it "validates the password" do
-      result = tester.test("correct horse battery staple", %w[✅ 🐴 🔋])
+  context 'with Unicode entries in the dictionary' do
+    it 'validates the password' do
+      result = tester.test('correct horse battery staple', %w[✅ 🐴 🔋])
       expect(result.entropy).to be_positive
       expect(result.score).to be_positive
     end
   end
 
-  context "with Unicode entries in the password and the dictionary" do
-    it "validates the password" do
-      result = tester.test("✅🐴🔋staple", %w[✅ 🐴 🔋])
+  context 'with Unicode entries in the password and the dictionary' do
+    it 'validates the password' do
+      result = tester.test('✅🐴🔋staple', %w[✅ 🐴 🔋])
       expect(result.entropy).to be_positive
       expect(result.score).to be_zero
     end
   end
 
-  context "with invalid entries in the dictionary" do
-    it "ignores those entries" do
-      result = tester.test("themeforest", [nil, 1, "themeforest"])
+  context 'with invalid entries in the dictionary' do
+    it 'ignores those entries' do
+      result = tester.test('themeforest', [nil, 1, 'themeforest'])
       expect(result.entropy).to eq 0
       expect(result.score).to eq 0
     end
   end
 
-  context "with a custom global dictionary" do
-    before { tester.add_word_lists("envato" => ["envato"]) }
+  context 'with a custom global dictionary' do
+    before { tester.add_word_lists('envato' => ['envato']) }
 
-    it "scores them against the dictionary" do
-      result = tester.test("envato")
+    it 'scores them against the dictionary' do
+      result = tester.test('envato')
       expect(result.entropy).to eq 0
       expect(result.score).to eq 0
     end
 
-    context "with invalid entries in a custom dictionary" do
-      before { tester.add_word_lists("themeforest" => [nil, 1, "themeforest"]) }
+    context 'with invalid entries in a custom dictionary' do
+      before { tester.add_word_lists('themeforest' => [nil, 1, 'themeforest']) }
 
-      it "ignores those entries" do
-        expect(tester.test("themeforest")).to have_attributes(entropy: 0, score: 0, crack_time: 0)
+      it 'ignores those entries' do
+        expect(tester.test('themeforest')).to have_attributes(entropy: 0, score: 0, crack_time: 0)
       end
     end
   end
 
-  context "nil password" do
+  context 'nil password' do
     specify do
       expect(tester.test(nil)).to have_attributes(entropy: 0, score: 0, crack_time: 0)
     end

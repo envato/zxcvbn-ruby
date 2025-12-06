@@ -7,7 +7,7 @@ module Zxcvbn
     class Year
       include RegexHelpers
 
-      YEAR_REGEX = /19\d\d|200\d|201\d/
+      YEAR_REGEX = /19\d\d|200\d|201\d/.freeze
 
       def matches(password)
         result = []

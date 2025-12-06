@@ -116,29 +116,12 @@ Style/AndOr:
   Exclude:
     - 'lib/zxcvbn/matchers/sequences.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, ProceduralMethods, FunctionalMethods, AllowedMethods, AllowedPatterns, AllowBracesOnProceduralOneLiners, BracesRequiredMethods.
-# SupportedStyles: line_count_based, semantic, braces_for_chaining, always_braces
-# ProceduralMethods: benchmark, bm, bmbm, create, each_with_object, measure, new, realtime, tap, with_object
-# FunctionalMethods: let, let!, subject, watch
-# AllowedMethods: lambda, proc, it
-Style/BlockDelimiters:
-  Exclude:
-    - 'spec/scoring/entropy_spec.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, EnforcedStyleForClasses, EnforcedStyleForModules.
 # SupportedStyles: nested, compact
 # SupportedStylesForClasses: ~, nested, compact
 # SupportedStylesForModules: ~, nested, compact
 Style/ClassAndModuleChildren:
-  Exclude:
-    - 'lib/zxcvbn/entropy.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, SingleLineConditionsOnly, IncludeTernaryExpressions.
-# SupportedStyles: assign_to_condition, assign_inside_condition
-Style/ConditionalAssignment:
   Exclude:
     - 'lib/zxcvbn/entropy.rb'
 
@@ -177,28 +160,9 @@ Style/EachForSimpleLoop:
     - 'spec/scoring/math_spec.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-Style/EmptyCaseCondition:
-  Exclude:
-    - 'lib/zxcvbn/crack_time.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/Encoding:
-  Exclude:
-    - 'spec/tester_spec.rb'
-    - 'zxcvbn-ruby.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
 Style/EvalWithLocation:
   Exclude:
     - 'spec/support/js_helpers.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/ExpandPathArguments:
-  Exclude:
-    - 'lib/zxcvbn.rb'
-    - 'spec/spec_helper.rb'
-    - 'spec/support/js_helpers.rb'
-    - 'zxcvbn-ruby.gemspec'
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
@@ -219,22 +183,6 @@ Style/GuardClause:
   Exclude:
     - 'lib/zxcvbn/matchers/sequences.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, EnforcedShorthandSyntax, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
-# SupportedStyles: ruby19, hash_rockets, no_mixed_keys, ruby19_no_mixed_keys
-# SupportedShorthandSyntax: always, never, either, consistent, either_consistent
-Style/HashSyntax:
-  Exclude:
-    - 'lib/zxcvbn/matchers/date.rb'
-    - 'lib/zxcvbn/matchers/dictionary.rb'
-    - 'lib/zxcvbn/matchers/regex_helpers.rb'
-    - 'lib/zxcvbn/matchers/repeat.rb'
-    - 'lib/zxcvbn/matchers/sequences.rb'
-    - 'lib/zxcvbn/matchers/spatial.rb'
-    - 'lib/zxcvbn/scorer.rb'
-    - 'spec/dictionary_ranker_spec.rb'
-    - 'spec/scoring/entropy_spec.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/HashTransformValues:
   Exclude:
@@ -248,13 +196,6 @@ Style/IfUnlessModifier:
     - 'lib/zxcvbn/scorer.rb'
     - 'spec/support/matcher.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: require_parentheses, require_no_parentheses, require_no_parentheses_except_multiline
-Style/MethodDefParentheses:
-  Exclude:
-    - 'lib/zxcvbn/scorer.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, Autocorrect.
 # SupportedStyles: module_function, extend_self, forbidden
@@ -265,21 +206,6 @@ Style/ModuleFunction:
 Style/MultilineBlockChain:
   Exclude:
     - 'lib/zxcvbn/scorer.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: literals, strict
-Style/MutableConstant:
-  Exclude:
-    - 'lib/zxcvbn/entropy.rb'
-    - 'lib/zxcvbn/matchers/date.rb'
-    - 'lib/zxcvbn/matchers/digits.rb'
-    - 'lib/zxcvbn/matchers/l33t.rb'
-    - 'lib/zxcvbn/matchers/new_l33t.rb'
-    - 'lib/zxcvbn/matchers/sequences.rb'
-    - 'lib/zxcvbn/matchers/year.rb'
-    - 'spec/spec_helper.rb'
-    - 'zxcvbn-ruby.gemspec'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, MinBodyLength, AllowConsecutiveConditionals.
@@ -337,12 +263,6 @@ Style/RedundantRegexpEscape:
     - 'lib/zxcvbn/matchers/date.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowMultipleReturnValues.
-Style/RedundantReturn:
-  Exclude:
-    - 'lib/zxcvbn/matchers/date.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, AllowInnerSlashes.
 # SupportedStyles: slashes, percent_r, mixed
 Style/RegexpLiteral:
@@ -362,31 +282,6 @@ Style/SafeNavigation:
     - 'lib/zxcvbn/matchers/spatial.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-Style/SelfAssignment:
-  Exclude:
-    - 'lib/zxcvbn/math.rb'
-    - 'lib/zxcvbn/password_strength.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'Guardfile'
-    - 'Rakefile'
-    - 'lib/zxcvbn/data.rb'
-    - 'lib/zxcvbn/tester.rb'
-    - 'spec/matchers/dictionary_spec.rb'
-    - 'spec/matchers/l33t_spec.rb'
-    - 'spec/tester_spec.rb'
-    - 'zxcvbn-ruby.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/WhileUntilModifier:
-  Exclude:
-    - 'lib/zxcvbn/matchers/repeat.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, MinSize, WordRegex.
 # SupportedStyles: percent, brackets
 Style/WordArray:
@@ -398,8 +293,3 @@ Style/WordArray:
     - 'spec/matchers/l33t_spec.rb'
     - 'spec/matchers/sequences_spec.rb'
     - 'spec/support/matcher.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/ZeroLengthPredicate:
-  Exclude:
-    - 'lib/zxcvbn/feedback_giver.rb'

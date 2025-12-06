@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "zxcvbn/data"
-require "zxcvbn/password_strength"
+require 'zxcvbn/data'
+require 'zxcvbn/password_strength'
 
 module Zxcvbn
   # Allows you to test the strength of multiple passwords without reading and
