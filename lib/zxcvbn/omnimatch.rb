@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zxcvbn/dictionary_ranker'
 require 'zxcvbn/matchers/dictionary'
 require 'zxcvbn/matchers/l33t'
@@ -26,12 +28,12 @@ module Zxcvbn
 
     def user_input_matchers(user_inputs)
       return [] unless user_inputs.any?
+
       user_ranked_dictionary = DictionaryRanker.rank_dictionary(user_inputs)
       dictionary_matcher = Matchers::Dictionary.new('user_inputs', user_ranked_dictionary)
       l33t_matcher = Matchers::L33t.new([dictionary_matcher])
       [dictionary_matcher, l33t_matcher]
     end
-
 
     def build_matchers
       matchers = []

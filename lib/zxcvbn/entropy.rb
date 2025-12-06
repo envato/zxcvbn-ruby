@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zxcvbn/math'
 
 module Zxcvbn::Entropy
@@ -6,24 +8,25 @@ module Zxcvbn::Entropy
   def calc_entropy(match)
     return match.entropy unless match.entropy.nil?
 
-    match.entropy = case match.pattern
-                    when 'repeat'
-                      repeat_entropy(match)
-                    when 'sequence'
-                      sequence_entropy(match)
-                    when 'digits'
-                      digits_entropy(match)
-                    when 'year'
-                      year_entropy(match)
-                    when 'date'
-                      date_entropy(match)
-                    when 'spatial'
-                      spatial_entropy(match)
-                    when 'dictionary'
-                      dictionary_entropy(match)
-                    else
-                      0
-                    end
+    match.entropy =
+      case match.pattern
+      when 'repeat'
+        repeat_entropy(match)
+      when 'sequence'
+        sequence_entropy(match)
+      when 'digits'
+        digits_entropy(match)
+      when 'year'
+        year_entropy(match)
+      when 'date'
+        date_entropy(match)
+      when 'spatial'
+        spatial_entropy(match)
+      when 'dictionary'
+        dictionary_entropy(match)
+      else
+        0
+      end
   end
 
   def repeat_entropy(match)
@@ -33,21 +36,22 @@ module Zxcvbn::Entropy
 
   def sequence_entropy(match)
     first_char = match.token[0]
-    base_entropy = if ['a', '1'].include?(first_char)
-      1
-    elsif first_char.match(/\d/)
-      lg(10)
-    elsif first_char.match(/[a-z]/)
-      lg(26)
-    else
-      lg(26) + 1
-    end
+    base_entropy =
+      if ['a', '1'].include?(first_char)
+        1
+      elsif first_char.match(/\d/)
+        lg(10)
+      elsif first_char.match(/[a-z]/)
+        lg(26)
+      else
+        lg(26) + 1
+      end
     base_entropy += 1 unless match.ascending
     base_entropy + lg(match.token.length)
   end
 
   def digits_entropy(match)
-    lg(10 ** match.token.length)
+    lg(10**match.token.length)
   end
 
   NUM_YEARS = 119 # years match against 1900 - 2019
@@ -90,8 +94,8 @@ module Zxcvbn::Entropy
     [START_UPPER, END_UPPER, ALL_UPPER].each do |regex|
       return 1 if word.match(regex)
     end
-    num_upper = word.chars.count{|c| c.match(/[A-Z]/) }
-    num_lower = word.chars.count{|c| c.match(/[a-z]/) }
+    num_upper = word.chars.count { |c| c.match(/[A-Z]/) }
+    num_lower = word.chars.count { |c| c.match(/[a-z]/) }
     possibilities = 0
     (0..[num_upper, num_lower].min).each do |i|
       possibilities += nCk(num_upper + num_lower, i)
@@ -102,10 +106,11 @@ module Zxcvbn::Entropy
   def extra_l33t_entropy(match)
     word = match.token
     return 0 unless match.l33t
+
     possibilities = 0
     match.sub.each do |subbed, unsubbed|
-      num_subbed = word.chars.count{|c| c == subbed}
-      num_unsubbed = word.chars.count{|c| c == unsubbed}
+      num_subbed = word.chars.count { |c| c == subbed }
+      num_unsubbed = word.chars.count { |c| c == unsubbed }
       (0..[num_subbed, num_unsubbed].min).each do |i|
         possibilities += nCk(num_subbed + num_unsubbed, i)
       end
@@ -131,7 +136,7 @@ module Zxcvbn::Entropy
     (2..token_length).each do |i|
       possible_turns = [turns, i - 1].min
       (1..possible_turns).each do |j|
-        possibilities += nCk(i - 1, j - 1) * starting_positions * average_degree ** j
+        possibilities += nCk(i - 1, j - 1) * starting_positions * average_degree**j
       end
     end
 

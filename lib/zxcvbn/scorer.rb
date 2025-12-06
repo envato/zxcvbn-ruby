@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zxcvbn/entropy'
 require 'zxcvbn/crack_time'
 require 'zxcvbn/score'
@@ -16,11 +18,13 @@ module Zxcvbn
 
     def minimum_entropy_match_sequence(password, matches)
       bruteforce_cardinality = bruteforce_cardinality(password) # e.g. 26 for lowercase
-      up_to_k = []      # minimum entropy up to k.
-      backpointers = [] # for the optimal sequence of matches up to k, holds the final match (match.j == k). null means the sequence ends w/ a brute-force character.
+      up_to_k = [] # minimum entropy up to k.
+      # for the optimal sequence of matches up to k, holds the final match (match.j == k).
+      # null means the sequence ends w/ a brute-force character.
+      backpointers = []
       (0...password.length).each do |k|
         # starting scenario to try and beat: adding a brute-force character to the minimum entropy sequence at k-1.
-        previous_k_entropy = k > 0 ? up_to_k[k-1] : 0
+        previous_k_entropy = k > 0 ? up_to_k[k - 1] : 0
         up_to_k[k] = previous_k_entropy + lg(bruteforce_cardinality)
         backpointers[k] = nil
         matches.select do |match|
@@ -28,7 +32,7 @@ module Zxcvbn
         end.each do |match|
           i, j = match.i, match.j
           # see if best entropy up to i-1 + entropy of this match is less than the current minimum at j.
-          previous_i_entropy = i > 0 ? up_to_k[i-1] : 0
+          previous_i_entropy = i > 0 ? up_to_k[i - 1] : 0
           candidate_entropy = previous_i_entropy + calc_entropy(match)
           if up_to_k[j] && candidate_entropy < up_to_k[j]
             up_to_k[j] = candidate_entropy
@@ -55,7 +59,7 @@ module Zxcvbn
     end
 
     def score_for password, match_sequence, up_to_k
-      min_entropy = up_to_k[password.length - 1] || 0  # or 0 corner case is for an empty password ''
+      min_entropy = up_to_k[password.length - 1] || 0 # or 0 corner case is for an empty password ''
       crack_time = entropy_to_crack_time(min_entropy)
 
       # final result object
@@ -68,7 +72,6 @@ module Zxcvbn
         :score => crack_time_to_score(crack_time)
       )
     end
-
 
     def pad_with_bruteforce_matches(match_sequence, password, bruteforce_cardinality)
       k = 0
@@ -85,6 +88,7 @@ module Zxcvbn
       end
       match_sequence_copy
     end
+
     # fill in the blanks between pattern matches with bruteforce "matches"
     # that way the match sequence fully covers the password:
     # match1.j == match2.i - 1 for every adjacent match1, match2.
@@ -94,7 +98,7 @@ module Zxcvbn
         :i => i,
         :j => j,
         :token => password[i..j],
-        :entropy => lg(bruteforce_cardinality ** (j - i + 1)),
+        :entropy => lg(bruteforce_cardinality**(j - i + 1)),
         :cardinality => bruteforce_cardinality
       )
     end

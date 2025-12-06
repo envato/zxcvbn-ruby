@@ -1,4 +1,5 @@
-# -*- encoding: utf-8 -*-
+# frozen_string_literal: true
+
 require File.expand_path('../lib/zxcvbn/version', __FILE__)
 
 GITHUB_URL = 'https://github.com/envato/zxcvbn-ruby'
@@ -11,8 +12,8 @@ Gem::Specification.new do |gem|
   gem.homepage      = "http://github.com/envato/zxcvbn-ruby"
 
   gem.files         = `git ls-files -z`.split("\x0").reject do |file|
-                        file.match(%r{^(\.|CODE_OF_CONDUCT.md|Gemfile|Rakefile|Guardfile|zxcvbn-ruby.gemspec|spec/)})
-                      end
+    file.match(%r{^(\.|CODE_OF_CONDUCT.md|Gemfile|Rakefile|Guardfile|zxcvbn-ruby.gemspec|spec/)})
+  end
   gem.name          = "zxcvbn-ruby"
   gem.require_paths = ["lib"]
   gem.version       = Zxcvbn::VERSION

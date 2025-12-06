@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zxcvbn/match'
 
 module Zxcvbn
@@ -14,7 +16,7 @@ module Zxcvbn
         j = 1
         while from + j < password.length &&
               password[from + j] == seq[index_from + direction * j]
-          j+= 1
+          j += 1
         end
         j
       end
@@ -24,7 +26,7 @@ module Zxcvbn
       def applicable_sequence(password, i)
         SEQUENCES.each do |name, sequence|
           index1 = sequence.index(password[i])
-          index2 = sequence.index(password[i+1])
+          index2 = sequence.index(password[i + 1])
           if index1 and index2
             seq_direction = index2 - index1
             if [-1, 1].include?(seq_direction)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zxcvbn/match'
 
 module Zxcvbn
@@ -17,7 +19,7 @@ module Zxcvbn
             result << Match.new(
               :pattern => 'repeat',
               :i => i,
-              :j => j-1,
+              :j => j - 1,
               :token => password[i...j],
               :repeated_char => cur_char
             )

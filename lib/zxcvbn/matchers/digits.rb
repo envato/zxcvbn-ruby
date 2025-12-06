@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'zxcvbn/matchers/regex_helpers'
 
 module Zxcvbn

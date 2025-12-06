@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 require 'zxcvbn/dictionary_ranker'
 
@@ -5,11 +7,11 @@ module Zxcvbn
   class Data
     def initialize
       @ranked_dictionaries = DictionaryRanker.rank_dictionaries(
-        "english" =>      read_word_list("english.txt"),
+        "english" => read_word_list("english.txt"),
         "female_names" => read_word_list("female_names.txt"),
-        "male_names" =>   read_word_list("male_names.txt"),
-        "passwords" =>    read_word_list("passwords.txt"),
-        "surnames" =>     read_word_list("surnames.txt")
+        "male_names" => read_word_list("male_names.txt"),
+        "passwords" => read_word_list("passwords.txt"),
+        "surnames" => read_word_list("surnames.txt")
       )
       @adjacency_graphs = JSON.load(DATA_PATH.join('adjacency_graphs.json').read)
     end

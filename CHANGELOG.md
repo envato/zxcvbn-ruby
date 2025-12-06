@@ -6,7 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.1...HEAD
+[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.2...HEAD
+
+## [1.2.2] - 2025-12-06
+
+### Changed
+ - Address layout and frozen string literal issues ([#49])
+
+[1.2.2]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.1...v.1.2.2
+[#49]: https://github.com/envato/zxcvbn-ruby/pull/49
 
 ## [1.2.1] - 2025-12-05
 

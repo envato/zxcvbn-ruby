@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Zxcvbn::Entropy do
@@ -22,7 +24,7 @@ RSpec.describe Zxcvbn::Entropy do
   describe '#sequence_entropy' do
     let(:match) { Zxcvbn::Match.new(:token => token, :ascending => true) }
 
-    {'a' => 'abcdefg', '1' => '1234567'}.each do |first_char, token|
+    { 'a' => 'abcdefg', '1' => '1234567' }.each do |first_char, token|
       context "when the first char is #{first_char}" do
         let(:token) { token }
 
@@ -154,7 +156,7 @@ RSpec.describe Zxcvbn::Entropy do
       let(:token) { 'p3rs0n' }
       let(:rank)  { 1 }
       let(:l33t)  { true }
-      let(:sub)   { {'3' => 'e', '0' => 'o'} }
+      let(:sub)   { { '3' => 'e', '0' => 'o' } }
 
       specify { expect(calculated_entropy).to eq 1 }
     end
@@ -212,5 +214,4 @@ RSpec.describe Zxcvbn::Entropy do
       end
     end
   end
-
 end

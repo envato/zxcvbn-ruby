@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :match_js_results do |expected_js_results|
   match do |actual_ruby_results|
     actual_ruby_results = reduce(actual_ruby_results.map(&:to_hash))
