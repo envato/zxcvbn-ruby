@@ -126,10 +126,6 @@ attacker. For this reason we advise you not to store the results of
  - [GitHub project](https://github.com/envato/zxcvbn-ruby)
  - Bug reports and feature requests are welcome via [GitHub Issues](https://github.com/envato/zxcvbn-ruby/issues)
 
-## Maintainers
-
- - [Steve Hodgkiss](https://github.com/stevehodgkiss)
-
 ## Authors
 
  - [Steve Hodgkiss](https://github.com/stevehodgkiss)
