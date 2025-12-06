@@ -15,11 +15,11 @@ module Zxcvbn
 
           if j - i > 2 # don't consider length 1 or 2 chains.
             result << Match.new(
-              :pattern => 'repeat',
-              :i => i,
-              :j => j - 1,
-              :token => password[i...j],
-              :repeated_char => cur_char
+              pattern: 'repeat',
+              i: i,
+              j: j - 1,
+              token: password[i...j],
+              repeated_char: cur_char
             )
           end
 

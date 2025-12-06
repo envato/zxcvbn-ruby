@@ -13,9 +13,9 @@ module Zxcvbn
           j -= 1
 
           match = Match.new(
-            :i => i,
-            :j => j,
-            :token => password[i..j]
+            i: i,
+            j: j,
+            token: password[i..j]
           )
           yield match, re_match
         end

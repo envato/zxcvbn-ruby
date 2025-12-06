@@ -48,13 +48,13 @@ module Zxcvbn
             length = seq_match_length(password, i, seq_direction, seq)
             if length > 2
               result << Match.new(
-                :pattern => 'sequence',
-                :i => i,
-                :j => i + length - 1,
-                :token => password[i, length],
-                :sequence_name => seq_name,
-                :sequence_space => seq.length,
-                :ascending => seq_direction == 1
+                pattern: 'sequence',
+                i: i,
+                j: i + length - 1,
+                token: password[i, length],
+                sequence_name: seq_name,
+                sequence_space: seq.length,
+                ascending: seq_direction == 1
               )
             end
             i += length - 1

@@ -16,13 +16,13 @@ RSpec.describe Zxcvbn::Entropy do
 
   describe '#repeat_entropy' do
     it 'returns the correct value' do
-      match = Zxcvbn::Match.new(:token => '2222')
+      match = Zxcvbn::Match.new(token: '2222')
       expect(entropy.repeat_entropy(match)).to eq 5.321928094887363
     end
   end
 
   describe '#sequence_entropy' do
-    let(:match) { Zxcvbn::Match.new(:token => token, :ascending => true) }
+    let(:match) { Zxcvbn::Match.new(token: token, ascending: true) }
 
     { 'a' => 'abcdefg', '1' => '1234567' }.each do |first_char, token|
       context "when the first char is #{first_char}" do
@@ -70,7 +70,7 @@ RSpec.describe Zxcvbn::Entropy do
 
   describe '#digits_entropy' do
     it 'returns the correct value' do
-      match = Zxcvbn::Match.new(:token => '12345678')
+      match = Zxcvbn::Match.new(token: '12345678')
       expect(entropy.digits_entropy(match)).to be_within(1e-14).of(26.5754247590989)
     end
   end
@@ -84,28 +84,28 @@ RSpec.describe Zxcvbn::Entropy do
   describe '#date_entropy' do
     context 'with a two digit year' do
       it 'returns the correct value' do
-        match = Zxcvbn::Match.new(:year => 98)
+        match = Zxcvbn::Match.new(year: 98)
         expect(entropy.date_entropy(match)).to eq 15.183015000882756
       end
     end
 
     context 'with a four digit year' do
       it 'returns the correct value' do
-        match = Zxcvbn::Match.new(:year => 2012)
+        match = Zxcvbn::Match.new(year: 2012)
         expect(entropy.date_entropy(match)).to eq 15.433976574415976
       end
     end
 
     context 'with a separator' do
       it 'returns the correct value' do
-        match = Zxcvbn::Match.new(:year => 2012, :separator => '/')
+        match = Zxcvbn::Match.new(year: 2012, separator: '/')
         expect(entropy.date_entropy(match)).to eq 17.433976574415976
       end
     end
   end
 
   describe '#dictionary_entropy' do
-    let(:match) { Zxcvbn::Match.new(:token => token, :rank => rank, :l33t => l33t, :sub => sub) }
+    let(:match) { Zxcvbn::Match.new(token: token, rank: rank, l33t: l33t, sub: sub) }
     let(:l33t)  { false }
     let(:sub)   { {} }
     let(:calculated_entropy) { entropy.dictionary_entropy(match) }
@@ -163,7 +163,7 @@ RSpec.describe Zxcvbn::Entropy do
   end
 
   describe '#spatial_entropy' do
-    let(:match) { Zxcvbn::Match.new(:token => '123wsclf', :turns => 1) }
+    let(:match) { Zxcvbn::Match.new(token: '123wsclf', turns: 1) }
 
     context 'when keyboard is qwerty' do
       it 'should return the correct entropy' do

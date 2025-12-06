@@ -64,12 +64,12 @@ module Zxcvbn
 
       # final result object
       Score.new(
-        :password => password,
-        :entropy => min_entropy.round(3),
-        :match_sequence => match_sequence,
-        :crack_time => crack_time.round(3),
-        :crack_time_display => display_time(crack_time),
-        :score => crack_time_to_score(crack_time)
+        password: password,
+        entropy: min_entropy.round(3),
+        match_sequence: match_sequence,
+        crack_time: crack_time.round(3),
+        crack_time_display: display_time(crack_time),
+        score: crack_time_to_score(crack_time)
       )
     end
 
@@ -94,12 +94,12 @@ module Zxcvbn
     # match1.j == match2.i - 1 for every adjacent match1, match2.
     def make_bruteforce_match(password, i, j, bruteforce_cardinality)
       Match.new(
-        :pattern => 'bruteforce',
-        :i => i,
-        :j => j,
-        :token => password[i..j],
-        :entropy => lg(bruteforce_cardinality**(j - i + 1)),
-        :cardinality => bruteforce_cardinality
+        pattern: 'bruteforce',
+        i: i,
+        j: j,
+        token: password[i..j],
+        entropy: lg(bruteforce_cardinality**(j - i + 1)),
+        cardinality: bruteforce_cardinality
       )
     end
   end
