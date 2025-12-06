@@ -161,18 +161,14 @@ For larger new features: Do everything as above, but first also make contact wit
 
 ## About [![code with heart by Envato](https://img.shields.io/badge/%3C%2F%3E%20with%20%E2%99%A5%20by-Envato-ff69b4.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby)
 
-This project is maintained by the [Envato engineering team][webuild] and funded by [Envato][envato].
-
-[<img src="http://opensource.envato.com/images/envato-oss-readme-logo.png" alt="Envato logo">][envato]
+This project is maintained by the Envato engineering team and funded by [Envato][envato].
 
 Encouraging the use and creation of open source software is one of the ways we
-serve our community. See [our other projects][oss] or [come work with us][careers]
+serve our community. Perhaps [come work with us][careers]
 where you'll find an incredibly diverse, intelligent and capable group of people
 who help make our company succeed and make our workplace fun, friendly and
 happy.
 
  [careers]: https://envato.com/careers/?utm_source=github
  [envato]: https://envato.com?utm_source=github
- [oss]: https://opensource.envato.com/?utm_source=github
- [webuild]: https://webuild.envato.com?utm_source=github
  [zxcvbn.js]: https://github.com/dropbox/zxcvbn
