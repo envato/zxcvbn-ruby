@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Zxcvbn::DictionaryRanker do
+RSpec.describe Zxcvbn::DictionaryRanker do
   describe '.rank_dictionaries' do
     it 'ranks word lists' do
       result = Zxcvbn::DictionaryRanker.rank_dictionaries({:test => ['ABC', 'def'],

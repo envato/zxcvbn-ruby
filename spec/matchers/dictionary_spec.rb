@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Zxcvbn::Matchers::Dictionary do
+RSpec.describe Zxcvbn::Matchers::Dictionary do
   subject(:matcher) { described_class.new("Test dictionary", dictionary) }
 
   describe "#matches" do

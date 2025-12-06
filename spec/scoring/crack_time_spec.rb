@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Zxcvbn::CrackTime do
+RSpec.describe Zxcvbn::CrackTime do
   include Zxcvbn::CrackTime
 
   describe '#entropy_to_crack_time' do

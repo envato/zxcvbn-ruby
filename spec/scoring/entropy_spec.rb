@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Zxcvbn::Entropy do
+RSpec.describe Zxcvbn::Entropy do
   include Zxcvbn::Math
 
   let(:entropy) {

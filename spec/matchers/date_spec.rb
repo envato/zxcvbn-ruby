@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Zxcvbn::Matchers::Date do
+RSpec.describe Zxcvbn::Matchers::Date do
   let(:matcher) { subject }
 
   {
