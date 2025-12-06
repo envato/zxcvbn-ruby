@@ -24,7 +24,7 @@ module Zxcvbn
           turns = 0
           shifted_count = 0
           loop do
-            prev_char = password[j-1]
+            prev_char = password[j - 1]
             found = false
             found_direction = -1
             cur_direction = -1
@@ -61,7 +61,7 @@ module Zxcvbn
                 result << Match.new(
                   :pattern => 'spatial',
                   :i => i,
-                  :j => j-1,
+                  :j => j - 1,
                   :token => password[i...j],
                   :graph => graph_name,
                   :turns => turns,

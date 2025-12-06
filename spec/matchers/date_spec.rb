@@ -20,7 +20,7 @@ RSpec.describe Zxcvbn::Matchers::Date do
 
       it 'finds the correct matches' do
         expect(matches.count).to eq 1
-        expect(matches[0].token).to eq %w[ 02 12 1997 ].join(separator)
+        expect(matches[0].token).to eq %w[02 12 1997].join(separator)
         expect(matches[0].separator).to eq separator
         expect(matches[0].day).to eq 2
         expect(matches[0].month).to eq 12

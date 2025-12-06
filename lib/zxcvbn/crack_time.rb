@@ -6,7 +6,7 @@ module Zxcvbn
     SECONDS_PER_GUESS = SINGLE_GUESS / NUM_ATTACKERS
 
     def entropy_to_crack_time(entropy)
-      0.5 * (2 ** entropy) * SECONDS_PER_GUESS
+      0.5 * (2**entropy) * SECONDS_PER_GUESS
     end
 
     def crack_time_to_score(seconds)

@@ -20,6 +20,8 @@ task :console do
 end
 
 task :compile_coffeescript do
-  `coffee --compile --bare spec/support/js_source/{matching,scoring,init}.coffee`
-  `cat spec/support/js_source/{matching,scoring,adjacency_graphs,frequency_lists,init}.js > spec/support/js_source/compiled.js`
+  system('coffee --compile --bare spec/support/js_source/{matching,scoring,init}.coffee', exception: true)
+  system(<<~COMMAND.strip, exception: true)
+    cat spec/support/js_source/{matching,scoring,adjacency_graphs,frequency_lists,init}.js > spec/support/js_source/compiled.js
+  COMMAND
 end

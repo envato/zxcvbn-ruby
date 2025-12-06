@@ -17,7 +17,7 @@ RSpec.describe 'Zxcvbn.test' do
 
   context 'with a password, user input and custom word lists' do
     it 'returns a result' do
-      result = Zxcvbn.test('password', ['inputs'], {'list' => ['words']})
+      result = Zxcvbn.test('password', ['inputs'], { 'list' => ['words'] })
       expect(result.entropy).to_not be_nil
     end
   end

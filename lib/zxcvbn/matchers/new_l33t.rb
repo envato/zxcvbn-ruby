@@ -31,6 +31,7 @@ module Zxcvbn
             matcher.matches(subbed_password).each do |match|
               token = lowercased_password[match.i..match.j]
               next if token == match.matched_word.downcase
+
               # debugger if token == '1'
               match_substitutions = {}
               substitution.each do |letter, substitution|
@@ -82,7 +83,7 @@ module Zxcvbn
         expanded_substitutions.each do |substitution_hash|
           # convert a hash to an array of hashes with 1 key each
           subs_array = substitution_hash.map do |letter, substitutions|
-            {letter => substitutions}
+            { letter => substitutions }
           end
           combinations << subs_array
 
@@ -110,11 +111,11 @@ module Zxcvbn
       #      [{'a' => '4', 'i' => 1}, {'a' => '@', 'i' => '1'}]
       def expanded_substitutions(hash)
         return {} if hash.empty?
+
         values = hash.values
         product_values = values[0].product(*values[1..-1])
-        product_values.map{ |p| Hash[hash.keys.zip(p)] }
+        product_values.map { |p| Hash[hash.keys.zip(p)] }
       end
-
     end
   end
 end

@@ -31,6 +31,7 @@ module Zxcvbn
     def nCk(n, k)
       return 0 if k > n
       return 1 if k == 0
+
       r = 1
       (1..k).each do |d|
         r = r * n

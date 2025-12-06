@@ -7,4 +7,3 @@ module Zxcvbn
     end
   end
 end
-

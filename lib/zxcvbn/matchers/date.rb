@@ -92,11 +92,11 @@ module Zxcvbn
       end
 
       DATE_PATTERN_FOR_LENGTH = {
-        8 => %w[ yyyymmdd ddmmyyyy mmddyyyy ],
-        7 => %w[ yyyymdd yyyymmd ddmyyyy dmmyyyy ],
-        6 => %w[ yymmdd ddmmyy mmddyy ],
-        5 => %w[ yymdd yymmd ddmyy dmmyy mmdyy mddyy ],
-        4 => %w[ yymd dmyy mdyy ]
+        8 => %w[yyyymmdd ddmmyyyy mmddyyyy],
+        7 => %w[yyyymdd yyyymmd ddmyyyy dmmyyyy],
+        6 => %w[yymmdd ddmmyy mmddyy],
+        5 => %w[yymdd yymmd ddmyy dmmyy mmdyy mddyy],
+        4 => %w[yymd dmyy mdyy]
       }
 
       PATTERN_CHAR_TO_SYM = {
@@ -112,6 +112,7 @@ module Zxcvbn
       def valid_date?(day, month, year)
         return false if day > 31 || month > 12
         return false unless year >= 1900 && year <= 2019
+
         true
       end
 

@@ -30,6 +30,7 @@ module Zxcvbn
             matcher.matches(subbed_password).each do |match|
               token = password[match.i..match.j]
               next if token.downcase == match.matched_word.downcase
+
               match_substitutions = {}
               substitution.each do |s, letter|
                 match_substitutions[s] = letter if token.include?(s)
@@ -79,6 +80,7 @@ module Zxcvbn
 
       def find_substitutions(subs, table, keys)
         return subs if keys.empty?
+
         first_key = keys[0]
         rest_keys = keys[1..-1]
         next_subs = []
@@ -114,7 +116,7 @@ module Zxcvbn
           assoc = sub.dup
 
           assoc.sort! rescue debugger
-          label = assoc.map{|k, v| "#{k},#{v}"}.join('-')
+          label = assoc.map { |k, v| "#{k},#{v}" }.join('-')
           unless members.include?(label)
             members << label
             deduped << sub
