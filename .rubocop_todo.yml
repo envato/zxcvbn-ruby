@@ -160,11 +160,6 @@ Style/EachForSimpleLoop:
     - 'spec/scoring/math_spec.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-Style/EmptyCaseCondition:
-  Exclude:
-    - 'lib/zxcvbn/crack_time.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
 Style/EvalWithLocation:
   Exclude:
     - 'spec/support/js_helpers.rb'
