@@ -123,7 +123,7 @@ module Zxcvbn
       end
 
       def expand_year(year)
-        return year
+        year
         # Block dates with 2 digit years for now to be compatible with the JS version
         # return year unless year < 100
         # now = Time.now.year
