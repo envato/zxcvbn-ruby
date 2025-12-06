@@ -182,12 +182,6 @@ Style/EmptyCaseCondition:
     - 'lib/zxcvbn/crack_time.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-Style/Encoding:
-  Exclude:
-    - 'spec/tester_spec.rb'
-    - 'zxcvbn-ruby.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
 Style/EvalWithLocation:
   Exclude:
     - 'spec/support/js_helpers.rb'
