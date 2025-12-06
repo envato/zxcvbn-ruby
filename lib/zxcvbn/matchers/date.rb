@@ -13,7 +13,7 @@ module Zxcvbn
         ( \d{1,2} )                         # month or day
         \2                                  # same separator
         ( 19\d{2} | 200\d | 201\d | \d{2} ) # year
-      /x
+      /x.freeze
 
       YEAR_PREFIX = /
         ( 19\d{2} | 200\d | 201\d | \d{2} ) # year
@@ -21,9 +21,9 @@ module Zxcvbn
         ( \d{1,2} )                         # day or month
         \2                                  # same separator
         ( \d{1,2} )                         # month or day
-      /x
+      /x.freeze
 
-      WITHOUT_SEPARATOR = /\d{4,8}/
+      WITHOUT_SEPARATOR = /\d{4,8}/.freeze
 
       def matches(password)
         match_with_separator(password) + match_without_separator(password)
@@ -99,13 +99,13 @@ module Zxcvbn
         6 => %w[yymmdd ddmmyy mmddyy],
         5 => %w[yymdd yymmd ddmyy dmmyy mmdyy mddyy],
         4 => %w[yymd dmyy mdyy]
-      }
+      }.freeze
 
       PATTERN_CHAR_TO_SYM = {
         'y' => :year,
         'm' => :month,
         'd' => :day
-      }
+      }.freeze
 
       def date_patterns_for_length(length)
         DATE_PATTERN_FOR_LENGTH[length] || []

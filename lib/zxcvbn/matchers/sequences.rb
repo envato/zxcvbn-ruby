@@ -9,7 +9,7 @@ module Zxcvbn
         'lower' => 'abcdefghijklmnopqrstuvwxyz',
         'upper' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         'digits' => '01234567890'
-      }
+      }.freeze
 
       def seq_match_length(password, from, direction, seq)
         index_from = seq.index(password[from])

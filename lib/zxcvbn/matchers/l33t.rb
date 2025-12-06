@@ -16,7 +16,7 @@ module Zxcvbn
         't' => ['+', '7'],
         'x' => ['%'],
         'z' => ['2']
-      }
+      }.freeze
 
       def initialize(dictionary_matchers)
         @dictionary_matchers = dictionary_matchers

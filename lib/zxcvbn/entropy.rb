@@ -84,10 +84,10 @@ module Zxcvbn::Entropy
     match.base_entropy + match.uppercase_entropy + match.l33t_entropy
   end
 
-  START_UPPER = /^[A-Z][^A-Z]+$/
-  END_UPPER   = /^[^A-Z]+[A-Z]$/
-  ALL_UPPER   = /^[A-Z]+$/
-  ALL_LOWER   = /^[a-z]+$/
+  START_UPPER = /^[A-Z][^A-Z]+$/.freeze
+  END_UPPER   = /^[^A-Z]+[A-Z]$/.freeze
+  ALL_UPPER   = /^[A-Z]+$/.freeze
+  ALL_LOWER   = /^[a-z]+$/.freeze
 
   def extra_uppercase_entropy(match)
     word = match.token
