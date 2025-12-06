@@ -362,12 +362,6 @@ Style/SafeNavigation:
     - 'lib/zxcvbn/matchers/spatial.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-Style/SelfAssignment:
-  Exclude:
-    - 'lib/zxcvbn/math.rb'
-    - 'lib/zxcvbn/password_strength.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, MinSize, WordRegex.
 # SupportedStyles: percent, brackets
 Style/WordArray:
