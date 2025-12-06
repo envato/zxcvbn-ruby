@@ -382,11 +382,6 @@ Style/StringLiterals:
     - 'zxcvbn-ruby.gemspec'
 
 # This cop supports safe autocorrection (--autocorrect).
-Style/WhileUntilModifier:
-  Exclude:
-    - 'lib/zxcvbn/matchers/repeat.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, MinSize, WordRegex.
 # SupportedStyles: percent, brackets
 Style/WordArray:
