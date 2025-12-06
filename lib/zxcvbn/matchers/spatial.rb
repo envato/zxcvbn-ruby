@@ -36,22 +36,22 @@ module Zxcvbn
               cur_char = password[j]
               adjacents.each do |adj|
                 cur_direction += 1
-                if adj&.index(cur_char)
-                  found = true
-                  found_direction = cur_direction
-                  if adj.index(cur_char) == 1
-                    # index 1 in the adjacency means the key is shifted, 0 means unshifted: A vs a, % vs 5, etc.
-                    # for example, 'q' is adjacent to the entry '2@'. @ is shifted w/ index 1, 2 is unshifted.
-                    shifted_count += 1
-                  end
-                  if last_direction != found_direction
-                    # adding a turn is correct even in the initial case when last_direction is null:
-                    # every spatial pattern starts with a turn.
-                    turns += 1
-                    last_direction = found_direction
-                  end
-                  break
+                next unless adj&.index(cur_char)
+
+                found = true
+                found_direction = cur_direction
+                if adj.index(cur_char) == 1
+                  # index 1 in the adjacency means the key is shifted, 0 means unshifted: A vs a, % vs 5, etc.
+                  # for example, 'q' is adjacent to the entry '2@'. @ is shifted w/ index 1, 2 is unshifted.
+                  shifted_count += 1
                 end
+                if last_direction != found_direction
+                  # adding a turn is correct even in the initial case when last_direction is null:
+                  # every spatial pattern starts with a turn.
+                  turns += 1
+                  last_direction = found_direction
+                end
+                break
               end
             end
             # if the current pattern continued, extend j and try to grow again

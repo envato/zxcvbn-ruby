@@ -209,15 +209,6 @@ Style/MultilineBlockChain:
     - 'lib/zxcvbn/scorer.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinBodyLength, AllowConsecutiveConditionals.
-# SupportedStyles: skip_modifier_ifs, always
-Style/Next:
-  Exclude:
-    - 'lib/zxcvbn/matchers/dictionary.rb'
-    - 'lib/zxcvbn/matchers/sequences.rb'
-    - 'lib/zxcvbn/matchers/spatial.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, MinSize, WordRegex.
 # SupportedStyles: percent, brackets
 Style/WordArray:

@@ -27,13 +27,13 @@ module Zxcvbn
         SEQUENCES.each do |name, sequence|
           index1 = sequence.index(password[i])
           index2 = sequence.index(password[i + 1])
-          if index1 and index2
-            seq_direction = index2 - index1
-            if [-1, 1].include?(seq_direction)
-              return [name, sequence, seq_direction]
-            else
-              return nil
-            end
+          next unless index1 and index2
+
+          seq_direction = index2 - index1
+          if [-1, 1].include?(seq_direction)
+            return [name, sequence, seq_direction]
+          else
+            return nil
           end
         end
       end
