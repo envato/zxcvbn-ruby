@@ -368,20 +368,6 @@ Style/SelfAssignment:
     - 'lib/zxcvbn/password_strength.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'Guardfile'
-    - 'Rakefile'
-    - 'lib/zxcvbn/data.rb'
-    - 'lib/zxcvbn/tester.rb'
-    - 'spec/matchers/dictionary_spec.rb'
-    - 'spec/matchers/l33t_spec.rb'
-    - 'spec/tester_spec.rb'
-    - 'zxcvbn-ruby.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, MinSize, WordRegex.
 # SupportedStyles: percent, brackets
 Style/WordArray:

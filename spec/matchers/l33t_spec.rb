@@ -52,7 +52,7 @@ RSpec.describe Zxcvbn::Matchers::L33t do
     subject(:matches) { matcher.matches('p@ssword') }
 
     it "doesn't find 'password' because it's not in english.txt" do
-      expect(matches.map(&:matched_word)).not_to include "password"
+      expect(matches.map(&:matched_word)).not_to include 'password'
     end
 
     it 'finds the correct matches' do
