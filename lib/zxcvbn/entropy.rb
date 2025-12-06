@@ -70,9 +70,7 @@ module Zxcvbn::Entropy
         lg(NUM_DAYS * NUM_MONTHS * NUM_YEARS)
       end
 
-    if match.separator
-      entropy += 2
-    end
+    entropy += 2 if match.separator
 
     entropy
   end
@@ -117,11 +115,11 @@ module Zxcvbn::Entropy
       end
     end
     entropy = lg(possibilities)
-    entropy == 0 ? 1 : entropy
+    entropy.zero? ? 1 : entropy
   end
 
   def spatial_entropy(match)
-    if %w|qwerty dvorak|.include? match.graph
+    if %w[qwerty dvorak].include? match.graph
       starting_positions = starting_positions_for_graph('qwerty')
       average_degree     = average_degree_for_graph('qwerty')
     else

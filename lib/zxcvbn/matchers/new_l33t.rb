@@ -65,9 +65,7 @@ module Zxcvbn
         end
         L33T_TABLE.each do |letter, substibutions|
           password.each_char do |password_char|
-            if substibutions.include?(password_char)
-              subs[letter] << password_char
-            end
+            subs[letter] << password_char if substibutions.include?(password_char)
           end
         end
         subs
@@ -95,15 +93,13 @@ module Zxcvbn
         end
 
         # convert back to simple hash per substitution combination
-        combination_hashes = combinations.map do |combination_set|
+        combinations.map do |combination_set|
           hash = {}
           combination_set.each do |combination_hash|
             hash.merge!(combination_hash)
           end
           hash
         end
-
-        combination_hashes
       end
 
       # expand possible combinations if multiple characters can be substituted

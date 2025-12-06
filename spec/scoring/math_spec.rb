@@ -19,7 +19,7 @@ RSpec.describe Zxcvbn::Math do
     context 'when password is one character long' do
       context 'and a digit' do
         it 'should return 10' do
-          (0..9).each do |digit|
+          10.times do |digit|
             expect(bruteforce_cardinality(digit.to_s)).to eql 10
           end
         end

@@ -7,21 +7,21 @@ module Zxcvbn
     class Date
       include RegexHelpers
 
-      YEAR_SUFFIX = /
+      YEAR_SUFFIX = %r{
         ( \d{1,2} )                         # day or month
-        ( \s | \- | \/ | \\ | \_ | \. )     # separator
+        ( \s | - | / | \\ | _ | \. )        # separator
         ( \d{1,2} )                         # month or day
         \2                                  # same separator
         ( 19\d{2} | 200\d | 201\d | \d{2} ) # year
-      /x.freeze
+      }x.freeze
 
-      YEAR_PREFIX = /
+      YEAR_PREFIX = %r{
         ( 19\d{2} | 200\d | 201\d | \d{2} ) # year
-        ( \s | - | \/ | \\ | _ | \. )       # separator
+        ( \s | - | / | \\ | _ | \. )        # separator
         ( \d{1,2} )                         # day or month
         \2                                  # same separator
         ( \d{1,2} )                         # month or day
-      /x.freeze
+      }x.freeze
 
       WITHOUT_SEPARATOR = /\d{4,8}/.freeze
 
@@ -56,7 +56,9 @@ module Zxcvbn
         result = []
         re_match_all(WITHOUT_SEPARATOR, password) do |match, _re_match|
           extract_dates(match.token).each do |candidate|
-            day, month, year = candidate[:day], candidate[:month], candidate[:year]
+            day = candidate[:day]
+            month = candidate[:month]
+            year = candidate[:year]
 
             match.pattern = 'date'
             match.day = day

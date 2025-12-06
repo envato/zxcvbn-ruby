@@ -7,8 +7,8 @@ GITHUB_URL = 'https://github.com/envato/zxcvbn-ruby'
 Gem::Specification.new do |gem|
   gem.authors       = ['Steve Hodgkiss', 'Matthieu Aussaguel']
   gem.email         = ['steve@hodgkiss.me', 'matthieu.aussaguel@gmail.com']
-  gem.description   = %q{Ruby port of Dropboxs zxcvbn.js}
-  gem.summary       = %q{}
+  gem.description   = 'Ruby port of Dropboxs zxcvbn.js'
+  gem.summary       = ''
   gem.homepage      = 'http://github.com/envato/zxcvbn-ruby'
 
   gem.files         = `git ls-files -z`.split("\x0").reject do |file|

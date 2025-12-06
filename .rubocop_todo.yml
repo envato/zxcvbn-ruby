@@ -42,6 +42,7 @@ Metrics/BlockNesting:
 Metrics/ClassLength:
   Exclude:
     - 'lib/zxcvbn/feedback_giver.rb'
+    - 'lib/zxcvbn/matchers/date.rb'
     - 'lib/zxcvbn/matchers/l33t.rb'
 
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
@@ -110,13 +111,6 @@ Security/JSONLoad:
     - 'lib/zxcvbn/data.rb'
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: always, conditionals
-Style/AndOr:
-  Exclude:
-    - 'lib/zxcvbn/matchers/sequences.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, EnforcedStyleForClasses, EnforcedStyleForModules.
 # SupportedStyles: nested, compact
 # SupportedStylesForClasses: ~, nested, compact
@@ -155,10 +149,6 @@ Style/Documentation:
     - 'lib/zxcvbn/score.rb'
     - 'lib/zxcvbn/scorer.rb'
 
-Style/EachForSimpleLoop:
-  Exclude:
-    - 'spec/scoring/math_spec.rb'
-
 # This cop supports safe autocorrection (--autocorrect).
 Style/EvalWithLocation:
   Exclude:
@@ -177,109 +167,9 @@ Style/GlobalVars:
   Exclude:
     - 'spec/support/js_helpers.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: MinBodyLength, AllowConsecutiveConditionals.
-Style/GuardClause:
-  Exclude:
-    - 'lib/zxcvbn/matchers/sequences.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/HashTransformValues:
-  Exclude:
-    - 'lib/zxcvbn/dictionary_ranker.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/IfUnlessModifier:
-  Exclude:
-    - 'lib/zxcvbn/entropy.rb'
-    - 'lib/zxcvbn/matchers/new_l33t.rb'
-    - 'lib/zxcvbn/scorer.rb'
-    - 'spec/support/matcher.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, Autocorrect.
-# SupportedStyles: module_function, extend_self, forbidden
-Style/ModuleFunction:
-  Exclude:
-    - 'lib/zxcvbn.rb'
-
 Style/MultilineBlockChain:
   Exclude:
     - 'lib/zxcvbn/scorer.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinBodyLength, AllowConsecutiveConditionals.
-# SupportedStyles: skip_modifier_ifs, always
-Style/Next:
-  Exclude:
-    - 'lib/zxcvbn/matchers/dictionary.rb'
-    - 'lib/zxcvbn/matchers/sequences.rb'
-    - 'lib/zxcvbn/matchers/spatial.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowedMethods, AllowedPatterns.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Exclude:
-    - 'spec/**/*'
-    - 'lib/zxcvbn/entropy.rb'
-    - 'lib/zxcvbn/math.rb'
-    - 'lib/zxcvbn/scorer.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/ParallelAssignment:
-  Exclude:
-    - 'lib/zxcvbn/matchers/date.rb'
-    - 'lib/zxcvbn/scorer.rb'
-    - 'spec/support/matcher.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: PreferredDelimiters.
-Style/PercentLiteralDelimiters:
-  Exclude:
-    - 'lib/zxcvbn/entropy.rb'
-    - 'zxcvbn-ruby.gemspec'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
-  Exclude:
-    - 'lib/zxcvbn/matchers/dictionary.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantAssignment:
-  Exclude:
-    - 'lib/zxcvbn/matchers/new_l33t.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantPercentQ:
-  Exclude:
-    - 'zxcvbn-ruby.gemspec'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/RedundantRegexpEscape:
-  Exclude:
-    - 'lib/zxcvbn/matchers/date.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'lib/zxcvbn/matchers/date.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/RescueModifier:
-  Exclude:
-    - 'lib/zxcvbn/matchers/l33t.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
-# AllowedMethods: present?, blank?, presence, try, try!
-Style/SafeNavigation:
-  Exclude:
-    - 'lib/zxcvbn/matchers/spatial.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, MinSize, WordRegex.
@@ -290,6 +180,5 @@ Style/WordArray:
     - 'lib/zxcvbn/matchers/l33t.rb'
     - 'lib/zxcvbn/matchers/new_l33t.rb'
     - 'spec/dictionary_ranker_spec.rb'
-    - 'spec/matchers/l33t_spec.rb'
     - 'spec/matchers/sequences_spec.rb'
     - 'spec/support/matcher.rb'
