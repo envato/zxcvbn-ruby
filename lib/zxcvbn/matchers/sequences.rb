@@ -27,7 +27,7 @@ module Zxcvbn
         SEQUENCES.each do |name, sequence|
           index1 = sequence.index(password[i])
           index2 = sequence.index(password[i + 1])
-          next unless index1 and index2
+          next unless index1 && index2
 
           seq_direction = index2 - index1
           return [name, sequence, seq_direction] if [-1, 1].include?(seq_direction)
