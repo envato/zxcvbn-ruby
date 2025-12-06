@@ -36,7 +36,7 @@ module Zxcvbn
               cur_char = password[j]
               adjacents.each do |adj|
                 cur_direction += 1
-                if adj && adj.index(cur_char)
+                if adj&.index(cur_char)
                   found = true
                   found_direction = cur_direction
                   if adj.index(cur_char) == 1
