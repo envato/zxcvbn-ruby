@@ -128,7 +128,6 @@ attacker. For this reason we advise you not to store the results of
 
 ## Maintainers
 
- - [Pete Johns](https://github.com/johnsyweb)
  - [Steve Hodgkiss](https://github.com/stevehodgkiss)
 
 ## Authors
