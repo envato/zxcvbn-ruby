@@ -240,13 +240,6 @@ Style/PercentLiteralDelimiters:
     - 'lib/zxcvbn/entropy.rb'
     - 'zxcvbn-ruby.gemspec'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: short, verbose
-Style/PreferredHashMethods:
-  Exclude:
-    - 'lib/zxcvbn/matchers/dictionary.rb'
-
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, MinSize, WordRegex.
 # SupportedStyles: percent, brackets

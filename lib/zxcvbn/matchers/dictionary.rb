@@ -20,7 +20,7 @@ module Zxcvbn
         (0..password_length).each do |i|
           (i...password_length).each do |j|
             word = lowercased_password[i..j]
-            if @ranked_dictionary.has_key?(word)
+            if @ranked_dictionary.key?(word)
               results << Match.new(
                 matched_word: word,
                 token: password[i..j],
