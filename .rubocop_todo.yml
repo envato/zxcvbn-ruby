@@ -164,14 +164,6 @@ Style/EvalWithLocation:
   Exclude:
     - 'spec/support/js_helpers.rb'
 
-# This cop supports safe autocorrection (--autocorrect).
-Style/ExpandPathArguments:
-  Exclude:
-    - 'lib/zxcvbn.rb'
-    - 'spec/spec_helper.rb'
-    - 'spec/support/js_helpers.rb'
-    - 'zxcvbn-ruby.gemspec'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: each, for

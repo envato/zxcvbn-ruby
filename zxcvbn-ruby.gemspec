@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.expand_path('../lib/zxcvbn/version', __FILE__)
+require File.expand_path('lib/zxcvbn/version', __dir__)
 
 GITHUB_URL = 'https://github.com/envato/zxcvbn-ruby'
 

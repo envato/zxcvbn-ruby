@@ -5,7 +5,7 @@ require 'json'
 
 module JsHelpers
   class JsMethodInvoker
-    JS_SOURCE_PATH = Pathname(File.expand_path('../js_source/', __FILE__))
+    JS_SOURCE_PATH = Pathname(File.expand_path('js_source', __dir__))
 
     def initialize
       @ctx = MiniRacer::Context.new
