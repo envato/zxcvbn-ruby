@@ -3,8 +3,8 @@
 module Zxcvbn
   class DictionaryRanker
     def self.rank_dictionaries(lists)
-      lists.each_with_object({}) do |(dict_name, words), dictionaries|
-        dictionaries[dict_name] = rank_dictionary(words)
+      lists.transform_values do |words|
+        rank_dictionary(words)
       end
     end
 

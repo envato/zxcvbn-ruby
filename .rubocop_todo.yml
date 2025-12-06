@@ -184,11 +184,6 @@ Style/GuardClause:
   Exclude:
     - 'lib/zxcvbn/matchers/sequences.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/HashTransformValues:
-  Exclude:
-    - 'lib/zxcvbn/dictionary_ranker.rb'
-
 Style/MultilineBlockChain:
   Exclude:
     - 'lib/zxcvbn/scorer.rb'
