@@ -9,7 +9,7 @@ module Zxcvbn
 
       YEAR_SUFFIX = %r{
         ( \d{1,2} )                         # day or month
-        ( \s | \- | / | \\ | \_ | \. )      # separator
+        ( \s | - | / | \\ | _ | \. )        # separator
         ( \d{1,2} )                         # month or day
         \2                                  # same separator
         ( 19\d{2} | 200\d | 201\d | \d{2} ) # year
