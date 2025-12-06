@@ -121,7 +121,7 @@ module Zxcvbn::Entropy
   end
 
   def spatial_entropy(match)
-    if %w|qwerty dvorak|.include? match.graph
+    if %w[qwerty dvorak].include? match.graph
       starting_positions = starting_positions_for_graph('qwerty')
       average_degree     = average_degree_for_graph('qwerty')
     else
