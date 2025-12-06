@@ -5,14 +5,14 @@ require 'spec_helper'
 RSpec.describe Zxcvbn::Entropy do
   include Zxcvbn::Math
 
-  let(:entropy) {
+  let(:entropy) do
     Class.new do
       include Zxcvbn::Entropy
       def data
         Zxcvbn::Data.new
       end
     end.new
-  }
+  end
 
   describe '#repeat_entropy' do
     it 'returns the correct value' do
