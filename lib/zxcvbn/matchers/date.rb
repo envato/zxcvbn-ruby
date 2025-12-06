@@ -79,7 +79,7 @@ module Zxcvbn
             month: +'',
             day: +''
           }
-          for i in 0...token.length
+          (0...token.length).each do |i|
             candidate[PATTERN_CHAR_TO_SYM[pattern[i]]] << token[i]
           end
           candidate.each do |component, value|
