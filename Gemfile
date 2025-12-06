@@ -12,4 +12,5 @@ end
 group :test do
   gem 'mini_racer'
   gem 'rspec'
+  gem 'rubocop'
 end
