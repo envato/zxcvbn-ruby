@@ -117,7 +117,7 @@ module Zxcvbn::Entropy
       end
     end
     entropy = lg(possibilities)
-    entropy == 0 ? 1 : entropy
+    entropy.zero? ? 1 : entropy
   end
 
   def spatial_entropy(match)

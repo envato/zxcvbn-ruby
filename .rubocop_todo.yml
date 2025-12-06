@@ -217,16 +217,6 @@ Style/Next:
     - 'lib/zxcvbn/matchers/sequences.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowedMethods, AllowedPatterns.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Exclude:
-    - 'spec/**/*'
-    - 'lib/zxcvbn/entropy.rb'
-    - 'lib/zxcvbn/math.rb'
-    - 'lib/zxcvbn/scorer.rb'
-
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, MinSize, WordRegex.
 # SupportedStyles: percent, brackets
@@ -236,6 +226,5 @@ Style/WordArray:
     - 'lib/zxcvbn/matchers/l33t.rb'
     - 'lib/zxcvbn/matchers/new_l33t.rb'
     - 'spec/dictionary_ranker_spec.rb'
-    - 'spec/matchers/l33t_spec.rb'
     - 'spec/matchers/sequences_spec.rb'
     - 'spec/support/matcher.rb'

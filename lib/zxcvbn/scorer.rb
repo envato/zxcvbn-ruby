@@ -24,7 +24,7 @@ module Zxcvbn
       backpointers = []
       (0...password.length).each do |k|
         # starting scenario to try and beat: adding a brute-force character to the minimum entropy sequence at k-1.
-        previous_k_entropy = k > 0 ? up_to_k[k - 1] : 0
+        previous_k_entropy = k.positive? ? up_to_k[k - 1] : 0
         up_to_k[k] = previous_k_entropy + lg(bruteforce_cardinality)
         backpointers[k] = nil
         matches.select do |match|
@@ -33,7 +33,7 @@ module Zxcvbn
           i = match.i
           j = match.j
           # see if best entropy up to i-1 + entropy of this match is less than the current minimum at j.
-          previous_i_entropy = i > 0 ? up_to_k[i - 1] : 0
+          previous_i_entropy = i.positive? ? up_to_k[i - 1] : 0
           candidate_entropy = previous_i_entropy + calc_entropy(match)
           if up_to_k[j] && candidate_entropy < up_to_k[j]
             up_to_k[j] = candidate_entropy
