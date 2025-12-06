@@ -30,11 +30,9 @@ module Zxcvbn
           next unless index1 and index2
 
           seq_direction = index2 - index1
-          if [-1, 1].include?(seq_direction)
-            return [name, sequence, seq_direction]
-          else
-            return nil
-          end
+          return [name, sequence, seq_direction] if [-1, 1].include?(seq_direction)
+
+          return nil
         end
       end
 
