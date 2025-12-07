@@ -13,7 +13,7 @@ module Zxcvbn
         'passwords' => read_word_list('passwords.txt'),
         'surnames' => read_word_list('surnames.txt')
       )
-      @adjacency_graphs = JSON.load(DATA_PATH.join('adjacency_graphs.json').read)
+      @adjacency_graphs = JSON.parse(DATA_PATH.join('adjacency_graphs.json').read)
     end
 
     attr_reader :ranked_dictionaries, :adjacency_graphs

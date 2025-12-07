@@ -12,12 +12,12 @@ module JsHelpers
       @ctx.eval(JS_SOURCE_PATH.join('compiled.js').read)
     end
 
-    def eval(string)
+    def js_eval(string)
       @ctx.eval(string)
     end
 
     def eval_convert_object(string)
-      serialized = eval("JSON.stringify(#{string})")
+      serialized = js_eval("JSON.stringify(#{string})")
       JSON.parse(serialized)
     end
   end

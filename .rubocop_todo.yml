@@ -101,15 +101,6 @@ Naming/MethodParameterName:
     - 'lib/zxcvbn/math.rb'
     - 'lib/zxcvbn/scorer.rb'
 
-Security/Eval:
-  Exclude:
-    - 'spec/support/js_helpers.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Security/JSONLoad:
-  Exclude:
-    - 'lib/zxcvbn/data.rb'
-
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, EnforcedStyleForClasses, EnforcedStyleForModules.
 # SupportedStyles: nested, compact
@@ -148,11 +139,6 @@ Style/Documentation:
     - 'lib/zxcvbn/password_strength.rb'
     - 'lib/zxcvbn/score.rb'
     - 'lib/zxcvbn/scorer.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/EvalWithLocation:
-  Exclude:
-    - 'spec/support/js_helpers.rb'
 
 # Configuration parameters: AllowedVariables.
 Style/GlobalVars:

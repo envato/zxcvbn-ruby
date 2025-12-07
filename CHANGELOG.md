@@ -6,13 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+ - Address security issues found by RuboCop ([#56])
+
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.3...HEAD
+[#56]: https://github.com/envato/zxcvbn-ruby/pull/56
 
 ## [1.2.3] - 2025-12-07
 
 ### Changed
- - Address linting issues ([#52])
- - Address style issues ([#53], [#54], [#55])
+ - Address linting issues found by RuboCop ([#52])
+ - Address style issues found by RuboCop ([#53], [#54], [#55])
 
 [1.2.3]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.2...v1.2.3
 [#52]: https://github.com/envato/zxcvbn-ruby/pull/52
