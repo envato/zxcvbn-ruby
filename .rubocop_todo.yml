@@ -106,11 +106,6 @@ Security/Eval:
     - 'spec/support/js_helpers.rb'
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
-Security/JSONLoad:
-  Exclude:
-    - 'lib/zxcvbn/data.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, EnforcedStyleForClasses, EnforcedStyleForModules.
 # SupportedStyles: nested, compact
 # SupportedStylesForClasses: ~, nested, compact
