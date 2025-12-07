@@ -6,10 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.4...HEAD
+
+## [1.2.4] - 2025-12-07
+
 ### Changed
  - Address security issues found by RuboCop ([#56])
 
-[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.3...HEAD
+[1.2.4]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.3...v1.2.4
 [#56]: https://github.com/envato/zxcvbn-ruby/pull/56
 
 ## [1.2.3] - 2025-12-07
