@@ -6,11 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.3...HEAD
+
+## [1.2.3] - 2025-12-07
+
 ### Changed
  - Address linting issues ([#52])
  - Address style issues ([#53], [#54], [#55])
 
-[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.2...HEAD
+[1.2.3]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.2...v1.2.3
 [#52]: https://github.com/envato/zxcvbn-ruby/pull/52
 [#53]: https://github.com/envato/zxcvbn-ruby/pull/53
 [#54]: https://github.com/envato/zxcvbn-ruby/pull/54
@@ -21,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
  - Address layout and frozen string literal issues ([#49])
 
-[1.2.2]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.1...v.1.2.2
+[1.2.2]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.1...v1.2.2
 [#49]: https://github.com/envato/zxcvbn-ruby/pull/49
 
 ## [1.2.1] - 2025-12-05
@@ -30,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed the dependency on the Ruby `benchmark` module ([#44]).
 - Tests are no longer included in the gem package ([#45]).
 
-[1.2.1]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.0...v.1.2.1
+[1.2.1]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.0...v1.2.1
 [#44]: https://github.com/envato/zxcvbn-ruby/pull/44
 [#45]: https://github.com/envato/zxcvbn-ruby/pull/45
 
@@ -43,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Use [mini\_racer] for running JavaScript specs (thanks [@RSO] ([#33]))
  - Moved CI to GitHub Actions ([#34])
 
-[1.2.0]: https://github.com/envato/zxcvbn-ruby/compare/v1.1.0...v.1.2.0
+[1.2.0]: https://github.com/envato/zxcvbn-ruby/compare/v1.1.0...v1.2.0
 [@rso]: https://github.com/RSO
 [mini\_racer]: https://rubygems.org/gems/mini_racer/
 [#32]: https://github.com/envato/zxcvbn-ruby/pull/32
