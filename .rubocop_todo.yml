@@ -154,14 +154,6 @@ Style/EvalWithLocation:
   Exclude:
     - 'spec/support/js_helpers.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: each, for
-Style/For:
-  Exclude:
-    - 'lib/zxcvbn/feedback_giver.rb'
-    - 'lib/zxcvbn/matchers/date.rb'
-
 # Configuration parameters: AllowedVariables.
 Style/GlobalVars:
   Exclude:

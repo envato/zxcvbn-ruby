@@ -79,7 +79,7 @@ module Zxcvbn
             month: +'',
             day: +''
           }
-          for i in 0...token.length
+          (0...token.length).each do |i|
             candidate[PATTERN_CHAR_TO_SYM[pattern[i]]] << token[i]
           end
           candidate.each do |component, value|
@@ -96,11 +96,11 @@ module Zxcvbn
       end
 
       DATE_PATTERN_FOR_LENGTH = {
-        8 => %w[yyyymmdd ddmmyyyy mmddyyyy],
-        7 => %w[yyyymdd yyyymmd ddmyyyy dmmyyyy],
-        6 => %w[yymmdd ddmmyy mmddyy],
-        5 => %w[yymdd yymmd ddmyy dmmyy mmdyy mddyy],
-        4 => %w[yymd dmyy mdyy]
+        8 => %w[yyyymmdd ddmmyyyy mmddyyyy].freeze,
+        7 => %w[yyyymdd yyyymmd ddmyyyy dmmyyyy].freeze,
+        6 => %w[yymmdd ddmmyy mmddyy].freeze,
+        5 => %w[yymdd yymmd ddmyy dmmyy mmdyy mddyy].freeze,
+        4 => %w[yymd dmyy mdyy].freeze
       }.freeze
 
       PATTERN_CHAR_TO_SYM = {
