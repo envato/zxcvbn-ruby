@@ -9,10 +9,9 @@ module Zxcvbn
     end
 
     def self.rank_dictionary(words)
-      words.each_with_index
-           .with_object({}) do |(word, i), dictionary|
-        dictionary[word.downcase] = i + 1
-      end
+      words
+        .each_with_index
+        .with_object({}) { |(word, i), dictionary| dictionary[word.downcase] = i + 1 }
     end
   end
 end
