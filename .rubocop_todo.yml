@@ -25,6 +25,7 @@ Metrics/BlockLength:
     - '**/*.gemspec'
     - 'lib/zxcvbn/matchers/spatial.rb'
     - 'spec/feedback_giver_spec.rb'
+    - 'spec/match_spec.rb'
     - 'spec/matchers/date_spec.rb'
     - 'spec/matchers/l33t_spec.rb'
     - 'spec/scoring/crack_time_spec.rb'
@@ -32,11 +33,6 @@ Metrics/BlockLength:
     - 'spec/scoring/math_spec.rb'
     - 'spec/support/matcher.rb'
     - 'spec/tester_spec.rb'
-
-# Configuration parameters: CountBlocks, CountModifierForms, Max.
-Metrics/BlockNesting:
-  Exclude:
-    - 'lib/zxcvbn/matchers/spatial.rb'
 
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:

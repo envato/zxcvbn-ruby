@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+ - Replace OpenStruct with regular class in `Zxcvbn::Match` for 2x performance improvement ([#61])
+
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.4...HEAD
+[#61]: https://github.com/envato/zxcvbn-ruby/pull/61
 
 ## [1.2.4] - 2025-12-07
 
