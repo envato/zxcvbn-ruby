@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.3.0...HEAD
+
+## [1.3.0] - 2026-01-02
+
 ### Changed
  - Replace OpenStruct with regular class in `Zxcvbn::Match` for 2x performance improvement ([#61])
  - Implement Trie data structure for dictionary matching with 1.4x additional performance improvement ([#62])
@@ -14,7 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Pre-compute spatial graph statistics during data initialisation ([#65])
  - Optimise nCk calculation using symmetry property ([#66])
 
-[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.4...HEAD
+Overall performance improvement: 4.1x faster than v1.2.4 (0.722ms → 0.176ms per password)
+
+[1.3.0]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.4...v1.3.0
 [#61]: https://github.com/envato/zxcvbn-ruby/pull/61
 [#62]: https://github.com/envato/zxcvbn-ruby/pull/62
 [#63]: https://github.com/envato/zxcvbn-ruby/pull/63
