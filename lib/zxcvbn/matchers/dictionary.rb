@@ -31,7 +31,7 @@ module Zxcvbn
 
         (0...password.length).each do |i|
           @trie.search_prefixes(lowercased_password, i).each do |word, rank, start, ending|
-            results << build_match(word, password[start..ending], start, ending, rank)
+            results << build_match(word, password.slice(start, ending - start + 1), start, ending, rank)
           end
         end
 
@@ -44,10 +44,11 @@ module Zxcvbn
 
         (0..password_length).each do |i|
           (i...password_length).each do |j|
-            word = lowercased_password[i..j]
+            length = j - i + 1
+            word = lowercased_password.slice(i, length)
             next unless @ranked_dictionary.key?(word)
 
-            results << build_match(word, password[i..j], i, j, @ranked_dictionary[word])
+            results << build_match(word, password.slice(i, length), i, j, @ranked_dictionary[word])
           end
         end
 
