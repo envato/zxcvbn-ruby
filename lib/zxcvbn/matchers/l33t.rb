@@ -37,21 +37,7 @@ module Zxcvbn
           @dictionary_matchers.each do |matcher|
             subbed_password = translate(lowercased_password, substitution)
             matcher.matches(subbed_password).each do |match|
-              length = match.j - match.i + 1
-              token = password.slice(match.i, length)
-              next if token.downcase == match.matched_word.downcase
-
-              match_substitutions = {}
-              substitution.each do |s, letter|
-                match_substitutions[s] = letter if token.include?(s)
-              end
-              match.l33t = true
-              match.token = token
-              match.sub = match_substitutions
-              match.sub_display = match_substitutions.map do |k, v|
-                "#{k} -> #{v}"
-              end.join(', ')
-              matches << match
+              process_match(match, password, substitution, matches)
             end
           end
         end
@@ -88,6 +74,26 @@ module Zxcvbn
           new_subs << hash
         end
         new_subs
+      end
+
+      private
+
+      def process_match(match, password, substitution, matches)
+        length = match.j - match.i + 1
+        token = password.slice(match.i, length)
+        return if token.downcase == match.matched_word.downcase
+
+        match_substitutions = {}
+        substitution.each do |s, letter|
+          match_substitutions[s] = letter if token.include?(s)
+        end
+        match.l33t = true
+        match.token = token
+        match.sub = match_substitutions
+        match.sub_display = match_substitutions.map do |k, v|
+          "#{k} -> #{v}"
+        end.join(', ')
+        matches << match
       end
 
       def find_substitutions(subs, table, keys)
