@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'set'
+
 module Zxcvbn
   module Matchers
     class L33t
@@ -25,26 +27,17 @@ module Zxcvbn
       def matches(password)
         matches = []
         lowercased_password = password.downcase
-        combinations_to_try = l33t_subs(relevent_l33t_subtable(lowercased_password))
+        relevent_subtable = relevent_l33t_subtable(lowercased_password)
+
+        # Early bailout: if no l33t characters present, return empty matches
+        return matches if relevent_subtable.empty?
+
+        combinations_to_try = l33t_subs(relevent_subtable)
         combinations_to_try.each do |substitution|
           @dictionary_matchers.each do |matcher|
             subbed_password = translate(lowercased_password, substitution)
             matcher.matches(subbed_password).each do |match|
-              length = match.j - match.i + 1
-              token = password.slice(match.i, length)
-              next if token.downcase == match.matched_word.downcase
-
-              match_substitutions = {}
-              substitution.each do |s, letter|
-                match_substitutions[s] = letter if token.include?(s)
-              end
-              match.l33t = true
-              match.token = token
-              match.sub = match_substitutions
-              match.sub_display = match_substitutions.map do |k, v|
-                "#{k} -> #{v}"
-              end.join(', ')
-              matches << match
+              process_match(match, password, substitution, matches)
             end
           end
         end
@@ -52,9 +45,11 @@ module Zxcvbn
       end
 
       def translate(password, sub)
-        password.split('').map do |chr|
-          sub[chr] || chr
-        end.join
+        result = String.new
+        password.each_char do |chr|
+          result << (sub[chr] || chr)
+        end
+        result
       end
 
       def relevent_l33t_subtable(password)
@@ -79,6 +74,26 @@ module Zxcvbn
           new_subs << hash
         end
         new_subs
+      end
+
+      private
+
+      def process_match(match, password, substitution, matches)
+        length = match.j - match.i + 1
+        token = password.slice(match.i, length)
+        return if token.downcase == match.matched_word.downcase
+
+        match_substitutions = {}
+        substitution.each do |s, letter|
+          match_substitutions[s] = letter if token.include?(s)
+        end
+        match.l33t = true
+        match.token = token
+        match.sub = match_substitutions
+        match.sub_display = match_substitutions.map do |k, v|
+          "#{k} -> #{v}"
+        end.join(', ')
+        matches << match
       end
 
       def find_substitutions(subs, table, keys)
@@ -114,14 +129,12 @@ module Zxcvbn
 
       def dedup(subs)
         deduped = []
-        members = []
+        seen = Set.new
         subs.each do |sub|
-          assoc = sub.dup
-
-          assoc.sort!
-          label = assoc.map { |k, v| "#{k},#{v}" }.join('-')
-          unless members.include?(label)
-            members << label
+          # Sort and convert to hash for consistent comparison
+          sorted_sub = sub.sort.to_h
+          unless seen.include?(sorted_sub)
+            seen.add(sorted_sub)
             deduped << sub
           end
         end

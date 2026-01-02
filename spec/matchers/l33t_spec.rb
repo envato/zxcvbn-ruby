@@ -73,5 +73,107 @@ RSpec.describe Zxcvbn::Matchers::L33t do
         ]
       )
     end
+
+    it 'marks all matches as l33t' do
+      expect(matches.map(&:l33t).uniq).to eq([true])
+    end
+
+    it 'sets the sub_display field' do
+      expect(matches.first.sub_display).to eq('@ -> a')
+    end
+
+    context 'with no l33t characters' do
+      it 'returns empty array for password without l33t chars' do
+        expect(matcher.matches('password')).to be_empty
+      end
+
+      it 'returns empty array for simple words' do
+        expect(matcher.matches('hello')).to be_empty
+      end
+    end
+
+    context 'with multiple l33t substitutions' do
+      it 'handles multiple substitution types' do
+        matches = matcher.matches('p@ssw0rd')
+        expect(matches).not_to be_empty
+        expect(matches.any? { |m| m.sub.keys.include?('@') }).to be true
+        expect(matches.any? { |m| m.sub.keys.include?('0') }).to be true
+      end
+
+      it 'creates correct sub_display for multiple substitutions' do
+        matches = matcher.matches('h3ll0')
+        multi_sub_match = matches.find { |m| m.sub.length > 1 }
+        expect(multi_sub_match.sub_display).to include('->')
+      end
+    end
+
+    context 'with same character representing different letters' do
+      it 'handles ambiguous l33t characters' do
+        # '1' can represent both 'i' and 'l'
+        matches = matcher.matches('test1ng')
+        expect(matches).not_to be_empty
+      end
+    end
+
+    context 'with uppercase l33t speak' do
+      it 'finds matches in mixed case passwords' do
+        matches = matcher.matches('P@ssW0RD')
+        expect(matches).not_to be_empty
+      end
+
+      it 'preserves original case in token' do
+        matches = matcher.matches('P@SS')
+        uppercase_match = matches.find { |m| m.token == 'P@S' }
+        expect(uppercase_match).not_to be_nil
+        expect(uppercase_match.token).to eq('P@S')
+        expect(uppercase_match.matched_word).to eq('pas')
+      end
+    end
+
+    context 'with edge cases' do
+      it 'handles empty password' do
+        expect(matcher.matches('')).to be_empty
+      end
+
+      it 'handles password with only l33t characters' do
+        matches = matcher.matches('@$')
+        expect(matches).to be_an(Array)
+      end
+
+      it 'handles repeated l33t characters' do
+        matches = matcher.matches('@@@@')
+        expect(matches).to be_an(Array)
+      end
+    end
+  end
+
+  describe '#translate' do
+    it 'substitutes l33t characters with their letter equivalents' do
+      substitution = { '@' => 'a', '0' => 'o' }
+      expect(matcher.translate('p@ssw0rd', substitution)).to eq('password')
+    end
+
+    it 'leaves non-substituted characters unchanged' do
+      substitution = { '@' => 'a' }
+      expect(matcher.translate('p@ssword', substitution)).to eq('password')
+    end
+
+    it 'handles empty password' do
+      expect(matcher.translate('', { '@' => 'a' })).to eq('')
+    end
+
+    it 'handles empty substitution table' do
+      expect(matcher.translate('password', {})).to eq('password')
+    end
+
+    it 'handles multiple occurrences of same character' do
+      substitution = { '@' => 'a' }
+      expect(matcher.translate('@@@@', substitution)).to eq('aaaa')
+    end
+
+    it 'only substitutes specified characters' do
+      substitution = { '3' => 'e' }
+      expect(matcher.translate('l33t', substitution)).to eq('leet')
+    end
   end
 end
