@@ -9,10 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
  - Replace OpenStruct with regular class in `Zxcvbn::Match` for 2x performance improvement ([#61])
  - Implement Trie data structure for dictionary matching with 1.4x additional performance improvement ([#62])
+ - Replace range operators with `String#slice` for string slicing operations ([#63])
 
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.4...HEAD
 [#61]: https://github.com/envato/zxcvbn-ruby/pull/61
 [#62]: https://github.com/envato/zxcvbn-ruby/pull/62
+[#63]: https://github.com/envato/zxcvbn-ruby/pull/63
 
 ## [1.2.4] - 2025-12-07
 

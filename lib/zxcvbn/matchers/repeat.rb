@@ -18,7 +18,7 @@ module Zxcvbn
               pattern: 'repeat',
               i: i,
               j: j - 1,
-              token: password[i...j],
+              token: password.slice(i, j - i),
               repeated_char: cur_char
             )
           end

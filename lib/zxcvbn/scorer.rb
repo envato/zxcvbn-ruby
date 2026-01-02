@@ -96,7 +96,7 @@ module Zxcvbn
         pattern: 'bruteforce',
         i: i,
         j: j,
-        token: password[i..j],
+        token: password.slice(i, j - i + 1),
         entropy: lg(bruteforce_cardinality**(j - i + 1)),
         cardinality: bruteforce_cardinality
       )

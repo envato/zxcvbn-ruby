@@ -30,7 +30,8 @@ module Zxcvbn
           @dictionary_matchers.each do |matcher|
             subbed_password = substitute(lowercased_password, substitutions)
             matcher.matches(subbed_password).each do |match|
-              token = lowercased_password[match.i..match.j]
+              length = match.j - match.i + 1
+              token = lowercased_password.slice(match.i, length)
               next if token == match.matched_word.downcase
 
               match_substitutions = {}
@@ -38,7 +39,7 @@ module Zxcvbn
                 match_substitutions[substitution] = letter if token.include?(substitution)
               end
               match.l33t = true
-              match.token = password[match.i..match.j]
+              match.token = password.slice(match.i, length)
               match.sub = match_substitutions
               match.sub_display = match_substitutions.map do |k, v|
                 "#{k} -> #{v}"

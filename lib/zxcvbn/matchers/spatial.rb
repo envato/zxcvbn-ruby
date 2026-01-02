@@ -64,7 +64,7 @@ module Zxcvbn
                   pattern: 'spatial',
                   i: i,
                   j: j - 1,
-                  token: password[i...j],
+                  token: password.slice(i, j - i),
                   graph: graph_name,
                   turns: turns,
                   shifted_count: shifted_count
