@@ -34,6 +34,10 @@ module Zxcvbn
       return 0 if k > n
       return 1 if k.zero?
 
+      # Use symmetry property: C(n,k) = C(n, n-k)
+      # Choose smaller k to minimize iterations
+      k = n - k if k > n - k
+
       r = 1
       (1..k).each do |d|
         r *= n
