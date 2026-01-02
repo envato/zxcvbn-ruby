@@ -1,6 +1,13 @@
 inherit_from: .rubocop_todo.yml
+inherit_mode:
+  merge:
+    - Exclude
 
 AllCops:
   NewCops: disable
   SuggestExtensions: false
   TargetRubyVersion: 2.5
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'

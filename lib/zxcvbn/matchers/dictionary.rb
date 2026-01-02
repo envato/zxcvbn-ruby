@@ -8,32 +8,62 @@ module Zxcvbn
     # the lowercased password in the dictionary
 
     class Dictionary
-      def initialize(name, ranked_dictionary)
+      def initialize(name, ranked_dictionary, trie = nil)
         @name = name
         @ranked_dictionary = ranked_dictionary
+        @trie = trie
       end
 
       def matches(password)
+        lowercased_password = password.downcase
+
+        if @trie
+          trie_matches(password, lowercased_password)
+        else
+          hash_matches(password, lowercased_password)
+        end
+      end
+
+      private
+
+      def trie_matches(password, lowercased_password)
+        results = []
+
+        (0...password.length).each do |i|
+          @trie.search_prefixes(lowercased_password, i).each do |word, rank, start, ending|
+            results << build_match(word, password[start..ending], start, ending, rank)
+          end
+        end
+
+        results
+      end
+
+      def hash_matches(password, lowercased_password)
         results = []
         password_length = password.length
-        lowercased_password = password.downcase
+
         (0..password_length).each do |i|
           (i...password_length).each do |j|
             word = lowercased_password[i..j]
             next unless @ranked_dictionary.key?(word)
 
-            results << Match.new(
-              matched_word: word,
-              token: password[i..j],
-              i: i,
-              j: j,
-              rank: @ranked_dictionary[word],
-              pattern: 'dictionary',
-              dictionary_name: @name
-            )
+            results << build_match(word, password[i..j], i, j, @ranked_dictionary[word])
           end
         end
+
         results
+      end
+
+      def build_match(matched_word, token, start_pos, end_pos, rank)
+        Match.new(
+          matched_word: matched_word,
+          token: token,
+          i: start_pos,
+          j: end_pos,
+          rank: rank,
+          pattern: 'dictionary',
+          dictionary_name: @name
+        )
       end
     end
   end
