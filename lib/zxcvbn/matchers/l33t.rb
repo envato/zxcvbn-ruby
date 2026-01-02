@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'set'
+
 module Zxcvbn
   module Matchers
     class L33t
@@ -25,7 +27,12 @@ module Zxcvbn
       def matches(password)
         matches = []
         lowercased_password = password.downcase
-        combinations_to_try = l33t_subs(relevent_l33t_subtable(lowercased_password))
+        relevent_subtable = relevent_l33t_subtable(lowercased_password)
+        
+        # Early bailout: if no l33t characters present, return empty matches
+        return matches if relevent_subtable.empty?
+        
+        combinations_to_try = l33t_subs(relevent_subtable)
         combinations_to_try.each do |substitution|
           @dictionary_matchers.each do |matcher|
             subbed_password = translate(lowercased_password, substitution)
@@ -114,14 +121,12 @@ module Zxcvbn
 
       def dedup(subs)
         deduped = []
-        members = []
+        seen = Set.new
         subs.each do |sub|
-          assoc = sub.dup
-
-          assoc.sort!
-          label = assoc.map { |k, v| "#{k},#{v}" }.join('-')
-          unless members.include?(label)
-            members << label
+          # Sort and convert to hash for consistent comparison
+          sorted_sub = sub.sort.to_h
+          unless seen.include?(sorted_sub)
+            seen.add(sorted_sub)
             deduped << sub
           end
         end
