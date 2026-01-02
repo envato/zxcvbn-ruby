@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Replace range operators with `String#slice` for string slicing operations ([#63])
  - Optimise L33t matcher with early bailout and improved deduplication ([#64])
  - Pre-compute spatial graph statistics during data initialisation ([#65])
+ - Optimise nCk calculation using symmetry property ([#66])
 
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.2.4...HEAD
 [#61]: https://github.com/envato/zxcvbn-ruby/pull/61
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#63]: https://github.com/envato/zxcvbn-ruby/pull/63
 [#64]: https://github.com/envato/zxcvbn-ruby/pull/64
 [#65]: https://github.com/envato/zxcvbn-ruby/pull/65
+[#66]: https://github.com/envato/zxcvbn-ruby/pull/66
 
 ## [1.2.4] - 2025-12-07
 
