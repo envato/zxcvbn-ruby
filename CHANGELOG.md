@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+ - Minor fixups in gem metadata ([#67]).
+
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.3.0...HEAD
+[#67]: https://github.com/envato/zxcvbn-ruby/pull/67
 
 ## [1.3.0] - 2026-01-02
 
