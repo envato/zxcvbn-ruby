@@ -16,9 +16,10 @@ module Zxcvbn
       )
       @adjacency_graphs = JSON.parse(DATA_PATH.join('adjacency_graphs.json').read)
       @dictionary_tries = build_tries
+      @graph_stats = compute_graph_stats
     end
 
-    attr_reader :ranked_dictionaries, :adjacency_graphs, :dictionary_tries
+    attr_reader :ranked_dictionaries, :adjacency_graphs, :dictionary_tries, :graph_stats
 
     def add_word_list(name, list)
       ranked_dict = DictionaryRanker.rank_dictionary(list)
@@ -40,6 +41,22 @@ module Zxcvbn
       trie = Trie.new
       ranked_dictionary.each { |word, rank| trie.insert(word, rank) }
       trie
+    end
+
+    def compute_graph_stats
+      stats = {}
+      @adjacency_graphs.each do |graph_name, graph|
+        degrees = graph.map { |_, neighbors| neighbors.compact.size }
+        sum = degrees.inject(0, :+)
+        average_degree = sum.to_f / graph.size
+        starting_positions = graph.length
+
+        stats[graph_name] = {
+          average_degree: average_degree,
+          starting_positions: starting_positions
+        }
+      end
+      stats
     end
   end
 end
