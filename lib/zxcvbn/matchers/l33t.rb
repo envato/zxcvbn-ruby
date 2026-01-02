@@ -28,10 +28,10 @@ module Zxcvbn
         matches = []
         lowercased_password = password.downcase
         relevent_subtable = relevent_l33t_subtable(lowercased_password)
-        
+
         # Early bailout: if no l33t characters present, return empty matches
         return matches if relevent_subtable.empty?
-        
+
         combinations_to_try = l33t_subs(relevent_subtable)
         combinations_to_try.each do |substitution|
           @dictionary_matchers.each do |matcher|
@@ -59,9 +59,11 @@ module Zxcvbn
       end
 
       def translate(password, sub)
-        password.split('').map do |chr|
-          sub[chr] || chr
-        end.join
+        result = String.new
+        password.each_char do |chr|
+          result << (sub[chr] || chr)
+        end
+        result
       end
 
       def relevent_l33t_subtable(password)
