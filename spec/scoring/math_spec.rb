@@ -134,4 +134,62 @@ RSpec.describe Zxcvbn::Math do
       end
     end
   end
+
+  describe '#lg' do
+    it 'calculates log base 2 correctly' do
+      expect(lg(1)).to eq 0.0
+      expect(lg(2)).to eq 1.0
+      expect(lg(4)).to eq 2.0
+      expect(lg(8)).to eq 3.0
+      expect(lg(16)).to eq 4.0
+    end
+
+    it 'handles non-power-of-2 values' do
+      expect(lg(3)).to be_within(0.0001).of(1.5849625)
+      expect(lg(10)).to be_within(0.0001).of(3.3219281)
+      expect(lg(100)).to be_within(0.0001).of(6.6438562)
+    end
+
+    it 'handles decimal values' do
+      expect(lg(0.5)).to eq(-1.0)
+      expect(lg(0.25)).to eq(-2.0)
+    end
+  end
+
+  describe '#nCk' do
+    it 'returns 0 when k > n' do
+      expect(nCk(5, 10)).to eq 0
+      expect(nCk(0, 1)).to eq 0
+    end
+
+    it 'returns 1 when k is zero' do
+      expect(nCk(0, 0)).to eq 1
+      expect(nCk(5, 0)).to eq 1
+      expect(nCk(100, 0)).to eq 1
+    end
+
+    it 'calculates combinations correctly' do
+      expect(nCk(5, 1)).to eq 5
+      expect(nCk(5, 2)).to eq 10
+      expect(nCk(5, 3)).to eq 10
+      expect(nCk(5, 4)).to eq 5
+      expect(nCk(5, 5)).to eq 1
+    end
+
+    it 'handles larger values' do
+      expect(nCk(10, 5)).to eq 252
+      expect(nCk(20, 10)).to eq 184_756
+      expect(nCk(52, 5)).to eq 2_598_960 # poker hands
+    end
+
+    it 'demonstrates symmetry property C(n,k) = C(n,n-k)' do
+      expect(nCk(10, 3)).to eq nCk(10, 7)
+      expect(nCk(20, 5)).to eq nCk(20, 15)
+    end
+
+    it 'handles edge cases' do
+      expect(nCk(1, 1)).to eq 1
+      expect(nCk(2, 1)).to eq 2
+    end
+  end
 end
