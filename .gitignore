@@ -16,3 +16,6 @@ test/tmp
 test/version_tmp
 tmp
 bin/
+
+# RBS
+.gem_rbs_collection

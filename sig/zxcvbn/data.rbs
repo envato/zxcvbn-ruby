@@ -1,0 +1,31 @@
+module Zxcvbn
+  class Data
+    type ranked_dictionary = Hash[String, Integer]
+    type adjacency_graph = Hash[String, Array[String?]]
+    type graph_stats = Hash[String, { average_degree: Float, starting_positions: Integer }]
+
+    @ranked_dictionaries: Hash[String, ranked_dictionary]
+    @adjacency_graphs: Hash[String, adjacency_graph]
+    @dictionary_tries: Hash[String, Trie]
+    @graph_stats: graph_stats
+
+    attr_reader ranked_dictionaries: Hash[String, ranked_dictionary]
+    attr_reader adjacency_graphs: Hash[String, adjacency_graph]
+    attr_reader dictionary_tries: Hash[String, Trie]
+    attr_reader graph_stats: graph_stats
+
+    def initialize: () -> void
+
+    def add_word_list: (String name, Array[String] list) -> void
+
+    private
+
+    def read_word_list: (String file) -> Array[String]
+
+    def build_tries: () -> Hash[String, Trie]
+
+    def build_trie: (ranked_dictionary ranked_dictionary) -> Trie
+
+    def compute_graph_stats: () -> graph_stats
+  end
+end

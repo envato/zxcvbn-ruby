@@ -1,0 +1,33 @@
+module Zxcvbn
+  module Entropy
+    include Zxcvbn::Math
+
+    def calc_entropy: (Match match) -> Float
+
+    def repeat_entropy: (Match match) -> Float
+
+    def sequence_entropy: (Match match) -> Float
+
+    def digits_entropy: (Match match) -> Float
+
+    def year_entropy: (Match? match) -> Float
+
+    def date_entropy: (Match match) -> Float
+
+    def dictionary_entropy: (Match match) -> Float
+
+    def extra_uppercase_entropy: (Match match) -> Numeric
+
+    def extra_l33t_entropy: (Match match) -> Numeric
+
+    def spatial_entropy: (Match match) -> Float
+
+    NUM_YEARS: Integer
+    NUM_MONTHS: Integer
+    NUM_DAYS: Integer
+    START_UPPER: Regexp
+    END_UPPER: Regexp
+    ALL_UPPER: Regexp
+    ALL_LOWER: Regexp
+  end
+end

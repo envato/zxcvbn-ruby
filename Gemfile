@@ -10,6 +10,7 @@ group :development do
   gem 'guard-bundler', require: false
   gem 'guard-rspec', require: false
   gem 'rake'
+  gem 'rbs'
 end
 
 group :test do

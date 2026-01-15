@@ -1,0 +1,16 @@
+module Zxcvbn
+  class Omnimatch
+    @data: Data
+    @matchers: Array[untyped]
+
+    def initialize: (Data data) -> void
+
+    def matches: (String password, ?Array[String] user_inputs) -> Array[Match]
+
+    private
+
+    def user_input_matchers: (Array[String] user_inputs) -> Array[untyped]
+
+    def build_matchers: () -> Array[untyped]
+  end
+end

@@ -1,0 +1,13 @@
+module Zxcvbn
+  class FeedbackGiver
+    NAME_DICTIONARIES: Array[String]
+    DEFAULT_FEEDBACK: Feedback
+    EMPTY_FEEDBACK: Feedback
+
+    def self.get_feedback: (Integer? score, Array[Match] sequence) -> Feedback
+
+    def self.get_match_feedback: (Match match, bool is_sole_match) -> Feedback?
+
+    def self.get_dictionary_match_feedback: (Match match, bool is_sole_match) -> Feedback
+  end
+end

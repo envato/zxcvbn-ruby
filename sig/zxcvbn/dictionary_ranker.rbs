@@ -1,0 +1,7 @@
+module Zxcvbn
+  class DictionaryRanker
+    def self.rank_dictionaries: (Hash[String | Symbol, Array[String]] lists) -> Hash[String | Symbol, Hash[String, Integer]]
+
+    def self.rank_dictionary: (Array[String] words) -> Hash[String, Integer]
+  end
+end

@@ -1,0 +1,10 @@
+module Zxcvbn
+  VERSION: String
+
+  DATA_PATH: Pathname
+
+  type word_list = Hash[String, Array[String]]
+  type user_inputs = Array[String]
+
+  def self.test: (String? password, ?user_inputs user_inputs, ?word_list word_lists) -> Score
+end

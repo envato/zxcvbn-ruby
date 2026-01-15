@@ -1,0 +1,17 @@
+module Zxcvbn
+  class Tester
+    @data: Data
+
+    def initialize: () -> void
+
+    def test: (String? password, ?Array[untyped] user_inputs) -> Score
+
+    def add_word_lists: (Hash[String, Array[untyped]] lists) -> void
+
+    def inspect: () -> String
+
+    private
+
+    def sanitize: (Array[untyped] user_inputs) -> Array[String]
+  end
+end

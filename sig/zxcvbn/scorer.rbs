@@ -1,0 +1,20 @@
+module Zxcvbn
+  class Scorer
+    include Entropy
+    include CrackTime
+
+    @data: Data
+
+    attr_reader data: Data
+
+    def initialize: (Data data) -> void
+
+    def minimum_entropy_match_sequence: (String password, Array[Match] matches) -> Score
+
+    def score_for: (String password, Array[Match] match_sequence, Array[Float] up_to_k) -> Score
+
+    def pad_with_bruteforce_matches: (Array[Match] match_sequence, String password, Integer bruteforce_cardinality) -> Array[Match]
+
+    def make_bruteforce_match: (String password, Integer i, Integer j, Integer bruteforce_cardinality) -> Match
+  end
+end
