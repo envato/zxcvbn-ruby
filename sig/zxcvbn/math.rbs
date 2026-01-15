@@ -1,0 +1,13 @@
+module Zxcvbn
+  module Math
+    def bruteforce_cardinality: (String password) -> Integer
+
+    def lg: (Numeric n) -> Float
+
+    def nCk: (Integer n, Integer k) -> Integer
+
+    def average_degree_for_graph: (String graph_name) -> Float
+
+    def starting_positions_for_graph: (String graph_name) -> Integer
+  end
+end

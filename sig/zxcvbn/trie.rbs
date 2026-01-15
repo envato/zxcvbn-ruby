@@ -1,0 +1,13 @@
+module Zxcvbn
+  class Trie
+    type node = Hash[untyped, untyped]
+
+    @root: node
+
+    def initialize: () -> void
+
+    def insert: (String word, Integer rank) -> void
+
+    def search_prefixes: (String text, Integer start_pos) -> Array[[String, Integer?, Integer, Integer]]
+  end
+end

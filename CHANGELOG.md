@@ -6,11 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+ - RBS type signatures for improved type checking and IDE support ([#68])
+
 ### Changed
  - Minor fixups in gem metadata ([#67]).
 
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.3.0...HEAD
 [#67]: https://github.com/envato/zxcvbn-ruby/pull/67
+[#68]: https://github.com/envato/zxcvbn-ruby/pull/68
 
 ## [1.3.0] - 2026-01-02
 

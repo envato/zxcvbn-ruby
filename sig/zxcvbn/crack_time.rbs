@@ -1,0 +1,13 @@
+module Zxcvbn
+  module CrackTime
+    SINGLE_GUESS: Float
+    NUM_ATTACKERS: Integer
+    SECONDS_PER_GUESS: Float
+
+    def entropy_to_crack_time: (Numeric entropy) -> Float
+
+    def crack_time_to_score: (Numeric seconds) -> Integer
+
+    def display_time: (Numeric seconds) -> String
+  end
+end

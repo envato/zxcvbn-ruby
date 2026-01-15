@@ -1,0 +1,8 @@
+module Zxcvbn
+  class Feedback
+    attr_accessor warning: String?
+    attr_accessor suggestions: Array[String]
+
+    def initialize: (?warning: String?, ?suggestions: Array[String]) -> void
+  end
+end

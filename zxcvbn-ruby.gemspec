@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = 'https://github.com/envato/zxcvbn-ruby'
 
   gem.files         = `git ls-files -z`.split("\x0").reject do |file|
-    file.match(%r{^(\.|CODE_OF_CONDUCT.md|Gemfile|Rakefile|Guardfile|zxcvbn-ruby.gemspec|spec/)})
+    file.match(%r{^(\.|CODE_OF_CONDUCT.md|Gemfile|Rakefile|Guardfile|zxcvbn-ruby.gemspec|rbs_collection.yaml|spec/)})
   end
   gem.name          = 'zxcvbn-ruby'
   gem.require_paths = ['lib']
