@@ -106,6 +106,26 @@ module Zxcvbn
       build_score(password, sequence, total_guesses)
     end
 
+    # Compute guesses for a repeat match by recursively scoring the base token.
+    #
+    # Lazily instantiates an {Omnimatch} when first needed, using the same
+    # data and user_inputs as the enclosing scoring run.
+    #
+    # @param match [Match] a repeat match with base_token set
+    # @return [Integer] base_guesses * repeat_count
+    def repeat_guesses(match)
+      if match.base_guesses.nil?
+        require 'zxcvbn/omnimatch'
+        @omnimatch ||= Omnimatch.new(@data)
+        base_matches  = @omnimatch.matches(match.base_token, @user_inputs || [])
+        base_analysis = most_guessable_match_sequence(match.base_token, base_matches,
+                                                      exclude_additive: true,
+                                                      user_inputs: @user_inputs || [])
+        match.base_guesses = base_analysis.guesses
+      end
+      match.base_guesses * match.repeat_count
+    end
+
     private
 
     # @param password [String]
@@ -130,26 +150,6 @@ module Zxcvbn
       return 1 if n < 2
 
       (2..n).reduce(1, :*)
-    end
-
-    # Compute guesses for a repeat match by recursively scoring the base token.
-    #
-    # Lazily instantiates an {Omnimatch} when first needed. Overridden by
-    # {PasswordStrength} which supplies the correctly configured omnimatch.
-    #
-    # @param match [Match] a repeat match with base_token set
-    # @return [Integer] base_guesses * repeat_count
-    def repeat_guesses(match)
-      if match.base_guesses.nil?
-        require 'zxcvbn/omnimatch'
-        @omnimatch ||= Omnimatch.new(@data)
-        base_matches  = @omnimatch.matches(match.base_token, @user_inputs || [])
-        base_analysis = most_guessable_match_sequence(match.base_token, base_matches,
-                                                      exclude_additive: true,
-                                                      user_inputs: @user_inputs || [])
-        match.base_guesses = base_analysis.guesses
-      end
-      match.base_guesses * match.repeat_count
     end
   end
 end
