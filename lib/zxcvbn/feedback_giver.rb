@@ -13,9 +13,9 @@ module Zxcvbn
         'Use a few words, avoid common phrases',
         'No need for symbols, digits, or uppercase letters'
       ]
-    ).freeze
+    )
 
-    EMPTY_FEEDBACK = Feedback.new.freeze
+    EMPTY_FEEDBACK = Feedback.new
 
     # Returns feedback appropriate for the given score and match sequence.
     #
@@ -39,12 +39,10 @@ module Zxcvbn
       extra_feedback = 'Add another word or two. Uncommon words are better.'
 
       if feedback.nil?
-        feedback = Feedback.new(suggestions: [extra_feedback])
+        Feedback.new(suggestions: [extra_feedback])
       else
-        feedback.suggestions.unshift extra_feedback
+        feedback.with(suggestions: [extra_feedback, *feedback.suggestions])
       end
-
-      feedback
     end
 
     # Returns pattern-specific feedback for a single match, or nil if none applies.
