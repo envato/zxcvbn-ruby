@@ -56,7 +56,7 @@ module Zxcvbn
         est = estimate_guesses(match, password)
         est *= pi[match.i - 1][l - 1] if l > 1
         candidate = factorial(l) * est
-        candidate += MIN_GUESSES_BEFORE_GROWING_SEQUENCE**(l - 1) unless exclude_additive
+        candidate += MIN_GUESSES_BEFORE_GROWING_SEQUENCE.to_f**(l - 1) unless exclude_additive
         # only improve if no sequence of length <= l ending at j already beats candidate
         return if g[j].any? { |u, a| u <= l && a <= candidate }
 
@@ -148,7 +148,7 @@ module Zxcvbn
     def factorial(n)
       return 1 if n < 2
 
-      (2..n).reduce(1, :*)
+      (2..n).reduce(1.0, :*)
     end
   end
 end
