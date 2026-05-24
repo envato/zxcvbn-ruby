@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'benchmark'
 
 RSpec.describe Zxcvbn::Tester do
   let(:tester) { Zxcvbn::Tester.new }
@@ -96,6 +97,21 @@ RSpec.describe Zxcvbn::Tester do
   context 'nil password' do
     specify do
       expect(tester.test(nil)).to have_attributes(entropy: 0, score: 0, crack_time: 0)
+    end
+  end
+
+  context 'with a password exceeding MAX_PASSWORD_LENGTH' do
+    let(:max) { Zxcvbn::PasswordStrength::MAX_PASSWORD_LENGTH }
+
+    it 'truncates the password before scoring' do
+      result = tester.test('a' * (max + 100))
+      expect(result.password.length).to eq max
+    end
+
+    it 'completes in reasonable time for adversarial repeat inputs' do
+      adversarial = 'ab' * 150
+      elapsed = Benchmark.realtime { tester.test(adversarial) }
+      expect(elapsed).to be < 5
     end
   end
 end
