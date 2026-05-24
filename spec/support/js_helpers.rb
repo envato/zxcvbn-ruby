@@ -31,6 +31,6 @@ module JsHelpers
   end
 
   def js_zxcvbn(password)
-    run_js("zxcvbn('#{password}')")
+    run_js("zxcvbn(#{password.to_json})")
   end
 end
