@@ -20,7 +20,7 @@ module Zxcvbn
     def matches(password, user_inputs = [])
       matchers = @matchers + user_input_matchers(user_inputs)
       all_matches = matchers.map { |matcher| matcher.matches(password) }.inject(&:+)
-      all_matches + reverse_dictionary_matches(password)
+      all_matches + reverse_dictionary_matches(password, user_inputs)
     end
 
     private
@@ -42,14 +42,24 @@ module Zxcvbn
     # original (un-reversed) form.
     #
     # @param password [String] the original password
+    # @param user_inputs [Array<String>] caller-supplied words to check in reverse
     # @return [Array<Match>] dictionary matches found in the reversed password
-    def reverse_dictionary_matches(password)
+    def reverse_dictionary_matches(password, user_inputs = [])
       reversed = password.reverse
       n = password.length
       matches = []
-      @data.ranked_dictionaries.each do |name, dictionary|
+
+      matchers = @data.ranked_dictionaries.map do |name, dictionary|
         trie = @data.dictionary_tries[name]
-        matcher = Matchers::Dictionary.new(name, dictionary, trie)
+        Matchers::Dictionary.new(name, dictionary, trie)
+      end
+
+      if user_inputs.any?
+        user_ranked_dictionary = DictionaryRanker.rank_dictionary(user_inputs)
+        matchers << Matchers::Dictionary.new('user_inputs', user_ranked_dictionary)
+      end
+
+      matchers.each do |matcher|
         matcher.matches(reversed).each do |match|
           match.token    = match.token.reverse
           match.reversed = true

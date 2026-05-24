@@ -33,7 +33,8 @@ module Zxcvbn
     # @param exclude_additive [Boolean] omit the sequence-length penalty
     #   (used when recursively analysing repeat base tokens)
     # @return [Score] the optimal score with match sequence and guess count
-    def most_guessable_match_sequence(password, matches, exclude_additive: false)
+    def most_guessable_match_sequence(password, matches, exclude_additive: false, user_inputs: [])
+      @user_inputs = user_inputs
       n = password.length
 
       return build_score(password, [], 1) if n.zero?
@@ -142,8 +143,10 @@ module Zxcvbn
       if match.base_guesses.nil?
         require 'zxcvbn/omnimatch'
         @omnimatch ||= Omnimatch.new(@data)
-        base_matches  = @omnimatch.matches(match.base_token)
-        base_analysis = most_guessable_match_sequence(match.base_token, base_matches, exclude_additive: true)
+        base_matches  = @omnimatch.matches(match.base_token, @user_inputs || [])
+        base_analysis = most_guessable_match_sequence(match.base_token, base_matches,
+                                                      exclude_additive: true,
+                                                      user_inputs: @user_inputs || [])
         match.base_guesses = base_analysis.guesses
       end
       match.base_guesses * match.repeat_count

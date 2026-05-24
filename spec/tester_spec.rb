@@ -32,6 +32,18 @@ RSpec.describe Zxcvbn::Tester do
       result = tester.test('th3m3for3st', ['themeforest'])
       expect(result.score).to eq 0
     end
+
+    it 'catches reversed user-input words' do
+      result = tester.test('tserofemeht', ['themeforest'])
+      expect(result.score).to eq 0
+      expect(result.match_sequence.any?(&:reversed)).to be true
+    end
+
+    it 'scores repeats of user-input words using user context' do
+      with_inputs    = tester.test('themeforestthemeforest', ['themeforest'])
+      without_inputs = tester.test('themeforestthemeforest', [])
+      expect(with_inputs.guesses).to be < without_inputs.guesses
+    end
   end
 
   context 'with Unicode entries in the password' do
