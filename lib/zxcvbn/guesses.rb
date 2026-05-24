@@ -73,7 +73,7 @@ module Zxcvbn
     # @param user_inputs [Array] unused in this base implementation; present so
     #   overrides (e.g. {Scorer}) can receive the value without changing the callsite
     # @return [Integer] base_guesses multiplied by the number of repetitions
-    def repeat_guesses(match, user_inputs: [])
+    def repeat_guesses(match, user_inputs: []) # rubocop:disable Lint/UnusedMethodArgument
       match.base_guesses * match.repeat_count
     end
 

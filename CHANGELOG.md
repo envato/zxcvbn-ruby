@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - `Sequence` matcher ported to the zxcvbn.js v4 delta-based algorithm. Sequences are now detected using codepoint deltas up to ±5 (was ±1 only), enabling matches like `"ace"` (delta 2) or Unicode runs like `"αβγ"`. Sequence type is classified by character class (`lower`/`upper`/`digits`/`unicode`) rather than a lookup table ([#69])
  - `Date` matcher year range extended to 1000–2050; 2-digit years are now expanded (>50 → 1900s, ≤50 → 2000s) ([#69])
  - All frequency lists replaced with zxcvbn.js v4.4.2 versions: `passwords` (30k entries), `surnames` (10k), `female_names` (3,712), `male_names` (983), `english` (30k from the english_wikipedia list) ([#69])
- - `entropy` on `Zxcvbn::Score` is now derived as `log2(guesses)` rather than computed directly; `crack_time` is derived from that entropy. Both fields are retained for backward compatibility but their values will change ([#69])
+ - **Breaking**: `entropy` on `Zxcvbn::Score` has been removed. Use `Score#guesses` or `Math.log2(score.guesses)` instead ([#69])
  - Passwords longer than 256 characters are silently truncated before scoring to bound O(n²) dictionary matching time ([#69])
 
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.4.0...HEAD

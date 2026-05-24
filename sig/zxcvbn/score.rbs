@@ -1,7 +1,6 @@
 module Zxcvbn
   class Score
     attr_accessor guesses: Numeric?
-    attr_accessor entropy: Numeric?
     attr_accessor crack_time: Numeric?
     attr_accessor crack_time_display: String?
     attr_accessor score: Integer?

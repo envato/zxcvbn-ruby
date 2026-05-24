@@ -131,12 +131,10 @@ module Zxcvbn
     # @param guesses [Integer]
     # @return [Score]
     def build_score(password, sequence, guesses)
-      entropy    = ::Math.log2([guesses, 1].max)
-      crack_time = entropy_to_crack_time(entropy)
+      crack_time = entropy_to_crack_time(::Math.log2([guesses, 1].max))
       Score.new(
         password: password,
         guesses: guesses,
-        entropy: entropy.round(3),
         match_sequence: sequence,
         crack_time: crack_time.round(3),
         crack_time_display: display_time(crack_time),

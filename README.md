@@ -36,7 +36,6 @@ $ irb
  @calc_time=0.0007179999956861138,
  @crack_time=0.75,
  @crack_time_display="instant",
- @entropy=13.873,
  @feedback=
   #<Zxcvbn::Feedback:0x00007f7f59060150
    @suggestions=
@@ -76,7 +75,6 @@ $ irb
  @calc_time=0.0011630000080913305,
  @crack_time=46159.451,
  @crack_time_display="14 hours",
- @entropy=29.782,
  @feedback=
   #<Zxcvbn::Feedback:0x00007f7f5a9e9130
    @suggestions=[],
@@ -113,7 +111,6 @@ $ irb
  @calc_time=0.006318999978248030,
  @crack_time=0.75,
  @crack_time_display="instant",
- @entropy=13.873,
  @feedback=
   #<Zxcvbn::Feedback:0x00007f7f586fcac8
    @suggestions=

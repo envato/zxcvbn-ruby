@@ -57,7 +57,7 @@ RSpec.describe Zxcvbn::Tester do
   context 'with Unicode entries in the password' do
     it 'validates the password' do
       result = tester.test('✅🐴🔋staple', %w[Theme Forest themeforest])
-      expect(result.entropy).to be_positive
+      expect(result.guesses).to be_positive
       expect(result.score).to be_positive
     end
   end
@@ -65,7 +65,7 @@ RSpec.describe Zxcvbn::Tester do
   context 'with Unicode entries in the dictionary' do
     it 'validates the password' do
       result = tester.test('correct horse battery staple', %w[✅ 🐴 🔋])
-      expect(result.entropy).to be_positive
+      expect(result.guesses).to be_positive
       expect(result.score).to be_positive
     end
   end
@@ -73,7 +73,7 @@ RSpec.describe Zxcvbn::Tester do
   context 'with Unicode entries in the password and the dictionary' do
     it 'validates the password' do
       result = tester.test('✅🐴🔋staple', %w[✅ 🐴 🔋])
-      expect(result.entropy).to be_positive
+      expect(result.guesses).to be_positive
     end
   end
 
@@ -103,7 +103,7 @@ RSpec.describe Zxcvbn::Tester do
 
   context 'nil password' do
     specify do
-      expect(tester.test(nil)).to have_attributes(entropy: 0, score: 0, crack_time: 0)
+      expect(tester.test(nil)).to have_attributes(guesses: 1, score: 0, crack_time: 0)
     end
   end
 
