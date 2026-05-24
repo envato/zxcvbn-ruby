@@ -32,8 +32,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Sole matches from the `english_wikipedia` dictionary now produce an "A word by itself is easy to guess" warning ([#69])
  - Passwords longer than 256 characters are silently truncated before scoring to bound O(n²) dictionary matching time ([#69])
 
+### Removed
+ - Support for Ruby versions below 3.3 ([#70])
+
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.4.0...HEAD
 [#69]: https://github.com/envato/zxcvbn-ruby/pull/69
+[#70]: https://github.com/envato/zxcvbn-ruby/pull/70
 
 ## [1.4.0] - 2026-01-15
 
