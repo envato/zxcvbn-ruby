@@ -15,11 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
  - **Breaking**: Scoring algorithm aligned with zxcvbn.js v4.4.2. The dynamic programming step now minimises total guesses (`factorial(l) × cumulative_product + MIN_GUESSES^(l-1)` penalty) instead of entropy bits. Scores for many passwords will change ([#69])
+ - **Breaking**: Bruteforce cardinality is now fixed at 10 (digits only), matching zxcvbn.js v4. Previously it was computed dynamically from the character classes present in the password (10–95), so bruteforce guesses for passwords containing letters or symbols will change ([#69])
  - **Breaking**: `Repeat` matcher now detects multi-character repeating units (e.g. `abcabc`). The `base_token` field holds the repeating unit (which may be more than one character); `repeated_char` has been removed ([#69])
+ - **Breaking**: `Match#entropy`, `Match#base_entropy`, `Match#uppercase_entropy`, and `Match#l33t_entropy` have been removed. Use `Match#guesses` and `Match#guesses_log10` instead ([#69])
  - `crack_time_to_score` replaced by `guesses_to_score` with v4 thresholds: 0 (<1,005 guesses), 1 (<1,000,005), 2 (<100,000,005), 3 (<10,000,000,005), 4 (≥10,000,000,005) ([#69])
  - `Date` matcher year range extended to 1000–2050; 2-digit years are now expanded (>50 → 1900s, ≤50 → 2000s) ([#69])
  - All frequency lists replaced with zxcvbn.js v4.4.2 versions: `passwords` (30k entries), `surnames` (10k), `female_names` (3,712), `male_names` (983), `english` (30k from the english_wikipedia list) ([#69])
  - `entropy` on `Zxcvbn::Score` is now derived as `log2(guesses)` rather than computed directly; `crack_time` is derived from that entropy. Both fields are retained for backward compatibility but their values will change ([#69])
+ - Passwords longer than 256 characters are silently truncated before scoring to bound O(n²) dictionary matching time ([#69])
 
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.4.0...HEAD
 [#69]: https://github.com/envato/zxcvbn-ruby/pull/69
