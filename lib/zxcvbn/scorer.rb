@@ -119,7 +119,6 @@ module Zxcvbn
         @omnimatch ||= Omnimatch.new(@data)
         base_matches  = @omnimatch.matches(match.base_token, @user_inputs || [])
         base_analysis = most_guessable_match_sequence(match.base_token, base_matches,
-                                                      exclude_additive: true,
                                                       user_inputs: @user_inputs || [])
         match.base_guesses = base_analysis.guesses
       end
