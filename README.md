@@ -32,27 +32,11 @@ $ irb
 >> require 'zxcvbn'
 => true
 >> pp Zxcvbn.test('@lfred2004', ['alfred'])
-#<Zxcvbn::Score:0x00007f7f590610c8
- @calc_time=0.0007179999956861138,
- @crack_times_display=
-  {"online_throttling_100_per_hour"=>"instant",
-   "online_no_throttling_10_per_second"=>"instant",
-   "offline_slow_hashing_1e4_per_second"=>"instant",
-   "offline_fast_hashing_1e10_per_second"=>"instant"},
- @crack_times_seconds=
-  {"online_throttling_100_per_hour"=>540000.0,
-   "online_no_throttling_10_per_second"=>1500.0,
-   "offline_slow_hashing_1e4_per_second"=>1.5,
-   "offline_fast_hashing_1e10_per_second"=>1.5e-06},
- @feedback=
-  #<Zxcvbn::Feedback:0x00007f7f59060150
-   @suggestions=
-    ["Add another word or two. Uncommon words are better.",
-     "Predictable substitutions like '@' instead of 'a' don't help very much"],
-   @warning=nil>,
- @guesses=15000,
- @sequence=
-  [#<Zxcvbn::Match:0x00007f7f59060200
+#<data Zxcvbn::Score
+ password="@lfred2004",
+ guesses=15000.0,
+ sequence=
+  [#<Zxcvbn::Match:0x00000001139ddac8
     @base_guesses=1,
     @dictionary_name="user_inputs",
     @guesses=50,
@@ -68,36 +52,37 @@ $ irb
     @sub_display="@ -> a",
     @token="@lfred",
     @uppercase_variations=1>,
-   #<Zxcvbn::Match:0x00007f7f59060300
+   #<Zxcvbn::Match:0x00000001139de248
     @guesses=50,
     @guesses_log10=1.6989700043360187,
     @i=6,
     @j=9,
     @pattern="year",
     @token="2004">],
- @password="@lfred2004",
- @score=1>
-=> #<Zxcvbn::Score:0x00007f7f590610c8>
+ crack_times_seconds=
+  {"online_throttling_100_per_hour" => 540000.0,
+   "online_no_throttling_10_per_second" => 1500.0,
+   "offline_slow_hashing_1e4_per_second" => 1.5,
+   "offline_fast_hashing_1e10_per_second" => 1.5e-06},
+ crack_times_display=
+  {"online_throttling_100_per_hour" => "8 days",
+   "online_no_throttling_10_per_second" => "26 minutes",
+   "offline_slow_hashing_1e4_per_second" => "instant",
+   "offline_fast_hashing_1e10_per_second" => "instant"},
+ score=1,
+ calc_time=0.0009260000078938901,
+ feedback=
+  #<data Zxcvbn::Feedback
+   warning="",
+   suggestions=
+    ["Add another word or two. Uncommon words are better.",
+     "Predictable substitutions like '@' instead of 'a' don't help very much"]>>
 >> pp Zxcvbn.test('asdfghju7654rewq', ['alfred'])
-#<Zxcvbn::Score:0x00007f7f5a9e9248
- @calc_time=0.0011630000080913305,
- @crack_times_display=
-  {"online_throttling_100_per_hour"=>"centuries",
-   "online_no_throttling_10_per_second"=>"3 years",
-   "offline_slow_hashing_1e4_per_second"=>"2 hours",
-   "offline_fast_hashing_1e10_per_second"=>"instant"},
- @crack_times_seconds=
-  {"online_throttling_100_per_hour"=>3.323480495195046e+10,
-   "online_no_throttling_10_per_second"=>92318902.64430684,
-   "offline_slow_hashing_1e4_per_second"=>92318.90264430684,
-   "offline_fast_hashing_1e10_per_second"=>0.09231890264430684},
- @feedback=
-  #<Zxcvbn::Feedback:0x00007f7f5a9e9130
-   @suggestions=[],
-   @warning=nil>,
- @guesses=923189026.4430684,
- @sequence=
-  [#<Zxcvbn::Match:0x00007f7f5a9e9000
+#<data Zxcvbn::Score
+ password="asdfghju7654rewq",
+ guesses=923189026.4430684,
+ sequence=
+  [#<Zxcvbn::Match:0x00000001276dde90
     @graph="qwerty",
     @guesses=923189025.4430684,
     @guesses_log10=8.965290633097352,
@@ -107,9 +92,19 @@ $ irb
     @shifted_count=0,
     @token="asdfghju7654rewq",
     @turns=5>],
- @password="asdfghju7654rewq",
- @score=3>
-=> #<Zxcvbn::Score:0x00007f7f5a9e9248>
+ crack_times_seconds=
+  {"online_throttling_100_per_hour" => 33234804951.950462,
+   "online_no_throttling_10_per_second" => 92318902.64430684,
+   "offline_slow_hashing_1e4_per_second" => 92318.90264430684,
+   "offline_fast_hashing_1e10_per_second" => 0.09231890264430684},
+ crack_times_display=
+  {"online_throttling_100_per_hour" => "centuries",
+   "online_no_throttling_10_per_second" => "4 years",
+   "offline_slow_hashing_1e4_per_second" => "3 days",
+   "offline_fast_hashing_1e10_per_second" => "instant"},
+ score=3,
+ calc_time=0.001476000004913658,
+ feedback=#<data Zxcvbn::Feedback warning="" suggestions=[]>>
 ```
 
 ## Testing Multiple Passwords
@@ -123,27 +118,11 @@ $ irb
 >> tester = Zxcvbn::Tester.new
 => #<Zxcvbn::Tester:0x3fe99d869aa4>
 >> pp tester.test('@lfred2004', ['alfred'])
-#<Zxcvbn::Score:0x00007f7f586fcf50
- @calc_time=0.006318999978248030,
- @crack_times_display=
-  {"online_throttling_100_per_hour"=>"instant",
-   "online_no_throttling_10_per_second"=>"instant",
-   "offline_slow_hashing_1e4_per_second"=>"instant",
-   "offline_fast_hashing_1e10_per_second"=>"instant"},
- @crack_times_seconds=
-  {"online_throttling_100_per_hour"=>540000.0,
-   "online_no_throttling_10_per_second"=>1500.0,
-   "offline_slow_hashing_1e4_per_second"=>1.5,
-   "offline_fast_hashing_1e10_per_second"=>1.5e-06},
- @feedback=
-  #<Zxcvbn::Feedback:0x00007f7f586fcac8
-   @suggestions=
-    ["Add another word or two. Uncommon words are better.",
-     "Predictable substitutions like '@' instead of 'a' don't help very much"],
-   @warning=nil>,
- @guesses=15000,
- @sequence=
-  [#<Zxcvbn::Match:0x00007f7f586fc900
+#<data Zxcvbn::Score
+ password="@lfred2004",
+ guesses=15000.0,
+ sequence=
+  [#<Zxcvbn::Match:0x0000000126f7dcb8
     @base_guesses=1,
     @dictionary_name="user_inputs",
     @guesses=50,
@@ -159,23 +138,38 @@ $ irb
     @sub_display="@ -> a",
     @token="@lfred",
     @uppercase_variations=1>,
-   #<Zxcvbn::Match:0x00007f7f586fc800
+   #<Zxcvbn::Match:0x0000000126f7e438
     @guesses=50,
     @guesses_log10=1.6989700043360187,
     @i=6,
     @j=9,
     @pattern="year",
     @token="2004">],
- @password="@lfred2004",
- @score=1>
-=> #<Zxcvbn::Score:0x00007f7f586fcf50>
+ crack_times_seconds=
+  {"online_throttling_100_per_hour" => 540000.0,
+   "online_no_throttling_10_per_second" => 1500.0,
+   "offline_slow_hashing_1e4_per_second" => 1.5,
+   "offline_fast_hashing_1e10_per_second" => 1.5e-06},
+ crack_times_display=
+  {"online_throttling_100_per_hour" => "8 days",
+   "online_no_throttling_10_per_second" => "26 minutes",
+   "offline_slow_hashing_1e4_per_second" => "instant",
+   "offline_fast_hashing_1e10_per_second" => "instant"},
+ score=1,
+ calc_time=0.0010020000045187771,
+ feedback=
+  #<data Zxcvbn::Feedback
+   warning="",
+   suggestions=
+    ["Add another word or two. Uncommon words are better.",
+     "Predictable substitutions like '@' instead of 'a' don't help very much"]>>
 ```
 
-Subsequent calls reuse the already-loaded dictionaries, so `@calc_time` is significantly lower:
+Subsequent calls reuse the already-loaded dictionaries, so `calc_time` is significantly lower:
 
 ```ruby
 >> tester.test('@lfred2004', ['alfred']).calc_time
-=> 0.0009840000000596046
+=> 0.0006769999745301902
 ```
 
 > [!NOTE]
