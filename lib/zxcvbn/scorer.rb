@@ -1,105 +1,125 @@
 # frozen_string_literal: true
 
-require 'zxcvbn/entropy'
+require 'zxcvbn/guesses'
 require 'zxcvbn/crack_time'
 require 'zxcvbn/score'
 require 'zxcvbn/match'
 
 module Zxcvbn
   class Scorer
+    include Guesses
+    include CrackTime
+
     def initialize(data)
       @data = data
     end
 
     attr_reader :data
 
-    include Entropy
-    include CrackTime
+    def most_guessable_match_sequence(password, matches, exclude_additive: false)
+      n = password.length
 
-    def minimum_entropy_match_sequence(password, matches)
-      bruteforce_cardinality = bruteforce_cardinality(password) # e.g. 26 for lowercase
-      up_to_k = [] # minimum entropy up to k.
-      # for the optimal sequence of matches up to k, holds the final match (match.j == k).
-      # null means the sequence ends w/ a brute-force character.
-      backpointers = []
-      (0...password.length).each do |k|
-        # starting scenario to try and beat: adding a brute-force character to the minimum entropy sequence at k-1.
-        previous_k_entropy = k.positive? ? up_to_k[k - 1] : 0
-        up_to_k[k] = previous_k_entropy + lg(bruteforce_cardinality)
-        backpointers[k] = nil
-        matches.select do |match|
-          match.j == k
-        end.each do |match|
-          i = match.i
-          j = match.j
-          # see if best entropy up to i-1 + entropy of this match is less than the current minimum at j.
-          previous_i_entropy = i.positive? ? up_to_k[i - 1] : 0
-          candidate_entropy = previous_i_entropy + calc_entropy(match)
-          if up_to_k[j] && candidate_entropy < up_to_k[j]
-            up_to_k[j] = candidate_entropy
-            backpointers[j] = match
+      return build_score(password, [], 1) if n.zero?
+
+      # index matches by their last character
+      matches_by_j = Array.new(n) { [] }
+      matches.each { |m| matches_by_j[m.j] << m }
+      matches_by_j.each { |arr| arr.sort_by!(&:i) }
+
+      # m[k][l] = best match for a sequence of l matches ending at position k
+      # pi[k][l] = cumulative product of guesses for those l matches
+      # g[k][l]  = total guesses (factorial(l) * pi + penalty)
+      m  = Array.new(n) { {} }
+      pi = Array.new(n) { {} }
+      g  = Array.new(n) { {} }
+
+      update = lambda do |match, l|
+        j   = match.j
+        est = estimate_guesses(match, password)
+        est *= pi[match.i - 1][l - 1] if l > 1
+        candidate = factorial(l) * est
+        candidate += MIN_GUESSES_BEFORE_GROWING_SEQUENCE**(l - 1) unless exclude_additive
+        # only improve if no sequence of length <= l ending at j already beats candidate
+        g[j].each { |u, a| return if u <= l && a <= candidate }
+        g[j][l]  = candidate
+        m[j][l]  = match
+        pi[j][l] = est
+      end
+
+      make_bruteforce = lambda do |i, j|
+        Match.new(pattern: 'bruteforce', token: password.slice(i, j - i + 1), i: i, j: j)
+      end
+
+      (0...n).each do |k|
+        matches_by_j[k].each do |match|
+          if match.i > 0
+            m[match.i - 1].each_key { |l| update.call(match, l + 1) }
+          else
+            update.call(match, 1)
+          end
+        end
+
+        # try bruteforce segments ending at k
+        update.call(make_bruteforce.call(0, k), 1)
+        (1..k).each do |t|
+          bf = make_bruteforce.call(t, k)
+          m[t - 1].each do |l, prev_match|
+            update.call(bf, l + 1) unless prev_match.pattern == 'bruteforce'
           end
         end
       end
 
-      # walk backwards and decode the best sequence
-      match_sequence = []
-      k = password.length - 1
+      # find sequence length with minimum guesses at position n-1
+      optimal_l   = g[n - 1].min_by { |_, v| v }&.first
+      total_guesses = optimal_l ? g[n - 1][optimal_l] : 1
+
+      # backtrack to reconstruct sequence
+      sequence = []
+      k = n - 1
+      l = optimal_l
       while k >= 0
-        match = backpointers[k]
-        if match
-          match_sequence.unshift match
-          k = match.i - 1
-        else
-          k -= 1
-        end
+        match = m[k][l]
+        sequence.unshift(match)
+        k = match.i - 1
+        l -= 1
       end
 
-      match_sequence = pad_with_bruteforce_matches(match_sequence, password, bruteforce_cardinality)
-      score_for(password, match_sequence, up_to_k)
+      build_score(password, sequence, total_guesses)
     end
 
-    def score_for(password, match_sequence, up_to_k)
-      min_entropy = up_to_k[password.length - 1] || 0 # or 0 corner case is for an empty password ''
-      crack_time = entropy_to_crack_time(min_entropy)
+    private
 
-      # final result object
+    def build_score(password, sequence, guesses)
+      entropy    = ::Math.log2([guesses, 1].max)
+      crack_time = entropy_to_crack_time(entropy)
       Score.new(
-        password: password,
-        entropy: min_entropy.round(3),
-        match_sequence: match_sequence,
-        crack_time: crack_time.round(3),
+        password:           password,
+        guesses:            guesses,
+        entropy:            entropy.round(3),
+        match_sequence:     sequence,
+        crack_time:         crack_time.round(3),
         crack_time_display: display_time(crack_time),
-        score: crack_time_to_score(crack_time)
+        score:              guesses_to_score(guesses)
       )
     end
 
-    def pad_with_bruteforce_matches(match_sequence, password, bruteforce_cardinality)
-      k = 0
-      match_sequence_copy = []
-      match_sequence.each do |match|
-        match_sequence_copy << make_bruteforce_match(password, k, match.i - 1, bruteforce_cardinality) if match.i > k
-        k = match.j + 1
-        match_sequence_copy << match
-      end
-      if k < password.length
-        match_sequence_copy << make_bruteforce_match(password, k, password.length - 1, bruteforce_cardinality)
-      end
-      match_sequence_copy
+    def factorial(n)
+      return 1 if n < 2
+
+      (2..n).reduce(1, :*)
     end
 
-    # fill in the blanks between pattern matches with bruteforce "matches"
-    # that way the match sequence fully covers the password:
-    # match1.j == match2.i - 1 for every adjacent match1, match2.
-    def make_bruteforce_match(password, i, j, bruteforce_cardinality)
-      Match.new(
-        pattern: 'bruteforce',
-        i: i,
-        j: j,
-        token: password.slice(i, j - i + 1),
-        entropy: lg(bruteforce_cardinality**(j - i + 1)),
-        cardinality: bruteforce_cardinality
-      )
+    # Lazily compute base_guesses for repeat matches using internal omnimatch.
+    # Overridden by PasswordStrength to supply the correct omnimatch instance.
+    def repeat_guesses(match)
+      if match.base_guesses.nil?
+        require 'zxcvbn/omnimatch'
+        @omnimatch ||= Omnimatch.new(@data)
+        base_matches  = @omnimatch.matches(match.base_token)
+        base_analysis = most_guessable_match_sequence(match.base_token, base_matches, exclude_additive: true)
+        match.base_guesses = base_analysis.guesses
+      end
+      match.base_guesses * match.repeat_count
     end
   end
 end
