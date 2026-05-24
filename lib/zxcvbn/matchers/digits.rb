@@ -7,7 +7,7 @@ module Zxcvbn
     class Digits
       include RegexHelpers
 
-      DIGITS_REGEX = /\d{3,}/.freeze
+      DIGITS_REGEX = /\d{3,}/
 
       def matches(password)
         result = []

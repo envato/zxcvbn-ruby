@@ -110,7 +110,7 @@ module Zxcvbn
         return {} if hash.empty?
 
         values = hash.values
-        product_values = values[0].product(*values[1..-1])
+        product_values = values[0].product(*values[1..])
         product_values.map { |p| Hash[hash.keys.zip(p)] }
       end
     end

@@ -25,7 +25,7 @@ module Zxcvbn
 
       # tie feedback to the longest match for longer sequences
       longest_match = sequence[0]
-      sequence[1..-1].each do |match|
+      sequence[1..].each do |match|
         longest_match = match if match.token.length > longest_match.token.length
       end
 
