@@ -5,6 +5,8 @@ require 'zxcvbn/match'
 module Zxcvbn
   module Matchers
     class Spatial
+      SHIFTED_RX = /[~!@#$%^&*()\-_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?]/.freeze
+
       def initialize(graphs)
         @graphs = graphs
       end
@@ -19,12 +21,13 @@ module Zxcvbn
 
       def matches_for_graph(graph, graph_name, password)
         result = []
+        keyboard_graph = %w[qwerty dvorak].include?(graph_name)
         i = 0
         while i < password.length - 1
           j = i + 1
           last_direction = nil
           turns = 0
-          shifted_count = 0
+          shifted_count = keyboard_graph && SHIFTED_RX.match?(password[i]) ? 1 : 0
           loop do
             prev_char = password[j - 1]
             found = false
