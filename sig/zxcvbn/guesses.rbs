@@ -11,11 +11,11 @@ module Zxcvbn
     ALL_UPPER: Regexp
     ALL_LOWER: Regexp
 
-    def estimate_guesses: (Match match, String password) -> Numeric
+    def estimate_guesses: (Match match, String password, ?user_inputs: Array[untyped]) -> Numeric
 
     def bruteforce_guesses: (Match match) -> Numeric
 
-    def repeat_guesses: (Match match) -> Numeric
+    def repeat_guesses: (Match match, ?user_inputs: Array[untyped]) -> Numeric
 
     def sequence_guesses: (Match match) -> Numeric
 
