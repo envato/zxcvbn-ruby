@@ -5,7 +5,6 @@ module Zxcvbn
     attr_accessor crack_time: Numeric?
     attr_accessor crack_time_display: String?
     attr_accessor score: Integer?
-    attr_accessor pattern: String?
     attr_accessor match_sequence: Array[Match]?
     attr_accessor password: String?
     attr_accessor calc_time: Float?

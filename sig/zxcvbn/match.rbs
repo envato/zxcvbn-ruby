@@ -11,33 +11,23 @@ module Zxcvbn
     attr_accessor l33t: bool?
     attr_accessor sub: Hash[String, String]?
     attr_accessor sub_display: String?
-    attr_accessor l: Integer?
-    attr_accessor entropy: Numeric?
-    attr_accessor base_entropy: Numeric?
-    attr_accessor uppercase_entropy: Numeric?
-    attr_accessor l33t_entropy: Numeric?
     attr_accessor guesses: Numeric?
     attr_accessor guesses_log10: Float?
     attr_accessor base_guesses: Numeric?
     attr_accessor uppercase_variations: Numeric?
     attr_accessor l33t_variations: Numeric?
-    attr_accessor repeated_char: String?
     attr_accessor base_token: String?
     attr_accessor repeat_count: Integer?
-    attr_accessor base_matches: Array[Match]?
     attr_accessor sequence_name: String?
     attr_accessor sequence_space: Integer?
     attr_accessor ascending: bool?
     attr_accessor graph: String?
     attr_accessor turns: Integer?
     attr_accessor shifted_count: Integer?
-    attr_accessor shiffted_count: Integer?
     attr_accessor year: Integer?
     attr_accessor month: Integer?
     attr_accessor day: Integer?
     attr_accessor separator: String?
-    attr_accessor cardinality: Integer?
-    attr_accessor offset: Integer?
 
     def initialize: (**untyped attributes) -> void
 

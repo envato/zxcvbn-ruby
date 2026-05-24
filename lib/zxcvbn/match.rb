@@ -4,12 +4,11 @@ module Zxcvbn
   class Match
     attr_accessor :pattern, :i, :j, :token, :matched_word, :rank,
                   :dictionary_name, :reversed, :l33t, :sub, :sub_display,
-                  :l, :entropy, :base_entropy, :uppercase_entropy, :l33t_entropy,
                   :guesses, :guesses_log10, :base_guesses, :uppercase_variations, :l33t_variations,
-                  :repeated_char, :base_token, :repeat_count, :base_matches,
+                  :base_token, :repeat_count,
                   :sequence_name, :sequence_space, :ascending,
-                  :graph, :turns, :shifted_count, :shiffted_count,
-                  :year, :month, :day, :separator, :cardinality, :offset
+                  :graph, :turns, :shifted_count,
+                  :year, :month, :day, :separator
 
     def initialize(**attributes)
       attributes.each do |key, value|

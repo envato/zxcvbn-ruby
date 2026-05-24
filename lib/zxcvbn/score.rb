@@ -2,7 +2,7 @@
 
 module Zxcvbn
   class Score
-    attr_accessor :guesses, :entropy, :crack_time, :crack_time_display, :score, :pattern,
+    attr_accessor :guesses, :entropy, :crack_time, :crack_time_display, :score,
                   :match_sequence, :password, :calc_time, :feedback
 
     def initialize(options = {})
