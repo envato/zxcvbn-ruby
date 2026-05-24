@@ -192,7 +192,7 @@ module Zxcvbn
     # @param match [Match] a dictionary match, possibly with l33t substitutions
     # @return [Integer] l33t variation multiplier
     def l33t_variations(match)
-      return 1 unless match.l33t
+      return 1 unless match.l33t && match.sub
 
       variations = 1
       match.sub.each do |subbed, unsubbed|

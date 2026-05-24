@@ -152,6 +152,10 @@ RSpec.describe Zxcvbn::Guesses do
       expect(host.l33t_variations(make_match(l33t: false))).to eq 1
     end
 
+    it 'returns 1 when l33t is true but sub is nil' do
+      expect(host.l33t_variations(make_match(l33t: true, sub: nil))).to eq 1
+    end
+
     it 'returns 2 when all chars of a pair are substituted (no originals remain)' do
       # 'p4ssword': one '4', zero 'a' → doubles
       m = make_match(l33t: true, token: 'p4ssword', sub: { '4' => 'a' })
