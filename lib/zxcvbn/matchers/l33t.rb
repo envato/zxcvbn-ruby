@@ -114,7 +114,7 @@ module Zxcvbn
             dup_l33t_index = sub.find_index { |pair| pair[0] == l33t_char }
 
             if dup_l33t_index.nil?
-              next_subs << sub + [[l33t_char, first_key]]
+              next_subs << (sub + [[l33t_char, first_key]])
             else
               sub_alternative = sub.dup
               sub_alternative[dup_l33t_index, 1] = [[l33t_char, first_key]]

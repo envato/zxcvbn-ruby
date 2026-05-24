@@ -12,6 +12,22 @@ module Zxcvbn
     include Guesses
     include CrackTime
 
+    # Hash{Integer => Float} — factorial lookup for the DP hot loop.
+    # Precomputed up to MAX_PASSWORD_LENGTH (256); the default proc extends on demand
+    # by multiplying from the last cached entry.
+    FACTORIAL = (0..256).each_with_object(Hash.new { |h, n| h[n] = h[n - 1] * n }) do |n, h|
+      h[n] = n < 2 ? 1.0 : h[n - 1] * n
+    end
+
+    # Hash{Integer => Float} — powers of {MIN_GUESSES_BEFORE_GROWING_SEQUENCE} for the
+    # additive sequence-length penalty. Precomputed up to MAX_PASSWORD_LENGTH (256);
+    # the default proc extends on demand by multiplying from the last cached entry.
+    MIN_GUESSES_POW = (0..255).each_with_object(
+      Hash.new { |h, n| h[n] = h[n - 1] * MIN_GUESSES_BEFORE_GROWING_SEQUENCE }
+    ) do |n, h|
+      h[n] = MIN_GUESSES_BEFORE_GROWING_SEQUENCE.to_f**n
+    end
+
     # @param data [Data] the loaded frequency list and graph data
     def initialize(data)
       @data = data
@@ -43,25 +59,30 @@ module Zxcvbn
       matches.each { |m| matches_by_j[m.j] << m }
       matches_by_j.each { |arr| arr.sort_by!(&:i) }
 
-      # m[k][l] = best match for a sequence of l matches ending at position k
-      # pi[k][l] = cumulative product of guesses for those l matches
-      # g[k][l]  = total guesses (factorial(l) * pi + penalty)
-      m  = Array.new(n) { {} }
-      pi = Array.new(n) { {} }
-      g  = Array.new(n) { {} }
+      # m[k][l]       = best match for a sequence of l matches ending at position k
+      # pi_float[k][l] = cumulative guess product for those l matches as Float (avoids Bignum
+      #                  integer multiplication; each step is Integer × Float → Float)
+      # g[k][l]        = total guesses (FACTORIAL[l] * pi_float + penalty) as Float
+      # g_log10[k][l]  = log10(g[k][l]), used for dominance comparisons (small Float vs Float)
+      m        = Array.new(n) { {} }
+      pi_float = Array.new(n) { {} }
+      g        = Array.new(n) { {} }
+      g_log10  = Array.new(n) { {} }
 
       update = lambda do |match, l|
-        j   = match.j
-        est = estimate_guesses(match, password, user_inputs:)
-        est *= pi[match.i - 1][l - 1] if l > 1
-        candidate = factorial(l) * est
-        candidate += MIN_GUESSES_BEFORE_GROWING_SEQUENCE.to_f**(l - 1) unless exclude_additive
+        j       = match.j
+        est     = estimate_guesses(match, password, user_inputs:)
+        pi_prev = l > 1 ? pi_float[match.i - 1][l - 1] : 1.0
+        candidate = FACTORIAL[l] * est * pi_prev
+        candidate += MIN_GUESSES_POW[l - 1] unless exclude_additive
+        candidate_log10 = ::Math.log10(candidate)
         # only improve if no sequence of length <= l ending at j already beats candidate
-        return if g[j].any? { |u, a| u <= l && a <= candidate }
+        return if g_log10[j].any? { |u, a| u <= l && a <= candidate_log10 }
 
-        g[j][l]  = candidate
-        m[j][l]  = match
-        pi[j][l] = est
+        g[j][l]         = candidate
+        g_log10[j][l]   = candidate_log10
+        m[j][l]         = match
+        pi_float[j][l]  = est * pi_prev
       end
 
       make_bruteforce = lambda do |i, j|
@@ -88,7 +109,7 @@ module Zxcvbn
       end
 
       # find sequence length with minimum guesses at position n-1
-      optimal_l = g[n - 1].min_by { |_, v| v }&.first
+      optimal_l = g_log10[n - 1].min_by { |_, v| v }&.first
       total_guesses = optimal_l ? g[n - 1][optimal_l] : 1
 
       # backtrack to reconstruct sequence
@@ -111,7 +132,7 @@ module Zxcvbn
     #
     # @param match [Match] a repeat match with base_token set
     # @param user_inputs [Array] caller-supplied words passed through to sub-scoring
-    # @return [Integer] base_guesses * repeat_count
+    # @return [Float] base_guesses * repeat_count
     def repeat_guesses(match, user_inputs: [])
       if match.base_guesses.nil?
         require 'zxcvbn/omnimatch'
@@ -127,7 +148,7 @@ module Zxcvbn
 
     # @param password [String]
     # @param sequence [Array<Match>]
-    # @param guesses [Integer]
+    # @param guesses [Float]
     # @return [Score]
     def build_score(password, sequence, guesses)
       attack_times = estimate_attack_times(guesses)
@@ -139,12 +160,6 @@ module Zxcvbn
         crack_times_display: attack_times[:crack_times_display],
         score: guesses_to_score(guesses)
       )
-    end
-
-    def factorial(n)
-      return 1 if n < 2
-
-      (2..n).reduce(1.0, :*)
     end
   end
 end
