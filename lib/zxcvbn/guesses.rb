@@ -45,14 +45,14 @@ module Zxcvbn
 
       guesses =
         case match.pattern
-        when 'bruteforce' then bruteforce_guesses(match)
-        when 'dictionary' then dictionary_guesses(match)
-        when 'spatial'    then spatial_guesses(match)
-        when 'repeat'     then repeat_guesses(match, user_inputs:)
-        when 'sequence'   then sequence_guesses(match)
-        when 'digits'     then digits_guesses(match)
-        when 'year'       then year_guesses(match)
-        when 'date'       then date_guesses(match)
+        in 'bruteforce' then bruteforce_guesses(match)
+        in 'dictionary' then dictionary_guesses(match)
+        in 'spatial'    then spatial_guesses(match)
+        in 'repeat'     then repeat_guesses(match, user_inputs:)
+        in 'sequence'   then sequence_guesses(match)
+        in 'digits'     then digits_guesses(match)
+        in 'year'       then year_guesses(match)
+        in 'date'       then date_guesses(match)
         else 1
         end
 

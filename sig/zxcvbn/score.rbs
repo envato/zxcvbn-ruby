@@ -1,15 +1,26 @@
 module Zxcvbn
-  class Score
-    attr_accessor guesses: Numeric?
-    def guesses_log10: () -> Float?
-    attr_accessor crack_times_seconds: Hash[String, Float]?
-    attr_accessor crack_times_display: Hash[String, String]?
-    attr_accessor score: Integer?
-    attr_accessor sequence: Array[Match]?
-    attr_accessor password: String?
-    attr_accessor calc_time: Float?
-    attr_accessor feedback: Feedback?
+  class Score < ::Data
+    def self.new: (
+      password: String,
+      guesses: Numeric,
+      sequence: Array[Match],
+      crack_times_seconds: Hash[String, Float],
+      crack_times_display: Hash[String, String],
+      score: Integer,
+      ?calc_time: Float?,
+      ?feedback: Feedback?
+    ) -> instance
 
-    def initialize: (?Hash[Symbol, untyped] options) -> void
+    attr_reader password: String?
+    attr_reader guesses: Numeric?
+    attr_reader sequence: Array[Match]?
+    attr_reader crack_times_seconds: Hash[String, Float]?
+    attr_reader crack_times_display: Hash[String, String]?
+    attr_reader score: Integer?
+    attr_reader calc_time: Float?
+    attr_reader feedback: Feedback?
+
+    def guesses_log10: () -> Float?
+    def with: (**untyped) -> instance
   end
 end
