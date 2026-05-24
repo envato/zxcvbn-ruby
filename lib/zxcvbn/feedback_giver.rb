@@ -61,8 +61,14 @@ module Zxcvbn
         )
 
       when 'repeat'
+        warning =
+          if match.base_token.length == 1
+            'Repeats like "aaa" are easy to guess'
+          else
+            'Repeats like "abcabcabc" are only slightly harder to guess than "abc"'
+          end
         Feedback.new(
-          warning: 'Repeats like "aaa" are easy to guess',
+          warning: warning,
           suggestions: [
             'Avoid repeated words and characters'
           ]
@@ -73,6 +79,15 @@ module Zxcvbn
           warning: 'Sequences like abc or 6543 are easy to guess',
           suggestions: [
             'Avoid sequences'
+          ]
+        )
+
+      when 'year'
+        Feedback.new(
+          warning: 'Recent years are easy to guess',
+          suggestions: [
+            'Avoid recent years',
+            'Avoid years that are associated with you'
           ]
         )
 
@@ -87,25 +102,28 @@ module Zxcvbn
     end
 
     def self.get_dictionary_match_feedback(match, is_sole_match)
-      warning = if match.dictionary_name == 'passwords'
-                  if is_sole_match && !match.l33t && !match.reversed
-                    if match.rank <= 10
-                      'This is a top-10 common password'
-                    elsif match.rank <= 100
-                      'This is a top-100 common password'
-                    else
-                      'This is a very common password'
-                    end
-                  else
-                    'This is similar to a commonly used password'
-                  end
-                elsif NAME_DICTIONARIES.include? match.dictionary_name
-                  if is_sole_match
-                    'Names and surnames by themselves are easy to guess'
-                  else
-                    'Common names and surnames are easy to guess'
-                  end
-                end
+      warning =
+        if match.dictionary_name == 'passwords'
+          if is_sole_match && !match.l33t && !match.reversed
+            if match.rank <= 10
+              'This is a top-10 common password'
+            elsif match.rank <= 100
+              'This is a top-100 common password'
+            else
+              'This is a very common password'
+            end
+          elsif (match.guesses_log10 || 0) <= 4
+            'This is similar to a commonly used password'
+          end
+        elsif match.dictionary_name == 'english'
+          'A word by itself is easy to guess' if is_sole_match
+        elsif NAME_DICTIONARIES.include? match.dictionary_name
+          if is_sole_match
+            'Names and surnames by themselves are easy to guess'
+          else
+            'Common names and surnames are easy to guess'
+          end
+        end
 
       suggestions = []
       word = match.token

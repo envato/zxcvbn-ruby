@@ -26,7 +26,8 @@ RSpec.describe Zxcvbn::Tester do
         expect(ruby_match.j).to eq(js_match['j']), "match #{idx} j mismatch"
       end
 
-      expect(ruby_result.feedback).to be_a Zxcvbn::Feedback
+      expect(ruby_result.feedback.warning).to eq js_result['feedback']['warning']
+      expect(ruby_result.feedback.suggestions).to eq js_result['feedback']['suggestions']
     end
   end
 

@@ -25,6 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - **Breaking**: `entropy` on `Zxcvbn::Score` has been removed. Use `Score#guesses` or `Math.log2(score.guesses)` instead ([#69])
  - **Breaking**: `Score#crack_time` and `Score#crack_time_display` replaced by `Score#crack_times_seconds` and `Score#crack_times_display`, each a hash keyed by attack scenario (`online_throttling_100_per_hour`, `online_no_throttling_10_per_second`, `offline_slow_hashing_1e4_per_second`, `offline_fast_hashing_1e10_per_second`), matching the zxcvbn.js v4 output format ([#69])
  - **Breaking**: `Score#match_sequence` renamed to `Score#sequence` to match the zxcvbn.js v4 field name ([#69])
+ - **Breaking**: `Feedback#warning` now returns `''` instead of `nil` when no warning applies, matching zxcvbn.js v4 ([#69])
+ - **Breaking**: The "This is similar to a commonly used password" warning is now only emitted when `match.guesses_log10 <= 4`, matching the zxcvbn.js v4 threshold. Previously it was emitted unconditionally for any l33t, reversed, or non-sole-match on the passwords dictionary ([#69])
+ - Repeat feedback now distinguishes single-char repeats (`"aaa"`) from multi-char repeats (`"abcabcabc"`), matching zxcvbn.js v4 ([#69])
+ - `year` pattern matches now produce a "Recent years are easy to guess" warning ([#69])
+ - Sole matches from the `english_wikipedia` dictionary now produce an "A word by itself is easy to guess" warning ([#69])
  - Passwords longer than 256 characters are silently truncated before scoring to bound O(n²) dictionary matching time ([#69])
 
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.4.0...HEAD
