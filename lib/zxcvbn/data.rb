@@ -12,7 +12,8 @@ module Zxcvbn
         'female_names' => read_word_list('female_names.txt'),
         'male_names' => read_word_list('male_names.txt'),
         'passwords' => read_word_list('passwords.txt'),
-        'surnames' => read_word_list('surnames.txt')
+        'surnames' => read_word_list('surnames.txt'),
+        'us_tv_and_film' => read_word_list('us_tv_and_film.txt')
       )
       @adjacency_graphs = JSON.parse(DATA_PATH.join('adjacency_graphs.json').read)
       @dictionary_tries = build_tries

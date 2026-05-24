@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'zxcvbn/entropy'
+require 'zxcvbn/guesses'
 require 'zxcvbn/feedback'
 
 module Zxcvbn
@@ -110,9 +110,9 @@ module Zxcvbn
       suggestions = []
       word = match.token
 
-      if word =~ Zxcvbn::Entropy::START_UPPER
+      if word =~ Zxcvbn::Guesses::START_UPPER
         suggestions.push "Capitalization doesn't help very much"
-      elsif word =~ Zxcvbn::Entropy::ALL_UPPER && word.downcase != word
+      elsif word =~ Zxcvbn::Guesses::ALL_UPPER && word.downcase != word
         suggestions.push(
           'All-uppercase is almost as easy to guess as all-lowercase'
         )
