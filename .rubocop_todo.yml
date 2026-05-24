@@ -10,7 +10,6 @@
 Metrics/AbcSize:
   Exclude:
     - 'lib/zxcvbn/crack_time.rb'
-    - 'lib/zxcvbn/entropy.rb'
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/guesses.rb'
     - 'lib/zxcvbn/matchers/date.rb'
@@ -37,7 +36,6 @@ Metrics/ClassLength:
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/CyclomaticComplexity:
   Exclude:
-    - 'lib/zxcvbn/entropy.rb'
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/guesses.rb'
     - 'lib/zxcvbn/matchers/date.rb'
@@ -51,7 +49,6 @@ Metrics/MethodLength:
   Exclude:
     - 'lib/zxcvbn/crack_time.rb'
     - 'lib/zxcvbn/data.rb'
-    - 'lib/zxcvbn/entropy.rb'
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/guesses.rb'
     - 'lib/zxcvbn/matchers/date.rb'
@@ -69,7 +66,6 @@ Metrics/MethodLength:
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:
   Exclude:
-    - 'lib/zxcvbn/entropy.rb'
     - 'lib/zxcvbn/guesses.rb'
 
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
@@ -96,15 +92,6 @@ Naming/MethodParameterName:
     - 'lib/zxcvbn/math.rb'
     - 'lib/zxcvbn/scorer.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, EnforcedStyleForClasses, EnforcedStyleForModules.
-# SupportedStyles: nested, compact
-# SupportedStylesForClasses: ~, nested, compact
-# SupportedStylesForModules: ~, nested, compact
-Style/ClassAndModuleChildren:
-  Exclude:
-    - 'lib/zxcvbn/entropy.rb'
-
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
   Exclude:
@@ -113,7 +100,6 @@ Style/Documentation:
     - 'lib/zxcvbn/crack_time.rb'
     - 'lib/zxcvbn/data.rb'
     - 'lib/zxcvbn/dictionary_ranker.rb'
-    - 'lib/zxcvbn/entropy.rb'
     - 'lib/zxcvbn/feedback.rb'
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/match.rb'
@@ -141,7 +127,6 @@ Style/GlobalVars:
 # SupportedStyles: percent, brackets
 Style/WordArray:
   Exclude:
-    - 'lib/zxcvbn/entropy.rb'
     - 'lib/zxcvbn/matchers/l33t.rb'
     - 'lib/zxcvbn/matchers/new_l33t.rb'
     - 'spec/dictionary_ranker_spec.rb'
