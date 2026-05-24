@@ -14,7 +14,6 @@ Metrics/AbcSize:
     - 'lib/zxcvbn/guesses.rb'
     - 'lib/zxcvbn/matchers/date.rb'
     - 'lib/zxcvbn/matchers/l33t.rb'
-    - 'lib/zxcvbn/matchers/new_l33t.rb'
     - 'lib/zxcvbn/matchers/repeat.rb'
     - 'lib/zxcvbn/matchers/sequences.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
@@ -40,7 +39,6 @@ Metrics/CyclomaticComplexity:
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/guesses.rb'
     - 'lib/zxcvbn/matchers/date.rb'
-    - 'lib/zxcvbn/matchers/new_l33t.rb'
     - 'lib/zxcvbn/matchers/sequences.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
     - 'lib/zxcvbn/math.rb'
@@ -56,7 +54,6 @@ Metrics/MethodLength:
     - 'lib/zxcvbn/matchers/date.rb'
     - 'lib/zxcvbn/matchers/dictionary.rb'
     - 'lib/zxcvbn/matchers/l33t.rb'
-    - 'lib/zxcvbn/matchers/new_l33t.rb'
     - 'lib/zxcvbn/matchers/regex_helpers.rb'
     - 'lib/zxcvbn/matchers/repeat.rb'
     - 'lib/zxcvbn/matchers/sequences.rb'
@@ -108,7 +105,6 @@ Style/Documentation:
     - 'lib/zxcvbn/matchers/dictionary.rb'
     - 'lib/zxcvbn/matchers/digits.rb'
     - 'lib/zxcvbn/matchers/l33t.rb'
-    - 'lib/zxcvbn/matchers/new_l33t.rb'
     - 'lib/zxcvbn/matchers/regex_helpers.rb'
     - 'lib/zxcvbn/matchers/sequences.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
@@ -129,6 +125,5 @@ Style/GlobalVars:
 Style/WordArray:
   Exclude:
     - 'lib/zxcvbn/matchers/l33t.rb'
-    - 'lib/zxcvbn/matchers/new_l33t.rb'
     - 'spec/dictionary_ranker_spec.rb'
     - 'spec/matchers/sequences_spec.rb'
