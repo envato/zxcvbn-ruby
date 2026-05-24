@@ -51,7 +51,7 @@ $ irb
      "Predictable substitutions like '@' instead of 'a' don't help very much"],
    @warning=nil>,
  @guesses=15000,
- @match_sequence=
+ @sequence=
   [#<Zxcvbn::Match:0x00007f7f59060200
     @base_guesses=1,
     @dictionary_name="user_inputs",
@@ -96,7 +96,7 @@ $ irb
    @suggestions=[],
    @warning=nil>,
  @guesses=923189026.4430684,
- @match_sequence=
+ @sequence=
   [#<Zxcvbn::Match:0x00007f7f5a9e9000
     @graph="qwerty",
     @guesses=923189025.4430684,
@@ -142,7 +142,7 @@ $ irb
      "Predictable substitutions like '@' instead of 'a' don't help very much"],
    @warning=nil>,
  @guesses=15000,
- @match_sequence=
+ @sequence=
   [#<Zxcvbn::Match:0x00007f7f586fc900
     @base_guesses=1,
     @dictionary_name="user_inputs",

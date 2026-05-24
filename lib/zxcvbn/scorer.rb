@@ -135,7 +135,7 @@ module Zxcvbn
       Score.new(
         password: password,
         guesses: guesses,
-        match_sequence: sequence,
+        sequence: sequence,
         crack_times_seconds: attack_times[:crack_times_seconds],
         crack_times_display: attack_times[:crack_times_display],
         score: guesses_to_score(guesses)

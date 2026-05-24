@@ -4,7 +4,7 @@ module Zxcvbn
     attr_accessor crack_times_seconds: Hash[String, Float]?
     attr_accessor crack_times_display: Hash[String, String]?
     attr_accessor score: Integer?
-    attr_accessor match_sequence: Array[Match]?
+    attr_accessor sequence: Array[Match]?
     attr_accessor password: String?
     attr_accessor calc_time: Float?
     attr_accessor feedback: Feedback?

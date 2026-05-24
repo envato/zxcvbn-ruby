@@ -3,14 +3,14 @@
 module Zxcvbn
   class Score
     attr_accessor :guesses, :crack_times_seconds, :crack_times_display, :score,
-                  :match_sequence, :password, :calc_time, :feedback
+                  :sequence, :password, :calc_time, :feedback
 
     def initialize(options = {})
       @guesses             = options[:guesses]
       @crack_times_seconds = options[:crack_times_seconds]
       @crack_times_display = options[:crack_times_display]
       @score               = options[:score]
-      @match_sequence      = options[:match_sequence]
+      @sequence            = options[:sequence]
       @password            = options[:password]
     end
   end

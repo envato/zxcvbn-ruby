@@ -22,7 +22,7 @@ module Zxcvbn
         result = @scorer.most_guessable_match_sequence(password, matches, user_inputs: user_inputs)
       end
       result.calc_time = calc_time
-      result.feedback = FeedbackGiver.get_feedback(result.score, result.match_sequence)
+      result.feedback = FeedbackGiver.get_feedback(result.score, result.sequence)
       result
     end
   end
