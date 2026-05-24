@@ -12,7 +12,7 @@ RSpec.describe Zxcvbn::FeedbackGiver do
       feedback = tester.test('5815A30BE798').feedback
 
       expect(feedback).to be_a Zxcvbn::Feedback
-      expect(feedback.warning).to be_nil
+      expect(feedback.warning).to eq ''
       expect(feedback.suggestions).to be_empty
     end
 
@@ -20,7 +20,7 @@ RSpec.describe Zxcvbn::FeedbackGiver do
       feedback = tester.test('').feedback
 
       expect(feedback).to be_a Zxcvbn::Feedback
-      expect(feedback.warning).to be_nil
+      expect(feedback.warning).to eq ''
       expect(feedback.suggestions).to contain_exactly(
         'Use a few words, avoid common phrases',
         'No need for symbols, digits, or uppercase letters'
@@ -31,7 +31,7 @@ RSpec.describe Zxcvbn::FeedbackGiver do
       feedback = tester.test(':005:0').feedback
 
       expect(feedback).to be_a Zxcvbn::Feedback
-      expect(feedback.warning).to be_nil
+      expect(feedback.warning).to eq ''
       expect(feedback.suggestions).to contain_exactly(
         'Add another word or two. Uncommon words are better.'
       )
@@ -70,7 +70,7 @@ RSpec.describe Zxcvbn::FeedbackGiver do
         end
 
         it 'that are common and you tried to use l33tsp33k' do
-          feedback = tester.test('pl4yst4ti0n').feedback
+          feedback = tester.test('p@ssword').feedback
 
           expect(feedback).to be_a Zxcvbn::Feedback
           expect(feedback.warning).to eql(
@@ -130,8 +130,18 @@ RSpec.describe Zxcvbn::FeedbackGiver do
           )
         end
 
+        it 'that are a sole word from the english dictionary' do
+          feedback = tester.test('hydrogen').feedback
+
+          expect(feedback).to be_a Zxcvbn::Feedback
+          expect(feedback.warning).to eql('A word by itself is easy to guess')
+          expect(feedback.suggestions).to contain_exactly(
+            'Add another word or two. Uncommon words are better.'
+          )
+        end
+
         it 'that contain a common name and surname' do
-          feedback = tester.test('jessica smith').feedback
+          feedback = tester.test('jessicasmith').feedback
 
           expect(feedback).to be_a Zxcvbn::Feedback
           expect(feedback.warning).to eql(
@@ -171,7 +181,7 @@ RSpec.describe Zxcvbn::FeedbackGiver do
         end
       end
 
-      it 'for passwords with repeated characters' do
+      it 'for passwords with repeated single characters' do
         feedback = tester.test('zzz').feedback
 
         expect(feedback).to be_a Zxcvbn::Feedback
@@ -184,8 +194,33 @@ RSpec.describe Zxcvbn::FeedbackGiver do
         )
       end
 
+      it 'for passwords with repeated multi-character tokens' do
+        feedback = tester.test('rtrtrtrt').feedback
+
+        expect(feedback).to be_a Zxcvbn::Feedback
+        expect(feedback.warning).to eql(
+          'Repeats like "abcabcabc" are only slightly harder to guess than "abc"'
+        )
+        expect(feedback.suggestions).to contain_exactly(
+          'Add another word or two. Uncommon words are better.',
+          'Avoid repeated words and characters'
+        )
+      end
+
+      it 'for passwords containing recent years' do
+        feedback = tester.test('2017').feedback
+
+        expect(feedback).to be_a Zxcvbn::Feedback
+        expect(feedback.warning).to eql('Recent years are easy to guess')
+        expect(feedback.suggestions).to contain_exactly(
+          'Add another word or two. Uncommon words are better.',
+          'Avoid recent years',
+          'Avoid years that are associated with you'
+        )
+      end
+
       it 'for passwords with sequential characters' do
-        feedback = tester.test('pqrpqrpqr').feedback
+        feedback = tester.test('abcdefgh').feedback
 
         expect(feedback).to be_a Zxcvbn::Feedback
         expect(feedback.warning).to eql(

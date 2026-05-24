@@ -1,12 +1,10 @@
 module Zxcvbn
   module CrackTime
-    SINGLE_GUESS: Float
-    NUM_ATTACKERS: Integer
-    SECONDS_PER_GUESS: Float
+    ATTACK_SCENARIOS: Hash[String, Float]
 
-    def entropy_to_crack_time: (Numeric entropy) -> Float
+    def estimate_attack_times: (Numeric guesses) -> { crack_times_seconds: Hash[String, Float], crack_times_display: Hash[String, String] }
 
-    def crack_time_to_score: (Numeric seconds) -> Integer
+    def guesses_to_score: (Numeric guesses) -> Integer
 
     def display_time: (Numeric seconds) -> String
   end

@@ -33,38 +33,82 @@ $ irb
 => true
 >> pp Zxcvbn.test('@lfred2004', ['alfred'])
 #<Zxcvbn::Score:0x00007f7f590610c8
- @calc_time=0.0055760000250302255,
- @crack_time=0.012,
- @crack_time_display="instant",
- @entropy=7.895,
+ @calc_time=0.0007179999956861138,
+ @crack_times_display=
+  {"online_throttling_100_per_hour"=>"instant",
+   "online_no_throttling_10_per_second"=>"instant",
+   "offline_slow_hashing_1e4_per_second"=>"instant",
+   "offline_fast_hashing_1e10_per_second"=>"instant"},
+ @crack_times_seconds=
+  {"online_throttling_100_per_hour"=>540000.0,
+   "online_no_throttling_10_per_second"=>1500.0,
+   "offline_slow_hashing_1e4_per_second"=>1.5,
+   "offline_fast_hashing_1e10_per_second"=>1.5e-06},
  @feedback=
   #<Zxcvbn::Feedback:0x00007f7f59060150
    @suggestions=
     ["Add another word or two. Uncommon words are better.",
      "Predictable substitutions like '@' instead of 'a' don't help very much"],
    @warning=nil>,
- @match_sequence=
-  [#<Zxcvbn::Match matched_word="alfred", token="@lfred", i=0, j=5, rank=1, pattern="dictionary", dictionary_name="user_inputs", l33t=true, sub={"@"=>"a"}, sub_display="@ -> a", base_entropy=0.0, uppercase_entropy=0.0, l33t_entropy=1, entropy=1.0>,
-   #<Zxcvbn::Match i=6, j=9, token="2004", pattern="year", entropy=6.894817763307944>],
+ @guesses=15000,
+ @sequence=
+  [#<Zxcvbn::Match:0x00007f7f59060200
+    @base_guesses=1,
+    @dictionary_name="user_inputs",
+    @guesses=50,
+    @guesses_log10=1.6989700043360187,
+    @i=0,
+    @j=5,
+    @l33t=true,
+    @l33t_variations=2,
+    @matched_word="alfred",
+    @pattern="dictionary",
+    @rank=1,
+    @sub={"@" => "a"},
+    @sub_display="@ -> a",
+    @token="@lfred",
+    @uppercase_variations=1>,
+   #<Zxcvbn::Match:0x00007f7f59060300
+    @guesses=50,
+    @guesses_log10=1.6989700043360187,
+    @i=6,
+    @j=9,
+    @pattern="year",
+    @token="2004">],
  @password="@lfred2004",
- @score=0>
-=> #<Zxcvbn::Score:0x00007f7f59060150>
+ @score=1>
+=> #<Zxcvbn::Score:0x00007f7f590610c8>
 >> pp Zxcvbn.test('asdfghju7654rewq', ['alfred'])
 #<Zxcvbn::Score:0x00007f7f5a9e9248
- @calc_time=0.007504999986849725,
- @crack_time=46159.451,
- @crack_time_display="14 hours",
- @entropy=29.782,
+ @calc_time=0.0011630000080913305,
+ @crack_times_display=
+  {"online_throttling_100_per_hour"=>"centuries",
+   "online_no_throttling_10_per_second"=>"3 years",
+   "offline_slow_hashing_1e4_per_second"=>"2 hours",
+   "offline_fast_hashing_1e10_per_second"=>"instant"},
+ @crack_times_seconds=
+  {"online_throttling_100_per_hour"=>3.323480495195046e+10,
+   "online_no_throttling_10_per_second"=>92318902.64430684,
+   "offline_slow_hashing_1e4_per_second"=>92318.90264430684,
+   "offline_fast_hashing_1e10_per_second"=>0.09231890264430684},
  @feedback=
   #<Zxcvbn::Feedback:0x00007f7f5a9e9130
-   @suggestions=
-    ["Add another word or two. Uncommon words are better.",
-     "Use a longer keyboard pattern with more turns"],
-   @warning="Short keyboard patterns are easy to guess">,
- @match_sequence=
-  [#<Zxcvbn::Match pattern="spatial", i=0, j=15, token="asdfghju7654rewq", graph="qwerty", turns=5, shifted_count=0, entropy=29.7820508329166>],
+   @suggestions=[],
+   @warning=nil>,
+ @guesses=923189026.4430684,
+ @sequence=
+  [#<Zxcvbn::Match:0x00007f7f5a9e9000
+    @graph="qwerty",
+    @guesses=923189025.4430684,
+    @guesses_log10=8.965290633097352,
+    @i=0,
+    @j=15,
+    @pattern="spatial",
+    @shifted_count=0,
+    @token="asdfghju7654rewq",
+    @turns=5>],
  @password="asdfghju7654rewq",
- @score=2>
+ @score=3>
 => #<Zxcvbn::Score:0x00007f7f5a9e9248>
 ```
 
@@ -80,46 +124,65 @@ $ irb
 => #<Zxcvbn::Tester:0x3fe99d869aa4>
 >> pp tester.test('@lfred2004', ['alfred'])
 #<Zxcvbn::Score:0x00007f7f586fcf50
- @calc_time=0.00631899997824803,
- @crack_time=0.012,
- @crack_time_display="instant",
- @entropy=7.895,
+ @calc_time=0.006318999978248030,
+ @crack_times_display=
+  {"online_throttling_100_per_hour"=>"instant",
+   "online_no_throttling_10_per_second"=>"instant",
+   "offline_slow_hashing_1e4_per_second"=>"instant",
+   "offline_fast_hashing_1e10_per_second"=>"instant"},
+ @crack_times_seconds=
+  {"online_throttling_100_per_hour"=>540000.0,
+   "online_no_throttling_10_per_second"=>1500.0,
+   "offline_slow_hashing_1e4_per_second"=>1.5,
+   "offline_fast_hashing_1e10_per_second"=>1.5e-06},
  @feedback=
   #<Zxcvbn::Feedback:0x00007f7f586fcac8
    @suggestions=
     ["Add another word or two. Uncommon words are better.",
      "Predictable substitutions like '@' instead of 'a' don't help very much"],
    @warning=nil>,
- @match_sequence=
-  [#<Zxcvbn::Match matched_word="alfred", token="@lfred", i=0, j=5, rank=1, pattern="dictionary", dictionary_name="user_inputs", l33t=true, sub={"@"=>"a"}, sub_display="@ -> a", base_entropy=0.0, uppercase_entropy=0.0, l33t_entropy=1, entropy=1.0>,
-   #<Zxcvbn::Match i=6, j=9, token="2004", pattern="year", entropy=6.894817763307944>],
+ @guesses=15000,
+ @sequence=
+  [#<Zxcvbn::Match:0x00007f7f586fc900
+    @base_guesses=1,
+    @dictionary_name="user_inputs",
+    @guesses=50,
+    @guesses_log10=1.6989700043360187,
+    @i=0,
+    @j=5,
+    @l33t=true,
+    @l33t_variations=2,
+    @matched_word="alfred",
+    @pattern="dictionary",
+    @rank=1,
+    @sub={"@" => "a"},
+    @sub_display="@ -> a",
+    @token="@lfred",
+    @uppercase_variations=1>,
+   #<Zxcvbn::Match:0x00007f7f586fc800
+    @guesses=50,
+    @guesses_log10=1.6989700043360187,
+    @i=6,
+    @j=9,
+    @pattern="year",
+    @token="2004">],
  @password="@lfred2004",
- @score=0>
+ @score=1>
 => #<Zxcvbn::Score:0x00007f7f586fcf50>
->> pp tester.test('@lfred2004', ['alfred'])
-#<Zxcvbn::Score:0x00007f7f56d57438
- @calc_time=0.001986999996006489,
- @crack_time=0.012,
- @crack_time_display="instant",
- @entropy=7.895,
- @feedback=
-  #<Zxcvbn::Feedback:0x00007f7f56d56bf0
-   @suggestions=
-    ["Add another word or two. Uncommon words are better.",
-     "Predictable substitutions like '@' instead of 'a' don't help very much"],
-   @warning=nil>,
- @match_sequence=
-  [#<Zxcvbn::Match matched_word="alfred", token="@lfred", i=0, j=5, rank=1, pattern="dictionary", dictionary_name="user_inputs", l33t=true, sub={"@"=>"a"}, sub_display="@ -> a", base_entropy=0.0, uppercase_entropy=0.0, l33t_entropy=1, entropy=1.0>,
-   #<Zxcvbn::Match i=6, j=9, token="2004", pattern="year", entropy=6.894817763307944>],
- @password="@lfred2004",
- @score=0>
-=> #<Zxcvbn::Score:0x00007f7f56d57438>
 ```
 
-**Note**: Storing the entropy of an encrypted or hashed value provides
-information that can make cracking the value orders of magnitude easier for an
-attacker. For this reason we advise you not to store the results of
-`Zxcvbn::Tester#test`. Further reading: [A Tale of Security Gone Wrong](https://web.archive.org/web/20240715041147/http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/).
+Subsequent calls reuse the already-loaded dictionaries, so `@calc_time` is significantly lower:
+
+```ruby
+>> tester.test('@lfred2004', ['alfred']).calc_time
+=> 0.0009840000000596046
+```
+
+> [!NOTE]
+> Storing the guesses or score for an encrypted or hashed value provides
+> information that can make cracking the value orders of magnitude easier for an
+> attacker. For this reason we advise you not to store the results of
+> `Zxcvbn::Tester#test`. Further reading: [A Tale of Security Gone Wrong](https://web.archive.org/web/20240715041147/http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/).
 
 ## Contact
 

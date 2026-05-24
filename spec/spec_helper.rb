@@ -69,5 +69,11 @@ TEST_PASSWORDS = [
 
   'eheuczkqyq',
   'rWibMFACxAUGZmxhVncy',
-  'Ba9ZyWABu99[BK#6MBgbH88Tofv)vs$w'
+  'Ba9ZyWABu99[BK#6MBgbH88Tofv)vs$w',
+
+  # Passwords from issue #18 reports
+  'chenlu0525',
+  'rtrtrtrt',
+  'my_new_password',
+  'Bilbo Baggin'
 ].freeze

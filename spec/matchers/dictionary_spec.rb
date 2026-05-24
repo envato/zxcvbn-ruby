@@ -89,7 +89,7 @@ RSpec.describe Zxcvbn::Matchers::Dictionary do
       let(:password) { 'whatisinit' }
 
       it 'finds all the matches' do
-        expect(matched_words).to match_array %w[wha what ha hat a at tis i is sin i in i it]
+        expect(matched_words).to match_array %w[at in is]
       end
     end
 

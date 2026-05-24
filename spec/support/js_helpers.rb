@@ -9,7 +9,7 @@ module JsHelpers
 
     def initialize
       @ctx = MiniRacer::Context.new
-      @ctx.eval(JS_SOURCE_PATH.join('compiled.js').read)
+      @ctx.eval(JS_SOURCE_PATH.join('zxcvbn_v4.4.2.js').read)
     end
 
     def js_eval(string)

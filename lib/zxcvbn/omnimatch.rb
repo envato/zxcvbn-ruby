@@ -19,9 +19,8 @@ module Zxcvbn
 
     def matches(password, user_inputs = [])
       matchers = @matchers + user_input_matchers(user_inputs)
-      matchers.map do |matcher|
-        matcher.matches(password)
-      end.inject(&:+)
+      all_matches = matchers.map { |matcher| matcher.matches(password) }.inject(&:+)
+      all_matches + reverse_dictionary_matches(password, user_inputs)
     end
 
     private
@@ -33,6 +32,45 @@ module Zxcvbn
       dictionary_matcher = Matchers::Dictionary.new('user_inputs', user_ranked_dictionary)
       l33t_matcher = Matchers::L33t.new([dictionary_matcher])
       [dictionary_matcher, l33t_matcher]
+    end
+
+    # Run dictionary matchers on the reversed password and flip match positions
+    # back to the original password's coordinate space.
+    #
+    # This catches passwords like "drowssap" (reversed "password").
+    # Each returned match has reversed: true and its token restored to the
+    # original (un-reversed) form.
+    #
+    # @param password [String] the original password
+    # @param user_inputs [Array<String>] caller-supplied words to check in reverse
+    # @return [Array<Match>] dictionary matches found in the reversed password
+    def reverse_dictionary_matches(password, user_inputs = [])
+      reversed = password.reverse
+      n = password.length
+      matches = []
+
+      matchers = @data.ranked_dictionaries.map do |name, dictionary|
+        trie = @data.dictionary_tries[name]
+        Matchers::Dictionary.new(name, dictionary, trie)
+      end
+
+      if user_inputs.any?
+        user_ranked_dictionary = DictionaryRanker.rank_dictionary(user_inputs)
+        matchers << Matchers::Dictionary.new('user_inputs', user_ranked_dictionary)
+      end
+
+      matchers.each do |matcher|
+        matcher.matches(reversed).each do |match|
+          match.token    = match.token.reverse
+          match.reversed = true
+          old_i  = match.i
+          old_j  = match.j
+          match.i = n - 1 - old_j
+          match.j = n - 1 - old_i
+          matches << match
+        end
+      end
+      matches
     end
 
     def build_matchers

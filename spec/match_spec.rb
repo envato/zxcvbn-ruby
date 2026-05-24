@@ -31,32 +31,22 @@ RSpec.describe Zxcvbn::Match do
         l33t: true,
         sub: { '@' => 'a', '0' => 'o' },
         sub_display: '@ -> a, 0 -> o',
-        l: 8,
-        entropy: 10.5,
-        base_entropy: 8.0,
-        uppercase_entropy: 1.0,
-        l33t_entropy: 1.5,
-        repeated_char: nil,
         sequence_name: nil,
         sequence_space: nil,
         ascending: nil,
         graph: nil,
         turns: nil,
         shifted_count: nil,
-        shiffted_count: nil,
         year: nil,
         month: nil,
         day: nil,
-        separator: nil,
-        cardinality: 26,
-        offset: 0
+        separator: nil
       )
 
       expect(match.pattern).to eq('dictionary')
       expect(match.matched_word).to eq('password')
       expect(match.l33t).to be true
       expect(match.sub).to eq({ '@' => 'a', '0' => 'o' })
-      expect(match.cardinality).to eq(26)
     end
 
     it 'allows partial attribute initialisation' do
@@ -65,7 +55,7 @@ RSpec.describe Zxcvbn::Match do
       expect(match.pattern).to eq('repeat')
       expect(match.token).to eq('aaa')
       expect(match.i).to be_nil
-      expect(match.entropy).to be_nil
+      expect(match.guesses).to be_nil
     end
 
     it 'creates empty match with no arguments' do
@@ -96,18 +86,6 @@ RSpec.describe Zxcvbn::Match do
       expect(match.token).to eq('test123')
     end
 
-    it 'allows reading and writing entropy values' do
-      match.entropy = 12.5
-      match.base_entropy = 10.0
-      match.uppercase_entropy = 1.5
-      match.l33t_entropy = 1.0
-
-      expect(match.entropy).to eq(12.5)
-      expect(match.base_entropy).to eq(10.0)
-      expect(match.uppercase_entropy).to eq(1.5)
-      expect(match.l33t_entropy).to eq(1.0)
-    end
-
     it 'allows reading and writing dictionary attributes' do
       match.matched_word = 'test'
       match.rank = 500
@@ -126,11 +104,6 @@ RSpec.describe Zxcvbn::Match do
       expect(match.l33t).to be true
       expect(match.sub).to eq({ '3' => 'e' })
       expect(match.sub_display).to eq('3 -> e')
-    end
-
-    it 'allows reading and writing repeat attributes' do
-      match.repeated_char = 'a'
-      expect(match.repeated_char).to eq('a')
     end
 
     it 'allows reading and writing sequence attributes' do
@@ -165,16 +138,9 @@ RSpec.describe Zxcvbn::Match do
       expect(match.separator).to eq('/')
     end
 
-    it 'allows reading and writing other attributes' do
-      match.cardinality = 36
-      match.offset = 5
+    it 'allows reading and writing reversed attribute' do
       match.reversed = true
-      match.l = 10
-
-      expect(match.cardinality).to eq(36)
-      expect(match.offset).to eq(5)
       expect(match.reversed).to be true
-      expect(match.l).to eq(10)
     end
   end
 
@@ -255,8 +221,8 @@ RSpec.describe Zxcvbn::Match do
       expect(match.token).to eq('password')
 
       # Should be able to write attributes
-      match.entropy = 10.5
-      expect(match.entropy).to eq(10.5)
+      match.guesses = 1000
+      expect(match.guesses).to eq(1000)
 
       # Should convert to hash
       hash = match.to_hash
@@ -304,11 +270,13 @@ RSpec.describe Zxcvbn::Match do
         i: 0,
         j: 3,
         token: 'aaaa',
-        repeated_char: 'a'
+        base_token: 'a',
+        repeat_count: 4
       )
 
       expect(match.pattern).to eq('repeat')
-      expect(match.repeated_char).to eq('a')
+      expect(match.base_token).to eq('a')
+      expect(match.repeat_count).to eq(4)
     end
 
     it 'works with sequence matcher pattern' do

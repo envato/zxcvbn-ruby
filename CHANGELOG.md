@@ -6,10 +6,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+ - `Zxcvbn::Guesses` module with per-pattern guess estimation formulas matching zxcvbn.js v4: bruteforce, dictionary (with uppercase and l33t variation multipliers), spatial, repeat, sequence, digits, year, and date ([#69])
+ - `us_tv_and_film` frequency list (19,160 entries) introduced in zxcvbn.js v4 ([#69])
+ - Reverse dictionary matching in `Omnimatch` so reversed words (e.g. "drowssap") are detected and scored ([#69])
+ - `guesses` and `guesses_log10` fields on `Zxcvbn::Score` ([#69])
+ - `guesses`, `guesses_log10`, `base_token`, `repeat_count`, and `base_guesses` fields on `Zxcvbn::Match` ([#69])
+
+### Changed
+ - **Breaking**: Scoring algorithm aligned with zxcvbn.js v4.4.2. The dynamic programming step now minimises total guesses (`factorial(l) × cumulative_product + MIN_GUESSES^(l-1)` penalty) instead of entropy bits. Scores for many passwords will change ([#69])
+ - **Breaking**: Bruteforce cardinality is now fixed at 10 (digits only), matching zxcvbn.js v4. Previously it was computed dynamically from the character classes present in the password (10–95), so bruteforce guesses for passwords containing letters or symbols will change ([#69])
+ - **Breaking**: `Repeat` matcher now detects multi-character repeating units (e.g. `abcabc`). The `base_token` field holds the repeating unit (which may be more than one character); `repeated_char` has been removed ([#69])
+ - **Breaking**: `Match#entropy`, `Match#base_entropy`, `Match#uppercase_entropy`, and `Match#l33t_entropy` have been removed. Use `Match#guesses` and `Match#guesses_log10` instead ([#69])
+ - `crack_time_to_score` replaced by `guesses_to_score` with v4 thresholds: 0 (<1,005 guesses), 1 (<1,000,005), 2 (<100,000,005), 3 (<10,000,000,005), 4 (≥10,000,000,005) ([#69])
+ - `Sequence` matcher ported to the zxcvbn.js v4 delta-based algorithm. Sequences are now detected using codepoint deltas up to ±5 (was ±1 only), enabling matches like `"ace"` (delta 2) or Unicode runs like `"αβγ"`. Sequence type is classified by character class (`lower`/`upper`/`digits`/`unicode`) rather than a lookup table ([#69])
+ - `Date` matcher year range extended to 1000–2050; 2-digit years are now expanded (>50 → 1900s, ≤50 → 2000s) ([#69])
+ - All frequency lists replaced with zxcvbn.js v4.4.2 versions: `passwords` (30k entries), `surnames` (10k), `female_names` (3,712), `male_names` (983), `english` (30k from the english_wikipedia list) ([#69])
+ - **Breaking**: `entropy` on `Zxcvbn::Score` has been removed. Use `Score#guesses` or `Math.log2(score.guesses)` instead ([#69])
+ - **Breaking**: `Score#crack_time` and `Score#crack_time_display` replaced by `Score#crack_times_seconds` and `Score#crack_times_display`, each a hash keyed by attack scenario (`online_throttling_100_per_hour`, `online_no_throttling_10_per_second`, `offline_slow_hashing_1e4_per_second`, `offline_fast_hashing_1e10_per_second`), matching the zxcvbn.js v4 output format ([#69])
+ - **Breaking**: `Score#match_sequence` renamed to `Score#sequence` to match the zxcvbn.js v4 field name ([#69])
+ - **Breaking**: `Feedback#warning` now returns `''` instead of `nil` when no warning applies, matching zxcvbn.js v4 ([#69])
+ - **Breaking**: The "This is similar to a commonly used password" warning is now only emitted when `match.guesses_log10 <= 4`, matching the zxcvbn.js v4 threshold. Previously it was emitted unconditionally for any l33t, reversed, or non-sole-match on the passwords dictionary ([#69])
+ - Repeat feedback now distinguishes single-char repeats (`"aaa"`) from multi-char repeats (`"abcabcabc"`), matching zxcvbn.js v4 ([#69])
+ - `year` pattern matches now produce a "Recent years are easy to guess" warning ([#69])
+ - Sole matches from the `english_wikipedia` dictionary now produce an "A word by itself is easy to guess" warning ([#69])
+ - Passwords longer than 256 characters are silently truncated before scoring to bound O(n²) dictionary matching time ([#69])
+
 ### Removed
- - Support for Ruby versions below 3.3 ([#70]).
+ - Support for Ruby versions below 3.3 ([#70])
 
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.4.0...HEAD
+[#69]: https://github.com/envato/zxcvbn-ruby/pull/69
 [#70]: https://github.com/envato/zxcvbn-ruby/pull/70
 
 ## [1.4.0] - 2026-01-15

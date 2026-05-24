@@ -11,6 +11,8 @@ module Zxcvbn
 
     def user_input_matchers: (Array[String] user_inputs) -> Array[untyped]
 
+    def reverse_dictionary_matches: (String password, ?Array[String] user_inputs) -> Array[Match]
+
     def build_matchers: () -> Array[untyped]
   end
 end

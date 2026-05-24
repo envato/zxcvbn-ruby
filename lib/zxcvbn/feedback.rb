@@ -5,7 +5,7 @@ module Zxcvbn
     attr_accessor :warning, :suggestions
 
     def initialize(options = {})
-      @warning     = options[:warning]
+      @warning     = options[:warning] || ''
       @suggestions = options[:suggestions] || []
     end
   end
