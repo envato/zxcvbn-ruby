@@ -51,6 +51,18 @@ RSpec.describe Zxcvbn::CrackTime do
       expect(guesses_to_score(500)).to eq 0
     end
 
+    it 'returns 0 for exactly 1000 (within the fuzzing delta of 5)' do
+      expect(guesses_to_score(1_000)).to eq 0
+    end
+
+    it 'returns 0 for 1004 (last value inside the delta window)' do
+      expect(guesses_to_score(1_004)).to eq 0
+    end
+
+    it 'returns 1 for 1005 (first value beyond the delta window)' do
+      expect(guesses_to_score(1_005)).to eq 1
+    end
+
     it 'returns 1 for 1000–1_000_000 guesses' do
       expect(guesses_to_score(50_000)).to eq 1
     end

@@ -121,6 +121,13 @@ RSpec.describe Zxcvbn::Guesses do
       m = make_match(token: 'Password', rank: 1, reversed: false, l33t: false)
       expect(host.dictionary_guesses(m)).to eq 2
     end
+
+    it 'applies all multipliers together (rank × reversed × l33t × uppercase)' do
+      # token 'P4ss': rank=2, reversed=true (×2), l33t '4'→'a' all subbed (×2),
+      # StartUpper capitalisation (×2) → 2 × 2 × 2 × 2 = 16
+      m = make_match(token: 'P4ss', rank: 2, reversed: true, l33t: true, sub: { '4' => 'a' })
+      expect(host.dictionary_guesses(m)).to eq 16
+    end
   end
 
   describe '#uppercase_variations' do
@@ -167,6 +174,12 @@ RSpec.describe Zxcvbn::Guesses do
       m = make_match(l33t: true, token: '4ppla4', sub: { '4' => 'a' })
       expect(host.l33t_variations(m)).to eq 3
     end
+
+    it 'multiplies variation counts for each sub-pair independently' do
+      # 'p4ss0ord': '4'→'a' all subbed (×2), '0'→'o' one subbed one original → nCk(2,1)=2 (×2)
+      m = make_match(l33t: true, token: 'p4ss0ord', sub: { '4' => 'a', '0' => 'o' })
+      expect(host.l33t_variations(m)).to eq 4
+    end
   end
 
   describe '#estimate_guesses' do
@@ -196,6 +209,33 @@ RSpec.describe Zxcvbn::Guesses do
     it 'applies no minimum when the token spans the full password' do
       m = make_match(pattern: 'dictionary', token: 'pass', rank: 1, reversed: false, l33t: false)
       expect(host.estimate_guesses(m, 'pass')).to eq 1
+    end
+
+    it 'dispatches to sequence_guesses for sequence pattern' do
+      m = make_match(pattern: 'sequence', token: 'bcd', ascending: true)
+      expect(host.estimate_guesses(m, 'bcd')).to eq 78
+    end
+
+    it 'dispatches to repeat_guesses for repeat pattern' do
+      m = make_match(pattern: 'repeat', token: 'aaaa', base_guesses: 5, repeat_count: 4)
+      expect(host.estimate_guesses(m, 'aaaa')).to eq 20
+    end
+
+    it 'dispatches to digits_guesses for digits pattern' do
+      m = make_match(pattern: 'digits', token: '12345')
+      expect(host.estimate_guesses(m, '12345')).to eq 100_000
+    end
+
+    it 'dispatches to year_guesses for year pattern' do
+      year = Time.now.year - 30
+      m = make_match(pattern: 'year', token: year.to_s)
+      expect(host.estimate_guesses(m, year.to_s)).to eq 30
+    end
+
+    it 'dispatches to date_guesses for date pattern' do
+      year = Time.now.year - 30
+      m = make_match(pattern: 'date', token: '021297', year: year, separator: '')
+      expect(host.estimate_guesses(m, '021297')).to eq 365 * 30
     end
   end
 end

@@ -106,6 +106,7 @@ RSpec.describe Zxcvbn::Matchers::Date do
       12 => 2012,
       1 => 2001,
       15 => 2015,
+      50 => 2050,
       51 => 1951,
       99 => 1999,
       100 => 100,
@@ -149,7 +150,7 @@ RSpec.describe Zxcvbn::Matchers::Date do
 
   describe '#match_without_separator' do
     it 'returns exactly one match per numeric token' do
-      expect(matcher.matches('1234').count).to eq 1
+      expect(matcher.match_without_separator('1234').count).to eq 1
     end
 
     it 'all returned matches are distinct objects' do
@@ -159,8 +160,9 @@ RSpec.describe Zxcvbn::Matchers::Date do
 
     it 'selects the candidate whose year is closest to the current year' do
       date_matches = matcher.match_without_separator('02121997')
-      expect(date_matches).not_to be_empty
-      expect(date_matches[0].year).to be_between(1000, 2050)
+      full = date_matches.find { |m| m.token == '02121997' }
+      expect(full).not_to be_nil
+      expect(full.year).to eq 1997
     end
   end
 

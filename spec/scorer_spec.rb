@@ -50,6 +50,21 @@ RSpec.describe Zxcvbn::Scorer do
       end
     end
 
+    context 'with three non-overlapping matches covering the full password' do
+      # 4-char subtokens on a 12-char password: bruteforce of any 8-char prefix (10^8)
+      # is far more expensive than the 3-match path, so the DP picks the 3 matches.
+      let(:match_a) { Zxcvbn::Match.new(pattern: 'dictionary', i: 0, j: 3, token: 'abcd', rank: 1) }
+      let(:match_b) { Zxcvbn::Match.new(pattern: 'dictionary', i: 4, j: 7, token: 'efgh', rank: 1) }
+      let(:match_c) { Zxcvbn::Match.new(pattern: 'dictionary', i: 8, j: 11, token: 'ijkl', rank: 1) }
+
+      it 'chains all three and applies the sequence-length penalty' do
+        # Each subtoken min_guesses=50; l=3: 3! × 50³ + 10000² = 750_000 + 100_000_000
+        result = scorer.most_guessable_match_sequence('abcdefghijkl', [match_a, match_b, match_c])
+        expect(result.match_sequence).to eq [match_a, match_b, match_c]
+        expect(result.guesses).to eq 100_750_000
+      end
+    end
+
     context 'bruteforce chain prevention' do
       it 'does not build a multi-match sequence from bruteforce segments only' do
         result = scorer.most_guessable_match_sequence('ab', [])
