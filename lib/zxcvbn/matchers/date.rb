@@ -13,7 +13,7 @@ module Zxcvbn
         ( \d{1,2} )                         # month or day
         \2                                  # same separator
         ( 19\d{2} | 200\d | 201\d | \d{2} ) # year
-      }x.freeze
+      }x
 
       YEAR_PREFIX = %r{
         ( 19\d{2} | 200\d | 201\d | \d{2} ) # year
@@ -21,9 +21,9 @@ module Zxcvbn
         ( \d{1,2} )                         # day or month
         \2                                  # same separator
         ( \d{1,2} )                         # month or day
-      }x.freeze
+      }x
 
-      WITHOUT_SEPARATOR = /\d{4,8}/.freeze
+      WITHOUT_SEPARATOR = /\d{4,8}/
 
       def matches(password)
         match_with_separator(password) + match_without_separator(password)

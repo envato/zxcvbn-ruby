@@ -6,7 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+ - Support for Ruby versions below 3.3 ([#70]).
+
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.4.0...HEAD
+[#70]: https://github.com/envato/zxcvbn-ruby/pull/70
 
 ## [1.4.0] - 2026-01-15
 

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'set'
-
 module Zxcvbn
   module Matchers
     class L33t
@@ -100,7 +98,7 @@ module Zxcvbn
         return subs if keys.empty?
 
         first_key = keys[0]
-        rest_keys = keys[1..-1]
+        rest_keys = keys[1..]
         next_subs = []
         table[first_key].each do |l33t_char|
           subs.each do |sub|
