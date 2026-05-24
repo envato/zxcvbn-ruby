@@ -40,6 +40,7 @@ Metrics/CyclomaticComplexity:
     - 'lib/zxcvbn/entropy.rb'
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/guesses.rb'
+    - 'lib/zxcvbn/matchers/date.rb'
     - 'lib/zxcvbn/matchers/new_l33t.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
     - 'lib/zxcvbn/math.rb'
@@ -76,6 +77,7 @@ Metrics/PerceivedComplexity:
   Exclude:
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/guesses.rb'
+    - 'lib/zxcvbn/matchers/date.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
     - 'lib/zxcvbn/scorer.rb'
 
