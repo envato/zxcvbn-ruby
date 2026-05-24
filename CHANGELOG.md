@@ -6,7 +6,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+ - `Zxcvbn::Guesses` module with per-pattern guess estimation formulas matching zxcvbn.js v4: bruteforce, dictionary (with uppercase and l33t variation multipliers), spatial, repeat, sequence, digits, year, and date ([#69])
+ - `us_tv_and_film` frequency list (19,160 entries) introduced in zxcvbn.js v4 ([#69])
+ - Reverse dictionary matching in `Omnimatch` so reversed words (e.g. "drowssap") are detected and scored ([#69])
+ - `guesses` field on `Zxcvbn::Score` ([#69])
+ - `guesses`, `guesses_log10`, `base_token`, `repeat_count`, `base_guesses`, and `base_matches` fields on `Zxcvbn::Match` ([#69])
+
+### Changed
+ - **Breaking**: Scoring algorithm aligned with zxcvbn.js v4.4.2. The dynamic programming step now minimises total guesses (`factorial(l) × cumulative_product + MIN_GUESSES^(l-1)` penalty) instead of entropy bits. Scores for many passwords will change ([#69])
+ - **Breaking**: `Repeat` matcher now detects multi-character repeating units (e.g. `abcabc`). The `base_token` field holds the repeating unit (which may be more than one character); `repeated_char` is no longer set ([#69])
+ - `crack_time_to_score` replaced by `guesses_to_score` with v4 thresholds: 0 (<1,005 guesses), 1 (<1,000,005), 2 (<100,000,005), 3 (<10,000,000,005), 4 (≥10,000,000,005) ([#69])
+ - `Date` matcher year range extended to 1000–2050; 2-digit years are now expanded (>50 → 1900s, ≤50 → 2000s) ([#69])
+ - All frequency lists replaced with zxcvbn.js v4.4.2 versions: `passwords` (30k entries), `surnames` (10k), `female_names` (3,712), `male_names` (983), `english` (30k from the english_wikipedia list) ([#69])
+ - `entropy` on `Zxcvbn::Score` is now derived as `log2(guesses)` rather than computed directly; `crack_time` is derived from that entropy. Both fields are retained for backward compatibility but their values will change ([#69])
+
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.4.0...HEAD
+[#69]: https://github.com/envato/zxcvbn-ruby/pull/69
 
 ## [1.4.0] - 2026-01-15
 
