@@ -19,9 +19,8 @@ module Zxcvbn
 
     def matches(password, user_inputs = [])
       matchers = @matchers + user_input_matchers(user_inputs)
-      matchers.map do |matcher|
-        matcher.matches(password)
-      end.inject(&:+)
+      all_matches = matchers.map { |matcher| matcher.matches(password) }.inject(&:+)
+      all_matches + reverse_dictionary_matches(password)
     end
 
     private
@@ -33,6 +32,26 @@ module Zxcvbn
       dictionary_matcher = Matchers::Dictionary.new('user_inputs', user_ranked_dictionary)
       l33t_matcher = Matchers::L33t.new([dictionary_matcher])
       [dictionary_matcher, l33t_matcher]
+    end
+
+    def reverse_dictionary_matches(password)
+      reversed = password.reverse
+      n = password.length
+      matches = []
+      @data.ranked_dictionaries.each do |name, dictionary|
+        trie = @data.dictionary_tries[name]
+        matcher = Matchers::Dictionary.new(name, dictionary, trie)
+        matcher.matches(reversed).each do |match|
+          match.token    = match.token.reverse
+          match.reversed = true
+          old_i  = match.i
+          old_j  = match.j
+          match.i = n - 1 - old_j
+          match.j = n - 1 - old_i
+          matches << match
+        end
+      end
+      matches
     end
 
     def build_matchers

@@ -113,9 +113,12 @@ module Zxcvbn
         DATE_PATTERN_FOR_LENGTH[length] || []
       end
 
+      DATE_MIN_YEAR = 1000
+      DATE_MAX_YEAR = 2050
+
       def valid_date?(day, month, year)
-        return false if day > 31 || month > 12
-        return false unless year >= 1900 && year <= 2019
+        return false if day > 31 || day < 1 || month > 12 || month < 1
+        return false unless year >= DATE_MIN_YEAR && year <= DATE_MAX_YEAR
 
         true
       end
@@ -125,15 +128,9 @@ module Zxcvbn
       end
 
       def expand_year(year)
-        year
-        # Block dates with 2 digit years for now to be compatible with the JS version
-        # return year unless year < 100
-        # now = Time.now.year
-        # if year <= 19
-        #   year + 2000
-        # else
-        #   year + 1900
-        # end
+        return year if year > 99
+
+        year > 50 ? year + 1900 : year + 2000
       end
     end
   end
