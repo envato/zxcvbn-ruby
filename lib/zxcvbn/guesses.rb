@@ -3,6 +3,11 @@
 require 'zxcvbn/math'
 
 module Zxcvbn
+  # Mixin that provides guesses estimation for each match pattern.
+  #
+  # Each pattern-specific method returns a raw guess count; {estimate_guesses}
+  # applies a per-token minimum and memoises the result on the match object.
+  # Mirrors the guesses estimation logic from zxcvbn.js v4.
   module Guesses
     include Zxcvbn::Math
 
@@ -17,6 +22,16 @@ module Zxcvbn
     ALL_UPPER   = /^[^a-z]+$/.freeze
     ALL_LOWER   = /^[^A-Z]+$/.freeze
 
+    # Estimate the number of guesses required to crack a match.
+    #
+    # Returns immediately if the match already has a cached guesses value.
+    # Otherwise dispatches to a pattern-specific method, applies a minimum
+    # based on token length relative to the full password, and memoises the
+    # result on the match.
+    #
+    # @param match [Match] the match to estimate
+    # @param password [String] the full password being evaluated
+    # @return [Integer] estimated number of guesses
     def estimate_guesses(match, password)
       return match.guesses if match.guesses
 
@@ -45,16 +60,22 @@ module Zxcvbn
       match.guesses
     end
 
+    # @param match [Match] a bruteforce match
+    # @return [Integer] guesses based on token length and assumed cardinality
     def bruteforce_guesses(match)
       guesses = BRUTEFORCE_CARDINALITY**match.token.length
       min = match.token.length == 1 ? MIN_SUBMATCH_GUESSES_SINGLE_CHAR + 1 : MIN_SUBMATCH_GUESSES_MULTI_CHAR + 1
       [guesses, min].max
     end
 
+    # @param match [Match] a repeat match with base_guesses and repeat_count set
+    # @return [Integer] base_guesses multiplied by the number of repetitions
     def repeat_guesses(match)
       match.base_guesses * match.repeat_count
     end
 
+    # @param match [Match] a sequence match (e.g. "abc", "6543")
+    # @return [Integer] guesses based on sequence type and direction
     def sequence_guesses(match)
       first_char = match.token[0]
       base_guesses =
@@ -69,15 +90,21 @@ module Zxcvbn
       base_guesses * match.token.length
     end
 
+    # @param match [Match] a digits match
+    # @return [Integer] 10^length (all possible digit strings of that length)
     def digits_guesses(match)
       10**match.token.length
     end
 
+    # @param match [Match] a year match
+    # @return [Integer] distance from the current year, floored at {MIN_YEAR_SPACE}
     def year_guesses(match)
       reference_year = Time.now.year
       [(match.token.to_i - reference_year).abs, MIN_YEAR_SPACE].max
     end
 
+    # @param match [Match] a date match with year and separator set
+    # @return [Integer] 365 * year_space, multiplied by 4 if a separator is present
     def date_guesses(match)
       reference_year = Time.now.year
       year_space = [(match.year - reference_year).abs, MIN_YEAR_SPACE].max
@@ -86,6 +113,8 @@ module Zxcvbn
       guesses
     end
 
+    # @param match [Match] a spatial (keyboard pattern) match
+    # @return [Integer] guesses based on graph topology, turns, and shifted keys
     def spatial_guesses(match)
       if %w[qwerty dvorak].include?(match.graph)
         s = starting_positions_for_graph('qwerty')
@@ -120,6 +149,9 @@ module Zxcvbn
       guesses
     end
 
+    # @param match [Match] a dictionary match
+    # @return [Integer] rank multiplied by uppercase and l33t variation counts,
+    #   plus a factor of 2 if the word was matched in reverse
     def dictionary_guesses(match)
       match.base_guesses = match.rank
       match.uppercase_variations = uppercase_variations(match)
@@ -128,6 +160,14 @@ module Zxcvbn
       match.base_guesses * match.uppercase_variations * match.l33t_variations * reversed_multiplier
     end
 
+    # Count the number of ways the token's capitalisation could have been chosen.
+    #
+    # Returns 1 for all-lowercase or already-lowercase words. Returns 2 for
+    # simple patterns (StartUpper, endUPPER, ALLCAPS). Otherwise returns the
+    # sum of combinations for mixed-case tokens.
+    #
+    # @param match [Match] a dictionary match
+    # @return [Integer] uppercase variation multiplier
     def uppercase_variations(match)
       word = match.token
       return 1 if word.match?(ALL_LOWER) || word.downcase == word
@@ -141,6 +181,13 @@ module Zxcvbn
       variations
     end
 
+    # Count the number of ways the token's l33t substitutions could have been chosen.
+    #
+    # Returns 1 if the match has no l33t substitutions. Otherwise multiplies
+    # the variation count for each substituted character pair using combinations.
+    #
+    # @param match [Match] a dictionary match, possibly with l33t substitutions
+    # @return [Integer] l33t variation multiplier
     def l33t_variations(match)
       return 1 unless match.l33t
 

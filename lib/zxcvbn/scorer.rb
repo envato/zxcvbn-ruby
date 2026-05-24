@@ -6,16 +6,33 @@ require 'zxcvbn/score'
 require 'zxcvbn/match'
 
 module Zxcvbn
+  # Finds the match sequence that minimises the total number of guesses
+  # required to crack a password, using dynamic programming.
   class Scorer
     include Guesses
     include CrackTime
 
+    # @param data [Data] the loaded frequency list and graph data
     def initialize(data)
       @data = data
     end
 
     attr_reader :data
 
+    # Find the match sequence that minimises total guesses for a password.
+    #
+    # Uses a DP over positions in the password. At each position k and sequence
+    # length l, the total cost is:
+    #   factorial(l) * product_of_guesses + MIN_GUESSES^(l-1)
+    #
+    # The additive penalty discourages padding attacks where an adversary
+    # splits a password into many low-guesses submatches.
+    #
+    # @param password [String] the password to analyse
+    # @param matches [Array<Match>] candidate matches from the matchers
+    # @param exclude_additive [Boolean] omit the sequence-length penalty
+    #   (used when recursively analysing repeat base tokens)
+    # @return [Score] the optimal score with match sequence and guess count
     def most_guessable_match_sequence(password, matches, exclude_additive: false)
       n = password.length
 
@@ -90,6 +107,10 @@ module Zxcvbn
 
     private
 
+    # @param password [String]
+    # @param sequence [Array<Match>]
+    # @param guesses [Integer]
+    # @return [Score]
     def build_score(password, sequence, guesses)
       entropy    = ::Math.log2([guesses, 1].max)
       crack_time = entropy_to_crack_time(entropy)
@@ -110,8 +131,13 @@ module Zxcvbn
       (2..n).reduce(1, :*)
     end
 
-    # Lazily compute base_guesses for repeat matches using internal omnimatch.
-    # Overridden by PasswordStrength to supply the correct omnimatch instance.
+    # Compute guesses for a repeat match by recursively scoring the base token.
+    #
+    # Lazily instantiates an {Omnimatch} when first needed. Overridden by
+    # {PasswordStrength} which supplies the correctly configured omnimatch.
+    #
+    # @param match [Match] a repeat match with base_token set
+    # @return [Integer] base_guesses * repeat_count
     def repeat_guesses(match)
       if match.base_guesses.nil?
         require 'zxcvbn/omnimatch'

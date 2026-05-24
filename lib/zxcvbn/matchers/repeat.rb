@@ -4,11 +4,21 @@ require 'zxcvbn/match'
 
 module Zxcvbn
   module Matchers
+    # Finds repeated substrings in a password (e.g. "abcabc", "aaaa").
+    #
+    # Uses a greedy/lazy regex disambiguation strategy from zxcvbn.js v4:
+    # prefer the greedier match unless the lazy match is longer, then use
+    # LAZY_ANCHORED to extract the minimal repeating unit (base_token).
     class Repeat
       GREEDY        = /(.+)\1+/.freeze
       LAZY          = /(.+?)\1+/.freeze
       LAZY_ANCHORED = /^(.+?)\1+$/.freeze
 
+      # Find all repeated-substring matches in the password.
+      #
+      # @param password [String] the password to search
+      # @return [Array<Match>] matches with pattern 'repeat', each containing
+      #   base_token (the repeated unit) and repeat_count
       def matches(password)
         result = []
         last_index = 0

@@ -11,6 +11,14 @@ module Zxcvbn
       0.5 * (2**entropy) * SECONDS_PER_GUESS
     end
 
+    # Convert a guess count to a 0–4 score using zxcvbn.js v4 thresholds.
+    #
+    # A small delta (5) is added to each threshold so that passwords just at
+    # a boundary are not bumped up to the next score band by floating-point
+    # noise in the guess count.
+    #
+    # @param guesses [Numeric] estimated number of guesses to crack the password
+    # @return [Integer] score in the range 0..4
     def guesses_to_score(guesses)
       delta = 5
       if guesses < 1_000 + delta

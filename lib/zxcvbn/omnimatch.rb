@@ -34,6 +34,15 @@ module Zxcvbn
       [dictionary_matcher, l33t_matcher]
     end
 
+    # Run dictionary matchers on the reversed password and flip match positions
+    # back to the original password's coordinate space.
+    #
+    # This catches passwords like "drowssap" (reversed "password").
+    # Each returned match has reversed: true and its token restored to the
+    # original (un-reversed) form.
+    #
+    # @param password [String] the original password
+    # @return [Array<Match>] dictionary matches found in the reversed password
     def reverse_dictionary_matches(password)
       reversed = password.reverse
       n = password.length
