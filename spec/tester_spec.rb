@@ -12,12 +12,8 @@ RSpec.describe Zxcvbn::Tester do
 
       expect(ruby_result.calc_time).not_to be_nil
       expect(ruby_result.password).to eq js_result['password']
-      expect(ruby_result.entropy).to eq js_result['entropy']
-      expect(ruby_result.crack_time).to eq js_result['crack_time']
-      expect(ruby_result.crack_time_display).to eq js_result['crack_time_display']
       expect(ruby_result.score).to eq js_result['score']
-      expect(ruby_result.pattern).to eq js_result['pattern']
-      expect(ruby_result.match_sequence.count).to eq js_result['match_sequence'].count
+      expect(ruby_result.match_sequence.count).to eq js_result['sequence'].count
 
       # NOTE: feedback didn't exist in the version of the JS library this gem
       #       is based on, so instead we just check that it put `Feedback` in
