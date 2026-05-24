@@ -8,10 +8,10 @@ module Zxcvbn
       # Matches a separator-based date substring (e.g. "02/12/1997", "97-12-02").
       # The first and last groups each allow 1–4 digits so the year may appear in
       # either position; {map_ints_to_dmy} resolves which group is the year.
-      MAYBE_DATE_WITH_SEP = %r{\A(\d{1,4})([\s/\\_.-])(\d{1,2})\2(\d{1,4})\z}.freeze
+      MAYBE_DATE_WITH_SEP = %r{\A(\d{1,4})([\s/\\_.-])(\d{1,2})\2(\d{1,4})\z}
 
       # Matches a run of digits that could be a date without separators.
-      MAYBE_DATE_WITHOUT_SEP = /\A\d+\z/.freeze
+      MAYBE_DATE_WITHOUT_SEP = /\A\d+\z/
 
       # Maps token length to split-point pairs for separator-free date parsing.
       # Each pair +[a, b]+ divides the token into three parts: +[0...a]+, +[a...b]+, +[b..]+.
@@ -99,7 +99,7 @@ module Zxcvbn
             next if token.length == 4 && Year::YEAR_REGEX.match?(token)
 
             candidates = splits.filter_map do |a, b|
-              map_ints_to_dmy(token[0...a].to_i, token[a...b].to_i, token[b..-1].to_i)
+              map_ints_to_dmy(token[0...a].to_i, token[a...b].to_i, token[b..].to_i)
             end
             next if candidates.empty?
 

@@ -17,10 +17,10 @@ module Zxcvbn
     BRUTEFORCE_CARDINALITY              = 10
     MIN_YEAR_SPACE                      = 20
 
-    START_UPPER = /^[A-Z][^A-Z]+$/.freeze
-    END_UPPER   = /^[^A-Z]+[A-Z]$/.freeze
-    ALL_UPPER   = /^[^a-z]+$/.freeze
-    ALL_LOWER   = /^[^A-Z]+$/.freeze
+    START_UPPER = /^[A-Z][^A-Z]+$/
+    END_UPPER   = /^[^A-Z]+[A-Z]$/
+    ALL_UPPER   = /^[^a-z]+$/
+    ALL_LOWER   = /^[^A-Z]+$/
 
     # Estimate the number of guesses required to crack a match.
     #

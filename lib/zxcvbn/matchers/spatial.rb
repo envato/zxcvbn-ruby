@@ -5,7 +5,7 @@ require 'zxcvbn/match'
 module Zxcvbn
   module Matchers
     class Spatial
-      SHIFTED_RX = /[~!@#$%^&*()\-_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?]/.freeze
+      SHIFTED_RX = /[~!@#$%^&*()\-_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?]/
 
       def initialize(graphs)
         @graphs = graphs

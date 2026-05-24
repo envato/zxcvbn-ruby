@@ -6,9 +6,9 @@ module Zxcvbn
   module Matchers
     class Sequences
       MAX_DELTA  = 5
-      ALL_LOWER  = /^[a-z]+$/.freeze
-      ALL_UPPER  = /^[A-Z]+$/.freeze
-      ALL_DIGITS = /^\d+$/.freeze
+      ALL_LOWER  = /^[a-z]+$/
+      ALL_UPPER  = /^[A-Z]+$/
+      ALL_DIGITS = /^\d+$/
 
       def matches(password)
         return [] if password.length == 1
