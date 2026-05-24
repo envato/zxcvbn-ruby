@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Zxcvbn::Omnimatch do
-  let(:data) { Zxcvbn::Data.new }
+  let(:data) { ZXCVBN_TEST_DATA }
   let(:omnimatch) { described_class.new(data) }
 
   describe 'forward matching' do

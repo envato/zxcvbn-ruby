@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe Zxcvbn::Matchers::Spatial do
   let(:matcher) { Zxcvbn::Matchers::Spatial.new(graphs) }
-  let(:graphs)  { Zxcvbn::Data.new.adjacency_graphs }
+  let(:graphs)  { ZXCVBN_TEST_DATA.adjacency_graphs }
 
   describe '#matches' do
     let(:matches) { matcher.matches('rtyikm') }
