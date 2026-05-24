@@ -4,12 +4,20 @@ require 'zxcvbn/match'
 
 module Zxcvbn
   module Matchers
+    # Matches monotonically incrementing or decrementing character sequences,
+    # such as "abcde", "54321", or "ZYXW".
     class Sequences
+      # Maximum absolute step between adjacent characters for a valid sequence.
       MAX_DELTA  = 5
+      # Matches tokens that are all lowercase letters.
       ALL_LOWER  = /^[a-z]+$/
+      # Matches tokens that are all uppercase letters.
       ALL_UPPER  = /^[A-Z]+$/
+      # Matches tokens that are all digits.
       ALL_DIGITS = /^\d+$/
 
+      # @param password [String]
+      # @return [Array<Match>] matches with pattern "sequence"
       def matches(password)
         return [] if password.length == 1
 

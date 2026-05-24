@@ -6,14 +6,25 @@ require 'zxcvbn/omnimatch'
 require 'zxcvbn/scorer'
 
 module Zxcvbn
+  # Analyses a single password and returns a {Score}.
+  #
+  # Passwords longer than {MAX_PASSWORD_LENGTH} are silently truncated before
+  # analysis.
   class PasswordStrength
+    # Passwords longer than this are truncated before analysis.
     MAX_PASSWORD_LENGTH = 256
 
+    # @param data [Data] loaded frequency lists and adjacency graphs
     def initialize(data)
       @omnimatch = Omnimatch.new(data)
       @scorer = Scorer.new(data)
     end
 
+    # Analyses password strength and returns a populated {Score}.
+    #
+    # @param password [String] the password to evaluate (truncated to {MAX_PASSWORD_LENGTH})
+    # @param user_inputs [Array<String>] caller-supplied words to treat as known dictionary entries
+    # @return [Score]
     def test(password, user_inputs = [])
       password = (password || '').slice(0, MAX_PASSWORD_LENGTH)
       result = nil

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Reverse dictionary matching in `Omnimatch` so reversed words (e.g. "drowssap") are detected and scored ([#69])
  - `guesses` and `guesses_log10` fields on `Zxcvbn::Score` ([#69])
  - `guesses`, `guesses_log10`, `base_token`, `repeat_count`, and `base_guesses` fields on `Zxcvbn::Match` ([#69])
+ - YARD documentation for all public classes, modules, and methods ([#72])
 
 ### Changed
  - **Breaking**: Scoring algorithm aligned with zxcvbn.js v4.4.2. The dynamic programming step now minimises total guesses (`factorial(l) × cumulative_product + MIN_GUESSES^(l-1)` penalty) instead of entropy bits. Scores for many passwords will change ([#69])
@@ -35,9 +36,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
  - Support for Ruby versions below 3.3 ([#70])
 
+
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.4.0...HEAD
 [#69]: https://github.com/envato/zxcvbn-ruby/pull/69
 [#70]: https://github.com/envato/zxcvbn-ruby/pull/70
+[#72]: https://github.com/envato/zxcvbn-ruby/pull/72
 
 ## [1.4.0] - 2026-01-15
 

@@ -10,8 +10,11 @@ module Zxcvbn
     # prefer the greedier match unless the lazy match is longer, then use
     # LAZY_ANCHORED to extract the minimal repeating unit (base_token).
     class Repeat
+      # Greedily matches the longest repeated substring.
       GREEDY        = /(.+)\1+/
+      # Lazily matches the shortest repeated substring.
       LAZY          = /(.+?)\1+/
+      # Anchored lazy pattern used to extract the minimal base token.
       LAZY_ANCHORED = /^(.+?)\1+$/
 
       # Find all repeated-substring matches in the password.

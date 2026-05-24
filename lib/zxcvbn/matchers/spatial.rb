@@ -4,13 +4,19 @@ require 'zxcvbn/match'
 
 module Zxcvbn
   module Matchers
+    # Matches keyboard spatial patterns (e.g. "qwerty", "asdf") across all
+    # configured adjacency graphs.
     class Spatial
+      # Matches characters that require the Shift key on a standard keyboard.
       SHIFTED_RX = /[~!@#$%^&*()\-_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?]/
 
+      # @param graphs [Hash{String => Hash}] adjacency graph data keyed by graph name
       def initialize(graphs)
         @graphs = graphs
       end
 
+      # @param password [String]
+      # @return [Array<Match>] matches with pattern "spatial" across all graphs
       def matches(password)
         results = []
         @graphs.each do |graph_name, graph|
@@ -19,6 +25,12 @@ module Zxcvbn
         results
       end
 
+      # Returns spatial matches found in password using a single adjacency graph.
+      #
+      # @param graph [Hash] adjacency map for each key character
+      # @param graph_name [String] name of the graph (e.g. "qwerty")
+      # @param password [String]
+      # @return [Array<Match>] matches with pattern "spatial"
       def matches_for_graph(graph, graph_name, password)
         result = []
         keyboard_graph = %w[qwerty dvorak].include?(graph_name)

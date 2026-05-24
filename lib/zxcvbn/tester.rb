@@ -22,14 +22,24 @@ module Zxcvbn
       @data = Data.new
     end
 
+    # Evaluates a password and returns a {Score}.
+    #
+    # @param password [String] the password to evaluate
+    # @param user_inputs [Array<String>] caller-supplied words to treat as known
+    # @return [Score]
     def test(password, user_inputs = [])
       PasswordStrength.new(@data).test(password, sanitize(user_inputs))
     end
 
+    # Adds custom word lists to the loaded data for all future {#test} calls.
+    #
+    # @param lists [Hash{String => Array<String>}] named word lists
+    # @return [void]
     def add_word_lists(lists)
       lists.each_pair { |name, words| @data.add_word_list(name, sanitize(words)) }
     end
 
+    # @return [String] a concise representation that omits the large dictionary data
     def inspect
       "#<#{self.class}:0x#{__id__.to_s(16)}>"
     end
