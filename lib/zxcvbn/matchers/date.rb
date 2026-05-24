@@ -53,8 +53,8 @@ module Zxcvbn
         result = []
         return result if password.length < 6
 
-        (0..password.length - 6).each do |i|
-          (i + 5..[i + 9, password.length - 1].min).each do |j|
+        (0..(password.length - 6)).each do |i|
+          ((i + 5)..[i + 9, password.length - 1].min).each do |j|
             token = password[i..j]
             m = MAYBE_DATE_WITH_SEP.match(token)
             next unless m
@@ -63,7 +63,7 @@ module Zxcvbn
             next unless date
 
             result << Match.new(
-              i: i, j: j, token: token,
+              i:, j:, token:,
               pattern: 'date',
               separator: m[2],
               year: date[:year],
@@ -89,8 +89,8 @@ module Zxcvbn
         result = []
         return result if password.length < 4
 
-        (0..password.length - 4).each do |i|
-          (i + 3..[i + 7, password.length - 1].min).each do |j|
+        (0..(password.length - 4)).each do |i|
+          ((i + 3)..[i + 7, password.length - 1].min).each do |j|
             token = password[i..j]
             next unless MAYBE_DATE_WITHOUT_SEP.match?(token)
 
@@ -107,7 +107,7 @@ module Zxcvbn
             best = candidates.min_by { |c| (c[:year] - reference_year).abs }
 
             result << Match.new(
-              i: i, j: j, token: token,
+              i:, j:, token:,
               pattern: 'date',
               separator: '',
               year: best[:year],
@@ -150,7 +150,7 @@ module Zxcvbn
         # If a 4-digit candidate is found but day/month are invalid, return nil immediately
         # rather than falling through to the 2-digit pass.
         pairs = [[int3, int1, int2], [int1, int2, int3]]
-        four_digit = pairs.find { |yc, _dm1, _dm2| yc >= DATE_MIN_YEAR && yc <= DATE_MAX_YEAR }
+        four_digit = pairs.find { |yc, _dm1, _dm2| yc.between?(DATE_MIN_YEAR, DATE_MAX_YEAR) }
         if four_digit
           year_candidate, dm1, dm2 = four_digit
           dm = map_ints_to_dm(dm1, dm2)
@@ -177,7 +177,7 @@ module Zxcvbn
       # @return [Hash, nil] +{day:, month:}+ or +nil+ if neither ordering is valid
       def map_ints_to_dm(day_val, month_val)
         [[day_val, month_val], [month_val, day_val]].each do |day, month|
-          return { day: day, month: month } if day >= 1 && day <= 31 && month >= 1 && month <= 12
+          return { day:, month: } if day.between?(1, 31) && month >= 1 && month <= 12
         end
         nil
       end

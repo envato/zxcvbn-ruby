@@ -53,8 +53,8 @@ module Zxcvbn
         starting_positions = graph.length
 
         stats[graph_name] = {
-          average_degree: average_degree,
-          starting_positions: starting_positions
+          average_degree:,
+          starting_positions:
         }
       end
       stats

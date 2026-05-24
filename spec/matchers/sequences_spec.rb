@@ -18,6 +18,6 @@ RSpec.describe Zxcvbn::Matchers::Sequences do
 
   it 'finds overlapping matches' do
     matches = matcher.matches('abcba')
-    expect(matches.map(&:token)).to eq ['abc', 'cba']
+    expect(matches.map(&:token)).to eq %w[abc cba]
   end
 end

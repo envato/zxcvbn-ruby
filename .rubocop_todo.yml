@@ -120,10 +120,8 @@ Style/GlobalVars:
     - 'spec/support/js_helpers.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinSize, WordRegex.
+# Configuration parameters: WordRegex.
 # SupportedStyles: percent, brackets
 Style/WordArray:
   Exclude:
     - 'lib/zxcvbn/matchers/l33t.rb'
-    - 'spec/dictionary_ranker_spec.rb'
-    - 'spec/matchers/sequences_spec.rb'

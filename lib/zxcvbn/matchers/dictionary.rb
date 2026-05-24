@@ -57,11 +57,11 @@ module Zxcvbn
 
       def build_match(matched_word, token, start_pos, end_pos, rank)
         Match.new(
-          matched_word: matched_word,
-          token: token,
+          matched_word:,
+          token:,
           i: start_pos,
           j: end_pos,
-          rank: rank,
+          rank:,
           pattern: 'dictionary',
           dictionary_name: @name
         )

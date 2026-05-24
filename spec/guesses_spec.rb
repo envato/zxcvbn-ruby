@@ -9,6 +9,7 @@ RSpec.describe Zxcvbn::Guesses do
   let(:host) do
     Class.new do
       include Zxcvbn::Guesses
+
       attr_reader :data
 
       def initialize(data = nil)
@@ -234,7 +235,7 @@ RSpec.describe Zxcvbn::Guesses do
 
     it 'dispatches to date_guesses for date pattern' do
       year = Time.now.year - 30
-      m = make_match(pattern: 'date', token: '021297', year: year, separator: '')
+      m = make_match(pattern: 'date', token: '021297', year:, separator: '')
       expect(host.estimate_guesses(m, '021297')).to eq 365 * 30
     end
   end
