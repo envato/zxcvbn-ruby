@@ -10,7 +10,7 @@ module Zxcvbn
       LAZY_ANCHORED = /^(.+?)\1+$/.freeze
 
       def matches(password)
-        result   = []
+        result = []
         last_index = 0
 
         while last_index < password.length
@@ -31,11 +31,11 @@ module Zxcvbn
           token = rx_match[0]
 
           result << Match.new(
-            pattern:      'repeat',
-            i:            i,
-            j:            j,
-            token:        token,
-            base_token:   base_token,
+            pattern: 'repeat',
+            i: i,
+            j: j,
+            token: token,
+            base_token: base_token,
             repeat_count: token.length / base_token.length
           )
 

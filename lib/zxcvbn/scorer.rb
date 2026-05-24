@@ -40,7 +40,8 @@ module Zxcvbn
         candidate = factorial(l) * est
         candidate += MIN_GUESSES_BEFORE_GROWING_SEQUENCE**(l - 1) unless exclude_additive
         # only improve if no sequence of length <= l ending at j already beats candidate
-        g[j].each { |u, a| return if u <= l && a <= candidate }
+        return if g[j].any? { |u, a| u <= l && a <= candidate }
+
         g[j][l]  = candidate
         m[j][l]  = match
         pi[j][l] = est
@@ -52,7 +53,7 @@ module Zxcvbn
 
       (0...n).each do |k|
         matches_by_j[k].each do |match|
-          if match.i > 0
+          if match.i.positive?
             m[match.i - 1].each_key { |l| update.call(match, l + 1) }
           else
             update.call(match, 1)
@@ -70,7 +71,7 @@ module Zxcvbn
       end
 
       # find sequence length with minimum guesses at position n-1
-      optimal_l   = g[n - 1].min_by { |_, v| v }&.first
+      optimal_l = g[n - 1].min_by { |_, v| v }&.first
       total_guesses = optimal_l ? g[n - 1][optimal_l] : 1
 
       # backtrack to reconstruct sequence
@@ -93,13 +94,13 @@ module Zxcvbn
       entropy    = ::Math.log2([guesses, 1].max)
       crack_time = entropy_to_crack_time(entropy)
       Score.new(
-        password:           password,
-        guesses:            guesses,
-        entropy:            entropy.round(3),
-        match_sequence:     sequence,
-        crack_time:         crack_time.round(3),
+        password: password,
+        guesses: guesses,
+        entropy: entropy.round(3),
+        match_sequence: sequence,
+        crack_time: crack_time.round(3),
         crack_time_display: display_time(crack_time),
-        score:              guesses_to_score(guesses)
+        score: guesses_to_score(guesses)
       )
     end
 

@@ -20,23 +20,25 @@ module Zxcvbn
     def estimate_guesses(match, password)
       return match.guesses if match.guesses
 
-      min_guesses = if match.token.length < password.length
-        match.token.length == 1 ? MIN_SUBMATCH_GUESSES_SINGLE_CHAR : MIN_SUBMATCH_GUESSES_MULTI_CHAR
-      else
-        1
-      end
+      min_guesses =
+        if match.token.length < password.length
+          match.token.length == 1 ? MIN_SUBMATCH_GUESSES_SINGLE_CHAR : MIN_SUBMATCH_GUESSES_MULTI_CHAR
+        else
+          1
+        end
 
-      guesses = case match.pattern
-      when 'bruteforce' then bruteforce_guesses(match)
-      when 'dictionary' then dictionary_guesses(match)
-      when 'spatial'    then spatial_guesses(match)
-      when 'repeat'     then repeat_guesses(match)
-      when 'sequence'   then sequence_guesses(match)
-      when 'digits'     then digits_guesses(match)
-      when 'year'       then year_guesses(match)
-      when 'date'       then date_guesses(match)
-      else 1
-      end
+      guesses =
+        case match.pattern
+        when 'bruteforce' then bruteforce_guesses(match)
+        when 'dictionary' then dictionary_guesses(match)
+        when 'spatial'    then spatial_guesses(match)
+        when 'repeat'     then repeat_guesses(match)
+        when 'sequence'   then sequence_guesses(match)
+        when 'digits'     then digits_guesses(match)
+        when 'year'       then year_guesses(match)
+        when 'date'       then date_guesses(match)
+        else 1
+        end
 
       match.guesses = [guesses, min_guesses].max
       match.guesses_log10 = ::Math.log10(match.guesses)
@@ -55,13 +57,14 @@ module Zxcvbn
 
     def sequence_guesses(match)
       first_char = match.token[0]
-      base_guesses = if %w[a A z Z 0 1 9].include?(first_char)
-        4
-      elsif first_char.match?(/\d/)
-        10
-      else
-        26
-      end
+      base_guesses =
+        if %w[a A z Z 0 1 9].include?(first_char)
+          4
+        elsif first_char.match?(/\d/)
+          10
+        else
+          26
+        end
       base_guesses *= 2 unless match.ascending
       base_guesses * match.token.length
     end
@@ -72,8 +75,7 @@ module Zxcvbn
 
     def year_guesses(match)
       reference_year = Time.now.year
-      year_space = [(match.token.to_i - reference_year).abs, MIN_YEAR_SPACE].max
-      year_space
+      [(match.token.to_i - reference_year).abs, MIN_YEAR_SPACE].max
     end
 
     def date_guesses(match)
@@ -103,7 +105,7 @@ module Zxcvbn
         end
       end
 
-      if match.shifted_count && match.shifted_count > 0
+      if match.shifted_count&.positive?
         shifted   = match.shifted_count
         unshifted = token_length - match.shifted_count
         if shifted.zero? || unshifted.zero?
