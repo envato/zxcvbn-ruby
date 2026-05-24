@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - `Date` matcher year range extended to 1000–2050; 2-digit years are now expanded (>50 → 1900s, ≤50 → 2000s) ([#69])
  - All frequency lists replaced with zxcvbn.js v4.4.2 versions: `passwords` (30k entries), `surnames` (10k), `female_names` (3,712), `male_names` (983), `english` (30k from the english_wikipedia list) ([#69])
  - **Breaking**: `entropy` on `Zxcvbn::Score` has been removed. Use `Score#guesses` or `Math.log2(score.guesses)` instead ([#69])
+ - **Breaking**: `Score#crack_time` and `Score#crack_time_display` replaced by `Score#crack_times_seconds` and `Score#crack_times_display`, each a hash keyed by attack scenario (`online_throttling_100_per_hour`, `online_no_throttling_10_per_second`, `offline_slow_hashing_1e4_per_second`, `offline_fast_hashing_1e10_per_second`), matching the zxcvbn.js v4 output format ([#69])
  - Passwords longer than 256 characters are silently truncated before scoring to bound O(n²) dictionary matching time ([#69])
 
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.4.0...HEAD

@@ -34,8 +34,16 @@ $ irb
 >> pp Zxcvbn.test('@lfred2004', ['alfred'])
 #<Zxcvbn::Score:0x00007f7f590610c8
  @calc_time=0.0007179999956861138,
- @crack_time=0.75,
- @crack_time_display="instant",
+ @crack_times_display=
+  {"online_throttling_100_per_hour"=>"instant",
+   "online_no_throttling_10_per_second"=>"instant",
+   "offline_slow_hashing_1e4_per_second"=>"instant",
+   "offline_fast_hashing_1e10_per_second"=>"instant"},
+ @crack_times_seconds=
+  {"online_throttling_100_per_hour"=>540000.0,
+   "online_no_throttling_10_per_second"=>1500.0,
+   "offline_slow_hashing_1e4_per_second"=>1.5,
+   "offline_fast_hashing_1e10_per_second"=>1.5e-06},
  @feedback=
   #<Zxcvbn::Feedback:0x00007f7f59060150
    @suggestions=
@@ -73,8 +81,16 @@ $ irb
 >> pp Zxcvbn.test('asdfghju7654rewq', ['alfred'])
 #<Zxcvbn::Score:0x00007f7f5a9e9248
  @calc_time=0.0011630000080913305,
- @crack_time=46159.451,
- @crack_time_display="14 hours",
+ @crack_times_display=
+  {"online_throttling_100_per_hour"=>"centuries",
+   "online_no_throttling_10_per_second"=>"3 years",
+   "offline_slow_hashing_1e4_per_second"=>"2 hours",
+   "offline_fast_hashing_1e10_per_second"=>"instant"},
+ @crack_times_seconds=
+  {"online_throttling_100_per_hour"=>3.323480495195046e+10,
+   "online_no_throttling_10_per_second"=>92318902.64430684,
+   "offline_slow_hashing_1e4_per_second"=>92318.90264430684,
+   "offline_fast_hashing_1e10_per_second"=>0.09231890264430684},
  @feedback=
   #<Zxcvbn::Feedback:0x00007f7f5a9e9130
    @suggestions=[],
@@ -109,8 +125,16 @@ $ irb
 >> pp tester.test('@lfred2004', ['alfred'])
 #<Zxcvbn::Score:0x00007f7f586fcf50
  @calc_time=0.006318999978248030,
- @crack_time=0.75,
- @crack_time_display="instant",
+ @crack_times_display=
+  {"online_throttling_100_per_hour"=>"instant",
+   "online_no_throttling_10_per_second"=>"instant",
+   "offline_slow_hashing_1e4_per_second"=>"instant",
+   "offline_fast_hashing_1e10_per_second"=>"instant"},
+ @crack_times_seconds=
+  {"online_throttling_100_per_hour"=>540000.0,
+   "online_no_throttling_10_per_second"=>1500.0,
+   "offline_slow_hashing_1e4_per_second"=>1.5,
+   "offline_fast_hashing_1e10_per_second"=>1.5e-06},
  @feedback=
   #<Zxcvbn::Feedback:0x00007f7f586fcac8
    @suggestions=

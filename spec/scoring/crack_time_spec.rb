@@ -5,6 +5,47 @@ require 'spec_helper'
 RSpec.describe Zxcvbn::CrackTime do
   include Zxcvbn::CrackTime
 
+  describe '#estimate_attack_times' do
+    subject(:result) { estimate_attack_times(10_000) }
+
+    it 'returns crack_times_seconds and crack_times_display' do
+      expect(result).to include(:crack_times_seconds, :crack_times_display)
+    end
+
+    it 'has all four attack scenarios' do
+      keys = %w[
+        online_throttling_100_per_hour
+        online_no_throttling_10_per_second
+        offline_slow_hashing_1e4_per_second
+        offline_fast_hashing_1e10_per_second
+      ]
+      expect(result[:crack_times_seconds].keys).to eq keys
+      expect(result[:crack_times_display].keys).to eq keys
+    end
+
+    it 'computes seconds correctly for each scenario' do
+      s = result[:crack_times_seconds]
+      expect(s['online_throttling_100_per_hour']).to      be_within(0.01).of(10_000 / (100.0 / 3600))
+      expect(s['online_no_throttling_10_per_second']).to  eq 1000.0
+      expect(s['offline_slow_hashing_1e4_per_second']).to eq 1.0
+      expect(s['offline_fast_hashing_1e10_per_second']).to eq 1e-6
+    end
+
+    TEST_PASSWORDS.each do |password|
+      it "crack_times_seconds matches JS for #{password}" do
+        ruby = Zxcvbn.test(password).crack_times_seconds
+        js   = js_zxcvbn(password)['crack_times_seconds']
+
+        ruby.each do |scenario, seconds|
+          expect(seconds).to(
+            be_within(1e-9).of(js[scenario]),
+            "#{scenario} mismatch for '#{password}'"
+          )
+        end
+      end
+    end
+  end
+
   describe '#guesses_to_score' do
     it 'returns 0 for fewer than 1000 guesses' do
       expect(guesses_to_score(500)).to eq 0

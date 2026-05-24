@@ -96,14 +96,14 @@ RSpec.describe Zxcvbn::Tester do
       before { tester.add_word_lists('themeforest' => [nil, 1, 'themeforest']) }
 
       it 'ignores those entries' do
-        expect(tester.test('themeforest')).to have_attributes(score: 0, crack_time: 0)
+        expect(tester.test('themeforest')).to have_attributes(score: 0)
       end
     end
   end
 
   context 'nil password' do
     specify do
-      expect(tester.test(nil)).to have_attributes(guesses: 1, score: 0, crack_time: 0)
+      expect(tester.test(nil)).to have_attributes(guesses: 1, score: 0)
     end
   end
 

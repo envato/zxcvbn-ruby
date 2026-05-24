@@ -2,13 +2,21 @@
 
 module Zxcvbn
   module CrackTime
-    SINGLE_GUESS = 0.010
-    NUM_ATTACKERS = 100
+    ATTACK_SCENARIOS = {
+      'online_throttling_100_per_hour' => 100.0 / 3600,
+      'online_no_throttling_10_per_second' => 10.0,
+      'offline_slow_hashing_1e4_per_second' => 1e4,
+      'offline_fast_hashing_1e10_per_second' => 1e10
+    }.freeze
 
-    SECONDS_PER_GUESS = SINGLE_GUESS / NUM_ATTACKERS
-
-    def entropy_to_crack_time(entropy)
-      0.5 * (2**entropy) * SECONDS_PER_GUESS
+    # Returns the estimated seconds and display strings for each attack scenario.
+    #
+    # @param guesses [Numeric] estimated guess count
+    # @return [Hash] with :crack_times_seconds and :crack_times_display
+    def estimate_attack_times(guesses)
+      seconds = ATTACK_SCENARIOS.transform_values { |rate| guesses / rate }
+      display = seconds.transform_values { |s| display_time(s) }
+      { crack_times_seconds: seconds, crack_times_display: display }
     end
 
     # Convert a guess count to a 0–4 score using zxcvbn.js v4 thresholds.
