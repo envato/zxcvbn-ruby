@@ -1,6 +1,7 @@
 module Zxcvbn
   class Score
     attr_accessor guesses: Numeric?
+    def guesses_log10: () -> Float?
     attr_accessor crack_times_seconds: Hash[String, Float]?
     attr_accessor crack_times_display: Hash[String, String]?
     attr_accessor score: Integer?

@@ -5,6 +5,10 @@ module Zxcvbn
     attr_accessor :guesses, :crack_times_seconds, :crack_times_display, :score,
                   :sequence, :password, :calc_time, :feedback
 
+    def guesses_log10
+      ::Math.log10(@guesses) if @guesses
+    end
+
     def initialize(options = {})
       @guesses             = options[:guesses]
       @crack_times_seconds = options[:crack_times_seconds]

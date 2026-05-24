@@ -16,7 +16,7 @@ RSpec.describe Zxcvbn::Tester do
       expect(ruby_result.score).to eq js_result['score']
       expect(ruby_result.sequence.count).to eq js_result['sequence'].count
 
-      expect(Math.log10(ruby_result.guesses)).to be_within(0.01).of(js_result['guesses_log10'])
+      expect(ruby_result.guesses_log10).to be_within(0.01).of(js_result['guesses_log10'])
 
       ruby_result.sequence.zip(js_result['sequence']).each_with_index do |(ruby_match, js_match), idx|
         # Ruby uses 'year' where JS v4 uses 'regex' (regex_name: 'recent_year') — intentional naming difference.

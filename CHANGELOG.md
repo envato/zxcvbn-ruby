@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - `Zxcvbn::Guesses` module with per-pattern guess estimation formulas matching zxcvbn.js v4: bruteforce, dictionary (with uppercase and l33t variation multipliers), spatial, repeat, sequence, digits, year, and date ([#69])
  - `us_tv_and_film` frequency list (19,160 entries) introduced in zxcvbn.js v4 ([#69])
  - Reverse dictionary matching in `Omnimatch` so reversed words (e.g. "drowssap") are detected and scored ([#69])
- - `guesses` field on `Zxcvbn::Score` ([#69])
+ - `guesses` and `guesses_log10` fields on `Zxcvbn::Score` ([#69])
  - `guesses`, `guesses_log10`, `base_token`, `repeat_count`, and `base_guesses` fields on `Zxcvbn::Match` ([#69])
 
 ### Changed
