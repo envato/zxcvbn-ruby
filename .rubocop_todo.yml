@@ -16,6 +16,7 @@ Metrics/AbcSize:
     - 'lib/zxcvbn/matchers/l33t.rb'
     - 'lib/zxcvbn/matchers/new_l33t.rb'
     - 'lib/zxcvbn/matchers/repeat.rb'
+    - 'lib/zxcvbn/matchers/sequences.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
     - 'lib/zxcvbn/omnimatch.rb'
     - 'lib/zxcvbn/scorer.rb'
@@ -40,6 +41,7 @@ Metrics/CyclomaticComplexity:
     - 'lib/zxcvbn/guesses.rb'
     - 'lib/zxcvbn/matchers/date.rb'
     - 'lib/zxcvbn/matchers/new_l33t.rb'
+    - 'lib/zxcvbn/matchers/sequences.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
     - 'lib/zxcvbn/math.rb'
     - 'lib/zxcvbn/scorer.rb'
@@ -74,6 +76,7 @@ Metrics/PerceivedComplexity:
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/guesses.rb'
     - 'lib/zxcvbn/matchers/date.rb'
+    - 'lib/zxcvbn/matchers/sequences.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
     - 'lib/zxcvbn/scorer.rb'
 
@@ -88,7 +91,6 @@ Naming/MethodName:
 # AllowedNames: as, at, by, cc, db, id, if, in, io, ip, of, on, os, pp, to
 Naming/MethodParameterName:
   Exclude:
-    - 'lib/zxcvbn/matchers/sequences.rb'
     - 'lib/zxcvbn/math.rb'
     - 'lib/zxcvbn/scorer.rb'
 
@@ -103,7 +105,6 @@ Style/Documentation:
     - 'lib/zxcvbn/feedback.rb'
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/match.rb'
-    - 'lib/zxcvbn/matchers/date.rb'
     - 'lib/zxcvbn/matchers/dictionary.rb'
     - 'lib/zxcvbn/matchers/digits.rb'
     - 'lib/zxcvbn/matchers/l33t.rb'
