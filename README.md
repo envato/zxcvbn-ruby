@@ -157,10 +157,11 @@ Subsequent calls reuse the already-loaded dictionaries, so `@calc_time` is signi
 => 0.0009840000000596046
 ```
 
-**Note**: Storing the guesses or score for an encrypted or hashed value provides
-information that can make cracking the value orders of magnitude easier for an
-attacker. For this reason we advise you not to store the results of
-`Zxcvbn::Tester#test`. Further reading: [A Tale of Security Gone Wrong](https://web.archive.org/web/20240715041147/http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/).
+> [!NOTE]
+> Storing the guesses or score for an encrypted or hashed value provides
+> information that can make cracking the value orders of magnitude easier for an
+> attacker. For this reason we advise you not to store the results of
+> `Zxcvbn::Tester#test`. Further reading: [A Tale of Security Gone Wrong](https://web.archive.org/web/20240715041147/http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/).
 
 ## Contact
 
