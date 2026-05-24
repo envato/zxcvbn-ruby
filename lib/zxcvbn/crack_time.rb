@@ -11,14 +11,15 @@ module Zxcvbn
       0.5 * (2**entropy) * SECONDS_PER_GUESS
     end
 
-    def crack_time_to_score(seconds)
-      if seconds < 10**2
+    def guesses_to_score(guesses)
+      delta = 5
+      if guesses < 1_000 + delta
         0
-      elsif seconds < 10**4
+      elsif guesses < 1_000_000 + delta
         1
-      elsif seconds < 10**6
+      elsif guesses < 100_000_000 + delta
         2
-      elsif seconds < 10**8
+      elsif guesses < 10_000_000_000 + delta
         3
       else
         4
