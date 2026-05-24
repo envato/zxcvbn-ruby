@@ -6,7 +6,7 @@ RSpec.describe Zxcvbn::Math do
   include Zxcvbn::Math
 
   def data
-    Zxcvbn::Data.new
+    ZXCVBN_TEST_DATA
   end
 
   describe '#bruteforce_cardinality' do

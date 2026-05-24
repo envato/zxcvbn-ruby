@@ -6,6 +6,8 @@ require 'zxcvbn'
 
 Dir[Pathname.new(File.expand_path(__dir__)).join('support/**/*.rb')].each { |f| require f }
 
+ZXCVBN_TEST_DATA = Zxcvbn::Data.new
+
 RSpec.configure do |config|
   config.include JsHelpers
 
