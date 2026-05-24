@@ -4,6 +4,7 @@ require 'zxcvbn/guesses'
 require 'zxcvbn/feedback'
 
 module Zxcvbn
+  # Generates human-readable {Feedback} for a password given its score and match sequence.
   class FeedbackGiver
     NAME_DICTIONARIES = %w[surnames male_names female_names].freeze
 
@@ -16,6 +17,11 @@ module Zxcvbn
 
     EMPTY_FEEDBACK = Feedback.new.freeze
 
+    # Returns feedback appropriate for the given score and match sequence.
+    #
+    # @param score [Integer] 0–4 score from the scorer
+    # @param sequence [Array<Match>] optimal match sequence
+    # @return [Feedback]
     def self.get_feedback(score, sequence)
       # starting feedback
       return DEFAULT_FEEDBACK if sequence.empty?
@@ -41,6 +47,11 @@ module Zxcvbn
       feedback
     end
 
+    # Returns pattern-specific feedback for a single match, or nil if none applies.
+    #
+    # @param match [Match]
+    # @param is_sole_match [Boolean] true when this is the only match in the sequence
+    # @return [Feedback, nil]
     def self.get_match_feedback(match, is_sole_match)
       case match.pattern
       when 'dictionary'
@@ -101,6 +112,11 @@ module Zxcvbn
       end
     end
 
+    # Returns feedback specific to a dictionary match.
+    #
+    # @param match [Match] a dictionary pattern match
+    # @param is_sole_match [Boolean] true when this is the only match in the sequence
+    # @return [Feedback]
     def self.get_dictionary_match_feedback(match, is_sole_match)
       warning =
         if match.dictionary_name == 'passwords'

@@ -91,29 +91,6 @@ Naming/MethodParameterName:
     - 'lib/zxcvbn/math.rb'
     - 'lib/zxcvbn/scorer.rb'
 
-# Configuration parameters: AllowedConstants.
-Style/Documentation:
-  Exclude:
-    - 'lib/zxcvbn.rb'
-    - 'lib/zxcvbn/clock.rb'
-    - 'lib/zxcvbn/crack_time.rb'
-    - 'lib/zxcvbn/data.rb'
-    - 'lib/zxcvbn/dictionary_ranker.rb'
-    - 'lib/zxcvbn/feedback.rb'
-    - 'lib/zxcvbn/feedback_giver.rb'
-    - 'lib/zxcvbn/match.rb'
-    - 'lib/zxcvbn/matchers/dictionary.rb'
-    - 'lib/zxcvbn/matchers/digits.rb'
-    - 'lib/zxcvbn/matchers/l33t.rb'
-    - 'lib/zxcvbn/matchers/regex_helpers.rb'
-    - 'lib/zxcvbn/matchers/sequences.rb'
-    - 'lib/zxcvbn/matchers/spatial.rb'
-    - 'lib/zxcvbn/matchers/year.rb'
-    - 'lib/zxcvbn/math.rb'
-    - 'lib/zxcvbn/omnimatch.rb'
-    - 'lib/zxcvbn/password_strength.rb'
-    - 'lib/zxcvbn/score.rb'
-
 # Configuration parameters: AllowedVariables.
 Style/GlobalVars:
   Exclude:

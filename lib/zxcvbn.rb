@@ -4,6 +4,11 @@ require 'pathname'
 require 'zxcvbn/version'
 require 'zxcvbn/tester'
 
+# Ruby port of zxcvbn.js — realistic password strength estimation.
+#
+# Analyses a password against dictionary lists, keyboard patterns, dates,
+# sequences, and repeats to produce a {Score} with guess estimates and
+# human-readable crack-time display strings.
 module Zxcvbn
   module_function
 

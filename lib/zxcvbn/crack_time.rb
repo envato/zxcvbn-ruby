@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Zxcvbn
+  # Mixin that converts a guess count into estimated crack times and scores.
+  #
+  # Provides {estimate_attack_times}, {guesses_to_score}, and {display_time}
+  # mirroring the crack-time logic from zxcvbn.js v4.
   module CrackTime
     ATTACK_SCENARIOS = {
       'online_throttling_100_per_hour' => 100.0 / 3600,
@@ -42,6 +46,10 @@ module Zxcvbn
       end
     end
 
+    # Convert a number of seconds into a human-readable display string.
+    #
+    # @param seconds [Numeric] duration in seconds
+    # @return [String] e.g. "instant", "3 minutes", "centuries"
     def display_time(seconds)
       minute  = 60
       hour    = minute * 60

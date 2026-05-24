@@ -11,12 +11,23 @@ require 'zxcvbn/matchers/year'
 require 'zxcvbn/matchers/date'
 
 module Zxcvbn
+  # Runs all registered matchers against a password and aggregates results.
+  #
+  # Includes dictionary, l33t, spatial, digit, repeat, sequence, year, date,
+  # and reverse-dictionary matchers. User-supplied word lists are wrapped in
+  # transient matchers for each call to {#matches}.
   class Omnimatch
+    # @param data [Data] loaded frequency lists and adjacency graphs
     def initialize(data)
       @data = data
       @matchers = build_matchers
     end
 
+    # Returns all matches found in the password across every registered matcher.
+    #
+    # @param password [String] the password to analyse
+    # @param user_inputs [Array<String>] caller-supplied words to add as a dictionary
+    # @return [Array<Match>]
     def matches(password, user_inputs = [])
       matchers = @matchers + user_input_matchers(user_inputs)
       all_matches = matchers.map { |matcher| matcher.matches(password) }.inject(&:+)

@@ -4,16 +4,22 @@ require 'zxcvbn/match'
 
 module Zxcvbn
   module Matchers
-    # Given a password and a dictionary, match on any sequential segment of
-    # the lowercased password in the dictionary
-
+    # Matches any sequential segment of the lowercased password that appears in
+    # a ranked dictionary.
     class Dictionary
+      # @param name [String] dictionary identifier used in match results
+      # @param ranked_dictionary [Hash{String => Integer}] lowercased word → rank
+      # @param trie [Trie, nil] optional prefix trie for faster lookups
       def initialize(name, ranked_dictionary, trie = nil)
         @name = name
         @ranked_dictionary = ranked_dictionary
         @trie = trie
       end
 
+      # Returns all dictionary matches found in password.
+      #
+      # @param password [String]
+      # @return [Array<Match>] matches with pattern "dictionary"
       def matches(password)
         lowercased_password = password.downcase
 

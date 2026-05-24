@@ -5,7 +5,15 @@ require 'zxcvbn/dictionary_ranker'
 require 'zxcvbn/trie'
 
 module Zxcvbn
+  # Holds all loaded frequency lists, adjacency graphs, tries, and graph stats
+  # used by the matchers and scorer.
+  #
+  # @attr_reader ranked_dictionaries [Hash{String => Hash{String => Integer}}] word → rank maps
+  # @attr_reader adjacency_graphs [Hash{String => Hash}] keyboard adjacency data
+  # @attr_reader dictionary_tries [Hash{String => Trie}] prefix tries per dictionary
+  # @attr_reader graph_stats [Hash{String => Hash}] precomputed average degree and key count
   class Data
+    # Loads all built-in frequency lists and adjacency graphs from disk.
     def initialize
       @ranked_dictionaries = DictionaryRanker.rank_dictionaries(
         'english' => read_word_list('english.txt'),
@@ -22,6 +30,11 @@ module Zxcvbn
 
     attr_reader :ranked_dictionaries, :adjacency_graphs, :dictionary_tries, :graph_stats
 
+    # Adds a custom word list and builds a trie for it.
+    #
+    # @param name [String] dictionary name (used as a key in {#ranked_dictionaries})
+    # @param list [Array<String>] ordered words (most common first)
+    # @return [void]
     def add_word_list(name, list)
       ranked_dict = DictionaryRanker.rank_dictionary(list)
       @ranked_dictionaries[name] = ranked_dict

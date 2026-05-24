@@ -2,7 +2,10 @@
 
 module Zxcvbn
   module Matchers
+    # Matches dictionary words after substituting common l33t-speak character
+    # replacements (e.g. "@" for "a", "3" for "e").
     class L33t
+      # Mapping from plain letter to the l33t characters that can represent it.
       L33T_TABLE = {
         'a' => ['4', '@'].freeze,
         'b' => ['8'].freeze,
@@ -18,10 +21,15 @@ module Zxcvbn
         'z' => ['2'].freeze
       }.freeze
 
+      # @param dictionary_matchers [Array<Dictionary>] matchers to run against substituted passwords
       def initialize(dictionary_matchers)
         @dictionary_matchers = dictionary_matchers
       end
 
+      # Returns l33t-substituted dictionary matches found in password.
+      #
+      # @param password [String]
+      # @return [Array<Match>] matches with pattern "dictionary" and l33t: true
       def matches(password)
         matches = []
         lowercased_password = password.downcase
@@ -42,6 +50,11 @@ module Zxcvbn
         matches
       end
 
+      # Returns a copy of password with each character replaced according to sub.
+      #
+      # @param password [String]
+      # @param sub [Hash{String => String}] character substitution map
+      # @return [String]
       def translate(password, sub)
         result = String.new
         password.each_char do |chr|
@@ -50,6 +63,10 @@ module Zxcvbn
         result
       end
 
+      # Returns the subset of {L33T_TABLE} whose l33t characters appear in password.
+      #
+      # @param password [String] lowercased password
+      # @return [Hash{String => Array<String>}]
       def relevent_l33t_subtable(password)
         filtered = {}
         L33T_TABLE.each do |letter, subs|
@@ -59,6 +76,10 @@ module Zxcvbn
         filtered
       end
 
+      # Enumerates all possible substitution combinations for the given l33t subtable.
+      #
+      # @param table [Hash{String => Array<String>}] relevant l33t subtable
+      # @return [Array<Hash{String => String}>] list of substitution maps to try
       def l33t_subs(table)
         keys = table.keys
         subs = [[]]
