@@ -56,11 +56,7 @@ module Zxcvbn
       # @param sub [Hash{String => String}] character substitution map
       # @return [String]
       def translate(password, sub)
-        result = String.new
-        password.each_char do |chr|
-          result << (sub[chr] || chr)
-        end
-        result
+        password.gsub(Regexp.union(sub.keys), sub)
       end
 
       # Returns the subset of {L33T_TABLE} whose l33t characters appear in password.
@@ -84,15 +80,7 @@ module Zxcvbn
         keys = table.keys
         subs = [[]]
         subs = find_substitutions(subs, table, keys)
-        new_subs = []
-        subs.each do |sub|
-          hash = {}
-          sub.each do |l33t_char, chr|
-            hash[l33t_char] = chr
-          end
-          new_subs << hash
-        end
-        new_subs
+        subs.map(&:to_h)
       end
 
       private
@@ -123,17 +111,10 @@ module Zxcvbn
         next_subs = []
         table[first_key].each do |l33t_char|
           subs.each do |sub|
-            dup_l33t_index = -1
-            (0...sub.length).each do |i|
-              if sub[i][0] == l33t_char
-                dup_l33t_index = i
-                break
-              end
-            end
+            dup_l33t_index = sub.find_index { |pair| pair[0] == l33t_char }
 
-            if dup_l33t_index == -1
-              sub_extension = sub + [[l33t_char, first_key]]
-              next_subs << sub_extension
+            if dup_l33t_index.nil?
+              next_subs << sub + [[l33t_char, first_key]]
             else
               sub_alternative = sub.dup
               sub_alternative[dup_l33t_index, 1] = [[l33t_char, first_key]]
