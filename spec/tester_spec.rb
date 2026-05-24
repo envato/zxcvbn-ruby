@@ -7,7 +7,7 @@ RSpec.describe Zxcvbn::Tester do
   let(:tester) { Zxcvbn::Tester.new }
 
   TEST_PASSWORDS.each do |password|
-    it "gives back the same score for #{password}" do
+    it "matches the JS result for #{password}" do
       ruby_result = tester.test(password)
       js_result = js_zxcvbn(password)
 
@@ -16,9 +16,13 @@ RSpec.describe Zxcvbn::Tester do
       expect(ruby_result.score).to eq js_result['score']
       expect(ruby_result.match_sequence.count).to eq js_result['sequence'].count
 
-      # NOTE: feedback didn't exist in the version of the JS library this gem
-      #       is based on, so instead we just check that it put `Feedback` in
-      #       there. Real tests for its values go in `feedback_giver_spec.rb`.
+      expect(Math.log10(ruby_result.guesses)).to be_within(1.0).of(js_result['guesses_log10'])
+
+      ruby_result.match_sequence.zip(js_result['sequence']).each_with_index do |(ruby_match, js_match), idx|
+        expect(ruby_match.i).to eq(js_match['i']), "match #{idx} i mismatch"
+        expect(ruby_match.j).to eq(js_match['j']), "match #{idx} j mismatch"
+      end
+
       expect(ruby_result.feedback).to be_a Zxcvbn::Feedback
     end
   end
