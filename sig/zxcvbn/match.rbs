@@ -16,7 +16,15 @@ module Zxcvbn
     attr_accessor base_entropy: Numeric?
     attr_accessor uppercase_entropy: Numeric?
     attr_accessor l33t_entropy: Numeric?
+    attr_accessor guesses: Numeric?
+    attr_accessor guesses_log10: Float?
+    attr_accessor base_guesses: Numeric?
+    attr_accessor uppercase_variations: Numeric?
+    attr_accessor l33t_variations: Numeric?
     attr_accessor repeated_char: String?
+    attr_accessor base_token: String?
+    attr_accessor repeat_count: Integer?
+    attr_accessor base_matches: Array[Match]?
     attr_accessor sequence_name: String?
     attr_accessor sequence_space: Integer?
     attr_accessor ascending: bool?

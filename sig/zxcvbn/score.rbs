@@ -1,5 +1,6 @@
 module Zxcvbn
   class Score
+    attr_accessor guesses: Numeric?
     attr_accessor entropy: Numeric?
     attr_accessor crack_time: Numeric?
     attr_accessor crack_time_display: String?
@@ -10,6 +11,6 @@ module Zxcvbn
     attr_accessor calc_time: Float?
     attr_accessor feedback: Feedback?
 
-    def initialize: (?entropy: Numeric?, ?crack_time: Numeric?, ?crack_time_display: String?, ?score: Integer?, ?match_sequence: Array[Match]?, ?password: String?) -> void
+    def initialize: (?Hash[Symbol, untyped] options) -> void
   end
 end

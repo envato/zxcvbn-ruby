@@ -1,0 +1,36 @@
+module Zxcvbn
+  module Guesses
+    MIN_GUESSES_BEFORE_GROWING_SEQUENCE: Integer
+    MIN_SUBMATCH_GUESSES_SINGLE_CHAR: Integer
+    MIN_SUBMATCH_GUESSES_MULTI_CHAR: Integer
+    BRUTEFORCE_CARDINALITY: Integer
+    MIN_YEAR_SPACE: Integer
+
+    START_UPPER: Regexp
+    END_UPPER: Regexp
+    ALL_UPPER: Regexp
+    ALL_LOWER: Regexp
+
+    def estimate_guesses: (Match match, String password) -> Numeric
+
+    def bruteforce_guesses: (Match match) -> Numeric
+
+    def repeat_guesses: (Match match) -> Numeric
+
+    def sequence_guesses: (Match match) -> Numeric
+
+    def digits_guesses: (Match match) -> Integer
+
+    def year_guesses: (Match match) -> Integer
+
+    def date_guesses: (Match match) -> Numeric
+
+    def spatial_guesses: (Match match) -> Numeric
+
+    def dictionary_guesses: (Match match) -> Numeric
+
+    def uppercase_variations: (Match match) -> Integer
+
+    def l33t_variations: (Match match) -> Integer
+  end
+end
