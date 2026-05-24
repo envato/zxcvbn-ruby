@@ -48,7 +48,7 @@ module Zxcvbn
         when 'bruteforce' then bruteforce_guesses(match)
         when 'dictionary' then dictionary_guesses(match)
         when 'spatial'    then spatial_guesses(match)
-        when 'repeat'     then repeat_guesses(match, user_inputs: user_inputs)
+        when 'repeat'     then repeat_guesses(match, user_inputs:)
         when 'sequence'   then sequence_guesses(match)
         when 'digits'     then digits_guesses(match)
         when 'year'       then year_guesses(match)
@@ -133,7 +133,7 @@ module Zxcvbn
       (2..token_length).each do |i|
         possible_turns = [turns, i - 1].min
         (1..possible_turns).each do |j|
-          guesses += nCk(i - 1, j - 1) * s * d**j
+          guesses += nCk(i - 1, j - 1) * s * (d**j)
         end
       end
 

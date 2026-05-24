@@ -25,6 +25,7 @@ Gem::Specification.new do |gem|
     'changelog_uri' => "#{gem.homepage}/blob/HEAD/CHANGELOG.md",
     'documentation_uri' => "https://www.rubydoc.info/gems/#{gem.name}/#{gem.version}",
     'homepage_uri' => gem.homepage,
-    'source_code_uri' => "#{gem.homepage}/tree/v#{gem.version}"
+    'source_code_uri' => "#{gem.homepage}/tree/v#{gem.version}",
+    'rubygems_mfa_required' => 'true'
   }
 end

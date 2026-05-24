@@ -65,12 +65,12 @@ module Zxcvbn
               if j - i > 2 # don't consider length 1 or 2 chains.
                 result << Match.new(
                   pattern: 'spatial',
-                  i: i,
+                  i:,
                   j: j - 1,
                   token: password.slice(i, j - i),
                   graph: graph_name,
-                  turns: turns,
-                  shifted_count: shifted_count
+                  turns:,
+                  shifted_count:
                 )
               end
               # ...and then start a new search for the rest of the password.

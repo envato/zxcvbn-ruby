@@ -32,7 +32,7 @@ module Zxcvbn
             pattern: 'sequence',
             i: start,
             j: seq_end,
-            token: token,
+            token:,
             sequence_name: seq_name,
             sequence_space: seq_space,
             ascending: delta.positive?

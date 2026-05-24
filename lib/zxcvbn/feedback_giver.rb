@@ -54,7 +54,7 @@ module Zxcvbn
                   end
 
         Feedback.new(
-          warning: warning,
+          warning:,
           suggestions: [
             'Use a longer keyboard pattern with more turns'
           ]
@@ -68,7 +68,7 @@ module Zxcvbn
             'Repeats like "abcabcabc" are only slightly harder to guess than "abc"'
           end
         Feedback.new(
-          warning: warning,
+          warning:,
           suggestions: [
             'Avoid repeated words and characters'
           ]
@@ -143,10 +143,7 @@ don't help very much"
         )
       end
 
-      Feedback.new(
-        warning: warning,
-        suggestions: suggestions
-      )
+      Feedback.new(warning:, suggestions:)
     end
   end
 end

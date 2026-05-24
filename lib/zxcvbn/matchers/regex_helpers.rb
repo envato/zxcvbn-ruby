@@ -12,11 +12,7 @@ module Zxcvbn
           pos = j
           j -= 1
 
-          match = Match.new(
-            i: i,
-            j: j,
-            token: password.slice(i, j - i + 1)
-          )
+          match = Match.new(i:, j:, token: password.slice(i, j - i + 1))
           yield match, re_match
         end
       end

@@ -52,7 +52,7 @@ module Zxcvbn
 
       update = lambda do |match, l|
         j   = match.j
-        est = estimate_guesses(match, password, user_inputs: user_inputs)
+        est = estimate_guesses(match, password, user_inputs:)
         est *= pi[match.i - 1][l - 1] if l > 1
         candidate = factorial(l) * est
         candidate += MIN_GUESSES_BEFORE_GROWING_SEQUENCE.to_f**(l - 1) unless exclude_additive
@@ -65,7 +65,7 @@ module Zxcvbn
       end
 
       make_bruteforce = lambda do |i, j|
-        Match.new(pattern: 'bruteforce', token: password.slice(i, j - i + 1), i: i, j: j)
+        Match.new(pattern: 'bruteforce', token: password.slice(i, j - i + 1), i:, j:)
       end
 
       (0...n).each do |k|
@@ -117,8 +117,7 @@ module Zxcvbn
         require 'zxcvbn/omnimatch'
         @omnimatch ||= Omnimatch.new(@data)
         base_matches  = @omnimatch.matches(match.base_token, user_inputs)
-        base_analysis = most_guessable_match_sequence(match.base_token, base_matches,
-                                                      user_inputs: user_inputs)
+        base_analysis = most_guessable_match_sequence(match.base_token, base_matches, user_inputs:)
         match.base_guesses = base_analysis.guesses
       end
       match.base_guesses * match.repeat_count
@@ -133,9 +132,9 @@ module Zxcvbn
     def build_score(password, sequence, guesses)
       attack_times = estimate_attack_times(guesses)
       Score.new(
-        password: password,
-        guesses: guesses,
-        sequence: sequence,
+        password:,
+        guesses:,
+        sequence:,
         crack_times_seconds: attack_times[:crack_times_seconds],
         crack_times_display: attack_times[:crack_times_display],
         score: guesses_to_score(guesses)

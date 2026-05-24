@@ -42,10 +42,10 @@ module Zxcvbn
 
           result << Match.new(
             pattern: 'repeat',
-            i: i,
-            j: j,
-            token: token,
-            base_token: base_token,
+            i:,
+            j:,
+            token:,
+            base_token:,
             repeat_count: token.length / base_token.length
           )
 
