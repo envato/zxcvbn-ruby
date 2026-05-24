@@ -32,9 +32,10 @@ module Zxcvbn
         matches = @omnimatch.matches(password, user_inputs)
         result = @scorer.most_guessable_match_sequence(password, matches, user_inputs:)
       end
-      result.calc_time = calc_time
-      result.feedback = FeedbackGiver.get_feedback(result.score, result.sequence)
-      result
+      result.with(
+        calc_time:,
+        feedback: FeedbackGiver.get_feedback(result.score, result.sequence)
+      )
     end
   end
 end
