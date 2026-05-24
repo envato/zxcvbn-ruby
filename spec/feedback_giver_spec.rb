@@ -131,7 +131,7 @@ RSpec.describe Zxcvbn::FeedbackGiver do
         end
 
         it 'that contain a common name and surname' do
-          feedback = tester.test('jessica smith').feedback
+          feedback = tester.test('jessicasmith').feedback
 
           expect(feedback).to be_a Zxcvbn::Feedback
           expect(feedback.warning).to eql(
@@ -185,7 +185,7 @@ RSpec.describe Zxcvbn::FeedbackGiver do
       end
 
       it 'for passwords with sequential characters' do
-        feedback = tester.test('pqrpqrpqr').feedback
+        feedback = tester.test('abcdefgh').feedback
 
         expect(feedback).to be_a Zxcvbn::Feedback
         expect(feedback.warning).to eql(

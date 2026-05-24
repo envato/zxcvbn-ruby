@@ -4,7 +4,10 @@ require 'spec_helper'
 
 RSpec.describe Zxcvbn::Matchers::L33t do
   let(:matcher) { described_class.new([dictionary_matcher]) }
-  let(:dictionary) { Zxcvbn::Data.new.ranked_dictionaries['english'] }
+  # Custom dictionary with words needed for l33t substitution tests.
+  # Using a fixed set rather than the real english list avoids test brittleness
+  # when frequency list data changes.
+  let(:dictionary) { Zxcvbn::DictionaryRanker.rank_dictionary(%w[pas a as ass hello word testing]) }
   let(:dictionary_matcher) { Zxcvbn::Matchers::Dictionary.new('english', dictionary) }
 
   describe '#relevant_l33t_substitutions' do
@@ -51,7 +54,7 @@ RSpec.describe Zxcvbn::Matchers::L33t do
   describe '#matches' do
     subject(:matches) { matcher.matches('p@ssword') }
 
-    it "doesn't find 'password' because it's not in english.txt" do
+    it "doesn't find 'password' because it's not in the dictionary" do
       expect(matches.map(&:matched_word)).not_to include 'password'
     end
 

@@ -5,104 +5,62 @@ require 'spec_helper'
 RSpec.describe Zxcvbn::CrackTime do
   include Zxcvbn::CrackTime
 
-  describe '#entropy_to_crack_time' do
-    specify do
-      expect(entropy_to_crack_time(15.433976574415976)).to eq 2.2134000000000014
-    end
-  end
-
-  describe '#crack_time_to_score' do
-    context 'crack time less than 10 to the power 2' do
-      it 'returns 0' do
-        expect(crack_time_to_score(90)).to eq 0
-      end
+  describe '#guesses_to_score' do
+    it 'returns 0 for fewer than 1000 guesses' do
+      expect(guesses_to_score(500)).to eq 0
     end
 
-    context 'crack time in between 10**2 and 10**4' do
-      it 'returns 1' do
-        expect(crack_time_to_score(5000)).to eq 1
-      end
+    it 'returns 1 for 1000–1_000_000 guesses' do
+      expect(guesses_to_score(50_000)).to eq 1
     end
 
-    context 'crack time in between 10**4 and 10**6' do
-      it 'returns 2' do
-        expect(crack_time_to_score(500_000)).to eq 2
-      end
+    it 'returns 2 for 1_000_000–100_000_000 guesses' do
+      expect(guesses_to_score(5_000_000)).to eq 2
     end
 
-    context 'crack time in between 10**6 and 10**8' do
-      it 'returns 3' do
-        expect(crack_time_to_score(50_000_000)).to eq 3
-      end
+    it 'returns 3 for 100_000_000–10_000_000_000 guesses' do
+      expect(guesses_to_score(500_000_000)).to eq 3
     end
 
-    context 'crack time above 10**8' do
-      it 'returns 4' do
-        expect(crack_time_to_score(110_000_000)).to eq 4
-      end
+    it 'returns 4 for 10_000_000_000 or more guesses' do
+      expect(guesses_to_score(50_000_000_000)).to eq 4
     end
   end
 
   describe '#display_time' do
-    let(:minute_to_seconds)  { 60 }
-    let(:hour_to_seconds)    { minute_to_seconds * 60 }
-    let(:day_to_seconds)     { hour_to_seconds * 24 }
-    let(:month_to_seconds)   { day_to_seconds * 31 }
-    let(:year_to_seconds)    { month_to_seconds * 12 }
-    let(:century_to_seconds) { year_to_seconds * 100 }
+    let(:minute)  { 60 }
+    let(:hour)    { minute * 60 }
+    let(:day)     { hour * 24 }
+    let(:month)   { day * 31 }
+    let(:year)    { month * 12 }
+    let(:century) { year * 100 }
 
-    context 'when less than a minute' do
-      it 'should return instant' do
-        [0, minute_to_seconds - 1].each do |seconds|
-          expect(display_time(seconds)).to eql 'instant'
-        end
-      end
+    it 'returns instant for less than a minute' do
+      [0, minute - 1].each { |s| expect(display_time(s)).to eq 'instant' }
     end
 
-    context 'when less than an hour' do
-      it 'should return a readable time in minutes' do
-        [60, (hour_to_seconds - 1)].each do |seconds|
-          expect(display_time(seconds)).to match(/[0-9]+ minutes$/)
-        end
-      end
+    it 'returns minutes for less than an hour' do
+      [minute, hour - 1].each { |s| expect(display_time(s)).to match(/\d+ minutes$/) }
     end
 
-    context 'when less than a day' do
-      it 'should return a readable time in hours' do
-        [hour_to_seconds, (day_to_seconds - 1)].each do |seconds|
-          expect(display_time(seconds)).to match(/[0-9]+ hours$/)
-        end
-      end
+    it 'returns hours for less than a day' do
+      [hour, day - 1].each { |s| expect(display_time(s)).to match(/\d+ hours$/) }
     end
 
-    context 'when less than 31 days' do
-      it 'should return a readable time in days' do
-        [day_to_seconds, month_to_seconds - 1].each do |seconds|
-          expect(display_time(seconds)).to match(/[0-9]+ days$/)
-        end
-      end
+    it 'returns days for less than a month' do
+      [day, month - 1].each { |s| expect(display_time(s)).to match(/\d+ days$/) }
     end
 
-    context 'when less than 1 year' do
-      it 'should return a readable time in days' do
-        [month_to_seconds, (year_to_seconds - 1)].each do |seconds|
-          expect(display_time(seconds)).to match(/[0-9]+ months$/)
-        end
-      end
+    it 'returns months for less than a year' do
+      [month, year - 1].each { |s| expect(display_time(s)).to match(/\d+ months$/) }
     end
 
-    context 'when less than a century' do
-      it 'should return a readable time in days' do
-        [year_to_seconds, (century_to_seconds - 1)].each do |seconds|
-          expect(display_time(seconds)).to match(/[0-9]+ years$/)
-        end
-      end
+    it 'returns years for less than a century' do
+      [year, century - 1].each { |s| expect(display_time(s)).to match(/\d+ years$/) }
     end
 
-    context 'when a century or more' do
-      it 'should return centuries' do
-        expect(display_time(century_to_seconds)).to eql 'centuries'
-      end
+    it 'returns centuries for a century or more' do
+      expect(display_time(century)).to eq 'centuries'
     end
   end
 end
