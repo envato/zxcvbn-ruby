@@ -131,8 +131,6 @@ module Zxcvbn
 
     # Compute guesses for a repeat match by recursively scoring the base token.
     #
-    # Lazily instantiates an {Omnimatch} when first needed.
-    #
     # @param match [Match] a repeat match with base_token set
     # @param user_inputs [Array] caller-supplied words passed through to sub-scoring
     # @return [Float] base_guesses * repeat_count

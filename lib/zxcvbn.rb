@@ -12,7 +12,12 @@ require 'zxcvbn/tester'
 module Zxcvbn
   module_function
 
+  # Path to the bundled data directory (frequency lists, adjacency graphs).
   DATA_PATH = Pathname(File.expand_path('../data', __dir__))
+
+  # Mutex protecting lazy initialisation of the shared default {Tester}.
+  DEFAULT_TESTER_MUTEX = Mutex.new
+  private_constant :DEFAULT_TESTER_MUTEX
 
   # Returns a Zxcvbn::Score for the given password.
   #
@@ -32,12 +37,17 @@ module Zxcvbn
   #   Zxcvbn.test("password").score #=> 0
   def test(password, user_inputs = [], word_lists = {})
     if word_lists.empty?
-      @default_tester ||= Tester.new
-      @default_tester.test(password, user_inputs)
+      default_tester.test(password, user_inputs)
     else
       tester = Tester.new
       tester.add_word_lists(word_lists)
       tester.test(password, user_inputs)
     end
   end
+
+  # @return [Tester] the shared default tester, constructed on first call
+  def default_tester
+    DEFAULT_TESTER_MUTEX.synchronize { @default_tester ||= Tester.new }
+  end
+  private_class_method :default_tester
 end
