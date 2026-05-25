@@ -28,7 +28,7 @@ module Zxcvbn
     #
     # @param password [String] the password to analyse
     # @param user_inputs [Array<String>] caller-supplied words to add as a dictionary
-    # @return [Array<Match>]
+    # @return [Array<MatchBuilder>]
     def matches(password, user_inputs = [])
       matchers = @matchers + user_input_matchers(user_inputs)
       all_matches = matchers.map { |matcher| matcher.matches(password) }.inject(&:+)
@@ -59,7 +59,7 @@ module Zxcvbn
     #
     # @param password [String] the original password
     # @param user_inputs [Array<String>] caller-supplied words to check in reverse
-    # @return [Array<Match>] dictionary matches found in the reversed password
+    # @return [Array<MatchBuilder>] dictionary matches found in the reversed password
     def reverse_dictionary_matches(password, user_inputs = [])
       reversed = password.reverse
       n = password.length

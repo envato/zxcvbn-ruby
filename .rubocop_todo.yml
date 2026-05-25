@@ -31,7 +31,6 @@ Metrics/ClassLength:
   Exclude:
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/matchers/date.rb'
-    - 'lib/zxcvbn/matchers/l33t.rb'
 
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/CyclomaticComplexity:
@@ -87,6 +86,7 @@ Naming/MethodName:
 # AllowedNames: as, at, by, cc, db, id, if, in, io, ip, of, on, os, pp, to
 Naming/MethodParameterName:
   Exclude:
+    - 'lib/zxcvbn/match.rb'
     - 'lib/zxcvbn/math.rb'
 
 # Configuration parameters: AllowedVariables.

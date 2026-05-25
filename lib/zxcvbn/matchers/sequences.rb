@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'zxcvbn/match'
+require 'zxcvbn/match_builder'
 
 module Zxcvbn
   module Matchers
@@ -17,7 +17,7 @@ module Zxcvbn
       ALL_DIGITS = /^\d+$/
 
       # @param password [String]
-      # @return [Array<Match>] matches with pattern "sequence"
+      # @return [Array<MatchBuilder>] matches with pattern "sequence"
       def matches(password)
         return [] if password.length == 1
 
@@ -36,7 +36,7 @@ module Zxcvbn
 
           token = password[start, len]
           seq_name, seq_space = classify(token)
-          result << Match.new(
+          result << MatchBuilder.new(
             pattern: 'sequence',
             i: start,
             j: seq_end,

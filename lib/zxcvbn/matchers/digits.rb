@@ -12,7 +12,7 @@ module Zxcvbn
       DIGITS_REGEX = /\d{3,}/
 
       # @param password [String]
-      # @return [Array<Match>] matches with pattern "digits"
+      # @return [Array<MatchBuilder>] matches with pattern "digits"
       def matches(password)
         result = []
         re_match_all(DIGITS_REGEX, password) do |match|

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'zxcvbn/match'
+require 'zxcvbn/match_builder'
 
 module Zxcvbn
   # Namespace for all password pattern matchers.
@@ -22,7 +22,7 @@ module Zxcvbn
           pos = j
           j -= 1
 
-          match = Match.new(i:, j:, token: password.slice(i, j - i + 1))
+          match = MatchBuilder.new(i:, j:, token: password.slice(i, j - i + 1))
           yield match, re_match
         end
       end

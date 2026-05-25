@@ -66,168 +66,87 @@ RSpec.describe Zxcvbn::Match do
     end
   end
 
-  describe 'attribute accessors' do
-    let(:match) { described_class.new }
-
-    it 'allows reading and writing pattern' do
-      match.pattern = 'spatial'
-      expect(match.pattern).to eq('spatial')
+  describe '#with' do
+    it 'derives a new match with changed pattern' do
+      match = described_class.new
+      updated = match.with(pattern: 'spatial')
+      expect(updated.pattern).to eq('spatial')
+      expect(match.pattern).to be_nil
     end
 
-    it 'allows reading and writing position attributes' do
-      match.i = 5
-      match.j = 10
-      expect(match.i).to eq(5)
-      expect(match.j).to eq(10)
+    it 'derives a new match with changed position attributes' do
+      match = described_class.new
+      updated = match.with(i: 5, j: 10)
+      expect(updated.i).to eq(5)
+      expect(updated.j).to eq(10)
     end
 
-    it 'allows reading and writing token' do
-      match.token = 'test123'
-      expect(match.token).to eq('test123')
+    it 'derives a new match with changed dictionary attributes' do
+      match = described_class.new
+      updated = match.with(matched_word: 'test', rank: 500, dictionary_name: 'passwords')
+      expect(updated.matched_word).to eq('test')
+      expect(updated.rank).to eq(500)
+      expect(updated.dictionary_name).to eq('passwords')
     end
 
-    it 'allows reading and writing dictionary attributes' do
-      match.matched_word = 'test'
-      match.rank = 500
-      match.dictionary_name = 'passwords'
-
-      expect(match.matched_word).to eq('test')
-      expect(match.rank).to eq(500)
-      expect(match.dictionary_name).to eq('passwords')
+    it 'derives a new match with changed l33t attributes' do
+      match = described_class.new
+      updated = match.with(l33t: true, sub: { '3' => 'e' }, sub_display: '3 -> e')
+      expect(updated.l33t).to be true
+      expect(updated.sub).to eq({ '3' => 'e' })
+      expect(updated.sub_display).to eq('3 -> e')
     end
 
-    it 'allows reading and writing l33t attributes' do
-      match.l33t = true
-      match.sub = { '3' => 'e' }
-      match.sub_display = '3 -> e'
-
-      expect(match.l33t).to be true
-      expect(match.sub).to eq({ '3' => 'e' })
-      expect(match.sub_display).to eq('3 -> e')
+    it 'derives a new match with changed date attributes' do
+      match = described_class.new
+      updated = match.with(year: 2024, month: 12, day: 25, separator: '/')
+      expect(updated.year).to eq(2024)
+      expect(updated.month).to eq(12)
+      expect(updated.day).to eq(25)
+      expect(updated.separator).to eq('/')
     end
 
-    it 'allows reading and writing sequence attributes' do
-      match.sequence_name = 'lower'
-      match.sequence_space = 26
-      match.ascending = true
-
-      expect(match.sequence_name).to eq('lower')
-      expect(match.sequence_space).to eq(26)
-      expect(match.ascending).to be true
-    end
-
-    it 'allows reading and writing spatial attributes' do
-      match.graph = 'qwerty'
-      match.turns = 3
-      match.shifted_count = 2
-
-      expect(match.graph).to eq('qwerty')
-      expect(match.turns).to eq(3)
-      expect(match.shifted_count).to eq(2)
-    end
-
-    it 'allows reading and writing date attributes' do
-      match.year = 2024
-      match.month = 12
-      match.day = 25
-      match.separator = '/'
-
-      expect(match.year).to eq(2024)
-      expect(match.month).to eq(12)
-      expect(match.day).to eq(25)
-      expect(match.separator).to eq('/')
-    end
-
-    it 'allows reading and writing reversed attribute' do
-      match.reversed = true
-      expect(match.reversed).to be true
+    it 'does not mutate the original' do
+      match = described_class.new(pattern: 'digits', token: 'abc')
+      match.with(pattern: 'spatial')
+      expect(match.pattern).to eq('digits')
     end
   end
 
-  describe '#to_hash' do
-    it 'converts match to hash with all attributes' do
-      match = described_class.new(
-        pattern: 'dictionary',
-        i: 0,
-        j: 4,
-        token: 'test',
-        rank: 100
-      )
-
-      hash = match.to_hash
-
-      expect(hash).to be_a(Hash)
-      expect(hash['pattern']).to eq('dictionary')
-      expect(hash['i']).to eq(0)
-      expect(hash['j']).to eq(4)
-      expect(hash['token']).to eq('test')
-      expect(hash['rank']).to eq(100)
+  describe 'value object equality' do
+    it 'is equal to another match with the same attributes' do
+      a = described_class.new(pattern: 'digits', token: '123', i: 0, j: 2)
+      b = described_class.new(pattern: 'digits', token: '123', i: 0, j: 2)
+      expect(a).to eq(b)
     end
 
-    it 'only includes attributes that were set' do
-      match = described_class.new(pattern: 'repeat', token: 'aaa')
-      hash = match.to_hash
-
-      expect(hash.keys).to contain_exactly('pattern', 'token')
-      expect(hash['pattern']).to eq('repeat')
-      expect(hash['token']).to eq('aaa')
+    it 'is not equal to a match with different attributes' do
+      a = described_class.new(pattern: 'digits', token: '123')
+      b = described_class.new(pattern: 'digits', token: '456')
+      expect(a).not_to eq(b)
     end
 
-    it 'returns hash keys as strings' do
-      match = described_class.new(pattern: 'spatial', token: 'qwerty')
-      hash = match.to_hash
-
-      hash.each_key do |key|
-        expect(key).to be_a(String)
-      end
+    it 'is eql? to another match with the same attributes' do
+      a = described_class.new(pattern: 'digits', token: '123', i: 0, j: 2)
+      b = described_class.new(pattern: 'digits', token: '123', i: 0, j: 2)
+      expect(a).to eql(b)
     end
 
-    it 'sorts keys alphabetically' do
-      match = described_class.new(
-        token: 'test',
-        pattern: 'dictionary',
-        i: 0,
-        j: 3
-      )
-
-      hash = match.to_hash
-      keys = hash.keys
-
-      expect(keys).to eq(keys.sort)
-    end
-
-    it 'preserves complex attribute values' do
-      sub_hash = { '@' => 'a', '0' => 'o' }
-      match = described_class.new(
-        l33t: true,
-        sub: sub_hash
-      )
-
-      hash = match.to_hash
-
-      expect(hash['l33t']).to be true
-      expect(hash['sub']).to eq(sub_hash)
-      expect(hash['sub']).to be(sub_hash) # Same object reference
+    it 'produces the same hash for matches with the same attributes' do
+      a = described_class.new(pattern: 'digits', token: '123', i: 0, j: 2)
+      b = described_class.new(pattern: 'digits', token: '123', i: 0, j: 2)
+      expect(a.hash).to eq(b.hash)
     end
   end
 
-  describe 'backward compatibility' do
-    it 'maintains compatibility with OpenStruct-style usage' do
-      # This test ensures the new implementation works like OpenStruct did
-      match = described_class.new(pattern: 'test', token: 'password')
+  describe 'immutability' do
+    it 'is frozen' do
+      expect(described_class.new(pattern: 'digits', token: '123')).to be_frozen
+    end
 
-      # Should be able to read attributes
-      expect(match.pattern).to eq('test')
-      expect(match.token).to eq('password')
-
-      # Should be able to write attributes
-      match.guesses = 1000
-      expect(match.guesses).to eq(1000)
-
-      # Should convert to hash
-      hash = match.to_hash
-      expect(hash).to be_a(Hash)
-      expect(hash['pattern']).to eq('test')
+    it 'does not respond to attribute setters' do
+      match = described_class.new(pattern: 'digits', token: '123')
+      expect(match).not_to respond_to(:pattern=)
     end
   end
 

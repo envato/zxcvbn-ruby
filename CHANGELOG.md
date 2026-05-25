@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - `Zxcvbn.test` now reuses a shared `Tester` instance across calls, avoiding repeated dictionary parsing. Equivalent to using `Tester` directly for callers who do not pass custom `word_lists` ([#80])
  - Repeat base tokens are now scored without `user_inputs`, matching zxcvbn.js v4. Previously, user-supplied words were propagated into the recursive scoring of a repeat's base token, causing repeat matches of user-supplied words to score lower than JS would report ([#83])
  - `Zxcvbn::Score` is now an immutable value object backed by Ruby's `Data`. Attribute setters (`calc_time=`, `feedback=`, etc.) have been removed. Instances now support structural equality (`==`/`eql?`/`hash`) and the `with` method for creating modified copies ([#74])
+ - **Breaking**: `Zxcvbn::Match` is now an immutable value object backed by Ruby's `Data`. Attribute setters have been removed. Instances now support structural equality (`==`/`eql?`/`hash`) and the `with` method for creating modified copies ([#92])
+ - **Breaking**: `Match#to_hash` has been removed. Use `match.to_h` instead — note the shape differs: keys are symbols (not strings), all 28 attributes are included (not just those that were set), and order follows the member definition rather than being sorted alphabetically. To replicate the old behaviour: `match.to_h.transform_keys(&:to_s).compact`. Additionally, `to_hash` was Ruby's implicit-conversion hook, so any code that splatted a match (`**match`) or passed it to `Hash()` will now raise `TypeError` ([#92])
  - **Breaking**: `Zxcvbn::Feedback` is now an immutable value object backed by Ruby's `Data`. Attribute setters (`warning=`, `suggestions=`) have been removed. Instances now support structural equality (`==`/`eql?`/`hash`) and the `with` method for creating modified copies ([#77])
  - **Breaking**: Scoring algorithm aligned with zxcvbn.js v4.4.2. The dynamic programming step now minimises total guesses (`factorial(l) × cumulative_product + MIN_GUESSES^(l-1)` penalty) instead of entropy bits. Scores for many passwords will change ([#69])
  - **Breaking**: Bruteforce cardinality is now fixed at 10 (digits only), matching zxcvbn.js v4. Previously it was computed dynamically from the character classes present in the password (10–95), so bruteforce guesses for passwords containing letters or symbols will change ([#69])
@@ -54,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#83]: https://github.com/envato/zxcvbn-ruby/pull/83
 [#89]: https://github.com/envato/zxcvbn-ruby/pull/89
 [#90]: https://github.com/envato/zxcvbn-ruby/pull/90
+[#92]: https://github.com/envato/zxcvbn-ruby/pull/92
 
 ## [1.4.0] - 2026-01-15
 

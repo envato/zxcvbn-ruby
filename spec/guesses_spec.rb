@@ -19,7 +19,7 @@ RSpec.describe Zxcvbn::Guesses do
   end
 
   def make_match(**attrs)
-    Zxcvbn::Match.new(**attrs)
+    Zxcvbn::MatchBuilder.new(**attrs)
   end
 
   describe '#bruteforce_guesses' do
@@ -182,10 +182,16 @@ RSpec.describe Zxcvbn::Guesses do
       expect(host.estimate_guesses(m, 'abcdefgh')).to eq 999
     end
 
-    it 'memoises the result on match.guesses' do
+    it 'sets guesses and guesses_log10 on the builder' do
       m = make_match(pattern: 'bruteforce', token: 'abc')
       host.estimate_guesses(m, 'abc')
       expect(m.guesses).not_to be_nil
+      expect(m.guesses_log10).to eq(Math.log10(m.guesses))
+    end
+
+    it 'skips recomputation when guesses already set on the builder' do
+      m = make_match(pattern: 'digits', token: 'abc', guesses: 5)
+      expect(host.estimate_guesses(m, 'abc')).to eq 5
     end
 
     it 'applies a single-char minimum of 10 for sub-token single characters' do
@@ -225,6 +231,14 @@ RSpec.describe Zxcvbn::Guesses do
       year = Time.now.year - 30
       m = make_match(pattern: 'date', token: '021297', year:, separator: '')
       expect(host.estimate_guesses(m, '021297')).to eq 365 * 30
+    end
+
+    it 'sets base_guesses, uppercase_variations, l33t_variations on dictionary matches' do
+      m = make_match(pattern: 'dictionary', token: 'Pass', rank: 5, reversed: false, l33t: false)
+      host.estimate_guesses(m, 'Pass')
+      expect(m.base_guesses).to eq 5
+      expect(m.uppercase_variations).to eq 2
+      expect(m.l33t_variations).to eq 1
     end
   end
 end

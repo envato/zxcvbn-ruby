@@ -3,7 +3,7 @@
 require 'zxcvbn/guesses'
 require 'zxcvbn/crack_time'
 require 'zxcvbn/score'
-require 'zxcvbn/match'
+require 'zxcvbn/match_builder'
 
 module Zxcvbn
   # Finds the match sequence that minimises the total number of guesses
@@ -48,7 +48,7 @@ module Zxcvbn
     # splits a password into many low-guesses submatches.
     #
     # @param password [String] the password to analyse
-    # @param matches [Array<Match>] candidate matches from the matchers
+    # @param matches [Array<MatchBuilder>] candidate matches from the matchers
     # @param exclude_additive [Boolean] omit the sequence-length penalty
     #   (used when recursively analysing repeat base tokens)
     # @return [Score] the optimal score with match sequence and guess count
@@ -89,7 +89,7 @@ module Zxcvbn
       end
 
       make_bruteforce = lambda do |i, j|
-        Match.new(pattern: 'bruteforce', token: password.slice(i, j - i + 1), i:, j:)
+        MatchBuilder.new(pattern: 'bruteforce', token: password.slice(i, j - i + 1), i:, j:)
       end
 
       (0...n).each do |k|
@@ -121,7 +121,7 @@ module Zxcvbn
       l = optimal_l
       while k >= 0
         match = m[k][l]
-        sequence.unshift(match)
+        sequence.unshift(match.build)
         k = match.i - 1
         l -= 1
       end
@@ -131,7 +131,7 @@ module Zxcvbn
 
     # Compute guesses for a repeat match by recursively scoring the base token.
     #
-    # @param match [Match] a repeat match with base_token set
+    # @param match [MatchBuilder] a repeat match with base_token set
     # @return [Numeric] base_guesses * repeat_count
     def repeat_guesses(match)
       if match.base_guesses.nil?

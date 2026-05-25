@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'zxcvbn/match'
+require 'zxcvbn/match_builder'
 
 module Zxcvbn
   module Matchers
@@ -16,7 +16,7 @@ module Zxcvbn
       end
 
       # @param password [String]
-      # @return [Array<Match>] matches with pattern "spatial" across all graphs
+      # @return [Array<MatchBuilder>] matches with pattern "spatial" across all graphs
       def matches(password)
         results = []
         @graphs.each do |graph_name, graph|
@@ -30,7 +30,7 @@ module Zxcvbn
       # @param graph [Hash] adjacency map for each key character
       # @param graph_name [String] name of the graph (e.g. "qwerty")
       # @param password [String]
-      # @return [Array<Match>] matches with pattern "spatial"
+      # @return [Array<MatchBuilder>] matches with pattern "spatial"
       def matches_for_graph(graph, graph_name, password)
         result = []
         keyboard_graph = %w[qwerty dvorak].include?(graph_name)
@@ -75,7 +75,7 @@ module Zxcvbn
             else
               # otherwise push the pattern discovered so far, if any...
               if j - i > 2 # don't consider length 1 or 2 chains.
-                result << Match.new(
+                result << MatchBuilder.new(
                   pattern: 'spatial',
                   i:,
                   j: j - 1,

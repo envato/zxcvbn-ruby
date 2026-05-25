@@ -12,7 +12,7 @@ module Zxcvbn
       YEAR_REGEX = /19\d\d|200\d|201\d/
 
       # @param password [String]
-      # @return [Array<Match>] matches with pattern "year"
+      # @return [Array<MatchBuilder>] matches with pattern "year"
       def matches(password)
         result = []
         re_match_all(YEAR_REGEX, password) do |match|
