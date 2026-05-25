@@ -56,7 +56,7 @@ module Zxcvbn
     # @return [void]
     def add_word_list(name, list)
       ranked_dict = DictionaryRanker.rank_dictionary(list)
-      trie = build_trie(ranked_dict)
+      trie = Trie.from_ranked(ranked_dict)
       WRITE_MUTEX.synchronize do
         old = @dictionaries
         @dictionaries = Dictionaries.new(
@@ -73,13 +73,7 @@ module Zxcvbn
     end
 
     def build_tries(ranked)
-      ranked.transform_values { |dict| build_trie(dict) }
-    end
-
-    def build_trie(ranked_dictionary)
-      trie = Trie.new
-      ranked_dictionary.each { |word, rank| trie.insert(word, rank) }
-      trie
+      ranked.transform_values { |dict| Trie.from_ranked(dict) }
     end
 
     def compute_graph_stats
