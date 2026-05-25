@@ -8,7 +8,7 @@ module Zxcvbn
     # configured adjacency graphs.
     class Spatial
       # Matches characters that require the Shift key on a standard keyboard.
-      SHIFTED_RX = /[~!@#$%^&*()\-_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?]/
+      SHIFTED_RX = /[~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?]/
 
       # @param graphs [Hash{String => Hash}] adjacency graph data keyed by graph name
       def initialize(graphs)
