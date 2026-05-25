@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
  - `Zxcvbn.test` now reuses a shared `Tester` instance across calls, avoiding repeated dictionary parsing. Equivalent to using `Tester` directly for callers who do not pass custom `word_lists` ([#80])
+ - Repeat base tokens are now scored without `user_inputs`, matching zxcvbn.js v4. Previously, user-supplied words were propagated into the recursive scoring of a repeat's base token, causing repeat matches of user-supplied words to score lower than JS would report ([#83])
  - `Zxcvbn::Score` is now an immutable value object backed by Ruby's `Data`. Attribute setters (`calc_time=`, `feedback=`, etc.) have been removed. Instances now support structural equality (`==`/`eql?`/`hash`) and the `with` method for creating modified copies ([#74])
  - **Breaking**: `Zxcvbn::Feedback` is now an immutable value object backed by Ruby's `Data`. Attribute setters (`warning=`, `suggestions=`) have been removed. Instances now support structural equality (`==`/`eql?`/`hash`) and the `with` method for creating modified copies ([#77])
  - **Breaking**: Scoring algorithm aligned with zxcvbn.js v4.4.2. The dynamic programming step now minimises total guesses (`factorial(l) × cumulative_product + MIN_GUESSES^(l-1)` penalty) instead of entropy bits. Scores for many passwords will change ([#69])
@@ -46,6 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#74]: https://github.com/envato/zxcvbn-ruby/pull/74
 [#77]: https://github.com/envato/zxcvbn-ruby/pull/77
 [#80]: https://github.com/envato/zxcvbn-ruby/pull/80
+[#83]: https://github.com/envato/zxcvbn-ruby/pull/83
 
 ## [1.4.0] - 2026-01-15
 
