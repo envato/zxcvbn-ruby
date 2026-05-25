@@ -2,6 +2,7 @@
 
 require 'zxcvbn/guesses'
 require 'zxcvbn/crack_time'
+require 'zxcvbn/omnimatch'
 require 'zxcvbn/score'
 require 'zxcvbn/match'
 
@@ -32,6 +33,7 @@ module Zxcvbn
     # @param data [Data] the loaded frequency list and graph data
     def initialize(data)
       @data = data
+      @omnimatch = Omnimatch.new(data)
     end
 
     attr_reader :data
@@ -129,15 +131,11 @@ module Zxcvbn
 
     # Compute guesses for a repeat match by recursively scoring the base token.
     #
-    # Lazily instantiates an {Omnimatch} when first needed.
-    #
     # @param match [Match] a repeat match with base_token set
     # @param user_inputs [Array] caller-supplied words passed through to sub-scoring
     # @return [Float] base_guesses * repeat_count
     def repeat_guesses(match, user_inputs: [])
       if match.base_guesses.nil?
-        require 'zxcvbn/omnimatch'
-        @omnimatch ||= Omnimatch.new(@data)
         base_matches  = @omnimatch.matches(match.base_token, user_inputs)
         base_analysis = most_guessable_match_sequence(match.base_token, base_matches, user_inputs:)
         match.base_guesses = base_analysis.guesses

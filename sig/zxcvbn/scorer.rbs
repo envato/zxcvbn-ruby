@@ -4,6 +4,7 @@ module Zxcvbn
     include CrackTime
 
     @data: Data
+    @omnimatch: Omnimatch
 
     attr_reader data: Data
 
@@ -11,6 +12,6 @@ module Zxcvbn
 
     def most_guessable_match_sequence: (String password, Array[Match] matches, ?exclude_additive: bool, ?user_inputs: Array[String]) -> Score
 
-    def repeat_guesses: (Match match) -> Numeric
+    def repeat_guesses: (Match match, ?user_inputs: Array[String]) -> Numeric
   end
 end

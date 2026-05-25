@@ -4,15 +4,26 @@ module Zxcvbn
     type adjacency_graph = Hash[String, Array[String?]]
     type graph_stats = Hash[String, { average_degree: Float, starting_positions: Integer }]
 
-    @ranked_dictionaries: Hash[String, ranked_dictionary]
+    class Dictionaries
+      attr_reader ranked: Hash[String, ranked_dictionary]
+      attr_reader tries: Hash[String, Trie]
+
+      def initialize: (ranked: Hash[String, ranked_dictionary], tries: Hash[String, Trie]) -> void
+    end
+
+    WRITE_MUTEX: Mutex
+
+    @dictionaries: Dictionaries
     @adjacency_graphs: Hash[String, adjacency_graph]
-    @dictionary_tries: Hash[String, Trie]
     @graph_stats: graph_stats
 
-    attr_reader ranked_dictionaries: Hash[String, ranked_dictionary]
+    attr_reader dictionaries: Dictionaries
     attr_reader adjacency_graphs: Hash[String, adjacency_graph]
-    attr_reader dictionary_tries: Hash[String, Trie]
     attr_reader graph_stats: graph_stats
+
+    def ranked_dictionaries: () -> Hash[String, ranked_dictionary]
+
+    def dictionary_tries: () -> Hash[String, Trie]
 
     def initialize: () -> void
 
@@ -22,7 +33,7 @@ module Zxcvbn
 
     def read_word_list: (String file) -> Array[String]
 
-    def build_tries: () -> Hash[String, Trie]
+    def build_tries: (Hash[String, ranked_dictionary] ranked) -> Hash[String, Trie]
 
     def build_trie: (ranked_dictionary ranked_dictionary) -> Trie
 

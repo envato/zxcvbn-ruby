@@ -60,8 +60,9 @@ module Zxcvbn
       n = password.length
       matches = []
 
-      matchers = @data.ranked_dictionaries.map do |name, dictionary|
-        trie = @data.dictionary_tries[name]
+      dicts = @data.dictionaries
+      matchers = dicts.ranked.map do |name, dictionary|
+        trie = dicts.tries[name]
         Matchers::Dictionary.new(name, dictionary, trie)
       end
 
@@ -86,8 +87,9 @@ module Zxcvbn
 
     def build_matchers
       matchers = []
-      dictionary_matchers = @data.ranked_dictionaries.map do |name, dictionary|
-        trie = @data.dictionary_tries[name]
+      dicts = @data.dictionaries
+      dictionary_matchers = dicts.ranked.map do |name, dictionary|
+        trie = dicts.tries[name]
         Matchers::Dictionary.new(name, dictionary, trie)
       end
       l33t_matcher = Matchers::L33t.new(dictionary_matchers)
