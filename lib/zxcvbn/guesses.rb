@@ -94,14 +94,12 @@ module Zxcvbn
     # @param match [Match] a year match
     # @return [Integer] distance from the current year, floored at {MIN_YEAR_SPACE}
     def year_guesses(match)
-      reference_year = Time.now.year
       [(match.token.to_i - reference_year).abs, MIN_YEAR_SPACE].max
     end
 
     # @param match [Match] a date match with year and separator set
     # @return [Integer] 365 * year_space, multiplied by 4 if a separator is present
     def date_guesses(match)
-      reference_year = Time.now.year
       year_space = [(match.year - reference_year).abs, MIN_YEAR_SPACE].max
       guesses = 365 * year_space
       guesses *= 4 if match.separator && !match.separator.empty?
@@ -201,6 +199,10 @@ module Zxcvbn
         end
       end
       variations
+    end
+
+    def reference_year
+      @reference_year ||= Time.now.year
     end
   end
 end
