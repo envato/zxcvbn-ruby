@@ -151,6 +151,8 @@ module Zxcvbn
         )
       end
 
+      suggestions.push("Reversed words aren't much harder to guess") if match.reversed && match.token.length >= 4
+
       if match.l33t
         suggestions.push(
           "Predictable substitutions like '@' instead of 'a' \
