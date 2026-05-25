@@ -2,6 +2,7 @@
 
 module Zxcvbn
   # Monotonic-clock utility for measuring elapsed wall time.
+  # @api private
   module Clock
     # Yields to the block and returns the elapsed time in seconds.
     #

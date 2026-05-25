@@ -6,6 +6,7 @@ module Zxcvbn
   module Matchers
     # Matches any sequential segment of the lowercased password that appears in
     # a ranked dictionary.
+    # @api private
     class Dictionary
       # @param name [String] dictionary identifier used in match results
       # @param ranked_dictionary [Hash{String => Integer}] lowercased word → rank

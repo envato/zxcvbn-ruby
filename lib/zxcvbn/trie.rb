@@ -5,6 +5,7 @@ module Zxcvbn
   # Provides fast prefix-based lookups to eliminate unnecessary substring checks.
   #
   # @see https://en.wikipedia.org/wiki/Trie
+  # @api private
   class Trie
     # Build a trie from a ranked dictionary hash.
     # @param ranked_dictionary [Hash{String => Integer}] word → rank

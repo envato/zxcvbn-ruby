@@ -17,6 +17,7 @@ module Zxcvbn
   # Includes dictionary, l33t, spatial, digit, repeat, sequence, year, date,
   # and reverse-dictionary matchers. User-supplied word lists are wrapped in
   # transient matchers for each call to {#matches}.
+  # @api private
   class Omnimatch
     # @param data [Data] loaded frequency lists and adjacency graphs
     def initialize(data)

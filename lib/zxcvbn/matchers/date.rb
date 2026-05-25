@@ -4,6 +4,7 @@ module Zxcvbn
   module Matchers
     # Matches date patterns in passwords, both with and without separators.
     # Ported from the zxcvbn v4 JavaScript implementation's +date_match+ function.
+    # @api private
     class Date
       # Matches a separator-based date substring (e.g. "02/12/1997", "97-12-02").
       # The first and last groups each allow 1–4 digits so the year may appear in

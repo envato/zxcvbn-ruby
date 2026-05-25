@@ -8,6 +8,7 @@ module Zxcvbn
   # Each pattern-specific method returns a raw guess count; {estimate_guesses}
   # applies a per-token minimum and memoises the result on the match object.
   # Mirrors the guesses estimation logic from zxcvbn.js v4.
+  # @api private
   module Guesses
     include Zxcvbn::Math
 

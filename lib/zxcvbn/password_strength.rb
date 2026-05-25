@@ -7,6 +7,7 @@ require 'zxcvbn/scorer'
 
 module Zxcvbn
   # Analyses a single password and returns a {Score}.
+  # @api private
   class PasswordStrength
     # @param data [Data] loaded frequency lists and adjacency graphs
     def initialize(data)

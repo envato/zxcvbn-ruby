@@ -4,8 +4,10 @@ require 'zxcvbn/match_builder'
 
 module Zxcvbn
   # Namespace for all password pattern matchers.
+  # @api private
   module Matchers
     # Shared helper for iterating non-overlapping regex matches over a password.
+    # @api private
     module RegexHelpers
       # Yields a {Match} and the underlying MatchData for every non-overlapping
       # occurrence of regex in password.

@@ -6,6 +6,7 @@ module Zxcvbn
   module Matchers
     # Matches monotonically incrementing or decrementing character sequences,
     # such as "abcde", "54321", or "ZYXW".
+    # @api private
     class Sequences
       # Maximum absolute step between adjacent characters for a valid sequence.
       MAX_DELTA  = 5

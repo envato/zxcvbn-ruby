@@ -9,6 +9,7 @@ module Zxcvbn
     # Uses a greedy/lazy regex disambiguation strategy from zxcvbn.js v4:
     # prefer the greedier match unless the lazy match is longer, then use
     # LAZY_ANCHORED to extract the minimal repeating unit (base_token).
+    # @api private
     class Repeat
       # Greedily matches the longest repeated substring.
       GREEDY        = /(.+)\1+/
