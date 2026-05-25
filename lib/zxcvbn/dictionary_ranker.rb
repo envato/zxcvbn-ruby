@@ -2,6 +2,7 @@
 
 module Zxcvbn
   # Converts raw word lists into frequency-ranked dictionaries for matcher use.
+  # @api private
   class DictionaryRanker
     # Ranks multiple word lists, returning a hash of ranked dictionaries.
     #

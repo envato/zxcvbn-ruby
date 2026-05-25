@@ -14,6 +14,7 @@ module Zxcvbn
 
   # Path to the bundled data directory (frequency lists, adjacency graphs).
   DATA_PATH = Pathname(File.expand_path('../data', __dir__))
+  private_constant :DATA_PATH
 
   # Mutex protecting lazy initialisation of the shared default {Tester}.
   DEFAULT_TESTER_MUTEX = Mutex.new

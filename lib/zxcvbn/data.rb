@@ -12,6 +12,7 @@ module Zxcvbn
   # @attr_reader graph_stats [Hash{String => Hash}] precomputed average degree and key count
   # @attr_reader dictionaries [#ranked, #tries] consistent snapshot of ranked dictionaries and
   #   their tries; use this for concurrent reads to guarantee the pair is always in sync
+  # @api private
   class Data
     # Consistent snapshot of ranked dictionaries and their tries.
     # Stored as a single reference so it can be swapped atomically on update.

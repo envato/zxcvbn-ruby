@@ -5,6 +5,7 @@ require 'zxcvbn/matchers/regex_helpers'
 module Zxcvbn
   module Matchers
     # Matches runs of 3 or more consecutive digits in the password.
+    # @api private
     class Digits
       include RegexHelpers
 

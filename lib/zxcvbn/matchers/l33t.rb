@@ -4,6 +4,7 @@ module Zxcvbn
   module Matchers
     # Matches dictionary words after substituting common l33t-speak character
     # replacements (e.g. "@" for "a", "3" for "e").
+    # @api private
     class L33t
       # Mapping from plain letter to the l33t characters that can represent it.
       L33T_TABLE = {

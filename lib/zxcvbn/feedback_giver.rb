@@ -5,6 +5,7 @@ require 'zxcvbn/feedback'
 
 module Zxcvbn
   # Generates human-readable {Feedback} for a password given its score and match sequence.
+  # @api private
   class FeedbackGiver
     NAME_DICTIONARIES = %w[surnames male_names female_names].freeze
 

@@ -5,6 +5,7 @@ require 'zxcvbn/matchers/regex_helpers'
 module Zxcvbn
   module Matchers
     # Matches 4-digit year substrings (1900–2019) in the password.
+    # @api private
     class Year
       include RegexHelpers
 

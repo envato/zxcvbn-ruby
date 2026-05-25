@@ -5,6 +5,7 @@ module Zxcvbn
   #
   # Provides {estimate_attack_times}, {guesses_to_score}, and {display_time}
   # mirroring the crack-time logic from zxcvbn.js v4.
+  # @api private
   module CrackTime
     ATTACK_SCENARIOS = {
       'online_throttling_100_per_hour' => 100.0 / 3600,

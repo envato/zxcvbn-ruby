@@ -6,6 +6,7 @@ module Zxcvbn
   module Matchers
     # Matches keyboard spatial patterns (e.g. "qwerty", "asdf") across all
     # configured adjacency graphs.
+    # @api private
     class Spatial
       # Matches characters that require the Shift key on a standard keyboard.
       SHIFTED_RX = /[~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?]/

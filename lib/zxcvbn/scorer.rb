@@ -8,6 +8,7 @@ require 'zxcvbn/match_builder'
 module Zxcvbn
   # Finds the match sequence that minimises the total number of guesses
   # required to crack a password, using dynamic programming.
+  # @api private
   class Scorer
     include Guesses
     include CrackTime
