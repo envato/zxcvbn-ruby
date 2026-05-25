@@ -33,7 +33,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Repeat feedback now distinguishes single-char repeats (`"aaa"`) from multi-char repeats (`"abcabcabc"`), matching zxcvbn.js v4 ([#69])
  - `year` pattern matches now produce a "Recent years are easy to guess" warning ([#69])
  - Sole matches from the `english_wikipedia` dictionary now produce an "A word by itself is easy to guess" warning ([#69])
- - Passwords longer than 256 characters are silently truncated before scoring to bound O(n²) dictionary matching time ([#69])
 
 ### Removed
  - Support for Ruby versions below 3.3 ([#70])

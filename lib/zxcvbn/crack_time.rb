@@ -18,7 +18,7 @@ module Zxcvbn
     # @param guesses [Numeric] estimated guess count
     # @return [Hash] with :crack_times_seconds and :crack_times_display
     def estimate_attack_times(guesses)
-      seconds = ATTACK_SCENARIOS.transform_values { |rate| guesses / rate }
+      seconds = ATTACK_SCENARIOS.transform_values { |rate| [guesses / rate, Float::MAX].min }
       display = seconds.transform_values { |s| display_time(s) }
       { crack_times_seconds: seconds, crack_times_display: display }
     end

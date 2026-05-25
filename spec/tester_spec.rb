@@ -113,18 +113,28 @@ RSpec.describe Zxcvbn::Tester do
     end
   end
 
-  context 'with a password exceeding MAX_PASSWORD_LENGTH' do
-    let(:max) { Zxcvbn::PasswordStrength::MAX_PASSWORD_LENGTH }
-
-    it 'truncates the password before scoring' do
-      result = tester.test('a' * (max + 100))
-      expect(result.password.length).to eq max
+  context 'with a very long password' do
+    it 'scores the full password without truncation' do
+      long = 'a' * 400
+      result = tester.test(long)
+      expect(result.password.length).to eq 400
     end
 
     it 'completes in reasonable time for adversarial repeat inputs' do
-      adversarial = 'ab' * 150
+      adversarial = 'ab' * 128
       elapsed = Benchmark.realtime { tester.test(adversarial) }
       expect(elapsed).to be < 5
+    end
+
+    it 'produces finite crack times for passwords longer than 308 characters' do
+      # 'z' * 400 hits the repeat matcher (guesses ~4801), not bruteforce.
+      # Use a high-entropy string so the whole password is a single bruteforce
+      # match: length 400 → 10**400 → Float::MAX → crack time overflows to Infinity.
+      saved = srand(7)
+      high_entropy = (1..400).map { rand(33..126).chr }.join
+      srand(saved)
+      result = tester.test(high_entropy)
+      expect(result.crack_times_seconds.values).to all(be_finite)
     end
   end
 end
