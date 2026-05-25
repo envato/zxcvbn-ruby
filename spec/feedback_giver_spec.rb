@@ -69,6 +69,18 @@ RSpec.describe Zxcvbn::FeedbackGiver do
           )
         end
 
+        it 'that are a reversed common password' do
+          feedback = tester.test('drowssap').feedback
+
+          expect(feedback).to be_a Zxcvbn::Feedback
+          expect(feedback.warning).to eql(
+            'This is similar to a commonly used password'
+          )
+          expect(feedback.suggestions).to include(
+            "Reversed words aren't much harder to guess"
+          )
+        end
+
         it 'that are common and you tried to use l33tsp33k' do
           feedback = tester.test('p@ssword').feedback
 
