@@ -35,13 +35,6 @@ RSpec.describe Zxcvbn::Guesses do
     end
   end
 
-  describe '#repeat_guesses' do
-    it 'multiplies base_guesses by repeat_count' do
-      m = make_match(base_guesses: 10, repeat_count: 3)
-      expect(host.repeat_guesses(m)).to eq 30
-    end
-  end
-
   describe '#sequence_guesses' do
     it 'uses base 4 for common sequence starters' do
       %w[a A z Z 0 1 9].each do |char|
@@ -215,11 +208,6 @@ RSpec.describe Zxcvbn::Guesses do
     it 'dispatches to sequence_guesses for sequence pattern' do
       m = make_match(pattern: 'sequence', token: 'bcd', ascending: true)
       expect(host.estimate_guesses(m, 'bcd')).to eq 78
-    end
-
-    it 'dispatches to repeat_guesses for repeat pattern' do
-      m = make_match(pattern: 'repeat', token: 'aaaa', base_guesses: 5, repeat_count: 4)
-      expect(host.estimate_guesses(m, 'aaaa')).to eq 20
     end
 
     it 'dispatches to digits_guesses for digits pattern' do

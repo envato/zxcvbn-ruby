@@ -15,8 +15,6 @@ module Zxcvbn
 
     def bruteforce_guesses: (Match match) -> Numeric
 
-    def repeat_guesses: (Match match) -> Numeric
-
     def sequence_guesses: (Match match) -> Numeric
 
     def digits_guesses: (Match match) -> Integer
