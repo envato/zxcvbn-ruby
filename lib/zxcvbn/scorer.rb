@@ -2,7 +2,6 @@
 
 require 'zxcvbn/guesses'
 require 'zxcvbn/crack_time'
-require 'zxcvbn/omnimatch'
 require 'zxcvbn/score'
 require 'zxcvbn/match'
 
@@ -31,9 +30,10 @@ module Zxcvbn
     private_constant :FACTORIAL, :MIN_GUESSES_POW
 
     # @param data [Data] the loaded frequency list and graph data
-    def initialize(data)
+    # @param omnimatch [Omnimatch] shared omnimatch instance
+    def initialize(data, omnimatch)
       @data = data
-      @omnimatch = Omnimatch.new(data)
+      @omnimatch = omnimatch
     end
 
     attr_reader :data
