@@ -31,9 +31,8 @@ module Zxcvbn
     #
     # @param match [Match] the match to estimate
     # @param password [String] the full password being evaluated
-    # @param user_inputs [Array] caller-supplied words forwarded to repeat sub-scoring
     # @return [Integer] estimated number of guesses
-    def estimate_guesses(match, password, user_inputs: [])
+    def estimate_guesses(match, password)
       return match.guesses if match.guesses
 
       min_guesses =
@@ -48,7 +47,7 @@ module Zxcvbn
         in 'bruteforce' then bruteforce_guesses(match)
         in 'dictionary' then dictionary_guesses(match)
         in 'spatial'    then spatial_guesses(match)
-        in 'repeat'     then repeat_guesses(match, user_inputs:)
+        in 'repeat'     then repeat_guesses(match)
         in 'sequence'   then sequence_guesses(match)
         in 'digits'     then digits_guesses(match)
         in 'year'       then year_guesses(match)
@@ -71,10 +70,8 @@ module Zxcvbn
     end
 
     # @param match [Match] a repeat match with base_guesses and repeat_count set
-    # @param user_inputs [Array] unused in this base implementation; present so
-    #   overrides (e.g. {Scorer}) can receive the value without changing the callsite
     # @return [Integer] base_guesses multiplied by the number of repetitions
-    def repeat_guesses(match, user_inputs: []) # rubocop:disable Lint/UnusedMethodArgument
+    def repeat_guesses(match)
       match.base_guesses * match.repeat_count
     end
 

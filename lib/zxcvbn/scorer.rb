@@ -52,7 +52,7 @@ module Zxcvbn
     # @param exclude_additive [Boolean] omit the sequence-length penalty
     #   (used when recursively analysing repeat base tokens)
     # @return [Score] the optimal score with match sequence and guess count
-    def most_guessable_match_sequence(password, matches, exclude_additive: false, user_inputs: [])
+    def most_guessable_match_sequence(password, matches, exclude_additive: false)
       n = password.length
 
       return build_score(password, [], 1) if n.zero?
@@ -74,7 +74,7 @@ module Zxcvbn
 
       update = lambda do |match, l|
         j       = match.j
-        est     = estimate_guesses(match, password, user_inputs:)
+        est     = estimate_guesses(match, password)
         pi_prev = l > 1 ? pi_float[match.i - 1][l - 1] : 1.0
         candidate = FACTORIAL[l] * est * pi_prev
         candidate += MIN_GUESSES_POW[l - 1] unless exclude_additive
@@ -132,12 +132,11 @@ module Zxcvbn
     # Compute guesses for a repeat match by recursively scoring the base token.
     #
     # @param match [Match] a repeat match with base_token set
-    # @param user_inputs [Array] caller-supplied words passed through to sub-scoring
     # @return [Float] base_guesses * repeat_count
-    def repeat_guesses(match, user_inputs: [])
+    def repeat_guesses(match)
       if match.base_guesses.nil?
-        base_matches  = @omnimatch.matches(match.base_token, user_inputs)
-        base_analysis = most_guessable_match_sequence(match.base_token, base_matches, user_inputs:)
+        base_matches  = @omnimatch.matches(match.base_token)
+        base_analysis = most_guessable_match_sequence(match.base_token, base_matches)
         match.base_guesses = base_analysis.guesses
       end
       match.base_guesses * match.repeat_count
