@@ -25,7 +25,7 @@ module Zxcvbn
     # Loads all built-in frequency lists and adjacency graphs from disk.
     def initialize
       ranked = DictionaryRanker.rank_dictionaries(
-        'english' => read_word_list('english.txt'),
+        'english_wikipedia' => read_word_list('english_wikipedia.txt'),
         'female_names' => read_word_list('female_names.txt'),
         'male_names' => read_word_list('male_names.txt'),
         'passwords' => read_word_list('passwords.txt'),

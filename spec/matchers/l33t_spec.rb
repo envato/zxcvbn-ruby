@@ -8,7 +8,7 @@ RSpec.describe Zxcvbn::Matchers::L33t do
   # Using a fixed set rather than the real english list avoids test brittleness
   # when frequency list data changes.
   let(:dictionary) { Zxcvbn::DictionaryRanker.rank_dictionary(%w[pas a as ass hello word testing]) }
-  let(:dictionary_matcher) { Zxcvbn::Matchers::Dictionary.new('english', dictionary) }
+  let(:dictionary_matcher) { Zxcvbn::Matchers::Dictionary.new('english_wikipedia', dictionary) }
 
   describe '#relevant_l33t_substitutions' do
     it 'returns relevant l33t substitutions' do

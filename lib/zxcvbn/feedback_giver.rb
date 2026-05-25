@@ -130,7 +130,7 @@ module Zxcvbn
           elsif (match.guesses_log10 || 0) <= 4
             'This is similar to a commonly used password'
           end
-        elsif match.dictionary_name == 'english'
+        elsif match.dictionary_name == 'english_wikipedia'
           'A word by itself is easy to guess' if is_sole_match
         elsif NAME_DICTIONARIES.include? match.dictionary_name
           if is_sole_match

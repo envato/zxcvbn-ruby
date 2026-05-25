@@ -26,7 +26,7 @@ RSpec.describe Zxcvbn::Match do
         token: 'p@ssw0rd',
         matched_word: 'password',
         rank: 100,
-        dictionary_name: 'english',
+        dictionary_name: 'english_wikipedia',
         reversed: false,
         l33t: true,
         sub: { '@' => 'a', '0' => 'o' },
@@ -240,12 +240,12 @@ RSpec.describe Zxcvbn::Match do
         j: 7,
         rank: 1,
         pattern: 'dictionary',
-        dictionary_name: 'english'
+        dictionary_name: 'english_wikipedia'
       )
 
       expect(match.pattern).to eq('dictionary')
       expect(match.matched_word).to eq('password')
-      expect(match.dictionary_name).to eq('english')
+      expect(match.dictionary_name).to eq('english_wikipedia')
     end
 
     it 'works with spatial matcher pattern' do

@@ -85,7 +85,7 @@ RSpec.describe Zxcvbn::Matchers::Dictionary do
     context 'Given a dictionary of English words' do
       subject(:matcher) { described_class.new('Test dictionary', dictionary) }
 
-      let(:dictionary) { ZXCVBN_TEST_DATA.ranked_dictionaries['english'] }
+      let(:dictionary) { ZXCVBN_TEST_DATA.ranked_dictionaries['english_wikipedia'] }
       let(:password) { 'whatisinit' }
 
       it 'finds all the matches' do
