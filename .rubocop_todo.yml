@@ -36,6 +36,7 @@ Metrics/ClassLength:
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/CyclomaticComplexity:
   Exclude:
+    - 'lib/zxcvbn/crack_time.rb'
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/guesses.rb'
     - 'lib/zxcvbn/matchers/date.rb'
@@ -67,6 +68,7 @@ Metrics/ModuleLength:
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/PerceivedComplexity:
   Exclude:
+    - 'lib/zxcvbn/crack_time.rb'
     - 'lib/zxcvbn/feedback_giver.rb'
     - 'lib/zxcvbn/guesses.rb'
     - 'lib/zxcvbn/matchers/date.rb'
