@@ -31,7 +31,7 @@ module Zxcvbn
     #
     # @param match [Match] the match to estimate
     # @param password [String] the full password being evaluated
-    # @return [Integer] estimated number of guesses
+    # @return [Numeric] estimated number of guesses
     def estimate_guesses(match, password)
       return match.guesses if match.guesses
 
@@ -61,7 +61,7 @@ module Zxcvbn
     end
 
     # @param match [Match] a bruteforce match
-    # @return [Float] guesses based on token length and assumed cardinality
+    # @return [Numeric] guesses based on token length and assumed cardinality
     def bruteforce_guesses(match)
       guesses = BRUTEFORCE_CARDINALITY**match.token.length.to_f
       guesses = Float::MAX if guesses.infinite?
@@ -70,7 +70,7 @@ module Zxcvbn
     end
 
     # @param match [Match] a repeat match with base_guesses and repeat_count set
-    # @return [Integer] base_guesses multiplied by the number of repetitions
+    # @return [Numeric] base_guesses multiplied by the number of repetitions
     def repeat_guesses(match)
       match.base_guesses * match.repeat_count
     end
@@ -115,7 +115,7 @@ module Zxcvbn
     end
 
     # @param match [Match] a spatial (keyboard pattern) match
-    # @return [Integer] guesses based on graph topology, turns, and shifted keys
+    # @return [Numeric] guesses based on graph topology, turns, and shifted keys
     def spatial_guesses(match)
       if %w[qwerty dvorak].include?(match.graph)
         s = starting_positions_for_graph('qwerty')
