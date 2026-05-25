@@ -88,28 +88,45 @@ RSpec.describe Zxcvbn::CrackTime do
     let(:year)    { month * 12 }
     let(:century) { year * 100 }
 
-    it 'returns instant for less than a minute' do
-      [0, minute - 1].each { |s| expect(display_time(s)).to eq 'instant' }
+    it 'returns "less than a second" for under 1 second' do
+      expect(display_time(0)).to eq 'less than a second'
+      expect(display_time(0.9)).to eq 'less than a second'
+    end
+
+    it 'returns seconds for less than a minute' do
+      expect(display_time(1)).to eq '1 second'
+      expect(display_time(30)).to eq '30 seconds'
+      expect(display_time(minute - 1)).to match(/\d+ seconds$/)
     end
 
     it 'returns minutes for less than an hour' do
-      [minute, hour - 1].each { |s| expect(display_time(s)).to match(/\d+ minutes$/) }
+      expect(display_time(minute)).to eq '1 minute'
+      expect(display_time(minute * 2)).to eq '2 minutes'
+      expect(display_time(hour - 1)).to match(/\d+ minutes$/)
     end
 
     it 'returns hours for less than a day' do
-      [hour, day - 1].each { |s| expect(display_time(s)).to match(/\d+ hours$/) }
+      expect(display_time(hour)).to eq '1 hour'
+      expect(display_time(hour * 2)).to eq '2 hours'
+      expect(display_time(day - 1)).to match(/\d+ hours$/)
     end
 
     it 'returns days for less than a month' do
-      [day, month - 1].each { |s| expect(display_time(s)).to match(/\d+ days$/) }
+      expect(display_time(day)).to eq '1 day'
+      expect(display_time(day * 2)).to eq '2 days'
+      expect(display_time(month - 1)).to match(/\d+ days$/)
     end
 
     it 'returns months for less than a year' do
-      [month, year - 1].each { |s| expect(display_time(s)).to match(/\d+ months$/) }
+      expect(display_time(month)).to eq '1 month'
+      expect(display_time(month * 2)).to eq '2 months'
+      expect(display_time(year - 1)).to match(/\d+ months$/)
     end
 
     it 'returns years for less than a century' do
-      [year, century - 1].each { |s| expect(display_time(s)).to match(/\d+ years$/) }
+      expect(display_time(year)).to eq '1 year'
+      expect(display_time(year * 2)).to eq '2 years'
+      expect(display_time(century - 1)).to match(/\d+ years$/)
     end
 
     it 'returns centuries for a century or more' do

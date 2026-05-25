@@ -58,18 +58,26 @@ module Zxcvbn
       year    = month * 12
       century = year * 100
 
-      if seconds < minute
-        'instant'
+      if seconds < 1
+        'less than a second'
+      elsif seconds < minute
+        t = seconds.round
+        "#{t} second#{'s' unless t == 1}"
       elsif seconds < hour
-        "#{1 + (seconds / minute).ceil} minutes"
+        t = (seconds / minute).round
+        "#{t} minute#{'s' unless t == 1}"
       elsif seconds < day
-        "#{1 + (seconds / hour).ceil} hours"
+        t = (seconds / hour).round
+        "#{t} hour#{'s' unless t == 1}"
       elsif seconds < month
-        "#{1 + (seconds / day).ceil} days"
+        t = (seconds / day).round
+        "#{t} day#{'s' unless t == 1}"
       elsif seconds < year
-        "#{1 + (seconds / month).ceil} months"
+        t = (seconds / month).round
+        "#{t} month#{'s' unless t == 1}"
       elsif seconds < century
-        "#{1 + (seconds / year).ceil} years"
+        t = (seconds / year).round
+        "#{t} year#{'s' unless t == 1}"
       else
         'centuries'
       end
