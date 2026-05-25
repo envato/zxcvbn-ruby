@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - YARD documentation for all public classes, modules, and methods ([#72])
 
 ### Changed
+ - **Breaking**: English frequency list dictionary name renamed from `english` to `english_wikipedia`, matching the zxcvbn.js source. Affects `match.dictionary_name` in results ([#90])
  - `Zxcvbn.test` now reuses a shared `Tester` instance across calls, avoiding repeated dictionary parsing. Equivalent to using `Tester` directly for callers who do not pass custom `word_lists` ([#80])
  - Repeat base tokens are now scored without `user_inputs`, matching zxcvbn.js v4. Previously, user-supplied words were propagated into the recursive scoring of a repeat's base token, causing repeat matches of user-supplied words to score lower than JS would report ([#83])
  - `Zxcvbn::Score` is now an immutable value object backed by Ruby's `Data`. Attribute setters (`calc_time=`, `feedback=`, etc.) have been removed. Instances now support structural equality (`==`/`eql?`/`hash`) and the `with` method for creating modified copies ([#74])
@@ -29,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - `crack_time_to_score` replaced by `guesses_to_score` with v4 thresholds: 0 (<1,005 guesses), 1 (<1,000,005), 2 (<100,000,005), 3 (<10,000,000,005), 4 (≥10,000,000,005) ([#69])
  - `Sequence` matcher ported to the zxcvbn.js v4 delta-based algorithm. Sequences are now detected using codepoint deltas up to ±5 (was ±1 only), enabling matches like `"ace"` (delta 2) or Unicode runs like `"αβγ"`. Sequence type is classified by character class (`lower`/`upper`/`digits`/`unicode`) rather than a lookup table ([#69])
  - `Date` matcher year range extended to 1000–2050; 2-digit years are now expanded (>50 → 1900s, ≤50 → 2000s) ([#69])
- - All frequency lists replaced with zxcvbn.js v4.4.2 versions: `passwords` (30k entries), `surnames` (10k), `female_names` (3,712), `male_names` (983), `english` (30k from the english_wikipedia list) ([#69])
+ - All frequency lists replaced with zxcvbn.js v4.4.2 versions: `passwords` (30k entries), `surnames` (10k), `female_names` (3,712), `male_names` (983), `english_wikipedia` (30k entries) ([#69])
  - **Breaking**: `entropy` on `Zxcvbn::Score` has been removed. Use `Score#guesses` or `Math.log2(score.guesses)` instead ([#69])
  - **Breaking**: `Score#crack_time` and `Score#crack_time_display` replaced by `Score#crack_times_seconds` and `Score#crack_times_display`, each a hash keyed by attack scenario (`online_throttling_100_per_hour`, `online_no_throttling_10_per_second`, `offline_slow_hashing_1e4_per_second`, `offline_fast_hashing_1e10_per_second`), matching the zxcvbn.js v4 output format ([#69])
  - **Breaking**: `Score#match_sequence` renamed to `Score#sequence` to match the zxcvbn.js v4 field name ([#69])
@@ -52,6 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#80]: https://github.com/envato/zxcvbn-ruby/pull/80
 [#83]: https://github.com/envato/zxcvbn-ruby/pull/83
 [#89]: https://github.com/envato/zxcvbn-ruby/pull/89
+[#90]: https://github.com/envato/zxcvbn-ruby/pull/90
 
 ## [1.4.0] - 2026-01-15
 

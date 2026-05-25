@@ -12,7 +12,8 @@ RSpec.describe Zxcvbn::Data do
     end
 
     it 'loads all expected dictionaries' do
-      expect(data.ranked_dictionaries.keys).to include('english', 'female_names', 'male_names', 'passwords', 'surnames')
+      expect(data.ranked_dictionaries.keys)
+        .to include('english_wikipedia', 'female_names', 'male_names', 'passwords', 'surnames')
     end
 
     it 'loads adjacency graphs' do
@@ -67,7 +68,7 @@ RSpec.describe Zxcvbn::Data do
 
   describe '#ranked_dictionaries' do
     it 'returns dictionaries with word rankings' do
-      dict = data.ranked_dictionaries['english']
+      dict = data.ranked_dictionaries['english_wikipedia']
       expect(dict).to be_a(Hash)
       expect(dict.values.first).to be_a(Integer)
     end
