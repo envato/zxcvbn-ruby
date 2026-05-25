@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'zxcvbn/dictionary_ranker'
+require 'zxcvbn/trie'
 require 'zxcvbn/matchers/dictionary'
 require 'zxcvbn/matchers/l33t'
 require 'zxcvbn/matchers/spatial'
@@ -40,7 +41,11 @@ module Zxcvbn
       return [] unless user_inputs.any?
 
       user_ranked_dictionary = DictionaryRanker.rank_dictionary(user_inputs)
-      dictionary_matcher = Matchers::Dictionary.new('user_inputs', user_ranked_dictionary)
+      dictionary_matcher = Matchers::Dictionary.new(
+        'user_inputs',
+        user_ranked_dictionary,
+        Trie.from_ranked(user_ranked_dictionary)
+      )
       l33t_matcher = Matchers::L33t.new([dictionary_matcher])
       [dictionary_matcher, l33t_matcher]
     end
@@ -68,7 +73,11 @@ module Zxcvbn
 
       if user_inputs.any?
         user_ranked_dictionary = DictionaryRanker.rank_dictionary(user_inputs)
-        matchers << Matchers::Dictionary.new('user_inputs', user_ranked_dictionary)
+        matchers << Matchers::Dictionary.new(
+          'user_inputs',
+          user_ranked_dictionary,
+          Trie.from_ranked(user_ranked_dictionary)
+        )
       end
 
       matchers.each do |matcher|

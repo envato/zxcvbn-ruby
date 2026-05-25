@@ -6,6 +6,15 @@ module Zxcvbn
   #
   # @see https://en.wikipedia.org/wiki/Trie
   class Trie
+    # Build a trie from a ranked dictionary hash.
+    # @param ranked_dictionary [Hash{String => Integer}] word → rank
+    # @return [Trie]
+    def self.from_ranked(ranked_dictionary)
+      trie = new
+      ranked_dictionary.each { |word, rank| trie.insert(word, rank) }
+      trie
+    end
+
     def initialize
       @root = {}
     end

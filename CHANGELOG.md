@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+ - User-input dictionary matchers now use the Trie path, preventing O(n²) slowdowns on long passwords ([#89])
+
 ### Added
  - `Zxcvbn::Guesses` module with per-pattern guess estimation formulas matching zxcvbn.js v4: bruteforce, dictionary (with uppercase and l33t variation multipliers), spatial, repeat, sequence, digits, year, and date ([#69])
  - `us_tv_and_film` frequency list (19,160 entries) introduced in zxcvbn.js v4 ([#69])
@@ -48,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [#77]: https://github.com/envato/zxcvbn-ruby/pull/77
 [#80]: https://github.com/envato/zxcvbn-ruby/pull/80
 [#83]: https://github.com/envato/zxcvbn-ruby/pull/83
+[#89]: https://github.com/envato/zxcvbn-ruby/pull/89
 
 ## [1.4.0] - 2026-01-15
 
