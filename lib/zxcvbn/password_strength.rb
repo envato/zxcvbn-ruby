@@ -11,7 +11,7 @@ module Zxcvbn
     # @param data [Data] loaded frequency lists and adjacency graphs
     def initialize(data)
       @omnimatch = Omnimatch.new(data)
-      @scorer = Scorer.new(data)
+      @scorer = Scorer.new(data, @omnimatch)
     end
 
     # Analyses password strength and returns a populated {Score}.

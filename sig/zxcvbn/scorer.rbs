@@ -8,7 +8,7 @@ module Zxcvbn
 
     attr_reader data: Data
 
-    def initialize: (Data data) -> void
+    def initialize: (Data data, Omnimatch omnimatch) -> void
 
     def most_guessable_match_sequence: (String password, Array[Match] matches, ?exclude_additive: bool, ?user_inputs: Array[String]) -> Score
 
