@@ -56,11 +56,12 @@ module Zxcvbn
         get_dictionary_match_feedback match, is_sole_match
 
       when 'spatial'
-        warning = if match.turns == 1
-                    'Straight rows of keys are easy to guess'
-                  else
-                    'Short keyboard patterns are easy to guess'
-                  end
+        warning =
+          if match.turns == 1
+            'Straight rows of keys are easy to guess'
+          else
+            'Short keyboard patterns are easy to guess'
+          end
 
         Feedback.new(
           warning:,

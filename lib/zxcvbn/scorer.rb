@@ -13,20 +13,21 @@ module Zxcvbn
     include CrackTime
 
     # Hash{Integer => Float} — factorial lookup for the DP hot loop.
-    # Precomputed up to MAX_PASSWORD_LENGTH (256); the default proc extends on demand
-    # by multiplying from the last cached entry.
-    FACTORIAL = (0..256).each_with_object(Hash.new { |h, n| h[n] = h[n - 1] * n }) do |n, h|
+    # Keys must be non-negative integers. Precomputed to 170 (the last value
+    # before overflow); returns Float::MAX for any key > 170.
+    FACTORIAL = (0..170).each_with_object(Hash.new { Float::MAX }) do |n, h|
       h[n] = n < 2 ? 1.0 : h[n - 1] * n
-    end
+    end.freeze
 
     # Hash{Integer => Float} — powers of {MIN_GUESSES_BEFORE_GROWING_SEQUENCE} for the
-    # additive sequence-length penalty. Precomputed up to MAX_PASSWORD_LENGTH (256);
-    # the default proc extends on demand by multiplying from the last cached entry.
-    MIN_GUESSES_POW = (0..255).each_with_object(
-      Hash.new { |h, n| h[n] = h[n - 1] * MIN_GUESSES_BEFORE_GROWING_SEQUENCE }
-    ) do |n, h|
+    # additive sequence-length penalty. Keys must be non-negative integers.
+    # Precomputed to 77 (the last value before overflow); returns Float::MAX for
+    # any key > 77.
+    MIN_GUESSES_POW = (0..77).each_with_object(Hash.new { Float::MAX }) do |n, h|
       h[n] = MIN_GUESSES_BEFORE_GROWING_SEQUENCE.to_f**n
-    end
+    end.freeze
+
+    private_constant :FACTORIAL, :MIN_GUESSES_POW
 
     # @param data [Data] the loaded frequency list and graph data
     def initialize(data)

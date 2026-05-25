@@ -172,7 +172,14 @@ Subsequent calls reuse the already-loaded dictionaries, so `calc_time` is signif
 => 0.0006769999745301902
 ```
 
-> [!NOTE]
+> [!WARNING]
+> Scoring time grows with password length. For adversarial inputs such as
+> short repeated sequences (e.g. `"ab" * 500`), the internal pattern-matching
+> DP produces super-quadratic runtime. Enforce a password length limit
+> appropriate for your use case before calling `Zxcvbn.test` or
+> `Zxcvbn::Tester#test`.
+
+> [!WARNING]
 > Storing the guesses or score for an encrypted or hashed value provides
 > information that can make cracking the value orders of magnitude easier for an
 > attacker. For this reason we advise you not to store the results of

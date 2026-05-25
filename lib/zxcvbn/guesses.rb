@@ -62,10 +62,11 @@ module Zxcvbn
     end
 
     # @param match [Match] a bruteforce match
-    # @return [Integer] guesses based on token length and assumed cardinality
+    # @return [Float] guesses based on token length and assumed cardinality
     def bruteforce_guesses(match)
-      guesses = BRUTEFORCE_CARDINALITY**match.token.length
-      min = match.token.length == 1 ? MIN_SUBMATCH_GUESSES_SINGLE_CHAR + 1 : MIN_SUBMATCH_GUESSES_MULTI_CHAR + 1
+      guesses = BRUTEFORCE_CARDINALITY**match.token.length.to_f
+      guesses = Float::MAX if guesses.infinite?
+      min = match.token.length == 1 ? MIN_SUBMATCH_GUESSES_SINGLE_CHAR + 1.0 : MIN_SUBMATCH_GUESSES_MULTI_CHAR + 1.0
       [guesses, min].max
     end
 

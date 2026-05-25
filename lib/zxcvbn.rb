@@ -14,7 +14,13 @@ module Zxcvbn
 
   DATA_PATH = Pathname(File.expand_path('../data', __dir__))
 
-  # Returns a Zxcvbn::Score for the given password
+  # Returns a Zxcvbn::Score for the given password.
+  #
+  # Scoring time grows with password length: the DP is O(n × m) where n is
+  # the password length and m is the number of pattern matches. For
+  # adversarial inputs such as short repeated sequences (e.g. "ab" * 500),
+  # m also grows with n, producing super-quadratic runtime. Enforce a
+  # password length limit appropriate for your use case before calling this.
   #
   # Example:
   #
