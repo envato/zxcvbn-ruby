@@ -4,12 +4,12 @@ require 'zxcvbn/matchers/regex_helpers'
 
 module Zxcvbn
   module Matchers
-    # Matches 4-digit year substrings (1900–2050) in the password.
+    # Matches 4-digit year substrings (1900–2019) in the password.
     class Year
       include RegexHelpers
 
-      # Matches years from 1900 to 2050.
-      YEAR_REGEX = /19\d\d|20[0-4]\d|2050/
+      # Matches years from 1900 to 2019, matching zxcvbn.js v4.
+      YEAR_REGEX = /19\d\d|200\d|201\d/
 
       # @param password [String]
       # @return [Array<Match>] matches with pattern "year"
