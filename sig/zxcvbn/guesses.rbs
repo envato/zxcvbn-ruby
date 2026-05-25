@@ -11,24 +11,24 @@ module Zxcvbn
     ALL_UPPER: Regexp
     ALL_LOWER: Regexp
 
-    def estimate_guesses: (Match match, String password) -> Numeric
+    def estimate_guesses: (MatchBuilder match, String password) -> Numeric
 
-    def bruteforce_guesses: (Match match) -> Numeric
+    def bruteforce_guesses: (MatchBuilder match) -> Numeric
 
-    def sequence_guesses: (Match match) -> Numeric
+    def sequence_guesses: (MatchBuilder match) -> Numeric
 
-    def digits_guesses: (Match match) -> Integer
+    def digits_guesses: (MatchBuilder match) -> Integer
 
-    def year_guesses: (Match match) -> Integer
+    def year_guesses: (MatchBuilder match) -> Integer
 
-    def date_guesses: (Match match) -> Numeric
+    def date_guesses: (MatchBuilder match) -> Numeric
 
-    def spatial_guesses: (Match match) -> Numeric
+    def spatial_guesses: (MatchBuilder match) -> Numeric
 
-    def dictionary_guesses: (Match match) -> Numeric
+    def dictionary_guesses: (MatchBuilder match) -> Numeric
 
-    def uppercase_variations: (Match match) -> Integer
+    def uppercase_variations: (MatchBuilder match) -> Integer
 
-    def l33t_variations: (Match match) -> Integer
+    def l33t_variations: (MatchBuilder match) -> Integer
   end
 end

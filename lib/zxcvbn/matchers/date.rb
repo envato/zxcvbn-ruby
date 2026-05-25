@@ -34,7 +34,7 @@ module Zxcvbn
       # whose character span is fully contained within another match's span.
       #
       # @param password [String] the password to search
-      # @return [Array<Match>] matches with pattern 'date', each containing
+      # @return [Array<MatchBuilder>] matches with pattern 'date', each containing
       #   +year+, +month+, +day+, and +separator+
       def matches(password)
         all = match_with_separator(password) + match_without_separator(password)
@@ -48,7 +48,7 @@ module Zxcvbn
       # {MAYBE_DATE_WITH_SEP}, then resolves day/month/year via {map_ints_to_dmy}.
       #
       # @param password [String] the password to search
-      # @return [Array<Match>] separator-based date matches
+      # @return [Array<MatchBuilder>] separator-based date matches
       def match_with_separator(password)
         result = []
         return result if password.length < 6
@@ -62,7 +62,7 @@ module Zxcvbn
             date = map_ints_to_dmy(m[1].to_i, m[3].to_i, m[4].to_i)
             next unless date
 
-            result << Match.new(
+            result << MatchBuilder.new(
               i:, j:, token:,
               pattern: 'date',
               separator: m[2],
@@ -84,7 +84,7 @@ module Zxcvbn
       # are skipped to avoid treating a year token as a date.
       #
       # @param password [String] the password to search
-      # @return [Array<Match>] separator-free date matches
+      # @return [Array<MatchBuilder>] separator-free date matches
       def match_without_separator(password)
         result = []
         return result if password.length < 4
@@ -106,7 +106,7 @@ module Zxcvbn
             reference_year = Time.now.year
             best = candidates.min_by { |c| (c[:year] - reference_year).abs }
 
-            result << Match.new(
+            result << MatchBuilder.new(
               i:, j:, token:,
               pattern: 'date',
               separator: '',

@@ -29,7 +29,7 @@ module Zxcvbn
       # Returns l33t-substituted dictionary matches found in password.
       #
       # @param password [String]
-      # @return [Array<Match>] matches with pattern "dictionary" and l33t: true
+      # @return [Array<MatchBuilder>] matches with pattern "dictionary" and l33t: true
       def matches(password)
         matches = []
         lowercased_password = password.downcase
@@ -90,16 +90,11 @@ module Zxcvbn
         token = password.slice(match.i, length)
         return if token.downcase == match.matched_word.downcase
 
-        match_substitutions = {}
-        substitution.each do |s, letter|
-          match_substitutions[s] = letter if token.include?(s)
-        end
+        match_substitutions = substitution.select { |s, _| token.include?(s) }
         match.l33t = true
         match.token = token
         match.sub = match_substitutions
-        match.sub_display = match_substitutions.map do |k, v|
-          "#{k} -> #{v}"
-        end.join(', ')
+        match.sub_display = match_substitutions.map { |k, v| "#{k} -> #{v}" }.join(', ')
         matches << match
       end
 

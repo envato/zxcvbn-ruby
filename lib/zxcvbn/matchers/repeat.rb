@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'zxcvbn/match'
+require 'zxcvbn/match_builder'
 
 module Zxcvbn
   module Matchers
@@ -20,7 +20,7 @@ module Zxcvbn
       # Find all repeated-substring matches in the password.
       #
       # @param password [String] the password to search
-      # @return [Array<Match>] matches with pattern 'repeat', each containing
+      # @return [Array<MatchBuilder>] matches with pattern 'repeat', each containing
       #   base_token (the repeated unit) and repeat_count
       def matches(password)
         result = []
@@ -43,7 +43,7 @@ module Zxcvbn
           j     = rx_match.end(0) - 1
           token = rx_match[0]
 
-          result << Match.new(
+          result << MatchBuilder.new(
             pattern: 'repeat',
             i:,
             j:,

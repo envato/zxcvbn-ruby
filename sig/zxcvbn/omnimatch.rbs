@@ -5,13 +5,13 @@ module Zxcvbn
 
     def initialize: (Data data) -> void
 
-    def matches: (String password, ?Array[String] user_inputs) -> Array[Match]
+    def matches: (String password, ?Array[String] user_inputs) -> Array[MatchBuilder]
 
     private
 
     def user_input_matchers: (Array[String] user_inputs) -> Array[untyped]
 
-    def reverse_dictionary_matches: (String password, ?Array[String] user_inputs) -> Array[Match]
+    def reverse_dictionary_matches: (String password, ?Array[String] user_inputs) -> Array[MatchBuilder]
 
     def build_matchers: () -> Array[untyped]
   end

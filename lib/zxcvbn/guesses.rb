@@ -24,14 +24,13 @@ module Zxcvbn
 
     # Estimate the number of guesses required to crack a match.
     #
-    # Returns immediately if the match already has a cached guesses value.
-    # Otherwise dispatches to a pattern-specific method, applies a minimum
-    # based on token length relative to the full password, and memoises the
-    # result on the match.
+    # Mutates the builder in place: sets guesses, guesses_log10, and any
+    # pattern-specific fields (base_guesses, uppercase_variations, l33t_variations).
+    # Returns immediately if guesses are already set.
     #
-    # @param match [Match] the match to estimate
+    # @param match [MatchBuilder] the builder to estimate
     # @param password [String] the full password being evaluated
-    # @return [Numeric] estimated number of guesses
+    # @return [Numeric] the estimated guess count
     def estimate_guesses(match, password)
       return match.guesses if match.guesses
 
@@ -60,7 +59,7 @@ module Zxcvbn
       match.guesses
     end
 
-    # @param match [Match] a bruteforce match
+    # @param match [MatchBuilder] a bruteforce match
     # @return [Numeric] guesses based on token length and assumed cardinality
     def bruteforce_guesses(match)
       guesses = BRUTEFORCE_CARDINALITY**match.token.length.to_f
@@ -69,7 +68,7 @@ module Zxcvbn
       [guesses, min].max
     end
 
-    # @param match [Match] a sequence match (e.g. "abc", "6543")
+    # @param match [MatchBuilder] a sequence match (e.g. "abc", "6543")
     # @return [Integer] guesses based on sequence type and direction
     def sequence_guesses(match)
       first_char = match.token[0]
@@ -85,20 +84,20 @@ module Zxcvbn
       base_guesses * match.token.length
     end
 
-    # @param match [Match] a digits match
+    # @param match [MatchBuilder] a digits match
     # @return [Integer] 10^length (all possible digit strings of that length)
     def digits_guesses(match)
       10**match.token.length
     end
 
-    # @param match [Match] a year match
+    # @param match [MatchBuilder] a year match
     # @return [Integer] distance from the current year, floored at {MIN_YEAR_SPACE}
     def year_guesses(match)
       reference_year = Time.now.year
       [(match.token.to_i - reference_year).abs, MIN_YEAR_SPACE].max
     end
 
-    # @param match [Match] a date match with year and separator set
+    # @param match [MatchBuilder] a date match with year and separator set
     # @return [Integer] 365 * year_space, multiplied by 4 if a separator is present
     def date_guesses(match)
       reference_year = Time.now.year
@@ -108,7 +107,7 @@ module Zxcvbn
       guesses
     end
 
-    # @param match [Match] a spatial (keyboard pattern) match
+    # @param match [MatchBuilder] a spatial (keyboard pattern) match
     # @return [Numeric] guesses based on graph topology, turns, and shifted keys
     def spatial_guesses(match)
       if %w[qwerty dvorak].include?(match.graph)
@@ -144,7 +143,7 @@ module Zxcvbn
       guesses
     end
 
-    # @param match [Match] a dictionary match
+    # @param match [MatchBuilder] a dictionary match
     # @return [Integer] rank multiplied by uppercase and l33t variation counts,
     #   plus a factor of 2 if the word was matched in reverse
     def dictionary_guesses(match)
@@ -161,7 +160,7 @@ module Zxcvbn
     # simple patterns (StartUpper, endUPPER, ALLCAPS). Otherwise returns the
     # sum of combinations for mixed-case tokens.
     #
-    # @param match [Match] a dictionary match
+    # @param match [MatchBuilder] a dictionary match
     # @return [Integer] uppercase variation multiplier
     def uppercase_variations(match)
       word = match.token
@@ -181,7 +180,7 @@ module Zxcvbn
     # Returns 1 if the match has no l33t substitutions. Otherwise multiplies
     # the variation count for each substituted character pair using combinations.
     #
-    # @param match [Match] a dictionary match, possibly with l33t substitutions
+    # @param match [MatchBuilder] a dictionary match, possibly with l33t substitutions
     # @return [Integer] l33t variation multiplier
     def l33t_variations(match)
       return 1 unless match.l33t && match.sub

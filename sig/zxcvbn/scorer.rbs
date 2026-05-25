@@ -10,8 +10,8 @@ module Zxcvbn
 
     def initialize: (Data data, Omnimatch omnimatch) -> void
 
-    def most_guessable_match_sequence: (String password, Array[Match] matches, ?exclude_additive: bool) -> Score
+    def most_guessable_match_sequence: (String password, Array[MatchBuilder] matches, ?exclude_additive: bool) -> Score
 
-    def repeat_guesses: (Match match) -> Numeric
+    def repeat_guesses: (MatchBuilder match) -> Numeric
   end
 end

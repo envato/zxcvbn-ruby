@@ -1,36 +1,36 @@
 module Zxcvbn
-  class Match
-    attr_accessor pattern: String?
-    attr_accessor i: Integer?
-    attr_accessor j: Integer?
-    attr_accessor token: String?
-    attr_accessor matched_word: String?
-    attr_accessor rank: Integer?
-    attr_accessor dictionary_name: String?
-    attr_accessor reversed: bool?
-    attr_accessor l33t: bool?
-    attr_accessor sub: Hash[String, String]?
-    attr_accessor sub_display: String?
-    attr_accessor guesses: Numeric?
-    attr_accessor guesses_log10: Float?
-    attr_accessor base_guesses: Numeric?
-    attr_accessor uppercase_variations: Numeric?
-    attr_accessor l33t_variations: Numeric?
-    attr_accessor base_token: String?
-    attr_accessor repeat_count: Integer?
-    attr_accessor sequence_name: String?
-    attr_accessor sequence_space: Integer?
-    attr_accessor ascending: bool?
-    attr_accessor graph: String?
-    attr_accessor turns: Integer?
-    attr_accessor shifted_count: Integer?
-    attr_accessor year: Integer?
-    attr_accessor month: Integer?
-    attr_accessor day: Integer?
-    attr_accessor separator: String?
+  class Match < Data
+    attr_reader pattern: String?
+    attr_reader i: Integer?
+    attr_reader j: Integer?
+    attr_reader token: String?
+    attr_reader matched_word: String?
+    attr_reader rank: Integer?
+    attr_reader dictionary_name: String?
+    attr_reader reversed: bool?
+    attr_reader l33t: bool?
+    attr_reader sub: Hash[String, String]?
+    attr_reader sub_display: String?
+    attr_reader guesses: Numeric?
+    attr_reader guesses_log10: Float?
+    attr_reader base_guesses: Numeric?
+    attr_reader uppercase_variations: Numeric?
+    attr_reader l33t_variations: Numeric?
+    attr_reader base_token: String?
+    attr_reader repeat_count: Integer?
+    attr_reader sequence_name: String?
+    attr_reader sequence_space: Integer?
+    attr_reader ascending: bool?
+    attr_reader graph: String?
+    attr_reader turns: Integer?
+    attr_reader shifted_count: Integer?
+    attr_reader year: Integer?
+    attr_reader month: Integer?
+    attr_reader day: Integer?
+    attr_reader separator: String?
 
-    def initialize: (**untyped attributes) -> void
+    def initialize: (?pattern: String?, ?i: Integer?, ?j: Integer?, ?token: String?, ?matched_word: String?, ?rank: Integer?, ?dictionary_name: String?, ?reversed: bool?, ?l33t: bool?, ?sub: Hash[String, String]?, ?sub_display: String?, ?guesses: Numeric?, ?guesses_log10: Float?, ?base_guesses: Numeric?, ?uppercase_variations: Numeric?, ?l33t_variations: Numeric?, ?base_token: String?, ?repeat_count: Integer?, ?sequence_name: String?, ?sequence_space: Integer?, ?ascending: bool?, ?graph: String?, ?turns: Integer?, ?shifted_count: Integer?, ?year: Integer?, ?month: Integer?, ?day: Integer?, ?separator: String?) -> void
 
-    def to_hash: () -> Hash[String, untyped]
+    def with: (**untyped) -> Match
   end
 end

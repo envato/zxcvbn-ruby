@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'zxcvbn/match'
+require 'zxcvbn/match_builder'
 
 module Zxcvbn
   module Matchers
@@ -19,7 +19,7 @@ module Zxcvbn
       # Returns all dictionary matches found in password.
       #
       # @param password [String]
-      # @return [Array<Match>] matches with pattern "dictionary"
+      # @return [Array<MatchBuilder>] matches with pattern "dictionary"
       def matches(password)
         lowercased_password = password.downcase
 
@@ -62,7 +62,7 @@ module Zxcvbn
       end
 
       def build_match(matched_word, token, start_pos, end_pos, rank)
-        Match.new(
+        MatchBuilder.new(
           matched_word:,
           token:,
           i: start_pos,
