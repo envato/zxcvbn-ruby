@@ -16,6 +16,11 @@ module Zxcvbn
 
   # Returns a Zxcvbn::Score for the given password.
   #
+  # Reuses a shared {Tester} instance (with pre-loaded dictionaries) when no
+  # custom +word_lists+ are given. For repeated calls without custom word lists,
+  # this is equivalent to using {Tester} directly. When +word_lists+ are
+  # provided, a fresh {Tester} is constructed each call.
+  #
   # Scoring time grows with password length: the DP is O(n × m) where n is
   # the password length and m is the number of pattern matches. For
   # adversarial inputs such as short repeated sequences (e.g. "ab" * 500),
@@ -26,8 +31,13 @@ module Zxcvbn
   #
   #   Zxcvbn.test("password").score #=> 0
   def test(password, user_inputs = [], word_lists = {})
-    tester = Tester.new
-    tester.add_word_lists(word_lists)
-    tester.test(password, user_inputs)
+    if word_lists.empty?
+      @default_tester ||= Tester.new
+      @default_tester.test(password, user_inputs)
+    else
+      tester = Tester.new
+      tester.add_word_lists(word_lists)
+      tester.test(password, user_inputs)
+    end
   end
 end
