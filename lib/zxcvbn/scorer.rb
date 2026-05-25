@@ -132,7 +132,7 @@ module Zxcvbn
     # Compute guesses for a repeat match by recursively scoring the base token.
     #
     # @param match [Match] a repeat match with base_token set
-    # @return [Float] base_guesses * repeat_count
+    # @return [Numeric] base_guesses * repeat_count
     def repeat_guesses(match)
       if match.base_guesses.nil?
         base_matches  = @omnimatch.matches(match.base_token)

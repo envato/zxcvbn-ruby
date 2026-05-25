@@ -24,12 +24,20 @@ RSpec.describe Zxcvbn::Scorer do
       end
     end
 
-    context 'with a single match spanning the full password' do
-      it 'selects the match over a bruteforce fallback' do
+    context 'when a match covers the full password' do
+      it 'prefers a cheap match over bruteforce' do
         match = Zxcvbn::Match.new(pattern: 'dictionary', i: 0, j: 2, token: 'abc', rank: 1)
         result = scorer.most_guessable_match_sequence('abc', [match])
-        expect(result.guesses).to eq 2
         expect(result.sequence).to eq [match]
+        expect(result.guesses).to be < 1001 # cheaper than bruteforce of 'abc' (10^3 + 1)
+      end
+
+      it 'prefers bruteforce when the match exceeds its cost' do
+        # rank=2000 → match guesses=2001; bruteforce of 'abc' = 1001
+        match = Zxcvbn::Match.new(pattern: 'dictionary', i: 0, j: 2, token: 'abc', rank: 2000)
+        result = scorer.most_guessable_match_sequence('abc', [match])
+        expect(result.sequence.length).to eq 1
+        expect(result.sequence.first.pattern).to eq 'bruteforce'
       end
     end
 
@@ -65,11 +73,15 @@ RSpec.describe Zxcvbn::Scorer do
       end
     end
 
-    context 'bruteforce chain prevention' do
-      it 'does not build a multi-match sequence from bruteforce segments only' do
-        result = scorer.most_guessable_match_sequence('ab', [])
-        expect(result.sequence.count).to eq 1
-        expect(result.sequence.first.token).to eq 'ab'
+    context 'with a partial match leaving a gap' do
+      it 'fills the uncovered region with bruteforce' do
+        # match covers 'abcd'; DP must cover 'efgh' with bruteforce
+        match = Zxcvbn::Match.new(pattern: 'dictionary', i: 0, j: 3, token: 'abcd', rank: 1)
+        result = scorer.most_guessable_match_sequence('abcdefgh', [match])
+        expect(result.sequence.length).to eq 2
+        expect(result.sequence.first).to eq match
+        expect(result.sequence.last.pattern).to eq 'bruteforce'
+        expect(result.sequence.last.token).to eq 'efgh'
       end
     end
   end
