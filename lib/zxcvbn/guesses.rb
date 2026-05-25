@@ -69,12 +69,6 @@ module Zxcvbn
       [guesses, min].max
     end
 
-    # @param match [Match] a repeat match with base_guesses and repeat_count set
-    # @return [Numeric] base_guesses multiplied by the number of repetitions
-    def repeat_guesses(match)
-      match.base_guesses * match.repeat_count
-    end
-
     # @param match [Match] a sequence match (e.g. "abc", "6543")
     # @return [Integer] guesses based on sequence type and direction
     def sequence_guesses(match)

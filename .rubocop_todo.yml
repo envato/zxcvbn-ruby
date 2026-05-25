@@ -41,7 +41,6 @@ Metrics/CyclomaticComplexity:
     - 'lib/zxcvbn/matchers/date.rb'
     - 'lib/zxcvbn/matchers/sequences.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
-    - 'lib/zxcvbn/math.rb'
     - 'lib/zxcvbn/scorer.rb'
 
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
@@ -54,11 +53,9 @@ Metrics/MethodLength:
     - 'lib/zxcvbn/matchers/date.rb'
     - 'lib/zxcvbn/matchers/dictionary.rb'
     - 'lib/zxcvbn/matchers/l33t.rb'
-    - 'lib/zxcvbn/matchers/regex_helpers.rb'
     - 'lib/zxcvbn/matchers/repeat.rb'
     - 'lib/zxcvbn/matchers/sequences.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
-    - 'lib/zxcvbn/math.rb'
     - 'lib/zxcvbn/omnimatch.rb'
     - 'lib/zxcvbn/scorer.rb'
 
@@ -89,7 +86,6 @@ Naming/MethodName:
 Naming/MethodParameterName:
   Exclude:
     - 'lib/zxcvbn/math.rb'
-    - 'lib/zxcvbn/scorer.rb'
 
 # Configuration parameters: AllowedVariables.
 Style/GlobalVars:
