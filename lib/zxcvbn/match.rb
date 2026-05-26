@@ -81,5 +81,25 @@ module Zxcvbn
     )
       super
     end
+
+    # @return [String] a human-readable representation omitting nil fields
+    def inspect
+      fields = to_h.reject { |_, v| v.nil? }.map { |k, v| "#{k}=#{v.inspect}" }.join(', ')
+      "#<data #{self.class} #{fields}>"
+    end
+
+    # @param pp [PP] the pretty-printer instance
+    # @return [void]
+    def pretty_print(pp)
+      fields = to_h.reject { |_, v| v.nil? }
+      pp.group(1, "#<data #{self.class}", '>') do
+        fields.each_with_index do |(k, v), i|
+          pp.text(',') if i.positive?
+          pp.breakable ' '
+          pp.text("#{k}=")
+          v.pretty_print(pp)
+        end
+      end
+    end
   end
 end
