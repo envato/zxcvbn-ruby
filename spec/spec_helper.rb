@@ -77,5 +77,13 @@ TEST_PASSWORDS = [
   'chenlu0525',
   'rtrtrtrt',
   'my_new_password',
-  'Bilbo Baggin'
+  'Bilbo Baggin',
+
+  # Feedback branch coverage
+  '1997',         # year warning: "Recent years are easy to guess"
+  '3/13/1997',    # date warning: "Dates are often easy to guess"
+  'qaz',          # spatial turns=1: "Straight rows of keys are easy to guess"
+  'democracy',    # wikipedia sole match: "A word by itself is easy to guess"
+  'drowssap',     # reversed word suggestion
+  'jennifer'      # sole name: "Names and surnames by themselves are easy to guess"
 ].freeze
