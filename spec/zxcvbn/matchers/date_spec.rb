@@ -165,6 +165,29 @@ RSpec.describe Zxcvbn::Matchers::Date do
       expect(full).not_to be_nil
       expect(full.year).to eq 1997
     end
+
+    it 'uses the supplied reference_year, not Time.now, to pick the closest candidate' do
+      # "1285" splits into candidates: year=1985 (2-digit "85"→1985) and year=2005 (2-digit "05"→2005).
+      # reference_year near 1990 picks 1985; reference_year near 2020 picks 2005.
+      matches_past = matcher.match_without_separator('1285', reference_year: 1990)
+      matches_recent = matcher.match_without_separator('1285', reference_year: 2020)
+      full_past = matches_past.find { |m| m.token == '1285' }
+      full_recent = matches_recent.find { |m| m.token == '1285' }
+      expect(full_past.year).to be < 2000
+      expect(full_recent.year).to be >= 2000
+    end
+  end
+
+  describe '#matches reference_year threading' do
+    it 'uses the supplied reference_year rather than Time.now.year' do
+      allow(Time).to receive(:now).and_return(double(year: 9999))
+      # "1285" has candidates 1985 and 2005. With reference_year=1990, year 1985 wins.
+      # If Time.now leaked through it would return 9999 and year 2005 would win instead.
+      results = matcher.matches('1285', reference_year: 1990)
+      full = results.find { |m| m.token == '1285' }
+      expect(full).not_to be_nil
+      expect(full.year).to be < 2000
+    end
   end
 
   context 'invalid date' do

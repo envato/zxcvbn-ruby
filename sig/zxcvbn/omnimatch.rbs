@@ -5,7 +5,7 @@ module Zxcvbn
 
     def initialize: (Data data) -> void
 
-    def matches: (String password, ?Array[String] user_inputs) -> Array[MatchBuilder]
+    def matches: (String password, ?Array[String] user_inputs, ?reference_year: Integer) -> Array[MatchBuilder]
 
     private
 

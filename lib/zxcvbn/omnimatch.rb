@@ -29,10 +29,19 @@ module Zxcvbn
     #
     # @param password [String] the password to analyse
     # @param user_inputs [Array<String>] caller-supplied words to add as a dictionary
+    # @param reference_year [Integer] year used by the date matcher to pick the closest
+    #   candidate; shared with the scorer so both phases agree even across midnight
     # @return [Array<MatchBuilder>]
-    def matches(password, user_inputs = [])
+    def matches(password, user_inputs = [], reference_year: Time.now.year)
       matchers = @matchers + user_input_matchers(user_inputs)
-      all_matches = matchers.map { |matcher| matcher.matches(password) }.inject(&:+)
+      all_matches = matchers.flat_map do |matcher|
+        case matcher
+        when Matchers::Date
+          matcher.matches(password, reference_year:)
+        else
+          matcher.matches(password)
+        end
+      end
       all_matches + reverse_dictionary_matches(password, user_inputs)
     end
 
