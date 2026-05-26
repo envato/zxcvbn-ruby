@@ -1,0 +1,21 @@
+module Zxcvbn
+  module Matchers
+    class Dictionary
+      @name: String
+      @ranked_dictionary: Data::ranked_dictionary
+      @trie: Trie?
+
+      def initialize: (String name, Data::ranked_dictionary ranked_dictionary, ?Trie? trie) -> void
+
+      def matches: (String password) -> Array[MatchBuilder]
+
+      private
+
+      def trie_matches: (String password, String lowercased_password) -> Array[MatchBuilder]
+
+      def hash_matches: (String password, String lowercased_password) -> Array[MatchBuilder]
+
+      def build_match: (String matched_word, String token, Integer start_pos, Integer end_pos, Integer rank) -> MatchBuilder
+    end
+  end
+end

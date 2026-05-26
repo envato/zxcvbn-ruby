@@ -1,0 +1,7 @@
+module Zxcvbn
+  module Matchers
+    module RegexHelpers
+      def re_match_all: (Regexp regex, String password) { (MatchBuilder, MatchData) -> void } -> void
+    end
+  end
+end

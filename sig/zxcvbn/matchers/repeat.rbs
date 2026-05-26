@@ -1,0 +1,11 @@
+module Zxcvbn
+  module Matchers
+    class Repeat
+      GREEDY: Regexp
+      LAZY: Regexp
+      LAZY_ANCHORED: Regexp
+
+      def matches: (String password) -> Array[MatchBuilder]
+    end
+  end
+end

@@ -4,6 +4,8 @@ module Zxcvbn
 
     @root: node
 
+    def self.from_ranked: (Data::ranked_dictionary ranked_dictionary) -> Trie
+
     def initialize: () -> void
 
     def insert: (String word, Integer rank) -> void

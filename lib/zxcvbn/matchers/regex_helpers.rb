@@ -14,7 +14,7 @@ module Zxcvbn
       #
       # @param regex [Regexp] pattern to search for
       # @param password [String] the password to search
-      # @yieldparam match [Match] match with i, j, and token set
+      # @yieldparam match [MatchBuilder] match with i, j, and token set
       # @yieldparam re_match [MatchData] the underlying MatchData object
       # @return [void]
       def re_match_all(regex, password)

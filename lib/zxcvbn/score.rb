@@ -6,7 +6,7 @@ module Zxcvbn
   # @!attribute [r] password
   #   @return [String] the password that was evaluated
   # @!attribute [r] guesses
-  #   @return [Integer] estimated number of guesses to crack the password
+  #   @return [Numeric] estimated number of guesses to crack the password
   # @!attribute [r] sequence
   #   @return [Array<Match>] the optimal match sequence
   # @!attribute [r] crack_times_seconds
