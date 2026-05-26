@@ -14,6 +14,7 @@ RSpec.describe Zxcvbn::Guesses do
 
       def initialize(data = nil)
         @data = data
+        @reference_year = Time.now.year
       end
     end.new
   end

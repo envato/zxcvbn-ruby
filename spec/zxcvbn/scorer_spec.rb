@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Zxcvbn::Scorer do
-  subject(:scorer) { described_class.new(ZXCVBN_TEST_DATA, Zxcvbn::Omnimatch.new(ZXCVBN_TEST_DATA)) }
+  subject(:scorer) { described_class.new(ZXCVBN_TEST_DATA, Zxcvbn::Omnimatch.new(ZXCVBN_TEST_DATA), Time.now.year) }
 
   describe '#most_guessable_match_sequence' do
     context 'with an empty password' do

@@ -32,9 +32,11 @@ module Zxcvbn
 
     # @param data [Data] the loaded frequency list and graph data
     # @param omnimatch [Omnimatch] shared omnimatch instance
-    def initialize(data, omnimatch)
+    # @param reference_year [Integer] year used for date/year guess calculations
+    def initialize(data, omnimatch, reference_year)
       @data = data
       @omnimatch = omnimatch
+      @reference_year = reference_year
     end
 
     attr_reader :data
@@ -141,7 +143,7 @@ module Zxcvbn
         # string so each unique base_token is scored at most once per scoring run.
         @repeat_cache ||= {}
         match.base_guesses = @repeat_cache[match.base_token] ||= begin
-          base_matches = @omnimatch.matches(match.base_token)
+          base_matches = @omnimatch.matches(match.base_token, reference_year: @reference_year)
           most_guessable_match_sequence(match.base_token, base_matches).guesses
         end
       end
