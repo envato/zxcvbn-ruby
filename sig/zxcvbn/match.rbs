@@ -32,5 +32,9 @@ module Zxcvbn
     def initialize: (?pattern: String?, ?i: Integer?, ?j: Integer?, ?token: String?, ?matched_word: String?, ?rank: Integer?, ?dictionary_name: String?, ?reversed: bool?, ?l33t: bool?, ?sub: Hash[String, String]?, ?sub_display: String?, ?guesses: Numeric?, ?guesses_log10: Float?, ?base_guesses: Numeric?, ?uppercase_variations: Numeric?, ?l33t_variations: Numeric?, ?base_token: String?, ?repeat_count: Integer?, ?sequence_name: String?, ?sequence_space: Integer?, ?ascending: bool?, ?graph: String?, ?turns: Integer?, ?shifted_count: Integer?, ?year: Integer?, ?month: Integer?, ?day: Integer?, ?separator: String?) -> void
 
     def with: (**untyped) -> Match
+
+    def inspect: () -> String
+
+    def pretty_print: (untyped pp) -> void
   end
 end

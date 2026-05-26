@@ -65,6 +65,11 @@ Metrics/ModuleLength:
   Exclude:
     - 'lib/zxcvbn/guesses.rb'
 
+# Configuration parameters: Max, CountKeywordArgs, MaxOptionalParameters.
+Metrics/ParameterLists:
+  Exclude:
+    - 'lib/zxcvbn/match.rb'
+
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/PerceivedComplexity:
   Exclude:
