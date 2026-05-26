@@ -186,16 +186,6 @@ module Zxcvbn
         nil
       end
 
-      # Returns +true+ if +token+ is a 4-digit string that looks like a standalone
-      # year (matched by {Year::YEAR_REGEX}), used to avoid double-counting year
-      # tokens as no-separator dates.
-      #
-      # @param token [String] the token to test
-      # @return [Boolean]
-      def matches_year?(token)
-        token.size == 4 && Year::YEAR_REGEX.match?(token)
-      end
-
       # Expands a 2-digit year to 4 digits. Values above 99 are returned unchanged.
       # Mirrors +two_to_four_digit_year+ in the JS v4 source.
       #

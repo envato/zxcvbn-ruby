@@ -88,20 +88,6 @@ RSpec.describe Zxcvbn::Matchers::Date do
     end
   end
 
-  describe '#matches_year?' do
-    it 'recognises years in the 1900–2019 range' do
-      expect(matcher.matches_year?('1999')).to be_truthy
-      expect(matcher.matches_year?('2009')).to be_truthy
-      expect(matcher.matches_year?('2019')).to be_truthy
-    end
-
-    it 'does not block tokens outside the year range' do
-      expect(matcher.matches_year?('2020')).to be_falsy
-      expect(matcher.matches_year?('2025')).to be_falsy
-      expect(matcher.matches_year?('1899')).to be_falsy
-    end
-  end
-
   describe '#expand_year' do
     {
       12 => 2012,
