@@ -274,6 +274,120 @@ Subsequent calls reuse the already-loaded dictionaries, so `calc_time` is signif
 > attacker. For this reason we advise you not to store the results of
 > `Zxcvbn::Tester#test`. Further reading: [A Tale of Security Gone Wrong](https://web.archive.org/web/20240715041147/http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/).
 
+## Migrating from 1.x
+
+Version 2 aligns with the zxcvbn.js v4 algorithm and API. Scores will change for many passwords — this is expected. The sections below cover every breaking API change.
+
+### Ruby version
+
+Ruby 3.3 or later is required.
+
+### `Score` field changes
+
+The following attributes have been removed and will raise `NoMethodError`. Use the 2.x equivalents below:
+
+| Removed (1.x) | 2.x equivalent |
+|-----|-----|
+| `result.entropy` | `Math.log2(result.guesses)` or `result.guesses_log10 * Math.log2(10)` |
+| `result.crack_time` | `result.crack_times_seconds["online_no_throttling_10_per_second"]` (see [Attack scenarios](#attack-scenarios)) |
+| `result.crack_time_display` | `result.crack_times_display["online_no_throttling_10_per_second"]` |
+| `result.match_sequence` | `result.sequence` |
+
+1.x `crack_time` used 10 guesses/second (unthrottled online), corresponding to the `"online_no_throttling_10_per_second"` scenario. The entropy formula gives the same log-scale difficulty value, but the number will differ from 1.x because the underlying guessing algorithm has been rewritten.
+
+`Score` is now an immutable value object. Attribute setters (`calc_time=`, `feedback=`, etc.) have been removed. Use `result.with` to create a modified copy — `with` returns a **new** frozen object:
+
+```ruby
+# 1.x
+result.calc_time = 0.001
+
+# 2.x
+result = result.with(calc_time: 0.001)
+```
+
+#### Attack scenarios
+
+`crack_times_seconds` and `crack_times_display` are both hashes keyed by attack scenario:
+
+```ruby
+result.crack_times_display
+# => {
+#   "online_throttling_100_per_hour"       => "6 days",
+#   "online_no_throttling_10_per_second"   => "25 minutes",
+#   "offline_slow_hashing_1e4_per_second"  => "2 seconds",
+#   "offline_fast_hashing_1e10_per_second" => "less than a second"
+# }
+```
+
+### `Match` field changes
+
+The following attributes have been removed and will raise `NoMethodError`. Use the 2.x equivalents below:
+
+| Removed (1.x) | 2.x equivalent |
+|-----|-----|
+| `match.entropy` | `match.guesses_log10 * Math.log2(10)` |
+| `match.base_entropy` | `Math.log2(match.base_guesses)` (dictionary matches only — `base_guesses` is `nil` for other patterns) |
+| `match.uppercase_entropy` | `Math.log2(match.uppercase_variations)` (dictionary matches only — `uppercase_variations` is `nil` for other patterns) |
+| `match.l33t_entropy` | `Math.log2(match.l33t_variations)` (dictionary matches only — `l33t_variations` is `nil` for other patterns) |
+| `match.repeated_char` | `match.base_token` (now supports multi-character repeating units e.g. `"abcabc"`) |
+| `match.to_hash` | `match.to_h` — note: keys are now symbols (not strings), all 28 attributes are included (not just those that were set), and key order follows member definition rather than alphabetical. To replicate old behaviour: `match.to_h.transform_keys(&:to_s).compact.sort.to_h` |
+
+These translations give a log-scale difficulty value but are not numerically equivalent to 1.x — the underlying guess estimation formulas have been rewritten.
+
+`Match` is now an immutable value object. Attribute setters have been removed. Use `match.with(attr: value)` to derive a modified copy. Any code that splatted a match (`**match`) or passed it to `Hash()` will now raise `TypeError` — use `match.to_h` explicitly instead.
+
+### `Feedback` changes
+
+`Feedback#warning` now returns `''` instead of `nil` when no warning applies. Update `nil` checks accordingly:
+
+```ruby
+# 1.x
+if result.feedback.warning
+  show_warning(result.feedback.warning)
+end
+
+# 2.x
+unless result.feedback.warning.empty?
+  show_warning(result.feedback.warning)
+end
+```
+
+Also update any `||` defaults on `warning` — `''` is truthy so the fallback no longer fires:
+
+```ruby
+# 1.x — worked because nil is falsy
+label = result.feedback.warning || "No issues"
+
+# 2.x
+label = result.feedback.warning.empty? ? "No issues" : result.feedback.warning
+```
+
+The "This is similar to a commonly used password" warning is now only emitted when `match.guesses_log10 <= 4` (previously it applied to any l33t, reversed, or non-sole-match on the passwords dictionary). Update any code that asserts on feedback content.
+
+`Feedback` is now an immutable value object. Attribute setters (`warning=`, `suggestions=`) have been removed. Use `result.feedback.with(warning: "...")` to derive a modified copy.
+
+### Dictionary name change
+
+The `english` frequency list has been renamed to `english_wikipedia`. If you filter matches by `dictionary_name`:
+
+```ruby
+# 1.x
+match.dictionary_name == "english"
+
+# 2.x
+match.dictionary_name == "english_wikipedia"
+```
+
+If you pass a `word_lists` argument to `Zxcvbn.test` or `Tester#add_word_lists`, update any `"english"` key to `"english_wikipedia"` to keep custom entries in the same namespace as the built-in list.
+
+A new `us_tv_and_film` frequency list has also been added. Update any `dictionary_name` allowlists or case statements to include it.
+
+### Score values will change
+
+The scoring algorithm has been rewritten to match zxcvbn.js v4. It now minimises total guesses rather than entropy bits. Bruteforce cardinality is fixed at 10 regardless of the character classes in the password (previously 10–95 depending on which character classes were present). Scores (0–4) for many passwords will differ from 1.x — this is expected and intentional.
+
+Audit any code that gates on `result.score` (e.g. form validation thresholds), persists scores in a database, or asserts on score values in tests — these will need review after upgrading.
+
 ## Contact
 
  - [GitHub project](https://github.com/envato/zxcvbn-ruby)
