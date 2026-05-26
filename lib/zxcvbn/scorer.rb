@@ -136,9 +136,14 @@ module Zxcvbn
     # @return [Numeric] base_guesses * repeat_count
     def repeat_guesses(match)
       if match.base_guesses.nil?
-        base_matches  = @omnimatch.matches(match.base_token)
-        base_analysis = most_guessable_match_sequence(match.base_token, base_matches)
-        match.base_guesses = base_analysis.guesses
+        # The same base_token can appear in multiple distinct match objects when
+        # a repeated token occurs at several positions in the password. Cache by
+        # string so each unique base_token is scored at most once per scoring run.
+        @repeat_cache ||= {}
+        match.base_guesses = @repeat_cache[match.base_token] ||= begin
+          base_matches = @omnimatch.matches(match.base_token)
+          most_guessable_match_sequence(match.base_token, base_matches).guesses
+        end
       end
       match.base_guesses * match.repeat_count
     end
