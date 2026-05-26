@@ -11,6 +11,8 @@ module Zxcvbn
     ALL_UPPER: Regexp
     ALL_LOWER: Regexp
 
+    attr_reader reference_year: Integer
+
     def estimate_guesses: (MatchBuilder match, String password) -> Numeric
 
     def bruteforce_guesses: (MatchBuilder match) -> Numeric
