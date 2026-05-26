@@ -1,4 +1,7 @@
 module Zxcvbn
+  class PasswordTooLong < ArgumentError
+  end
+
   VERSION: String
 
   DATA_PATH: Pathname

@@ -27,11 +27,10 @@ module Zxcvbn
   # this is equivalent to using {Tester} directly. When +word_lists+ are
   # provided, a fresh {Tester} is constructed each call.
   #
-  # Scoring time grows with password length: the DP is O(n × m) where n is
-  # the password length and m is the number of pattern matches. For
-  # adversarial inputs such as short repeated sequences (e.g. "ab" * 500),
-  # m also grows with n, producing super-quadratic runtime. Enforce a
-  # password length limit appropriate for your use case before calling this.
+  # Raises {PasswordTooLong} (a subclass of +ArgumentError+) if the password
+  # exceeds +Tester::MAX_PASSWORD_LENGTH+ characters (default: 256). Override
+  # process-wide by setting +ZXCVBN_MAX_PASSWORD_LENGTH+ before the gem loads;
+  # for per-call limits, use {Tester} directly with +max_password_length:+.
   #
   # Example:
   #

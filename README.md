@@ -264,9 +264,12 @@ Subsequent calls reuse the already-loaded dictionaries, so `calc_time` is signif
 > [!WARNING]
 > Scoring time grows with password length. For adversarial inputs such as
 > short repeated sequences (e.g. `"ab" * 500`), the internal pattern-matching
-> DP produces super-quadratic runtime. Enforce a password length limit
-> appropriate for your use case before calling `Zxcvbn.test` or
-> `Zxcvbn::Tester#test`.
+> DP produces super-quadratic runtime. Both `Zxcvbn.test` and
+> `Zxcvbn::Tester#test` raise `Zxcvbn::PasswordTooLong` for passwords longer
+> than `Tester::MAX_PASSWORD_LENGTH` characters (default: 256). Override the
+> limit with the `ZXCVBN_MAX_PASSWORD_LENGTH` environment variable, but be
+> aware that raising it re-exposes this runtime risk. The `user_inputs`
+> parameter is not length-bounded; apply your own limit to those values.
 
 > [!WARNING]
 > Storing the guesses or score for an encrypted or hashed value provides
@@ -381,6 +384,36 @@ match.dictionary_name == "english_wikipedia"
 If you pass a `word_lists` argument to `Zxcvbn.test` or `Tester#add_word_lists`, update any `"english"` key to `"english_wikipedia"` to keep custom entries in the same namespace as the built-in list.
 
 A new `us_tv_and_film` frequency list has also been added. Update any `dictionary_name` allowlists or case statements to include it.
+
+### Password length limit
+
+`Tester#test` and `Zxcvbn.test` now raise `Zxcvbn::PasswordTooLong` (a subclass of `ArgumentError`) for passwords longer than `Tester::MAX_PASSWORD_LENGTH` characters (default: 256). Previously, long passwords were accepted without error. The `user_inputs` parameter remains unbounded.
+
+If your application accepts user-controlled input longer than 256 characters, either add a length check before calling the gem, construct a `Tester` with a custom limit, or adjust the process-wide default via the `ZXCVBN_MAX_PASSWORD_LENGTH` environment variable.
+
+To enforce your own limit before calling the gem (note: bcrypt's limit is 72 **bytes**, not characters):
+
+```ruby
+raise ArgumentError, "Password too long" if password.bytesize > 72 # bcrypt's 72-byte limit
+result = Zxcvbn.test(password)
+```
+
+To use a different limit for a specific tester without touching the environment:
+
+```ruby
+tester = Zxcvbn::Tester.new(max_password_length: 128)
+result = tester.test(password)
+```
+
+To adjust the process-wide default, set the environment variable **before the process starts** — the default is captured once when the gem loads and cannot be changed at runtime:
+
+```sh
+ZXCVBN_MAX_PASSWORD_LENGTH=1024 bundle exec rails server
+```
+
+In Rails, set it via the process environment (e.g. a `.env` file read by your process manager), not in `config/initializers/` — initializers run after `Bundler.require` loads the gem, so setting the env var there has no effect.
+
+Or export it from your shell profile, process manager, or platform environment config (Heroku, Docker, etc.). Note that raising the limit re-exposes the super-quadratic runtime for adversarial inputs to the `password` argument.
 
 ### Score values will change
 

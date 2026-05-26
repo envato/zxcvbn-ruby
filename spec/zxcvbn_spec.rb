@@ -23,4 +23,16 @@ RSpec.describe 'Zxcvbn.test' do
       expect(result.guesses).to_not be_nil
     end
   end
+
+  context 'with a password over the length limit' do
+    let(:over_limit) { 'a' * (Zxcvbn::Tester::MAX_PASSWORD_LENGTH + 1) }
+
+    it 'raises PasswordTooLong via the shared default tester' do
+      expect { Zxcvbn.test(over_limit) }.to raise_error(Zxcvbn::PasswordTooLong)
+    end
+
+    it 'raises PasswordTooLong via a fresh tester when word_lists are supplied' do
+      expect { Zxcvbn.test(over_limit, [], { 'custom' => ['word'] }) }.to raise_error(Zxcvbn::PasswordTooLong)
+    end
+  end
 end

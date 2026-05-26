@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Repeat feedback now distinguishes single-char repeats (`"aaa"`) from multi-char repeats (`"abcabcabc"`), matching zxcvbn.js v4 ([#69])
  - `year` pattern matches now produce a "Recent years are easy to guess" warning ([#69])
  - Sole matches from the `english_wikipedia` dictionary now produce an "A word by itself is easy to guess" warning ([#69])
+ - **Breaking**: `Tester#test` and `Zxcvbn.test` now raise `Zxcvbn::PasswordTooLong` (a subclass of `ArgumentError`) for passwords longer than `Tester::MAX_PASSWORD_LENGTH` characters (default: 256). Previously, long passwords were accepted and could cause super-quadratic runtime on adversarial repeat inputs to the `password` argument. The `user_inputs` parameter remains unbounded. Override the limit by setting the `ZXCVBN_MAX_PASSWORD_LENGTH` environment variable before the gem loads.
 
 ### Removed
  - Support for Ruby versions below 3.3 ([#70])
