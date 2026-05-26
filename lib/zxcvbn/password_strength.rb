@@ -24,7 +24,8 @@ module Zxcvbn
       password ||= ''
       result = nil
       calc_time = Clock.realtime do
-        matches = @omnimatch.matches(password, user_inputs)
+        reference_year = @scorer.reference_year
+        matches = @omnimatch.matches(password, user_inputs, reference_year:)
         result = @scorer.most_guessable_match_sequence(password, matches)
       end
       result.with(

@@ -35,10 +35,12 @@ module Zxcvbn
       # whose character span is fully contained within another match's span.
       #
       # @param password [String] the password to search
+      # @param reference_year [Integer] year used to pick the closest candidate for
+      #   separator-free dates; defaults to the current year
       # @return [Array<MatchBuilder>] matches with pattern 'date', each containing
       #   +year+, +month+, +day+, and +separator+
-      def matches(password)
-        all = match_with_separator(password) + match_without_separator(password)
+      def matches(password, reference_year: Time.now.year)
+        all = match_with_separator(password) + match_without_separator(password, reference_year:)
         all.reject do |match|
           all.any? { |other| !other.equal?(match) && other.i <= match.i && other.j >= match.j }
         end
@@ -85,8 +87,10 @@ module Zxcvbn
       # are skipped to avoid treating a year token as a date.
       #
       # @param password [String] the password to search
+      # @param reference_year [Integer] year used to pick the closest candidate;
+      #   defaults to the current year
       # @return [Array<MatchBuilder>] separator-free date matches
-      def match_without_separator(password)
+      def match_without_separator(password, reference_year: Time.now.year)
         result = []
         return result if password.length < 4
 
@@ -104,7 +108,6 @@ module Zxcvbn
             end
             next if candidates.empty?
 
-            reference_year = Time.now.year
             best = candidates.min_by { |c| (c[:year] - reference_year).abs }
 
             result << MatchBuilder.new(
