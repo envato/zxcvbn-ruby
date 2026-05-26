@@ -101,6 +101,32 @@ RSpec.describe Zxcvbn::Guesses do
     end
   end
 
+  context 'with a fixed reference_year' do
+    let(:host) do
+      Class.new do
+        include Zxcvbn::Guesses
+        attr_reader :data
+
+        def initialize
+          @data = nil
+          @reference_year = 2000
+        end
+      end.new
+    end
+
+    describe '#year_guesses' do
+      it 'computes distance relative to the configured reference_year, not Time.now.year' do
+        expect(host.year_guesses(make_match(token: '1970'))).to eq 30
+      end
+    end
+
+    describe '#date_guesses' do
+      it 'computes year_space relative to the configured reference_year, not Time.now.year' do
+        expect(host.date_guesses(make_match(year: 1970, separator: ''))).to eq 365 * 30
+      end
+    end
+  end
+
   describe '#dictionary_guesses' do
     it 'returns rank for a plain lowercase word' do
       m = make_match(token: 'password', rank: 5, reversed: false, l33t: false)
