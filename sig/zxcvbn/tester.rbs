@@ -3,6 +3,7 @@ module Zxcvbn
     MAX_PASSWORD_LENGTH: Integer
 
     @data: Data
+    @omnimatch: Omnimatch
 
     def initialize: (?max_password_length: Integer) -> void
 

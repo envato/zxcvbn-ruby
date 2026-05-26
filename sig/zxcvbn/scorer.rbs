@@ -5,10 +5,12 @@ module Zxcvbn
 
     @data: Data
     @omnimatch: Omnimatch
+    @reference_year: Integer
+    @repeat_cache: Hash[String, Numeric]
 
     attr_reader data: Data
 
-    def initialize: (Data data, Omnimatch omnimatch) -> void
+    def initialize: (Data data, Omnimatch omnimatch, Integer reference_year) -> void
 
     def most_guessable_match_sequence: (String password, Array[MatchBuilder] matches, ?exclude_additive: bool) -> Score
 

@@ -107,6 +107,20 @@ RSpec.describe Zxcvbn::Tester do
     end
   end
 
+  context 'when word lists are added after a prior test call' do
+    it 'picks up the new word list in subsequent test calls' do
+      expect(tester.test('envato').score).to be > 0
+      tester.add_word_lists('envato' => ['envato'])
+      expect(tester.test('envato').score).to eq 0
+    end
+  end
+
+  it 'returns consistent results across repeated calls with the same password' do
+    first = tester.test('password')
+    second = tester.test('password')
+    expect(second.guesses).to eq first.guesses
+  end
+
   context 'nil password' do
     specify do
       expect(tester.test(nil)).to have_attributes(guesses: 1, score: 0)

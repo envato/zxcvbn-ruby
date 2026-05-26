@@ -14,6 +14,7 @@ RSpec.describe Zxcvbn::Guesses do
 
       def initialize(data = nil)
         @data = data
+        @reference_year = Time.now.year
       end
     end.new
   end
@@ -97,6 +98,32 @@ RSpec.describe Zxcvbn::Guesses do
     it 'applies a minimum year_space of MIN_YEAR_SPACE (20)' do
       m = make_match(year: current_year - 5, separator: '')
       expect(host.date_guesses(m)).to eq 365 * 20
+    end
+  end
+
+  context 'with a fixed reference_year' do
+    let(:host) do
+      Class.new do
+        include Zxcvbn::Guesses
+        attr_reader :data
+
+        def initialize
+          @data = nil
+          @reference_year = 2000
+        end
+      end.new
+    end
+
+    describe '#year_guesses' do
+      it 'computes distance relative to the configured reference_year, not Time.now.year' do
+        expect(host.year_guesses(make_match(token: '1970'))).to eq 30
+      end
+    end
+
+    describe '#date_guesses' do
+      it 'computes year_space relative to the configured reference_year, not Time.now.year' do
+        expect(host.date_guesses(make_match(year: 1970, separator: ''))).to eq 365 * 30
+      end
     end
   end
 

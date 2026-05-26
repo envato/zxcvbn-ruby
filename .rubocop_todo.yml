@@ -57,8 +57,8 @@ Metrics/MethodLength:
     - 'lib/zxcvbn/matchers/sequences.rb'
     - 'lib/zxcvbn/matchers/spatial.rb'
     - 'lib/zxcvbn/omnimatch.rb'
-    - 'lib/zxcvbn/password_strength.rb'
     - 'lib/zxcvbn/scorer.rb'
+    - 'lib/zxcvbn/tester.rb'
 
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:

@@ -201,8 +201,6 @@ module Zxcvbn
       variations
     end
 
-    def reference_year
-      @reference_year ||= Time.now.year
-    end
+    attr_reader :reference_year
   end
 end

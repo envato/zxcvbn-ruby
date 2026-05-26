@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Zxcvbn::Scorer do
-  subject(:scorer) { described_class.new(ZXCVBN_TEST_DATA, Zxcvbn::Omnimatch.new(ZXCVBN_TEST_DATA)) }
+  subject(:scorer) { described_class.new(ZXCVBN_TEST_DATA, Zxcvbn::Omnimatch.new(ZXCVBN_TEST_DATA), Time.now.year) }
 
   describe '#most_guessable_match_sequence' do
     context 'with an empty password' do
@@ -93,6 +93,19 @@ RSpec.describe Zxcvbn::Scorer do
         expect(result.sequence.last.pattern).to eq 'bruteforce'
         expect(result.sequence.last.token).to eq 'efgh'
       end
+    end
+  end
+
+  describe '#repeat_guesses' do
+    it 'uses the scorer reference_year when scoring the base token' do
+      scorer = described_class.new(ZXCVBN_TEST_DATA, Zxcvbn::Omnimatch.new(ZXCVBN_TEST_DATA), 1990)
+      match = Zxcvbn::MatchBuilder.new(
+        pattern: 'repeat', token: '19851985', i: 0, j: 7,
+        base_token: '1985', repeat_count: 2
+      )
+      # '1985' scores as a year: year_space = max(|1985-1990|, 20) = 20; DP total = 21
+      # repeat_guesses = base_guesses * repeat_count = 21 * 2 = 42
+      expect(scorer.repeat_guesses(match)).to eq 42
     end
   end
 end
