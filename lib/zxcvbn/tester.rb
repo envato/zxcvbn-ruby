@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require 'zxcvbn/clock'
 require 'zxcvbn/data'
-require 'zxcvbn/password_strength'
+require 'zxcvbn/feedback_giver'
+require 'zxcvbn/omnimatch'
+require 'zxcvbn/scorer'
 
 module Zxcvbn
   # Raised when a password exceeds {Tester::MAX_PASSWORD_LENGTH} characters.
@@ -51,6 +54,7 @@ module Zxcvbn
 
       @data = Data.new
       @max_password_length = max_password_length
+      @omnimatch = Omnimatch.new(@data)
     end
 
     # Evaluates a password and returns a {Score}.
@@ -69,7 +73,18 @@ module Zxcvbn
         raise PasswordTooLong,
               "Password exceeds the maximum length of #{@max_password_length}."
       end
-      PasswordStrength.new(@data).test(password, sanitize(user_inputs))
+      password ||= ''
+      result = nil
+      calc_time = Clock.realtime do
+        reference_year = Time.now.year
+        scorer = Scorer.new(@data, @omnimatch, reference_year)
+        matches = @omnimatch.matches(password, sanitize(user_inputs), reference_year:)
+        result = scorer.most_guessable_match_sequence(password, matches)
+      end
+      result.with(
+        calc_time:,
+        feedback: FeedbackGiver.get_feedback(result.score, result.sequence)
+      )
     end
 
     # Adds custom word lists to the loaded data for all future {#test} calls.
@@ -78,6 +93,7 @@ module Zxcvbn
     # @return [void]
     def add_word_lists(lists)
       lists.each_pair { |name, words| @data.add_word_list(name, sanitize(words)) }
+      @omnimatch = Omnimatch.new(@data)
     end
 
     # @return [String] a concise representation that omits the large dictionary data
