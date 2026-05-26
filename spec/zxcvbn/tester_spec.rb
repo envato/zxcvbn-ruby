@@ -114,27 +114,49 @@ RSpec.describe Zxcvbn::Tester do
   end
 
   context 'with a very long password' do
-    it 'scores the full password without truncation' do
-      long = 'a' * 400
-      result = tester.test(long)
-      expect(result.password.length).to eq 400
+    it 'accepts passwords at the length limit' do
+      at_limit = 'a' * Zxcvbn::Tester::MAX_PASSWORD_LENGTH
+      expect { tester.test(at_limit) }.not_to raise_error
     end
 
-    it 'completes in reasonable time for adversarial repeat inputs' do
-      adversarial = 'ab' * 128
+    it 'raises PasswordTooLong for passwords over the length limit' do
+      over_limit = 'a' * (Zxcvbn::Tester::MAX_PASSWORD_LENGTH + 1)
+      expect { tester.test(over_limit) }.to raise_error(Zxcvbn::PasswordTooLong, /exceeds the maximum length of/)
+    end
+
+    it 'completes in reasonable time for adversarial repeat inputs at the limit' do
+      adversarial = 'ab' * (Zxcvbn::Tester::MAX_PASSWORD_LENGTH / 2)
       elapsed = Benchmark.realtime { tester.test(adversarial) }
       expect(elapsed).to be < 5
     end
 
-    it 'produces finite crack times for passwords longer than 308 characters' do
+    it 'produces finite crack times when the limit is raised past 308 characters' do
       # 'z' * 400 hits the repeat matcher (guesses ~4801), not bruteforce.
       # Use a high-entropy string so the whole password is a single bruteforce
-      # match: length 400 → 10**400 → Float::MAX → crack time overflows to Infinity.
+      # match: length 400 → 10**400 → Float::MAX → crack time overflows to Infinity
+      # without the clamp.
+      high_limit_tester = Zxcvbn::Tester.new(max_password_length: 400)
       saved = srand(7)
       high_entropy = (1..400).map { rand(33..126).chr }.join
       srand(saved)
-      result = tester.test(high_entropy)
+      result = high_limit_tester.test(high_entropy)
       expect(result.crack_times_seconds.values).to all(be_finite)
+    end
+  end
+
+  context 'with a custom max_password_length' do
+    let(:tester) { Zxcvbn::Tester.new(max_password_length: 10) }
+
+    it 'accepts passwords at the custom limit' do
+      expect { tester.test('a' * 10) }.not_to raise_error
+    end
+
+    it 'raises PasswordTooLong for passwords over the custom limit' do
+      expect { tester.test('a' * 11) }.to raise_error(Zxcvbn::PasswordTooLong)
+    end
+
+    it 'raises ArgumentError for non-positive max_password_length' do
+      expect { Zxcvbn::Tester.new(max_password_length: 0) }.to raise_error(ArgumentError)
     end
   end
 end
