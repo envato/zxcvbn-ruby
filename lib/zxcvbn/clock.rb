@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Zxcvbn
-  # Monotonic-clock utility for measuring elapsed wall time.
+  # Monotonic-clock utility for measuring elapsed time.
   # @api private
   module Clock
     # Yields to the block and returns the elapsed time in seconds.
