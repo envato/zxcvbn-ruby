@@ -1,0 +1,25 @@
+module Zxcvbn
+  module Matchers
+    class Date
+      MAYBE_DATE_WITH_SEP: Regexp
+      MAYBE_DATE_WITHOUT_SEP: Regexp
+      DATE_SPLITS: Hash[Integer, Array[[Integer, Integer]]]
+      DATE_MIN_YEAR: Integer
+      DATE_MAX_YEAR: Integer
+
+      def matches: (String password, ?reference_year: Integer) -> Array[MatchBuilder]
+
+      def match_with_separator: (String password) -> Array[MatchBuilder]
+
+      def match_without_separator: (String password, ?reference_year: Integer) -> Array[MatchBuilder]
+
+      def map_ints_to_dmy: (Integer int1, Integer int2, Integer int3) -> { year: Integer, month: Integer, day: Integer }?
+
+      def map_ints_to_dm: (Integer day_val, Integer month_val) -> { day: Integer, month: Integer }?
+
+      def matches_year?: (String token) -> bool
+
+      def expand_year: (Integer year) -> Integer
+    end
+  end
+end

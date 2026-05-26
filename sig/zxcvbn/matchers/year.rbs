@@ -1,0 +1,11 @@
+module Zxcvbn
+  module Matchers
+    class Year
+      include RegexHelpers
+
+      YEAR_REGEX: Regexp
+
+      def matches: (String password) -> Array[MatchBuilder]
+    end
+  end
+end

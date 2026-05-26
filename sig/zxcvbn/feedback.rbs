@@ -4,5 +4,7 @@ module Zxcvbn
     attr_reader suggestions: Array[String]
 
     def initialize: (?warning: String, ?suggestions: Array[String]) -> void
+
+    def with: (?warning: String, ?suggestions: Array[String]) -> Feedback
   end
 end

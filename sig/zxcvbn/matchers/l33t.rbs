@@ -1,0 +1,27 @@
+module Zxcvbn
+  module Matchers
+    class L33t
+      L33T_TABLE: Hash[String, Array[String]]
+
+      @dictionary_matchers: Array[Dictionary]
+
+      def initialize: (Array[Dictionary] dictionary_matchers) -> void
+
+      def matches: (String password) -> Array[MatchBuilder]
+
+      def translate: (String password, Hash[String, String] sub) -> String
+
+      def relevent_l33t_subtable: (String password) -> Hash[String, Array[String]]
+
+      def l33t_subs: (Hash[String, Array[String]] table) -> Array[Hash[String, String]]
+
+      private
+
+      def process_match: (MatchBuilder match, String password, Hash[String, String] substitution, Array[MatchBuilder] matches) -> void
+
+      def find_substitutions: (Array[untyped] subs, Hash[String, Array[String]] table, Array[String] keys) -> Array[untyped]
+
+      def dedup: (Array[untyped] subs) -> Array[untyped]
+    end
+  end
+end

@@ -1,0 +1,15 @@
+module Zxcvbn
+  module Matchers
+    class Spatial
+      SHIFTED_RX: Regexp
+
+      @graphs: Hash[String, Data::adjacency_graph]
+
+      def initialize: (Hash[String, Data::adjacency_graph] graphs) -> void
+
+      def matches: (String password) -> Array[MatchBuilder]
+
+      def matches_for_graph: (Data::adjacency_graph graph, String graph_name, String password) -> Array[MatchBuilder]
+    end
+  end
+end

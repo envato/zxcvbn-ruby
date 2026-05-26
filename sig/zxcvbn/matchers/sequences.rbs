@@ -1,0 +1,16 @@
+module Zxcvbn
+  module Matchers
+    class Sequences
+      MAX_DELTA: Integer
+      ALL_LOWER: Regexp
+      ALL_UPPER: Regexp
+      ALL_DIGITS: Regexp
+
+      def matches: (String password) -> Array[MatchBuilder]
+
+      private
+
+      def classify: (String token) -> [String, Integer]
+    end
+  end
+end
