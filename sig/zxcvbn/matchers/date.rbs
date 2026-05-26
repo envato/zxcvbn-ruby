@@ -17,8 +17,6 @@ module Zxcvbn
 
       def map_ints_to_dm: (Integer day_val, Integer month_val) -> { day: Integer, month: Integer }?
 
-      def matches_year?: (String token) -> bool
-
       def expand_year: (Integer year) -> Integer
     end
   end
