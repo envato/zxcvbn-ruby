@@ -20,8 +20,8 @@ module Zxcvbn
       h[n] = n < 2 ? 1.0 : h[n - 1] * n
     end.freeze
 
-    # Hash{Integer => Float} — powers of {MIN_GUESSES_BEFORE_GROWING_SEQUENCE} for the
-    # additive sequence-length penalty. Keys must be non-negative integers.
+    # Hash{Integer => Float} — powers of {MIN_GUESSES_BEFORE_GROWING_SEQUENCE} for
+    # the additive sequence-length penalty. Keys must be non-negative integers.
     # Precomputed to 77 (the last value before overflow); returns Float::MAX for
     # any key > 77.
     MIN_GUESSES_POW = (0..77).each_with_object(Hash.new { Float::MAX }) do |n, h|

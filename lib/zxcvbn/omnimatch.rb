@@ -22,6 +22,10 @@ module Zxcvbn
     # @param data [Data] loaded frequency lists and adjacency graphs
     def initialize(data)
       @data = data
+      dicts = data.dictionaries
+      @dictionary_matchers = dicts.ranked.map do |name, dictionary|
+        Matchers::Dictionary.new(name, dictionary, dicts.tries[name])
+      end
       @matchers = build_matchers
     end
 
@@ -74,23 +78,18 @@ module Zxcvbn
     def reverse_dictionary_matches(password, user_inputs = [])
       reversed = password.reverse
       n = password.length
-      matches = []
 
-      dicts = @data.dictionaries
-      matchers = dicts.ranked.map do |name, dictionary|
-        trie = dicts.tries[name]
-        Matchers::Dictionary.new(name, dictionary, trie)
-      end
-
+      matchers = @dictionary_matchers
       if user_inputs.any?
         user_ranked_dictionary = DictionaryRanker.rank_dictionary(user_inputs)
-        matchers << Matchers::Dictionary.new(
+        matchers += [Matchers::Dictionary.new(
           'user_inputs',
           user_ranked_dictionary,
           Trie.from_ranked(user_ranked_dictionary)
-        )
+        )]
       end
 
+      matches = []
       matchers.each do |matcher|
         matcher.matches(reversed).each do |match|
           match.token    = match.token.reverse
@@ -106,15 +105,8 @@ module Zxcvbn
     end
 
     def build_matchers
-      matchers = []
-      dicts = @data.dictionaries
-      dictionary_matchers = dicts.ranked.map do |name, dictionary|
-        trie = dicts.tries[name]
-        Matchers::Dictionary.new(name, dictionary, trie)
-      end
-      l33t_matcher = Matchers::L33t.new(dictionary_matchers)
-      matchers += dictionary_matchers
-      matchers += [
+      l33t_matcher = Matchers::L33t.new(@dictionary_matchers)
+      @dictionary_matchers + [
         l33t_matcher,
         Matchers::Spatial.new(@data.adjacency_graphs),
         Matchers::Digits.new,
@@ -123,7 +115,6 @@ module Zxcvbn
         Matchers::Year.new,
         Matchers::Date.new
       ]
-      matchers
     end
   end
 end
