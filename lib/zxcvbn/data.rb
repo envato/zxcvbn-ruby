@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'json'
+require 'pathname'
 require 'zxcvbn/dictionary_ranker'
 require 'zxcvbn/trie'
 
@@ -14,14 +15,12 @@ module Zxcvbn
   #   their tries; use this for concurrent reads to guarantee the pair is always in sync
   # @api private
   class Data
-    # Consistent snapshot of ranked dictionaries and their tries.
-    # Stored as a single reference so it can be swapped atomically on update.
+    DATA_PATH = Pathname(File.expand_path('../../data', __dir__))
+    private_constant :DATA_PATH
+
+    # Consistent named pair of ranked dictionaries and their tries.
     Dictionaries = ::Data.define(:ranked, :tries)
     private_constant :Dictionaries
-
-    # Mutex serialising concurrent calls to {#add_word_list}.
-    WRITE_MUTEX = Mutex.new
-    private_constant :WRITE_MUTEX
 
     # Loads all built-in frequency lists and adjacency graphs from disk.
     def initialize
@@ -48,23 +47,16 @@ module Zxcvbn
 
     # Adds a custom word list and builds a trie for it.
     #
-    # Safe to call concurrently with {#dictionaries} reads and with other
-    # {#add_word_list} calls. The mutex serialises writers; the atomic reference
-    # swap ensures readers always observe a consistent ranked/tries pair.
-    #
     # @param name [String] dictionary name (used as a key in {#ranked_dictionaries})
     # @param list [Array<String>] ordered words (most common first)
     # @return [void]
     def add_word_list(name, list)
-      ranked_dict = DictionaryRanker.rank_dictionary(list)
+      ranked_dict = DictionaryRanker.rank_dictionary(list.select { |w| w.respond_to?(:downcase) })
       trie = Trie.from_ranked(ranked_dict)
-      WRITE_MUTEX.synchronize do
-        old = @dictionaries
-        @dictionaries = Dictionaries.new(
-          ranked: old.ranked.merge(name => ranked_dict),
-          tries: old.tries.merge(name => trie)
-        )
-      end
+      @dictionaries = @dictionaries.with(
+        ranked: @dictionaries.ranked.merge(name => ranked_dict),
+        tries: @dictionaries.tries.merge(name => trie)
+      )
     end
 
     private

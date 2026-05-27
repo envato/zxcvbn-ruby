@@ -7,6 +7,7 @@ require 'zxcvbn'
 Dir[Pathname.new(File.expand_path(__dir__)).join('support/**/*.rb')].each { |f| require f }
 
 ZXCVBN_TEST_DATA = Zxcvbn::Data.new.freeze
+ZXCVBN_TESTER = Zxcvbn::Tester.new(data: ZXCVBN_TEST_DATA, max_password_length: Zxcvbn::TesterBuilder::DEFAULT_MAX_PASSWORD_LENGTH).freeze
 
 RSpec.configure do |config|
   config.include JsHelpers

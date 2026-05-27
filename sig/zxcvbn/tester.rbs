@@ -1,20 +1,15 @@
 module Zxcvbn
   class Tester
-    MAX_PASSWORD_LENGTH: Integer
-
     @data: Data
     @omnimatch: Omnimatch
+    @max_password_length: Integer
 
-    def initialize: (?max_password_length: Integer) -> void
+    def initialize: (data: Data, max_password_length: Integer) -> void
+
+    attr_reader max_password_length: Integer
 
     def test: (String? password, ?Array[untyped] user_inputs) -> Score
 
-    def add_word_lists: (Hash[String, Array[untyped]] lists) -> void
-
     def inspect: () -> String
-
-    private
-
-    def sanitize: (Array[untyped] user_inputs) -> Array[String]
   end
 end

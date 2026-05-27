@@ -4,12 +4,9 @@ require 'spec_helper'
 require 'benchmark'
 
 RSpec.describe Zxcvbn::Tester do
-  let(:tester) { Zxcvbn::Tester.new }
+  let(:tester) { ZXCVBN_TESTER }
 
   context 'JS compatibility' do
-    before(:context) { @shared_tester = Zxcvbn::Tester.new }
-    let(:tester) { @shared_tester }
-
     TEST_PASSWORDS.each do |password|
       it "matches the JS result for #{password}" do
         ruby_result = tester.test(password)
@@ -91,7 +88,7 @@ RSpec.describe Zxcvbn::Tester do
   end
 
   context 'with a custom global dictionary' do
-    before { tester.add_word_lists('envato' => ['envato']) }
+    let(:tester) { Zxcvbn.tester.add_word_list('envato', ['envato']).build }
 
     it 'scores them against the dictionary' do
       result = tester.test('envato')
@@ -99,19 +96,11 @@ RSpec.describe Zxcvbn::Tester do
     end
 
     context 'with invalid entries in a custom dictionary' do
-      before { tester.add_word_lists('themeforest' => [nil, 1, 'themeforest']) }
+      let(:tester) { Zxcvbn.tester.add_word_list('themeforest', [nil, 1, 'themeforest']).build }
 
       it 'ignores those entries' do
         expect(tester.test('themeforest')).to have_attributes(score: 0)
       end
-    end
-  end
-
-  context 'when word lists are added after a prior test call' do
-    it 'picks up the new word list in subsequent test calls' do
-      expect(tester.test('envato').score).to be > 0
-      tester.add_word_lists('envato' => ['envato'])
-      expect(tester.test('envato').score).to eq 0
     end
   end
 
@@ -129,17 +118,17 @@ RSpec.describe Zxcvbn::Tester do
 
   context 'with a very long password' do
     it 'accepts passwords at the length limit' do
-      at_limit = 'a' * Zxcvbn::Tester::MAX_PASSWORD_LENGTH
+      at_limit = 'a' * tester.max_password_length
       expect { tester.test(at_limit) }.not_to raise_error
     end
 
     it 'raises PasswordTooLong for passwords over the length limit' do
-      over_limit = 'a' * (Zxcvbn::Tester::MAX_PASSWORD_LENGTH + 1)
+      over_limit = 'a' * (tester.max_password_length + 1)
       expect { tester.test(over_limit) }.to raise_error(Zxcvbn::PasswordTooLong, /exceeds the maximum length of/)
     end
 
     it 'completes in reasonable time for adversarial repeat inputs at the limit' do
-      adversarial = 'ab' * (Zxcvbn::Tester::MAX_PASSWORD_LENGTH / 2)
+      adversarial = 'ab' * (tester.max_password_length / 2)
       elapsed = Benchmark.realtime { tester.test(adversarial) }
       expect(elapsed).to be < 5
     end
@@ -149,7 +138,7 @@ RSpec.describe Zxcvbn::Tester do
       # Use a high-entropy string so the whole password is a single bruteforce
       # match: length 400 → 10**400 → Float::MAX → crack time overflows to Infinity
       # without the clamp.
-      high_limit_tester = Zxcvbn::Tester.new(max_password_length: 400)
+      high_limit_tester = Zxcvbn.tester.max_password_length(400).build
       saved = srand(7)
       high_entropy = (1..400).map { rand(33..126).chr }.join
       srand(saved)
@@ -158,8 +147,20 @@ RSpec.describe Zxcvbn::Tester do
     end
   end
 
+  it 'raises ArgumentError for non-positive max_password_length' do
+    expect do
+      Zxcvbn::Tester.new(data: ZXCVBN_TEST_DATA, max_password_length: 0)
+    end.to raise_error(ArgumentError)
+  end
+
+  it 'raises ArgumentError for non-integer max_password_length' do
+    expect do
+      Zxcvbn::Tester.new(data: ZXCVBN_TEST_DATA, max_password_length: 'ten')
+    end.to raise_error(ArgumentError)
+  end
+
   context 'with a custom max_password_length' do
-    let(:tester) { Zxcvbn::Tester.new(max_password_length: 10) }
+    let(:tester) { Zxcvbn.tester.max_password_length(10).build }
 
     it 'accepts passwords at the custom limit' do
       expect { tester.test('a' * 10) }.not_to raise_error
@@ -167,10 +168,6 @@ RSpec.describe Zxcvbn::Tester do
 
     it 'raises PasswordTooLong for passwords over the custom limit' do
       expect { tester.test('a' * 11) }.to raise_error(Zxcvbn::PasswordTooLong)
-    end
-
-    it 'raises ArgumentError for non-positive max_password_length' do
-      expect { Zxcvbn::Tester.new(max_password_length: 0) }.to raise_error(ArgumentError)
     end
   end
 end

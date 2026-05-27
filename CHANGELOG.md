@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - User-input dictionary matchers now use the Trie path, preventing O(n²) slowdowns on long passwords ([#89])
 
 ### Added
+ - `Zxcvbn::TesterBuilder`: fluent builder for constructing a `Tester` with custom word lists and options. Obtain a builder via `Zxcvbn.tester`, then chain `add_word_list`, `max_password_length`, and `build`.
  - `Zxcvbn::Guesses` module with per-pattern guess estimation formulas matching zxcvbn.js v4: bruteforce, dictionary (with uppercase and l33t variation multipliers), spatial, repeat, sequence, digits, year, and date ([#69])
  - `us_tv_and_film` frequency list (19,160 entries) introduced in zxcvbn.js v4 ([#69])
  - Reverse dictionary matching in `Omnimatch` so reversed words (e.g. "drowssap") are detected and scored ([#69])
@@ -18,8 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - YARD documentation for all public classes, modules, and methods ([#72])
 
 ### Changed
+ - **Breaking**: `Zxcvbn::Tester.new` now requires `data:` and `max_password_length:` keyword arguments with no defaults. Use `Zxcvbn.tester.build` to construct a `Tester`.
  - **Breaking**: English frequency list dictionary name renamed from `english` to `english_wikipedia`, matching the zxcvbn.js source. Affects `match.dictionary_name` in results ([#90])
- - `Zxcvbn.test` now reuses a shared `Tester` instance across calls, avoiding repeated dictionary parsing. Equivalent to using `Tester` directly for callers who do not pass custom `word_lists` ([#80])
+ - `Zxcvbn.test` now reuses a shared `Tester` instance across calls, avoiding repeated dictionary parsing ([#80])
  - Repeat base tokens are now scored without `user_inputs`, matching zxcvbn.js v4. Previously, user-supplied words were propagated into the recursive scoring of a repeat's base token, causing repeat matches of user-supplied words to score lower than JS would report ([#83])
  - `Zxcvbn::Score` is now an immutable value object backed by Ruby's `Data`. Attribute setters (`calc_time=`, `feedback=`, etc.) have been removed. Instances now support structural equality (`==`/`eql?`/`hash`) and the `with` method for creating modified copies ([#74])
  - **Breaking**: `Zxcvbn::Match` is now an immutable value object backed by Ruby's `Data`. Attribute setters have been removed. Instances now support structural equality (`==`/`eql?`/`hash`) and the `with` method for creating modified copies ([#92])
@@ -41,9 +43,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Repeat feedback now distinguishes single-char repeats (`"aaa"`) from multi-char repeats (`"abcabcabc"`), matching zxcvbn.js v4 ([#69])
  - `year` pattern matches now produce a "Recent years are easy to guess" warning ([#69])
  - Sole matches from the `english_wikipedia` dictionary now produce an "A word by itself is easy to guess" warning ([#69])
- - **Breaking**: `Tester#test` and `Zxcvbn.test` now raise `Zxcvbn::PasswordTooLong` (a subclass of `ArgumentError`) for passwords longer than `Tester::MAX_PASSWORD_LENGTH` characters (default: 256). Previously, long passwords were accepted and could cause super-quadratic runtime on adversarial repeat inputs to the `password` argument. The `user_inputs` parameter remains unbounded. Override the limit by setting the `ZXCVBN_MAX_PASSWORD_LENGTH` environment variable before the gem loads.
+ - **Breaking**: `Tester#test` and `Zxcvbn.test` now raise `Zxcvbn::PasswordTooLong` (a subclass of `ArgumentError`) for passwords longer than 256 characters (the default). Previously, long passwords were accepted and could cause super-quadratic runtime on adversarial repeat inputs to the `password` argument. The `user_inputs` parameter remains unbounded. Override the limit with the `ZXCVBN_MAX_PASSWORD_LENGTH` environment variable or `Zxcvbn.tester.max_password_length(n).build`.
 
 ### Removed
+ - **Breaking**: `Tester#add_word_lists`. Use `Zxcvbn.tester.add_word_list(name, words).build` instead.
+ - **Breaking**: `word_lists:` argument to `Zxcvbn.test`. Use `Zxcvbn.tester.add_word_list(name, words).build` to construct a tester with custom word lists.
  - Support for Ruby versions below 3.3 ([#70])
 
 

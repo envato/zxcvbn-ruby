@@ -59,6 +59,7 @@ Metrics/MethodLength:
     - 'lib/zxcvbn/omnimatch.rb'
     - 'lib/zxcvbn/scorer.rb'
     - 'lib/zxcvbn/tester.rb'
+    - 'lib/zxcvbn/tester_builder.rb'
 
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:

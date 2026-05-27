@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'pathname'
 require 'zxcvbn/version'
 require 'zxcvbn/tester'
+require 'zxcvbn/tester_builder'
 
 # Ruby port of zxcvbn.js — realistic password strength estimation.
 #
@@ -12,42 +12,50 @@ require 'zxcvbn/tester'
 module Zxcvbn
   module_function
 
-  # Path to the bundled data directory (frequency lists, adjacency graphs).
-  DATA_PATH = Pathname(File.expand_path('../data', __dir__))
-  private_constant :DATA_PATH
-
   # Mutex protecting lazy initialisation of the shared default {Tester}.
   DEFAULT_TESTER_MUTEX = Mutex.new
   private_constant :DEFAULT_TESTER_MUTEX
 
   # Returns a Zxcvbn::Score for the given password.
   #
-  # Reuses a shared {Tester} instance (with pre-loaded dictionaries) when no
-  # custom +word_lists+ are given. For repeated calls without custom word lists,
-  # this is equivalent to using {Tester} directly. When +word_lists+ are
-  # provided, a fresh {Tester} is constructed each call.
+  # Reuses a shared {Tester} instance across calls. For custom word lists or
+  # options, use {.tester} to build a dedicated {Tester}.
   #
   # Raises {PasswordTooLong} (a subclass of +ArgumentError+) if the password
-  # exceeds +Tester::MAX_PASSWORD_LENGTH+ characters (default: 256). Override
-  # process-wide by setting +ZXCVBN_MAX_PASSWORD_LENGTH+ before the gem loads;
-  # for per-call limits, use {Tester} directly with +max_password_length:+.
+  # exceeds the configured limit (default: 256 characters). Override process-wide
+  # via the +ZXCVBN_MAX_PASSWORD_LENGTH+ environment variable; for per-call limits,
+  # use {.tester} with {TesterBuilder#max_password_length}.
   #
   # Example:
   #
   #   Zxcvbn.test("password").score #=> 0
-  def test(password, user_inputs = [], word_lists = {})
-    if word_lists.empty?
-      default_tester.test(password, user_inputs)
-    else
-      tester = Tester.new
-      tester.add_word_lists(word_lists)
-      tester.test(password, user_inputs)
-    end
+  #
+  # @param password [String] the password to evaluate
+  # @param user_inputs [Array<String>] caller-supplied words to treat as known
+  # @return [Score]
+  # @raise [PasswordTooLong] if the password exceeds the maximum length
+  def test(password, user_inputs = [])
+    default_tester.test(password, user_inputs)
+  end
+
+  # Returns a new {TesterBuilder} for constructing a {Tester} with custom
+  # word lists and options.
+  #
+  # Example:
+  #
+  #   tester = Zxcvbn.tester
+  #     .add_word_list('company', %w[acme corp])
+  #     .max_password_length(75)
+  #     .build
+  #
+  # @return [TesterBuilder]
+  def tester
+    TesterBuilder.new
   end
 
   # @return [Tester] the shared default tester, constructed on first call
   def default_tester
-    DEFAULT_TESTER_MUTEX.synchronize { @default_tester ||= Tester.new }
+    DEFAULT_TESTER_MUTEX.synchronize { @default_tester ||= tester.build }
   end
   private_class_method :default_tester
 end

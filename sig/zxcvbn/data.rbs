@@ -11,8 +11,6 @@ module Zxcvbn
       def initialize: (ranked: Hash[String, ranked_dictionary], tries: Hash[String, Trie]) -> void
     end
 
-    WRITE_MUTEX: Mutex
-
     @dictionaries: Dictionaries
     @adjacency_graphs: Hash[String, adjacency_graph]
     @graph_stats: graph_stats

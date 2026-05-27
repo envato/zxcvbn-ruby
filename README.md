@@ -107,15 +107,15 @@ $ irb
  feedback=#<data Zxcvbn::Feedback warning="" suggestions=[]>>
 ```
 
-## Testing Multiple Passwords
+## Custom Testers
 
-The dictionaries used for password strength testing are loaded each request to `Zxcvbn.test`. If you you'd prefer to persist the dictionaries in memory (approx 20MB RSS) to perform lots of password tests in succession then you can use the `Zxcvbn::Tester` API:
+`Zxcvbn.test` reuses a shared `Tester` internally — dictionaries are loaded once and persist in memory. Use `Zxcvbn.tester.build` to construct a standalone `Tester` you control:
 
 ```ruby
 $ irb
 >> require 'zxcvbn'
 => true
->> tester = Zxcvbn::Tester.new
+>> tester = Zxcvbn.tester.build
 => #<Zxcvbn::Tester:0x3fe99d869aa4>
 >> pp tester.test('@lfred2004', ['alfred'])
 #<data Zxcvbn::Score
@@ -165,6 +165,15 @@ $ irb
      "Predictable substitutions like '@' instead of 'a' don't help very much"]>>
 ```
 
+To add custom word lists, chain `add_word_list` before `build`. Use a distinct name (e.g. `"company"`) — using a built-in name (`"english_wikipedia"`, `"passwords"`, `"female_names"`, `"male_names"`, `"surnames"`, `"us_tv_and_film"`) replaces that list entirely:
+
+```ruby
+>> tester = Zxcvbn.tester.add_word_list('company', %w[acme corp]).build
+=> #<Zxcvbn::Tester:0x3fe99d869bb8>
+>> tester.test('acme').score
+=> 0
+```
+
 Subsequent calls reuse the already-loaded dictionaries, so `calc_time` is significantly lower:
 
 ```ruby
@@ -177,7 +186,7 @@ Subsequent calls reuse the already-loaded dictionaries, so `calc_time` is signif
 > short repeated sequences (e.g. `"ab" * 500`), the internal pattern-matching
 > DP produces super-quadratic runtime. Both `Zxcvbn.test` and
 > `Zxcvbn::Tester#test` raise `Zxcvbn::PasswordTooLong` for passwords longer
-> than `Tester::MAX_PASSWORD_LENGTH` characters (default: 256). Override the
+> than 256 characters (the default). Override the
 > limit with the `ZXCVBN_MAX_PASSWORD_LENGTH` environment variable, but be
 > aware that raising it re-exposes this runtime risk. The `user_inputs`
 > parameter is not length-bounded; apply your own limit to those values.
@@ -292,13 +301,11 @@ match.dictionary_name == "english"
 match.dictionary_name == "english_wikipedia"
 ```
 
-If you pass a `word_lists` argument to `Zxcvbn.test` or `Tester#add_word_lists`, update any `"english"` key to `"english_wikipedia"` to keep custom entries in the same namespace as the built-in list.
-
 A new `us_tv_and_film` frequency list has also been added. Update any `dictionary_name` allowlists or case statements to include it.
 
 ### Password length limit
 
-`Tester#test` and `Zxcvbn.test` now raise `Zxcvbn::PasswordTooLong` (a subclass of `ArgumentError`) for passwords longer than `Tester::MAX_PASSWORD_LENGTH` characters (default: 256). Previously, long passwords were accepted without error. The `user_inputs` parameter remains unbounded.
+`Tester#test` and `Zxcvbn.test` now raise `Zxcvbn::PasswordTooLong` (a subclass of `ArgumentError`) for passwords longer than 256 characters (the default). Previously, long passwords were accepted without error. The `user_inputs` parameter remains unbounded.
 
 If your application accepts user-controlled input longer than 256 characters, either add a length check before calling the gem, construct a `Tester` with a custom limit, or adjust the process-wide default via the `ZXCVBN_MAX_PASSWORD_LENGTH` environment variable.
 
@@ -312,19 +319,43 @@ result = Zxcvbn.test(password)
 To use a different limit for a specific tester without touching the environment:
 
 ```ruby
-tester = Zxcvbn::Tester.new(max_password_length: 128)
+tester = Zxcvbn.tester.max_password_length(128).build
 result = tester.test(password)
 ```
 
-To adjust the process-wide default, set the environment variable **before the process starts** — the default is captured once when the gem loads and cannot be changed at runtime:
+To adjust the process-wide default, set `ZXCVBN_MAX_PASSWORD_LENGTH` in the process environment before the process starts:
 
 ```sh
 ZXCVBN_MAX_PASSWORD_LENGTH=1024 bundle exec rails server
 ```
 
-In Rails, set it via the process environment (e.g. a `.env` file read by your process manager), not in `config/initializers/` — initializers run after `Bundler.require` loads the gem, so setting the env var there has no effect.
+The variable is read when `TesterBuilder#build` is called. For the shared tester backing `Zxcvbn.test`, that is the first call to `Zxcvbn.test`.
 
 Or export it from your shell profile, process manager, or platform environment config (Heroku, Docker, etc.). Note that raising the limit re-exposes the super-quadratic runtime for adversarial inputs to the `password` argument.
+
+### Custom word lists
+
+`Tester#add_word_lists` and the `word_lists:` argument to `Zxcvbn.test` have been removed. Use the `Zxcvbn.tester` builder instead:
+
+```ruby
+# 1.x — no longer works
+result = Zxcvbn.test(password, user_inputs, word_lists: { 'company' => %w[acme corp] })
+tester.add_word_lists('company' => %w[acme corp])
+
+# 2.x
+tester = Zxcvbn.tester.add_word_list('company', %w[acme corp]).build
+result = tester.test(password, user_inputs)
+```
+
+`Zxcvbn::Tester.new` is no longer a public construction path — it now requires `data:` and `max_password_length:` keyword arguments with no defaults. Use `Zxcvbn.tester.build` (or the fluent builder) instead:
+
+```ruby
+# 1.x
+tester = Zxcvbn::Tester.new
+
+# 2.x
+tester = Zxcvbn.tester.build
+```
 
 ### Score values will change
 
