@@ -33,7 +33,7 @@ module Zxcvbn
 
       @data = data
       @max_password_length = max_password_length
-      @omnimatch = Omnimatch.new(@data)
+      @omnimatch = Omnimatch.new(@data).freeze
     end
 
     attr_reader :max_password_length

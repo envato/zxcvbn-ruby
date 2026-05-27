@@ -31,10 +31,14 @@ module Zxcvbn
         'passwords' => read_word_list('passwords.txt'),
         'surnames' => read_word_list('surnames.txt'),
         'us_tv_and_film' => read_word_list('us_tv_and_film.txt')
-      )
-      @dictionaries = Dictionaries.new(ranked:, tries: build_tries(ranked))
-      @adjacency_graphs = JSON.parse(DATA_PATH.join('adjacency_graphs.json').read)
-      @graph_stats = compute_graph_stats
+      ).tap { |r| r.each_value(&:freeze) }.freeze
+      tries = build_tries(ranked).tap { |t| t.each_value(&:freeze) }.freeze
+      @dictionaries = Dictionaries.new(ranked:, tries:)
+      @adjacency_graphs =
+        JSON.parse(DATA_PATH.join('adjacency_graphs.json').read)
+            .tap { |gs| gs.each_value { |g| g.each_value { |a| a.each(&:freeze).freeze }.freeze } }
+            .freeze
+      @graph_stats = compute_graph_stats.each_value(&:freeze).freeze
     end
 
     attr_reader :adjacency_graphs, :graph_stats, :dictionaries
@@ -51,11 +55,11 @@ module Zxcvbn
     # @param list [Array<String>] ordered words (most common first)
     # @return [void]
     def add_word_list(name, list)
-      ranked_dict = DictionaryRanker.rank_dictionary(list.select { |w| w.respond_to?(:downcase) })
-      trie = Trie.from_ranked(ranked_dict)
+      ranked_dict = DictionaryRanker.rank_dictionary(list.select { |w| w.respond_to?(:downcase) }).freeze
+      trie = Trie.from_ranked(ranked_dict).freeze
       @dictionaries = @dictionaries.with(
-        ranked: @dictionaries.ranked.merge(name => ranked_dict),
-        tries: @dictionaries.tries.merge(name => trie)
+        ranked: @dictionaries.ranked.merge(name => ranked_dict).freeze,
+        tries: @dictionaries.tries.merge(name => trie).freeze
       )
     end
 

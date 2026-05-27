@@ -50,5 +50,17 @@ module Zxcvbn
 
       results
     end
+
+    def freeze
+      freeze_node(@root)
+      super
+    end
+
+    private
+
+    def freeze_node(node)
+      node.each_value { |v| freeze_node(v) if v.is_a?(Hash) }
+      node.freeze
+    end
   end
 end

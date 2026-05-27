@@ -10,6 +10,8 @@ module Zxcvbn
 
     def insert: (String word, Integer rank) -> void
 
+    def freeze: () -> self
+
     def search_prefixes: (String text, Integer start_pos) -> Array[[String, Integer?, Integer, Integer]]
   end
 end
