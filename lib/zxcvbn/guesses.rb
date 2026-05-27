@@ -35,9 +35,10 @@ module Zxcvbn
     def estimate_guesses(match, password)
       return match.guesses if match.guesses
 
+      token_length = match.token ? match.token.length : match.j - match.i + 1
       min_guesses =
-        if match.token.length < password.length
-          match.token.length == 1 ? MIN_SUBMATCH_GUESSES_SINGLE_CHAR : MIN_SUBMATCH_GUESSES_MULTI_CHAR
+        if token_length < password.length
+          token_length == 1 ? MIN_SUBMATCH_GUESSES_SINGLE_CHAR : MIN_SUBMATCH_GUESSES_MULTI_CHAR
         else
           1
         end
@@ -63,9 +64,10 @@ module Zxcvbn
     # @param match [MatchBuilder] a bruteforce match
     # @return [Numeric] guesses based on token length and assumed cardinality
     def bruteforce_guesses(match)
-      guesses = BRUTEFORCE_CARDINALITY**match.token.length.to_f
+      length = match.token ? match.token.length : match.j - match.i + 1
+      guesses = BRUTEFORCE_CARDINALITY**length.to_f
       guesses = Float::MAX if guesses.infinite?
-      min = match.token.length == 1 ? MIN_SUBMATCH_GUESSES_SINGLE_CHAR + 1.0 : MIN_SUBMATCH_GUESSES_MULTI_CHAR + 1.0
+      min = length == 1 ? MIN_SUBMATCH_GUESSES_SINGLE_CHAR + 1.0 : MIN_SUBMATCH_GUESSES_MULTI_CHAR + 1.0
       [guesses, min].max
     end
 
