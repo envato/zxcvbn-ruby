@@ -51,6 +51,8 @@ module Zxcvbn
       results
     end
 
+    def inspect = "#<#{self.class}:0x#{__id__.to_s(16)}>"
+
     def freeze
       stack = [@root]
       while (node = stack.pop)
