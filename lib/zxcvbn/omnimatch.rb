@@ -38,7 +38,9 @@ module Zxcvbn
     # @return [Array<MatchBuilder>]
     def matches(password, user_inputs = [], reference_year: Time.now.year)
       user_inputs = user_inputs.select { |i| i.respond_to?(:downcase) }
-      matchers = @matchers + user_input_matchers(user_inputs)
+      user_dictionary =
+        user_inputs.any? && Matchers::Dictionary.new('user_inputs', DictionaryRanker.rank_dictionary(user_inputs))
+      matchers = @matchers + user_input_matchers(user_dictionary)
       all_matches = matchers.flat_map do |matcher|
         case matcher
         when Matchers::Date
@@ -47,22 +49,15 @@ module Zxcvbn
           matcher.matches(password)
         end
       end
-      all_matches + reverse_dictionary_matches(password, user_inputs)
+      all_matches + reverse_dictionary_matches(password, user_dictionary)
     end
 
     private
 
-    def user_input_matchers(user_inputs)
-      return [] unless user_inputs.any?
+    def user_input_matchers(user_dictionary)
+      return [] unless user_dictionary
 
-      user_ranked_dictionary = DictionaryRanker.rank_dictionary(user_inputs)
-      dictionary_matcher = Matchers::Dictionary.new(
-        'user_inputs',
-        user_ranked_dictionary,
-        Trie.from_ranked(user_ranked_dictionary)
-      )
-      l33t_matcher = Matchers::L33t.new([dictionary_matcher])
-      [dictionary_matcher, l33t_matcher]
+      [user_dictionary, Matchers::L33t.new([user_dictionary])]
     end
 
     # Run dictionary matchers on the reversed password and flip match positions
@@ -73,21 +68,14 @@ module Zxcvbn
     # original (un-reversed) form.
     #
     # @param password [String] the original password
-    # @param user_inputs [Array<String>] caller-supplied words to check in reverse
+    # @param user_dictionary [Matchers::Dictionary, nil] pre-built user input matcher
     # @return [Array<MatchBuilder>] dictionary matches found in the reversed password
-    def reverse_dictionary_matches(password, user_inputs = [])
+    def reverse_dictionary_matches(password, user_dictionary)
       reversed = password.reverse
       n = password.length
 
       matchers = @dictionary_matchers
-      if user_inputs.any?
-        user_ranked_dictionary = DictionaryRanker.rank_dictionary(user_inputs)
-        matchers += [Matchers::Dictionary.new(
-          'user_inputs',
-          user_ranked_dictionary,
-          Trie.from_ranked(user_ranked_dictionary)
-        )]
-      end
+      matchers += [user_dictionary] if user_dictionary
 
       matches = []
       matchers.each do |matcher|
