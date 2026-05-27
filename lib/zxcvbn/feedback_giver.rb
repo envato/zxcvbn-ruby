@@ -145,21 +145,13 @@ module Zxcvbn
       word = match.token
 
       if word =~ Zxcvbn::Guesses::START_UPPER
-        suggestions.push "Capitalization doesn't help very much"
+        suggestions.push("Capitalization doesn't help very much")
       elsif word =~ Zxcvbn::Guesses::ALL_UPPER && word.downcase != word
-        suggestions.push(
-          'All-uppercase is almost as easy to guess as all-lowercase'
-        )
+        suggestions.push('All-uppercase is almost as easy to guess as all-lowercase')
       end
 
       suggestions.push("Reversed words aren't much harder to guess") if match.reversed && match.token.length >= 4
-
-      if match.l33t
-        suggestions.push(
-          "Predictable substitutions like '@' instead of 'a' \
-don't help very much"
-        )
-      end
+      suggestions.push("Predictable substitutions like '@' instead of 'a' don't help very much") if match.l33t
 
       Feedback.new(warning:, suggestions:)
     end

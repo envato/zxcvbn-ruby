@@ -372,7 +372,7 @@ Audit any code that gates on `result.score` (e.g. form validation thresholds), p
 
  - [Steve Hodgkiss](https://github.com/stevehodgkiss)
  - [Matthieu Aussaguel](https://github.com/matthieua)
- - [_et al._](https://github.com/envato/zxcvbn-ruby/graphs/contributors)
+ - [_et al._](https://github.com/envato/zxcvbn-ruby/graphs/contributors?all=1)
 
 ## License [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby/blob/HEAD/LICENSE.txt)
 
