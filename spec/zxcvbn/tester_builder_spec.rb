@@ -41,6 +41,11 @@ RSpec.describe Zxcvbn::TesterBuilder do
       expect(Zxcvbn.tester.build.max_password_length).to eq 50
     end
 
+    it 'parses ZXCVBN_MAX_PASSWORD_LENGTH as base 10, not octal' do
+      stub_const('ENV', { 'ZXCVBN_MAX_PASSWORD_LENGTH' => '010' })
+      expect(Zxcvbn.tester.build.max_password_length).to eq 10
+    end
+
     it 'ignores ZXCVBN_MAX_PASSWORD_LENGTH when an explicit value is set' do
       stub_const('ENV', { 'ZXCVBN_MAX_PASSWORD_LENGTH' => '50' })
       expect(Zxcvbn.tester.max_password_length(10).build.max_password_length).to eq 10
@@ -63,7 +68,15 @@ RSpec.describe Zxcvbn::TesterBuilder do
     end
 
     it 'raises ArgumentError for non-positive max_password_length' do
-      expect { Zxcvbn.tester.max_password_length(0).build }.to raise_error(ArgumentError)
+      expect { Zxcvbn.tester.max_password_length(0) }.to raise_error(ArgumentError)
+    end
+
+    it 'raises ArgumentError for nil max_password_length' do
+      expect { Zxcvbn.tester.max_password_length(nil) }.to raise_error(ArgumentError)
+    end
+
+    it 'raises ArgumentError for non-Array words in add_word_list' do
+      expect { Zxcvbn.tester.add_word_list('test', nil) }.to raise_error(ArgumentError)
     end
 
     it 'accumulates multiple add_word_list calls' do
