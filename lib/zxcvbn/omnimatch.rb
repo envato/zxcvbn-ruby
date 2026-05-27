@@ -24,9 +24,9 @@ module Zxcvbn
       @data = data
       dicts = data.dictionaries
       @dictionary_matchers = dicts.ranked.map do |name, dictionary|
-        Matchers::Dictionary.new(name, dictionary, dicts.tries[name])
-      end
-      @matchers = build_matchers
+        Matchers::Dictionary.new(name, dictionary, dicts.tries[name]).freeze
+      end.freeze
+      @matchers = build_matchers.each(&:freeze).freeze
     end
 
     # Returns all matches found in the password across every registered matcher.
@@ -105,9 +105,8 @@ module Zxcvbn
     end
 
     def build_matchers
-      l33t_matcher = Matchers::L33t.new(@dictionary_matchers)
       @dictionary_matchers + [
-        l33t_matcher,
+        Matchers::L33t.new(@dictionary_matchers),
         Matchers::Spatial.new(@data.adjacency_graphs),
         Matchers::Digits.new,
         Matchers::Repeat.new,
