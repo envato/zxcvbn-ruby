@@ -135,7 +135,7 @@ RSpec.describe Zxcvbn::Tester do
       expect { tester.test(over_limit) }.to raise_error(Zxcvbn::PasswordTooLong, /exceeds the maximum length of/)
     end
 
-    it 'completes in reasonable time for adversarial repeat inputs at the limit' do
+    it 'completes in reasonable time for adversarial repeat inputs at the limit', :no_rbs do
       adversarial = 'ab' * (tester.max_password_length / 2)
       elapsed = Benchmark.realtime { tester.test(adversarial) }
       expect(elapsed).to be < 5

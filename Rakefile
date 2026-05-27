@@ -19,7 +19,7 @@ begin
 
     desc 'Run RBS runtime type checker with RSpec'
     task :test do
-      sh "rbs -I sig test --target 'Zxcvbn::*' rspec"
+      sh "rbs -I sig test --target 'Zxcvbn::*' rspec --tag '~no_rbs'"
     end
 
     desc 'List RBS types'

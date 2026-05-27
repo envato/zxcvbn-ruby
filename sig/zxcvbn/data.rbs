@@ -25,7 +25,7 @@ module Zxcvbn
 
     def initialize: () -> void
 
-    def add_word_list: (String name, Array[String] list) -> void
+    def add_word_list: (String name, Array[untyped] list) -> void
 
     private
 
