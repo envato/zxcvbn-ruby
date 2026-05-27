@@ -161,9 +161,9 @@ module Zxcvbn
       Score.new(
         password:,
         guesses:,
-        sequence:,
-        crack_times_seconds: attack_times[:crack_times_seconds],
-        crack_times_display: attack_times[:crack_times_display],
+        sequence: sequence.freeze,
+        crack_times_seconds: attack_times[:crack_times_seconds].freeze,
+        crack_times_display: attack_times[:crack_times_display].freeze,
         score: guesses_to_score(guesses)
       )
     end

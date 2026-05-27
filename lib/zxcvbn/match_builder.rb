@@ -9,7 +9,7 @@ module Zxcvbn
   MatchBuilder = Struct.new(*Match.members, keyword_init: true) do
     # @return [Match] immutable match with the current attribute values
     def build
-      Match.new(**to_h)
+      Match.new(**to_h.tap { |h| h[:sub]&.freeze })
     end
   end
 end

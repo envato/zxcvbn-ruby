@@ -11,7 +11,7 @@ module Zxcvbn
     # @param warning [String] warning message (default: empty string)
     # @param suggestions [Array<String>] improvement tips (default: [])
     def initialize(warning: nil, suggestions: [])
-      super(warning: warning || '', suggestions:)
+      super(warning: warning || '', suggestions: suggestions.freeze)
     end
   end
 end
