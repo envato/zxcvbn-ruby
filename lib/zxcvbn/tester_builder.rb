@@ -25,16 +25,24 @@ module Zxcvbn
     end
 
     # @param name [String] identifier for the word list; calling with the same name twice replaces the earlier list
-    # @param words [Array<String>] words to add
+    # @param words [Array<String>] words to add; non-String elements are silently ignored during matching
     # @return [self]
+    # @raise [ArgumentError] if words is not an Array
     def add_word_list(name, words)
+      raise ArgumentError, "words must be an Array; got #{words.inspect}" unless words.is_a?(Array)
+
       @word_lists[name] = words
       self
     end
 
     # @param length [Integer] maximum password length for the built {Tester}
     # @return [self]
+    # @raise [ArgumentError] if length is not a positive integer
     def max_password_length(length)
+      unless length.is_a?(Integer) && length.positive?
+        raise ArgumentError, "max_password_length must be a positive integer; got #{length.inspect}"
+      end
+
       @max_password_length = length
       self
     end
@@ -52,18 +60,17 @@ module Zxcvbn
     def effective_max_password_length
       return @max_password_length if @max_password_length
 
+      env_str = ENV['ZXCVBN_MAX_PASSWORD_LENGTH']
+      return DEFAULT_MAX_PASSWORD_LENGTH unless env_str
+
       value = begin
-        Integer(ENV.fetch('ZXCVBN_MAX_PASSWORD_LENGTH', DEFAULT_MAX_PASSWORD_LENGTH))
-      rescue ArgumentError, TypeError
-        raise ArgumentError,
-              'ZXCVBN_MAX_PASSWORD_LENGTH must be a positive integer; ' \
-              "got #{ENV['ZXCVBN_MAX_PASSWORD_LENGTH'].inspect}"
+        Integer(env_str, 10)
+      rescue ArgumentError
+        raise ArgumentError, "ZXCVBN_MAX_PASSWORD_LENGTH must be a positive integer; got #{env_str.inspect}"
       end
 
       unless value.positive?
-        raise ArgumentError,
-              'ZXCVBN_MAX_PASSWORD_LENGTH must be a positive integer; ' \
-              "got #{ENV['ZXCVBN_MAX_PASSWORD_LENGTH'].inspect}"
+        raise ArgumentError, "ZXCVBN_MAX_PASSWORD_LENGTH must be a positive integer; got #{env_str.inspect}"
       end
 
       value
