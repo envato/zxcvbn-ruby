@@ -93,7 +93,7 @@ module Zxcvbn
       end
 
       make_bruteforce = lambda do |i, j|
-        MatchBuilder.new(pattern: 'bruteforce', token: password.slice(i, j - i + 1), i:, j:)
+        MatchBuilder.new(pattern: 'bruteforce', i:, j:)
       end
 
       (0...n).each do |k|
@@ -125,6 +125,7 @@ module Zxcvbn
       l = optimal_l
       while k >= 0
         match = m[k][l]
+        match.token ||= password.slice(match.i, match.j - match.i + 1)
         sequence.unshift(match.build)
         k = match.i - 1
         l -= 1
