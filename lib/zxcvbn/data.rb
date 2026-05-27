@@ -19,7 +19,9 @@ module Zxcvbn
     private_constant :DATA_PATH
 
     # Consistent named pair of ranked dictionaries and their tries.
-    Dictionaries = ::Data.define(:ranked, :tries)
+    Dictionaries = ::Data.define(:ranked, :tries) do
+      def inspect = "#<#{self.class}:0x#{__id__.to_s(16)}>"
+    end
     private_constant :Dictionaries
 
     # Loads all built-in frequency lists and adjacency graphs from disk.
@@ -42,6 +44,8 @@ module Zxcvbn
     end
 
     attr_reader :adjacency_graphs, :graph_stats, :dictionaries
+
+    def inspect = "#<#{self.class}:0x#{__id__.to_s(16)}>"
 
     # @return [Hash{String => Hash{String => Integer}}] word → rank maps
     def ranked_dictionaries = @dictionaries.ranked
