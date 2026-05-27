@@ -4,7 +4,7 @@ module Zxcvbn
     @omnimatch: Omnimatch
     @max_password_length: Integer
 
-    def initialize: (data: Data, max_password_length: Integer) -> void
+    def initialize: (data: Data, max_password_length: untyped) -> void
 
     attr_reader max_password_length: Integer
 
