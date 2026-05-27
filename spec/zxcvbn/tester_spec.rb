@@ -15,9 +15,12 @@ RSpec.describe Zxcvbn::Tester do
         expect(ruby_result.calc_time).not_to be_nil
         expect(ruby_result.password).to eq js_result['password']
         expect(ruby_result.score).to eq js_result['score']
-        expect(ruby_result.sequence.count).to eq js_result['sequence'].count
+        # Absorbs final-ULP log10 differences between Ruby and JS math library implementations.
+        expect(ruby_result.guesses_log10).to be_within(1e-13).of(js_result['guesses_log10'])
+        expect(ruby_result.crack_times_seconds).to eq js_result['crack_times_seconds']
+        expect(ruby_result.crack_times_display).to eq js_result['crack_times_display']
 
-        expect(ruby_result.guesses_log10).to be_within(0.01).of(js_result['guesses_log10'])
+        expect(ruby_result.sequence.count).to eq js_result['sequence'].count
 
         ruby_result.sequence.zip(js_result['sequence']).each_with_index do |(ruby_match, js_match), idx|
           # Ruby uses 'year' where JS v4 uses 'regex' (regex_name: 'recent_year') — intentional naming difference.
@@ -25,6 +28,11 @@ RSpec.describe Zxcvbn::Tester do
           expect(ruby_pattern).to eq(js_match['pattern']), "match #{idx} pattern mismatch"
           expect(ruby_match.i).to eq(js_match['i']), "match #{idx} i mismatch"
           expect(ruby_match.j).to eq(js_match['j']), "match #{idx} j mismatch"
+          expect(ruby_match.token).to eq(js_match['token']), "match #{idx} token mismatch"
+          expect(ruby_match.guesses_log10).to(
+            be_within(1e-13).of(js_match['guesses_log10']),
+            "match #{idx} guesses_log10 mismatch"
+          )
         end
 
         expect(ruby_result.feedback.warning).to eq js_result['feedback']['warning']

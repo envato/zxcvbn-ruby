@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'mini_racer'
-require 'json'
 
 module JsHelpers
   class JsMethodInvoker
@@ -16,9 +15,8 @@ module JsHelpers
       @ctx.eval(string)
     end
 
-    def eval_convert_object(string)
-      serialized = js_eval("JSON.stringify(#{string})")
-      JSON.parse(serialized)
+    def eval_convert_object(javascript)
+      js_eval(javascript)
     end
   end
 
