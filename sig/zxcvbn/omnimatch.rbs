@@ -1,6 +1,7 @@
 module Zxcvbn
   class Omnimatch
     @data: Data
+    @dictionary_matchers: Array[Matchers::Dictionary]
     @matchers: Array[untyped]
 
     def initialize: (Data data) -> void
