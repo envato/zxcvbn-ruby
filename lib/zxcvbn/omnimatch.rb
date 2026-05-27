@@ -33,6 +33,7 @@ module Zxcvbn
     #   candidate; shared with the scorer so both phases agree even across midnight
     # @return [Array<MatchBuilder>]
     def matches(password, user_inputs = [], reference_year: Time.now.year)
+      user_inputs = user_inputs.select { |i| i.respond_to?(:downcase) }
       matchers = @matchers + user_input_matchers(user_inputs)
       all_matches = matchers.flat_map do |matcher|
         case matcher

@@ -3,9 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Zxcvbn::FeedbackGiver do
-  # NOTE: We go in via the tester because the `FeedbackGiver` relies on both
-  #       Omnimatch and the Scorer, which are troublesome to wire up for tests
-  let(:tester) { Zxcvbn::Tester.new }
+  let(:tester) { ZXCVBN_TESTER }
 
   describe '.get_feedback' do
     it "gives empty feedback when a password's score is good" do

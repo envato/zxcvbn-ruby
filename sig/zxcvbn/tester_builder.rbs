@@ -1,0 +1,16 @@
+module Zxcvbn
+  class TesterBuilder
+    DEFAULT_MAX_PASSWORD_LENGTH: Integer
+
+    @word_lists: Hash[String, Array[untyped]]
+    @max_password_length: Integer?
+
+    def initialize: () -> void
+
+    def add_word_list: (String name, Array[untyped] words) -> TesterBuilder
+
+    def max_password_length: (Integer length) -> TesterBuilder
+
+    def build: () -> Tester
+  end
+end
