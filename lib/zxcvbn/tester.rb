@@ -52,6 +52,7 @@ module Zxcvbn
     # @raise [PasswordTooLong] if the password exceeds the maximum length
     def test(password, user_inputs = [])
       password ||= ''
+      user_inputs = Array(user_inputs).select { |i| i.is_a?(String) }
       if password.length > @max_password_length
         raise PasswordTooLong, "Password exceeds the maximum length of #{@max_password_length}."
       end

@@ -75,8 +75,19 @@ RSpec.describe Zxcvbn::TesterBuilder do
       expect { Zxcvbn.tester_builder.max_password_length(nil) }.to raise_error(ArgumentError)
     end
 
-    it 'raises ArgumentError for non-Array words in add_word_list' do
-      expect { Zxcvbn.tester_builder.add_word_list('test', nil) }.to raise_error(ArgumentError)
+    it 'treats nil words in add_word_list the same as an empty array' do
+      tester = Zxcvbn.tester_builder.add_word_list('test', nil).build
+      expect(tester.test('envato').guesses).to eq ZXCVBN_TESTER.test('envato').guesses
+    end
+
+    it 'accepts a single String in add_word_list' do
+      tester = Zxcvbn.tester_builder.add_word_list('envato', 'envato').build
+      expect(tester.test('envato').guesses).to be < ZXCVBN_TESTER.test('envato').guesses
+    end
+
+    it 'ignores non-String entries in add_word_list' do
+      tester_with_symbol = Zxcvbn.tester_builder.add_word_list('mixed', [:envato]).build
+      expect(tester_with_symbol.test('envato').guesses).to eq ZXCVBN_TESTER.test('envato').guesses
     end
 
     it 'accumulates multiple add_word_list calls' do

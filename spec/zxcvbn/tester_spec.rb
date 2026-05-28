@@ -124,6 +124,28 @@ RSpec.describe Zxcvbn::Tester do
     end
   end
 
+  context 'user_inputs coercion' do
+    it 'treats nil user_inputs the same as no user_inputs' do
+      expect(tester.test('themeforest', nil).guesses).to eq tester.test('themeforest').guesses
+    end
+
+    it 'accepts a single String as user_inputs' do
+      result_with = tester.test('themeforest', 'themeforest')
+      result_without = tester.test('themeforest')
+      expect(result_with.guesses).to be < result_without.guesses
+    end
+
+    it 'ignores non-String user_inputs such as symbols' do
+      expect(tester.test('themeforest', [:themeforest]).guesses).to eq tester.test('themeforest').guesses
+    end
+
+    it 'still uses valid String entries alongside ignored non-String ones' do
+      result_mixed = tester.test('themeforest', ['themeforest', :ignored, 42])
+      result_string_only = tester.test('themeforest', ['themeforest'])
+      expect(result_mixed.guesses).to eq result_string_only.guesses
+    end
+  end
+
   context 'with a very long password' do
     it 'accepts passwords at the length limit' do
       at_limit = 'a' * tester.max_password_length

@@ -7,7 +7,7 @@ module Zxcvbn
 
     def initialize: () -> void
 
-    def add_word_list: (String name, Array[untyped] words) -> TesterBuilder
+    def add_word_list: (String name, ?(Array[untyped] | String)? words) -> TesterBuilder
 
     def max_password_length: (Integer length) -> TesterBuilder
 

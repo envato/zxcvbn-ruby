@@ -20,6 +20,7 @@ Metrics/AbcSize:
     - 'lib/zxcvbn/matchers/spatial.rb'
     - 'lib/zxcvbn/omnimatch.rb'
     - 'lib/zxcvbn/scorer.rb'
+    - 'lib/zxcvbn/tester.rb'
 
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
 # AllowedMethods: refine

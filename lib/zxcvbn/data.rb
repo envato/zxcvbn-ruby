@@ -59,7 +59,7 @@ module Zxcvbn
     # @param list [Array<String>] ordered words (most common first)
     # @return [void]
     def add_word_list(name, list)
-      ranked_dict = DictionaryRanker.rank_dictionary(list.select { |w| w.respond_to?(:downcase) }).freeze
+      ranked_dict = DictionaryRanker.rank_dictionary(list.select { |w| w.is_a?(String) }).freeze
       trie = Trie.from_ranked(ranked_dict).freeze
       @dictionaries = @dictionaries.with(
         ranked: @dictionaries.ranked.merge(name => ranked_dict).freeze,
