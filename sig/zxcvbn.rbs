@@ -8,5 +8,5 @@ module Zxcvbn
 
   def self.test: (String? password, ?user_inputs user_inputs) -> Score
 
-  def self.tester: () -> TesterBuilder
+  def self.tester_builder: () -> TesterBuilder
 end

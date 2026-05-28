@@ -19,12 +19,12 @@ module Zxcvbn
   # Returns a Zxcvbn::Score for the given password.
   #
   # Reuses a shared {Tester} instance across calls. For custom word lists or
-  # options, use {.tester} to build a dedicated {Tester}.
+  # options, use {.tester_builder} to build a dedicated {Tester}.
   #
   # Raises {PasswordTooLong} (a subclass of +ArgumentError+) if the password
   # exceeds the configured limit (default: 256 characters). Override process-wide
   # via the +ZXCVBN_MAX_PASSWORD_LENGTH+ environment variable; for per-call limits,
-  # use {.tester} with {TesterBuilder#max_password_length}.
+  # use {.tester_builder} with {TesterBuilder#max_password_length}.
   #
   # Example:
   #
@@ -43,19 +43,20 @@ module Zxcvbn
   #
   # Example:
   #
-  #   tester = Zxcvbn.tester
+  #   tester = Zxcvbn
+  #     .tester_builder
   #     .add_word_list('company', %w[acme corp])
   #     .max_password_length(75)
   #     .build
   #
   # @return [TesterBuilder]
-  def tester
+  def tester_builder
     TesterBuilder.new
   end
 
   # @return [Tester] the shared default tester, constructed on first call
   def default_tester
-    DEFAULT_TESTER_MUTEX.synchronize { @default_tester ||= tester.build }
+    DEFAULT_TESTER_MUTEX.synchronize { @default_tester ||= tester_builder.build }
   end
   private_class_method :default_tester
 end

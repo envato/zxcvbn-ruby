@@ -109,13 +109,13 @@ $ irb
 
 ## Custom Testers
 
-`Zxcvbn.test` reuses a shared `Tester` internally — dictionaries are loaded once and persist in memory. Use `Zxcvbn.tester.build` to construct a standalone `Tester` you control:
+`Zxcvbn.test` reuses a shared `Tester` internally — dictionaries are loaded once and persist in memory. Use `Zxcvbn.tester_builder.build` to construct a standalone `Tester` you control:
 
 ```ruby
 $ irb
 >> require 'zxcvbn'
 => true
->> tester = Zxcvbn.tester.build
+>> tester = Zxcvbn.tester_builder.build
 => #<Zxcvbn::Tester:0x3fe99d869aa4>
 >> pp tester.test('@lfred2004', ['alfred'])
 #<data Zxcvbn::Score
@@ -168,7 +168,7 @@ $ irb
 To add custom word lists, chain `add_word_list` before `build`. Use a distinct name (e.g. `"company"`) — using a built-in name (`"english_wikipedia"`, `"passwords"`, `"female_names"`, `"male_names"`, `"surnames"`, `"us_tv_and_film"`) replaces that list entirely:
 
 ```ruby
->> tester = Zxcvbn.tester.add_word_list('company', %w[acme corp]).build
+>> tester = Zxcvbn.tester_builder.add_word_list('company', %w[acme corp]).build
 => #<Zxcvbn::Tester:0x3fe99d869bb8>
 >> tester.test('acme').score
 => 0
@@ -319,7 +319,7 @@ result = Zxcvbn.test(password)
 To use a different limit for a specific tester without touching the environment:
 
 ```ruby
-tester = Zxcvbn.tester.max_password_length(128).build
+tester = Zxcvbn.tester_builder.max_password_length(128).build
 result = tester.test(password)
 ```
 
@@ -335,7 +335,7 @@ Or export it from your shell profile, process manager, or platform environment c
 
 ### Custom word lists
 
-`Tester#add_word_lists` and the `word_lists:` argument to `Zxcvbn.test` have been removed. Use the `Zxcvbn.tester` builder instead:
+`Tester#add_word_lists` and the `word_lists:` argument to `Zxcvbn.test` have been removed. Use the `Zxcvbn.tester_builder` builder instead:
 
 ```ruby
 # 1.x — no longer works
@@ -343,18 +343,18 @@ result = Zxcvbn.test(password, user_inputs, word_lists: { 'company' => %w[acme c
 tester.add_word_lists('company' => %w[acme corp])
 
 # 2.x
-tester = Zxcvbn.tester.add_word_list('company', %w[acme corp]).build
+tester = Zxcvbn.tester_builder.add_word_list('company', %w[acme corp]).build
 result = tester.test(password, user_inputs)
 ```
 
-`Zxcvbn::Tester.new` is no longer a public construction path — it now requires `data:` and `max_password_length:` keyword arguments with no defaults. Use `Zxcvbn.tester.build` (or the fluent builder) instead:
+`Zxcvbn::Tester.new` is no longer a public construction path — it now requires `data:` and `max_password_length:` keyword arguments with no defaults. Use `Zxcvbn.tester_builder.build` (or the fluent builder) instead:
 
 ```ruby
 # 1.x
 tester = Zxcvbn::Tester.new
 
 # 2.x
-tester = Zxcvbn.tester.build
+tester = Zxcvbn.tester_builder.build
 ```
 
 ### Score values will change
