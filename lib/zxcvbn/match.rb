@@ -82,9 +82,9 @@ module Zxcvbn
       super
     end
 
-    # @return [String] a human-readable representation omitting nil fields
+    # @return [String] a human-readable representation omitting nil fields and token
     def inspect
-      fields = to_h.reject { |_, v| v.nil? }.map { |k, v| "#{k}=#{v.inspect}" }.join(', ')
+      fields = to_h.reject { |k, v| v.nil? || k == :token }.map { |k, v| "#{k}=#{v.inspect}" }.join(', ')
       "#<data #{self.class} #{fields}>"
     end
 

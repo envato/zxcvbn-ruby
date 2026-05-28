@@ -189,6 +189,10 @@ module Zxcvbn
       # Expands a 2-digit year to 4 digits. Values above 99 are returned unchanged.
       # Mirrors +two_to_four_digit_year+ in the JS v4 source.
       #
+      # Threshold is strictly +> 50+, matching JS: 50 → 2050, 51 → 1951.
+      # Negative values are treated as 1900s (e.g. -5 → 1995) — this is an
+      # edge case inherited from the JS implementation.
+      #
       # @param year [Integer] the year value to expand
       # @return [Integer] 4-digit year
       def expand_year(year)

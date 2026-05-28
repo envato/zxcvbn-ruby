@@ -197,6 +197,10 @@ Subsequent calls reuse the already-loaded dictionaries, so `calc_time` is signif
 > attacker. For this reason we advise you not to store the results of
 > `Zxcvbn::Tester#test`. Further reading: [A Tale of Security Gone Wrong](https://web.archive.org/web/20240715041147/http://gavinmiller.io/2016/a-tale-of-security-gone-wrong/).
 
+## Limitations
+
+The frequency lists bundled with this gem are English-only: English Wikipedia, US TV & film, English-derived names, and English-language password leaks. Passwords built from non-English words (e.g. `"รหัสผ่าน"`, Thai for "password") are scored against bruteforce rather than a localised dictionary, so their score will often be higher than the real-world risk warrants. If your users primarily choose passwords in a non-English language, treat the scores as a lower bound on strength, not an absolute measure.
+
 ## Migrating from 1.x
 
 Version 2 aligns with the zxcvbn.js v4 algorithm and API. Scores will change for many passwords — this is expected. The sections below cover every breaking API change.
