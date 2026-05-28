@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v2.0.0...HEAD
+
+## [2.0.0] - 2026-05-28
+
 ### Fixed
  - User-input dictionary matchers now use the Trie path, preventing O(n²) slowdowns on long passwords ([#89])
 
@@ -50,8 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - **Breaking**: `word_lists:` argument to `Zxcvbn.test`. Use `Zxcvbn.tester_builder.add_word_list(name, words).build` to construct a tester with custom word lists.
  - Support for Ruby versions below 3.3 ([#70])
 
-
-[Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v1.4.0...HEAD
+[2.0.0]: https://github.com/envato/zxcvbn-ruby/compare/v1.4.0...v2.0.0
 [#69]: https://github.com/envato/zxcvbn-ruby/pull/69
 [#70]: https://github.com/envato/zxcvbn-ruby/pull/70
 [#72]: https://github.com/envato/zxcvbn-ruby/pull/72
