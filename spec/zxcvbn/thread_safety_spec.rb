@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe 'Thread safety' do
+RSpec.describe 'Thread safety', :no_rbs do
   let(:tester) { ZXCVBN_TESTER }
 
   describe 'concurrent Zxcvbn.test from N threads' do
