@@ -132,7 +132,7 @@ module Zxcvbn
       if match.shifted_count&.positive?
         shifted   = match.shifted_count
         unshifted = token_length - match.shifted_count
-        if shifted.zero? || unshifted.zero?
+        if unshifted.zero?
           guesses *= 2
         else
           shift_variations = 0
