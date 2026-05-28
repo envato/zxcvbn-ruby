@@ -20,7 +20,7 @@ module Zxcvbn
       # @param password [String]
       # @return [Array<MatchBuilder>] matches with pattern "sequence"
       def matches(password)
-        return [] if password.length == 1
+        return [] if password.length < 2
 
         result = []
         start = 0
