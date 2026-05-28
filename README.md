@@ -165,7 +165,7 @@ $ irb
      "Predictable substitutions like '@' instead of 'a' don't help very much"]>>
 ```
 
-To add custom word lists, chain `add_word_list` before `build`. Use a distinct name (e.g. `"company"`) — using a built-in name (`"english_wikipedia"`, `"passwords"`, `"female_names"`, `"male_names"`, `"surnames"`, `"us_tv_and_film"`) replaces that list entirely:
+To add custom word lists, chain `add_word_list` before `build`:
 
 ```ruby
 >> tester = Zxcvbn.tester_builder.add_word_list('company', %w[acme corp]).build

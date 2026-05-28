@@ -24,6 +24,12 @@ module Zxcvbn
     end
     private_constant :Dictionaries
 
+    # Built-in dictionary names and the reserved per-call key.
+    # These names cannot be passed to {TesterBuilder#add_word_list}.
+    RESERVED_NAMES = %w[
+      english_wikipedia female_names male_names passwords surnames us_tv_and_film user_inputs
+    ].freeze
+
     # Loads all built-in frequency lists and adjacency graphs from disk.
     def initialize
       ranked = DictionaryRanker.rank_dictionaries(

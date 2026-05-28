@@ -11,6 +11,8 @@ module Zxcvbn
       def initialize: (ranked: Hash[String, ranked_dictionary], tries: Hash[String, Trie]) -> void
     end
 
+    RESERVED_NAMES: Array[String]
+
     @dictionaries: Dictionaries
     @adjacency_graphs: Hash[String, adjacency_graph]
     @graph_stats: graph_stats

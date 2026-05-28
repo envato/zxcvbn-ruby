@@ -28,7 +28,13 @@ module Zxcvbn
     # @param name [String] identifier for the word list; calling with the same name twice replaces the earlier list
     # @param words [Array<String>, String] words to add; non-String elements are silently ignored during matching
     # @return [self]
+    # @raise [ArgumentError] if name collides with a built-in dictionary name or +"user_inputs"+
     def add_word_list(name, words)
+      if Data::RESERVED_NAMES.include?(name)
+        raise ArgumentError,
+              "#{name.inspect} is a reserved dictionary name; use a different name for custom word lists"
+      end
+
       @word_lists[name] = Array(words)
       self
     end
