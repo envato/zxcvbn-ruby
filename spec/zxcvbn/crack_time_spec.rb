@@ -67,12 +67,36 @@ RSpec.describe Zxcvbn::CrackTime do
       expect(guesses_to_score(50_000)).to eq 1
     end
 
+    it 'returns 1 for 1_000_004 (last value inside the delta window for threshold 2)' do
+      expect(guesses_to_score(1_000_004)).to eq 1
+    end
+
+    it 'returns 2 for 1_000_005 (first value beyond the delta window for threshold 2)' do
+      expect(guesses_to_score(1_000_005)).to eq 2
+    end
+
     it 'returns 2 for 1_000_000–100_000_000 guesses' do
       expect(guesses_to_score(5_000_000)).to eq 2
     end
 
+    it 'returns 2 for 100_000_004 (last value inside the delta window for threshold 3)' do
+      expect(guesses_to_score(100_000_004)).to eq 2
+    end
+
+    it 'returns 3 for 100_000_005 (first value beyond the delta window for threshold 3)' do
+      expect(guesses_to_score(100_000_005)).to eq 3
+    end
+
     it 'returns 3 for 100_000_000–10_000_000_000 guesses' do
       expect(guesses_to_score(500_000_000)).to eq 3
+    end
+
+    it 'returns 3 for 10_000_000_004 (last value inside the delta window for threshold 4)' do
+      expect(guesses_to_score(10_000_000_004)).to eq 3
+    end
+
+    it 'returns 4 for 10_000_000_005 (first value beyond the delta window for threshold 4)' do
+      expect(guesses_to_score(10_000_000_005)).to eq 4
     end
 
     it 'returns 4 for 10_000_000_000 or more guesses' do
