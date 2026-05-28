@@ -26,13 +26,10 @@ module Zxcvbn
     end
 
     # @param name [String] identifier for the word list; calling with the same name twice replaces the earlier list
-    # @param words [Array<String>] words to add; non-String elements are silently ignored during matching
+    # @param words [Array<String>, String] words to add; non-String elements are silently ignored during matching
     # @return [self]
-    # @raise [ArgumentError] if words is not an Array
     def add_word_list(name, words)
-      raise ArgumentError, "words must be an Array; got #{words.inspect}" unless words.is_a?(Array)
-
-      @word_lists[name] = words
+      @word_lists[name] = Array(words)
       self
     end
 

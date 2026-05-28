@@ -8,7 +8,7 @@ module Zxcvbn
 
     attr_reader max_password_length: Integer
 
-    def test: (String? password, ?Array[untyped] user_inputs) -> Score
+    def test: (String? password, ?(Array[untyped] | String)? user_inputs) -> Score
 
     def inspect: () -> String
   end

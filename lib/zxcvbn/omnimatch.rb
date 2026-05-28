@@ -37,7 +37,6 @@ module Zxcvbn
     #   candidate; shared with the scorer so both phases agree even across midnight
     # @return [Array<MatchBuilder>]
     def matches(password, user_inputs = [], reference_year: Time.now.year)
-      user_inputs = user_inputs.select { |i| i.respond_to?(:downcase) }
       user_dictionary =
         user_inputs.any? && Matchers::Dictionary.new('user_inputs', DictionaryRanker.rank_dictionary(user_inputs))
       matchers = @matchers + user_input_matchers(user_dictionary)
