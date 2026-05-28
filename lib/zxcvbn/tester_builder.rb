@@ -6,11 +6,12 @@ require 'zxcvbn/tester'
 module Zxcvbn
   # Fluent builder for constructing a {Tester} with custom word lists and options.
   #
-  # Obtain a builder via {Zxcvbn.tester} and call {#build} to get the {Tester}.
+  # Obtain a builder via {Zxcvbn.tester_builder} and call {#build} to get the {Tester}.
   #
   # Example:
   #
-  #   tester = Zxcvbn.tester
+  #   tester = Zxcvbn
+  #     .tester_builder
   #     .add_word_list('company', %w[acme corp])
   #     .max_password_length(75)
   #     .build

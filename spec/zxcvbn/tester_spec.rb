@@ -96,7 +96,7 @@ RSpec.describe Zxcvbn::Tester do
   end
 
   context 'with a custom global dictionary' do
-    let(:tester) { Zxcvbn.tester.add_word_list('envato', ['envato']).build }
+    let(:tester) { Zxcvbn.tester_builder.add_word_list('envato', ['envato']).build }
 
     it 'scores them against the dictionary' do
       result = tester.test('envato')
@@ -104,7 +104,7 @@ RSpec.describe Zxcvbn::Tester do
     end
 
     context 'with invalid entries in a custom dictionary' do
-      let(:tester) { Zxcvbn.tester.add_word_list('themeforest', [nil, 1, 'themeforest']).build }
+      let(:tester) { Zxcvbn.tester_builder.add_word_list('themeforest', [nil, 1, 'themeforest']).build }
 
       it 'ignores those entries' do
         expect(tester.test('themeforest')).to have_attributes(score: 0)
@@ -146,7 +146,7 @@ RSpec.describe Zxcvbn::Tester do
       # Use a high-entropy string so the whole password is a single bruteforce
       # match: length 400 → 10**400 → Float::MAX → crack time overflows to Infinity
       # without the clamp.
-      high_limit_tester = Zxcvbn.tester.max_password_length(400).build
+      high_limit_tester = Zxcvbn.tester_builder.max_password_length(400).build
       saved = srand(7)
       high_entropy = (1..400).map { rand(33..126).chr }.join
       srand(saved)
@@ -168,7 +168,7 @@ RSpec.describe Zxcvbn::Tester do
   end
 
   context 'with a custom max_password_length' do
-    let(:tester) { Zxcvbn.tester.max_password_length(10).build }
+    let(:tester) { Zxcvbn.tester_builder.max_password_length(10).build }
 
     it 'accepts passwords at the custom limit' do
       expect { tester.test('a' * 10) }.not_to raise_error

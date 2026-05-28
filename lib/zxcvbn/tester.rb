@@ -12,9 +12,10 @@ module Zxcvbn
   class PasswordTooLong < ArgumentError; end
 
   # Evaluates password strength against dictionary lists, keyboard patterns,
-  # dates, sequences, and repeats. Construct via {Zxcvbn.tester}:
+  # dates, sequences, and repeats. Construct via {Zxcvbn.tester_builder}:
   #
-  #   tester = Zxcvbn.tester
+  #   tester = Zxcvbn
+  #     .tester_builder
   #     .add_word_list('company', %w[acme corp])
   #     .build
   #
