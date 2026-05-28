@@ -33,6 +33,16 @@ RSpec.describe Zxcvbn::Score do
     end
   end
 
+  describe '#inspect' do
+    it 'does not include the password' do
+      expect(minimal.inspect).not_to include('test')
+    end
+
+    it 'includes other non-nil fields' do
+      expect(minimal.inspect).to include('score=0')
+    end
+  end
+
   it 'supports structural equality' do
     other = described_class.new(
       password: 'test',

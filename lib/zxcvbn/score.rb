@@ -27,6 +27,12 @@ module Zxcvbn
       super(calc_time:, feedback:, **kwargs)
     end
 
+    # @return [String] a human-readable representation omitting nil fields and password
+    def inspect
+      fields = to_h.reject { |k, v| v.nil? || k == :password }.map { |k, v| "#{k}=#{v.inspect}" }.join(', ')
+      "#<data #{self.class} #{fields}>"
+    end
+
     # @return [Float, nil] log10 of {#guesses}, or nil if guesses is not set
     def guesses_log10
       ::Math.log10(guesses) if guesses

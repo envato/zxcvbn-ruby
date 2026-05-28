@@ -139,6 +139,18 @@ RSpec.describe Zxcvbn::Match do
     end
   end
 
+  describe '#inspect' do
+    it 'does not include the token' do
+      match = described_class.new(pattern: 'dictionary', token: 'password', i: 0, j: 7)
+      expect(match.inspect).not_to include('password')
+    end
+
+    it 'includes other non-nil fields' do
+      match = described_class.new(pattern: 'dictionary', token: 'password', i: 0, j: 7)
+      expect(match.inspect).to include('pattern="dictionary"')
+    end
+  end
+
   describe 'immutability' do
     it 'is frozen' do
       expect(described_class.new(pattern: 'digits', token: '123')).to be_frozen
