@@ -59,7 +59,7 @@ module Zxcvbn
     def most_guessable_match_sequence(password, matches, exclude_additive: false)
       n = password.length
 
-      return build_score(password, [], 1) if n.zero?
+      return build_score(password, [], 1.0) if n.zero?
 
       # index matches by their last character
       matches_by_j = Array.new(n) { [] }
