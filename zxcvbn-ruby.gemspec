@@ -3,21 +3,15 @@
 require File.expand_path('lib/zxcvbn/version', __dir__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ['Steve Hodgkiss', 'Matthieu Aussaguel']
-  gem.email         = ['steve@hodgkiss.me', 'matthieu.aussaguel@gmail.com']
-  gem.description   = 'Ruby port of Dropboxs zxcvbn.js'
-  gem.summary       = ''
-  gem.homepage      = 'https://github.com/envato/zxcvbn-ruby'
-
-  gem.files         = `git ls-files -z`.split("\x0").reject do |file|
-    file.match(%r{^(\.|CODE_OF_CONDUCT.md|Gemfile|Rakefile|Guardfile|zxcvbn-ruby.gemspec|rbs_collection.yaml|spec/)})
-  end
-  gem.name          = 'zxcvbn-ruby'
-  gem.require_paths = ['lib']
-  gem.version       = Zxcvbn::VERSION
-  gem.license       = 'MIT'
-
-  gem.required_ruby_version = '>= 3.3'
+  gem.name        = 'zxcvbn-ruby'
+  gem.version     = Zxcvbn::VERSION
+  gem.summary     = "Ruby port of Dropbox's zxcvbn.js JavaScript password strength estimator"
+  gem.description = "Ruby port of Dropbox's zxcvbn.js JavaScript password strength estimator, " \
+                    'providing v4 compatibility.'
+  gem.authors     = ['Steve Hodgkiss', 'Matthieu Aussaguel', 'Orien Madgwick']
+  gem.email       = ['steve@hodgkiss.me', 'matthieu.aussaguel@gmail.com', '_@orien.io']
+  gem.homepage    = "https://github.com/envato/#{gem.name}"
+  gem.license     = 'MIT'
 
   gem.metadata = {
     'allowed_push_host' => 'https://rubygems.org',
@@ -28,4 +22,12 @@ Gem::Specification.new do |gem|
     'source_code_uri' => "#{gem.homepage}/tree/v#{gem.version}",
     'rubygems_mfa_required' => 'true'
   }
+
+  gem.required_ruby_version = '>= 3.3'
+
+  gem.require_paths = ['lib']
+
+  gem.files = `git ls-files -z`.split("\x0").reject do |file|
+    file.match(%r{^(\.|CODE_OF_CONDUCT.md|Gemfile|Rakefile|Guardfile|zxcvbn-ruby.gemspec|rbs_collection.yaml|spec/)})
+  end
 end

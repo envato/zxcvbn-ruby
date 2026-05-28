@@ -1,6 +1,6 @@
 # zxcvbn-ruby
 
-This is a Ruby port of Dropbox's [zxcvbn.js][zxcvbn.js] JavaScript library, targeting **zxcvbn.js v4** and aiming to produce identical results.
+This is a Ruby port of Dropbox's [zxcvbn.js][zxcvbn.js] JavaScript password strength estimator, providing **zxcvbn.js v4** compatibility.
 
 ## Development status [![CI Status](https://github.com/envato/zxcvbn-ruby/workflows/CI/badge.svg)](https://github.com/envato/zxcvbn-ruby/actions?query=workflow%3ACI)
 
@@ -372,6 +372,7 @@ Audit any code that gates on `result.score` (e.g. form validation thresholds), p
 
  - [Steve Hodgkiss](https://github.com/stevehodgkiss)
  - [Matthieu Aussaguel](https://github.com/matthieua)
+ - [Orien Madgwick](https://github.com/orien)
  - [_et al._](https://github.com/envato/zxcvbn-ruby/graphs/contributors?all=1)
 
 ## License [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/envato/zxcvbn-ruby/blob/HEAD/LICENSE.txt)
