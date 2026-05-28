@@ -7,8 +7,8 @@ Gem::Specification.new do |gem|
   gem.version     = Zxcvbn::VERSION
   gem.description = 'Ruby port of Dropboxs zxcvbn.js'
   gem.summary     = ''
-  gem.authors     = ['Steve Hodgkiss', 'Matthieu Aussaguel']
-  gem.email       = ['steve@hodgkiss.me', 'matthieu.aussaguel@gmail.com']
+  gem.authors     = ['Steve Hodgkiss', 'Matthieu Aussaguel', 'Orien Madgwick']
+  gem.email       = ['steve@hodgkiss.me', 'matthieu.aussaguel@gmail.com', '_@orien.io']
   gem.homepage    = "https://github.com/envato/#{gem.name}"
   gem.license     = 'MIT'
 
