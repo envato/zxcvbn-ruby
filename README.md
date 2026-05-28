@@ -1,6 +1,6 @@
 # zxcvbn-ruby
 
-This is a Ruby port of Dropbox's [zxcvbn.js][zxcvbn.js] JavaScript library, targeting **zxcvbn.js v4** and aiming to produce identical results.
+This is a Ruby port of Dropbox's [zxcvbn.js][zxcvbn.js] JavaScript password strength estimator, providing **zxcvbn.js v4** compatibility.
 
 ## Development status [![CI Status](https://github.com/envato/zxcvbn-ruby/workflows/CI/badge.svg)](https://github.com/envato/zxcvbn-ruby/actions?query=workflow%3ACI)
 

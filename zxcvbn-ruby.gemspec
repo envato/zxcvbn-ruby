@@ -5,8 +5,9 @@ require File.expand_path('lib/zxcvbn/version', __dir__)
 Gem::Specification.new do |gem|
   gem.name        = 'zxcvbn-ruby'
   gem.version     = Zxcvbn::VERSION
-  gem.description = 'Ruby port of Dropboxs zxcvbn.js'
-  gem.summary     = ''
+  gem.summary     = "Ruby port of Dropbox's zxcvbn.js JavaScript password strength estimator"
+  gem.description = "Ruby port of Dropbox's zxcvbn.js JavaScript password strength estimator, " \
+                    'providing v4 compatibility.'
   gem.authors     = ['Steve Hodgkiss', 'Matthieu Aussaguel', 'Orien Madgwick']
   gem.email       = ['steve@hodgkiss.me', 'matthieu.aussaguel@gmail.com', '_@orien.io']
   gem.homepage    = "https://github.com/envato/#{gem.name}"
