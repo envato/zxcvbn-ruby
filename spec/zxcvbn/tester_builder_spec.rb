@@ -75,6 +75,16 @@ RSpec.describe Zxcvbn::TesterBuilder do
       expect { Zxcvbn.tester_builder.max_password_length(nil) }.to raise_error(ArgumentError)
     end
 
+    it 'raises ArgumentError when add_word_list name collides with a built-in dictionary' do
+      expect { Zxcvbn.tester_builder.add_word_list('passwords', %w[secret]) }
+        .to raise_error(ArgumentError, /reserved/)
+    end
+
+    it 'raises ArgumentError when add_word_list name is "user_inputs"' do
+      expect { Zxcvbn.tester_builder.add_word_list('user_inputs', %w[acme]) }
+        .to raise_error(ArgumentError, /reserved/)
+    end
+
     it 'treats nil words in add_word_list the same as an empty array' do
       tester = Zxcvbn.tester_builder.add_word_list('test', nil).build
       expect(tester.test('envato').guesses).to eq ZXCVBN_TESTER.test('envato').guesses
