@@ -31,6 +31,7 @@ RSpec.configure do |config|
 end
 
 TEST_PASSWORDS = [
+  '',
   'zxcvbn',
   'qwER43@!',
   'Tr0ub4dour&3',

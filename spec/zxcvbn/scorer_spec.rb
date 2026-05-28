@@ -94,6 +94,28 @@ RSpec.describe Zxcvbn::Scorer do
         expect(result.sequence.last.token).to eq 'efgh'
       end
     end
+
+    context 'dominance pruning — two candidates at the same j and l' do
+      it 'keeps the cheaper match when a more expensive one arrives later' do
+        cheap = Zxcvbn::MatchBuilder.new(pattern: 'dictionary', i: 0, j: 3, token: 'abcd', rank: 1)
+        expensive = Zxcvbn::MatchBuilder.new(pattern: 'dictionary', i: 0, j: 3, token: 'abcd', rank: 500)
+        result = scorer.most_guessable_match_sequence('abcd', [cheap, expensive])
+        expect(result.sequence.length).to eq 1
+        expect(result.sequence.first).to have_attributes(rank: 1)
+        expect(result.guesses).to be < 500
+      end
+
+      it 'picks a length-1 sequence over a more expensive length-2 sequence at the same j' do
+        # single match covers full password cheaply
+        single = Zxcvbn::MatchBuilder.new(pattern: 'dictionary', i: 0, j: 5, token: 'abcdef', rank: 1)
+        # two-match path ending at j=5: first covers 'abc', second 'def', both rank=1 → more expensive
+        left  = Zxcvbn::MatchBuilder.new(pattern: 'dictionary', i: 0, j: 2, token: 'abc', rank: 1)
+        right = Zxcvbn::MatchBuilder.new(pattern: 'dictionary', i: 3, j: 5, token: 'def', rank: 1)
+        result = scorer.most_guessable_match_sequence('abcdef', [single, left, right])
+        expect(result.sequence.length).to eq 1
+        expect(result.sequence.first).to have_attributes(pattern: 'dictionary', i: 0, j: 5)
+      end
+    end
   end
 
   describe '#repeat_guesses' do

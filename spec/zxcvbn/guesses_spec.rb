@@ -3,9 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe Zxcvbn::Guesses do
-  # Minimal host that satisfies the Guesses mixin contract.
-  # spatial_guesses additionally requires #data to supply graph stats,
-  # which is covered through integration tests in tester_spec.rb.
   let(:host) do
     Class.new do
       include Zxcvbn::Guesses
@@ -17,6 +14,19 @@ RSpec.describe Zxcvbn::Guesses do
         @reference_year = Time.now.year
       end
     end.new
+  end
+
+  let(:host_with_data) do
+    Class.new do
+      include Zxcvbn::Guesses
+
+      attr_reader :data
+
+      def initialize(data)
+        @data = data
+        @reference_year = Time.now.year
+      end
+    end.new(ZXCVBN_TEST_DATA)
   end
 
   def make_match(**attrs)
@@ -260,12 +270,42 @@ RSpec.describe Zxcvbn::Guesses do
       expect(host.estimate_guesses(m, '021297')).to eq 365 * 30
     end
 
+    it 'dispatches to spatial_guesses for spatial pattern' do
+      m = make_match(pattern: 'spatial', token: 'qwe', graph: 'qwerty', turns: 1, shifted_count: 0)
+      expect(host_with_data.estimate_guesses(m, 'qwe')).to be_positive
+    end
+
     it 'sets base_guesses, uppercase_variations, l33t_variations on dictionary matches' do
       m = make_match(pattern: 'dictionary', token: 'Pass', rank: 5, reversed: false, l33t: false)
       host.estimate_guesses(m, 'Pass')
       expect(m.base_guesses).to eq 5
       expect(m.uppercase_variations).to eq 2
       expect(m.l33t_variations).to eq 1
+    end
+  end
+
+  describe '#spatial_guesses' do
+    it 'returns a positive value for a straight qwerty path' do
+      m = make_match(token: 'qwe', graph: 'qwerty', turns: 1, shifted_count: 0)
+      expect(host_with_data.spatial_guesses(m)).to be_positive
+    end
+
+    it 'doubles guesses when all characters are shifted' do
+      unshifted = make_match(token: 'qwe', graph: 'qwerty', turns: 1, shifted_count: 0)
+      all_shifted = make_match(token: 'QWE', graph: 'qwerty', turns: 1, shifted_count: 3)
+      expect(host_with_data.spatial_guesses(all_shifted)).to eq host_with_data.spatial_guesses(unshifted) * 2
+    end
+
+    it 'produces more guesses for more turns' do
+      straight = make_match(token: 'qwer', graph: 'qwerty', turns: 1, shifted_count: 0)
+      curved   = make_match(token: 'qwer', graph: 'qwerty', turns: 3, shifted_count: 0)
+      expect(host_with_data.spatial_guesses(curved)).to be > host_with_data.spatial_guesses(straight)
+    end
+
+    it 'uses keypad stats for a keypad graph' do
+      qwerty_match = make_match(token: 'qwe', graph: 'qwerty', turns: 1, shifted_count: 0)
+      keypad_match = make_match(token: 'qwe', graph: 'keypad', turns: 1, shifted_count: 0)
+      expect(host_with_data.spatial_guesses(keypad_match)).not_to eq host_with_data.spatial_guesses(qwerty_match)
     end
   end
 end
