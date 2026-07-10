@@ -1,6 +1,8 @@
 module Zxcvbn
   module Matchers
     class Dictionary
+      include CaseHelpers
+
       @name: String
       @ranked_dictionary: Data::ranked_dictionary
       @trie: Trie?

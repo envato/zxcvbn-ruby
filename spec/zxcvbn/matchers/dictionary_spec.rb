@@ -32,6 +32,14 @@ RSpec.describe Zxcvbn::Matchers::Dictionary do
         expect(pass_match.pattern).to eq('dictionary')
         expect(pass_match.dictionary_name).to eq('test')
       end
+
+      context 'when downcasing lengthens the password (İ → i + combining dot)' do
+        let(:password) { 'İpassword' }
+
+        it 'keeps match indices within the original password bounds' do
+          expect(matches.map(&:j)).to all(be < password.length)
+        end
+      end
     end
 
     context 'with hash-based matching (no trie)' do
