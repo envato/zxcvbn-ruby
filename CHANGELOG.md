@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
- - `NoMethodError` in `Scorer` for passwords containing characters whose lowercased form is longer than the original (e.g. "İ" U+0130 downcases to "i" plus a combining dot). Dictionary and l33t matchers now lowercase per character, keeping match indices aligned with the original password. Dictionary word ranking applies the same normalisation, so user-input words containing such characters now match
+ - `NoMethodError` in `Scorer` for passwords containing characters whose lowercased form is longer than the original (e.g. "İ" U+0130 downcases to "i" plus a combining dot). Dictionary and l33t matchers now lowercase per character, keeping match indices aligned with the original password. Dictionary word ranking applies the same normalisation, so user-input words containing such characters now match ([#124])
 
 [Unreleased]: https://github.com/envato/zxcvbn-ruby/compare/v2.0.0...HEAD
+[#124]: https://github.com/envato/zxcvbn-ruby/pull/124
 
 ## [2.0.0] - 2026-05-28
 
