@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'zxcvbn/case_helpers'
 require 'zxcvbn/match_builder'
 
 module Zxcvbn
@@ -8,6 +9,7 @@ module Zxcvbn
     # a ranked dictionary.
     # @api private
     class Dictionary
+      include CaseHelpers
       # @param name [String] dictionary identifier used in match results
       # @param ranked_dictionary [Hash{String => Integer}] lowercased word → rank
       # @param trie [Trie, nil] optional prefix trie for faster lookups
@@ -22,7 +24,7 @@ module Zxcvbn
       # @param password [String]
       # @return [Array<MatchBuilder>] matches with pattern "dictionary"
       def matches(password)
-        lowercased_password = password.downcase
+        lowercased_password = downcase_preserving_length(password)
 
         if @trie
           trie_matches(password, lowercased_password)

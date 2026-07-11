@@ -82,6 +82,37 @@ RSpec.describe Zxcvbn::Matchers::Dictionary do
       end
     end
 
+    context 'when downcasing lengthens the password (İ → i + combining dot)' do
+      let(:dictionary) { { 'password' => 1, 'pass' => 2, 'word' => 3 } }
+      let(:password) { 'İpassword' }
+
+      let(:trie) do
+        trie = Zxcvbn::Trie.new
+        dictionary.each { |word, rank| trie.insert(word, rank) }
+        trie
+      end
+
+      let(:trie_matches) { described_class.new('test', dictionary, trie).matches(password) }
+      let(:hash_matches) { described_class.new('test', dictionary, nil).matches(password) }
+
+      it 'keeps all match indices within the original password bounds on both paths' do
+        (trie_matches + hash_matches).each do |match|
+          expect(match.i).to be >= 0
+          expect(match.j).to be < password.length
+        end
+      end
+
+      it 'finds the embedded words with indices aligned to the original password' do
+        found = trie_matches.map { |m| [m.matched_word, m.i, m.j] }.sort
+        expect(found).to eq([['pass', 1, 4], ['password', 1, 8], ['word', 5, 8]])
+      end
+
+      it 'produces identical results from the trie and hash paths' do
+        to_tuple = ->(m) { [m.matched_word, m.i, m.j, m.rank] }
+        expect(trie_matches.map(&to_tuple).sort).to eq(hash_matches.map(&to_tuple).sort)
+      end
+    end
+
     context 'Given a dictionary of English words' do
       subject(:matcher) { described_class.new('Test dictionary', dictionary) }
 

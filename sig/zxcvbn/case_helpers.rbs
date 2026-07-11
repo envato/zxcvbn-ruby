@@ -1,0 +1,5 @@
+module Zxcvbn
+  module CaseHelpers
+    def self?.downcase_preserving_length: (String string) -> String
+  end
+end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'zxcvbn/case_helpers'
+
 module Zxcvbn
   # Converts raw word lists into frequency-ranked dictionaries for matcher use.
   # @api private
@@ -21,7 +23,9 @@ module Zxcvbn
     def self.rank_dictionary(words)
       words
         .each_with_index
-        .with_object({}) { |(word, i), dictionary| dictionary[word.downcase] = i + 1 }
+        .with_object({}) do |(word, i), dictionary|
+          dictionary[CaseHelpers.downcase_preserving_length(word)] = i + 1
+        end
     end
   end
 end

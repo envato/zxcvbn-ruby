@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
+require 'zxcvbn/case_helpers'
+
 module Zxcvbn
   module Matchers
     # Matches dictionary words after substituting common l33t-speak character
     # replacements (e.g. "@" for "a", "3" for "e").
     # @api private
     class L33t
+      include CaseHelpers
       # Mapping from plain letter to the l33t characters that can represent it.
       L33T_TABLE = {
         'a' => ['4', '@'].freeze,
@@ -33,7 +36,7 @@ module Zxcvbn
       # @return [Array<MatchBuilder>] matches with pattern "dictionary" and l33t: true
       def matches(password)
         matches = []
-        lowercased_password = password.downcase
+        lowercased_password = downcase_preserving_length(password)
         relevent_subtable = relevent_l33t_subtable(lowercased_password)
 
         # Early bailout: if no l33t characters present, return empty matches

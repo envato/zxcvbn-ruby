@@ -61,7 +61,13 @@ module Zxcvbn
 
       return build_score(password, [], 1.0) if n.zero?
 
-      # index matches by their last character
+      # Index matches by their last character (j). matches_by_j is sized to the
+      # password, so this relies on every match satisfying 0 <= m.j < n (and
+      # 0 <= m.i <= m.j) — match indices must be positions in `password`.
+      # Matchers uphold this by matching against a lowercased view that keeps the
+      # original character length; see CaseHelpers.downcase_preserving_length. A
+      # match with j >= n reads a nil slot below and raises NoMethodError, so any
+      # new matcher must preserve this invariant.
       matches_by_j = Array.new(n) { [] }
       matches.each { |m| matches_by_j[m.j] << m }
       matches_by_j.each { |arr| arr.sort_by!(&:i) }

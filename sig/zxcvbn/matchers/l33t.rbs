@@ -1,6 +1,8 @@
 module Zxcvbn
   module Matchers
     class L33t
+      include CaseHelpers
+
       L33T_TABLE: Hash[String, Array[String]]
 
       @dictionary_matchers: Array[Dictionary]

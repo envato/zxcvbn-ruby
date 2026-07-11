@@ -71,6 +71,24 @@ RSpec.describe Zxcvbn::Tester do
       expect(result.guesses).to be_positive
       expect(result.score).to be_positive
     end
+
+    it 'handles characters whose downcased form is longer (İ → i + combining dot)' do
+      expect { tester.test('İpassword') }.not_to raise_error
+    end
+
+    it 'still finds dictionary words after a length-changing character' do
+      result = tester.test('İpassword')
+      expect(result.sequence.map(&:matched_word)).to include('password')
+    end
+
+    it 'handles l33t substitutions after a length-changing character' do
+      result = tester.test('İp@ssword')
+      expect(result.sequence.map(&:matched_word)).to include('password')
+    end
+
+    it 'matches user-input words containing a length-changing character' do
+      expect(tester.test('İstanbul', ['İstanbul']).score).to eq 0
+    end
   end
 
   context 'with Unicode entries in the dictionary' do
